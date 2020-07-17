@@ -10087,6 +10087,56 @@ public final class GameMsg {
      */
     com.google.protobuf.ByteString
         getUserNameBytes();
+
+    /**
+     * <pre>
+     * 血量
+     * </pre>
+     *
+     * <code>uint32 hp = 3;</code>
+     * @return The hp.
+     */
+    int getHp();
+
+    /**
+     * <pre>
+     * 所在地
+     * </pre>
+     *
+     * <code>string addressName = 4;</code>
+     * @return The addressName.
+     */
+    java.lang.String getAddressName();
+    /**
+     * <pre>
+     * 所在地
+     * </pre>
+     *
+     * <code>string addressName = 4;</code>
+     * @return The bytes for addressName.
+     */
+    com.google.protobuf.ByteString
+        getAddressNameBytes();
+
+    /**
+     * <pre>
+     * 横坐标
+     * </pre>
+     *
+     * <code>uint32 x = 5;</code>
+     * @return The x.
+     */
+    int getX();
+
+    /**
+     * <pre>
+     * 竖坐标
+     * </pre>
+     *
+     * <code>uint32 y = 6;</code>
+     * @return The y.
+     */
+    int getY();
   }
   /**
    * <pre>
@@ -10106,6 +10156,7 @@ public final class GameMsg {
     }
     private UserLoginResult() {
       userName_ = "";
+      addressName_ = "";
     }
 
     @java.lang.Override
@@ -10147,6 +10198,27 @@ public final class GameMsg {
               java.lang.String s = input.readStringRequireUtf8();
 
               userName_ = s;
+              break;
+            }
+            case 24: {
+
+              hp_ = input.readUInt32();
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              addressName_ = s;
+              break;
+            }
+            case 40: {
+
+              x_ = input.readUInt32();
+              break;
+            }
+            case 48: {
+
+              y_ = input.readUInt32();
               break;
             }
             default: {
@@ -10240,6 +10312,92 @@ public final class GameMsg {
       }
     }
 
+    public static final int HP_FIELD_NUMBER = 3;
+    private int hp_;
+    /**
+     * <pre>
+     * 血量
+     * </pre>
+     *
+     * <code>uint32 hp = 3;</code>
+     * @return The hp.
+     */
+    public int getHp() {
+      return hp_;
+    }
+
+    public static final int ADDRESSNAME_FIELD_NUMBER = 4;
+    private volatile java.lang.Object addressName_;
+    /**
+     * <pre>
+     * 所在地
+     * </pre>
+     *
+     * <code>string addressName = 4;</code>
+     * @return The addressName.
+     */
+    public java.lang.String getAddressName() {
+      java.lang.Object ref = addressName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        addressName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 所在地
+     * </pre>
+     *
+     * <code>string addressName = 4;</code>
+     * @return The bytes for addressName.
+     */
+    public com.google.protobuf.ByteString
+        getAddressNameBytes() {
+      java.lang.Object ref = addressName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        addressName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int X_FIELD_NUMBER = 5;
+    private int x_;
+    /**
+     * <pre>
+     * 横坐标
+     * </pre>
+     *
+     * <code>uint32 x = 5;</code>
+     * @return The x.
+     */
+    public int getX() {
+      return x_;
+    }
+
+    public static final int Y_FIELD_NUMBER = 6;
+    private int y_;
+    /**
+     * <pre>
+     * 竖坐标
+     * </pre>
+     *
+     * <code>uint32 y = 6;</code>
+     * @return The y.
+     */
+    public int getY() {
+      return y_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -10260,6 +10418,18 @@ public final class GameMsg {
       if (!getUserNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userName_);
       }
+      if (hp_ != 0) {
+        output.writeUInt32(3, hp_);
+      }
+      if (!getAddressNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, addressName_);
+      }
+      if (x_ != 0) {
+        output.writeUInt32(5, x_);
+      }
+      if (y_ != 0) {
+        output.writeUInt32(6, y_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -10275,6 +10445,21 @@ public final class GameMsg {
       }
       if (!getUserNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userName_);
+      }
+      if (hp_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, hp_);
+      }
+      if (!getAddressNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, addressName_);
+      }
+      if (x_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(5, x_);
+      }
+      if (y_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(6, y_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -10295,6 +10480,14 @@ public final class GameMsg {
           != other.getUserId()) return false;
       if (!getUserName()
           .equals(other.getUserName())) return false;
+      if (getHp()
+          != other.getHp()) return false;
+      if (!getAddressName()
+          .equals(other.getAddressName())) return false;
+      if (getX()
+          != other.getX()) return false;
+      if (getY()
+          != other.getY()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -10310,6 +10503,14 @@ public final class GameMsg {
       hash = (53 * hash) + getUserId();
       hash = (37 * hash) + USERNAME_FIELD_NUMBER;
       hash = (53 * hash) + getUserName().hashCode();
+      hash = (37 * hash) + HP_FIELD_NUMBER;
+      hash = (53 * hash) + getHp();
+      hash = (37 * hash) + ADDRESSNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getAddressName().hashCode();
+      hash = (37 * hash) + X_FIELD_NUMBER;
+      hash = (53 * hash) + getX();
+      hash = (37 * hash) + Y_FIELD_NUMBER;
+      hash = (53 * hash) + getY();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10451,6 +10652,14 @@ public final class GameMsg {
 
         userName_ = "";
 
+        hp_ = 0;
+
+        addressName_ = "";
+
+        x_ = 0;
+
+        y_ = 0;
+
         return this;
       }
 
@@ -10479,6 +10688,10 @@ public final class GameMsg {
         msg.GameMsg.UserLoginResult result = new msg.GameMsg.UserLoginResult(this);
         result.userId_ = userId_;
         result.userName_ = userName_;
+        result.hp_ = hp_;
+        result.addressName_ = addressName_;
+        result.x_ = x_;
+        result.y_ = y_;
         onBuilt();
         return result;
       }
@@ -10533,6 +10746,19 @@ public final class GameMsg {
         if (!other.getUserName().isEmpty()) {
           userName_ = other.userName_;
           onChanged();
+        }
+        if (other.getHp() != 0) {
+          setHp(other.getHp());
+        }
+        if (!other.getAddressName().isEmpty()) {
+          addressName_ = other.addressName_;
+          onChanged();
+        }
+        if (other.getX() != 0) {
+          setX(other.getX());
+        }
+        if (other.getY() != 0) {
+          setY(other.getY());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -10703,6 +10929,228 @@ public final class GameMsg {
         onChanged();
         return this;
       }
+
+      private int hp_ ;
+      /**
+       * <pre>
+       * 血量
+       * </pre>
+       *
+       * <code>uint32 hp = 3;</code>
+       * @return The hp.
+       */
+      public int getHp() {
+        return hp_;
+      }
+      /**
+       * <pre>
+       * 血量
+       * </pre>
+       *
+       * <code>uint32 hp = 3;</code>
+       * @param value The hp to set.
+       * @return This builder for chaining.
+       */
+      public Builder setHp(int value) {
+        
+        hp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 血量
+       * </pre>
+       *
+       * <code>uint32 hp = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearHp() {
+        
+        hp_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object addressName_ = "";
+      /**
+       * <pre>
+       * 所在地
+       * </pre>
+       *
+       * <code>string addressName = 4;</code>
+       * @return The addressName.
+       */
+      public java.lang.String getAddressName() {
+        java.lang.Object ref = addressName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          addressName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 所在地
+       * </pre>
+       *
+       * <code>string addressName = 4;</code>
+       * @return The bytes for addressName.
+       */
+      public com.google.protobuf.ByteString
+          getAddressNameBytes() {
+        java.lang.Object ref = addressName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          addressName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 所在地
+       * </pre>
+       *
+       * <code>string addressName = 4;</code>
+       * @param value The addressName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddressName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        addressName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 所在地
+       * </pre>
+       *
+       * <code>string addressName = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAddressName() {
+        
+        addressName_ = getDefaultInstance().getAddressName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 所在地
+       * </pre>
+       *
+       * <code>string addressName = 4;</code>
+       * @param value The bytes for addressName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddressNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        addressName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int x_ ;
+      /**
+       * <pre>
+       * 横坐标
+       * </pre>
+       *
+       * <code>uint32 x = 5;</code>
+       * @return The x.
+       */
+      public int getX() {
+        return x_;
+      }
+      /**
+       * <pre>
+       * 横坐标
+       * </pre>
+       *
+       * <code>uint32 x = 5;</code>
+       * @param value The x to set.
+       * @return This builder for chaining.
+       */
+      public Builder setX(int value) {
+        
+        x_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 横坐标
+       * </pre>
+       *
+       * <code>uint32 x = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearX() {
+        
+        x_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int y_ ;
+      /**
+       * <pre>
+       * 竖坐标
+       * </pre>
+       *
+       * <code>uint32 y = 6;</code>
+       * @return The y.
+       */
+      public int getY() {
+        return y_;
+      }
+      /**
+       * <pre>
+       * 竖坐标
+       * </pre>
+       *
+       * <code>uint32 y = 6;</code>
+       * @param value The y to set.
+       * @return This builder for chaining.
+       */
+      public Builder setY(int value) {
+        
+        y_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 竖坐标
+       * </pre>
+       *
+       * <code>uint32 y = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearY() {
+        
+        y_ = 0;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -10757,7 +11205,7 @@ public final class GameMsg {
   }
 
   public interface UserRegisterCmdOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:msg.UserRegisterCmdClient)
+      // @@protoc_insertion_point(interface_extends:msg.UserRegisterCmd)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -10805,14 +11253,14 @@ public final class GameMsg {
    * 用户注册
    * </pre>
    *
-   * Protobuf type {@code msg.UserRegisterCmdClient}
+   * Protobuf type {@code msg.UserRegisterCmd}
    */
   public  static final class UserRegisterCmd extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:msg.UserRegisterCmdClient)
+      // @@protoc_insertion_point(message_implements:msg.UserRegisterCmd)
       UserRegisterCmdOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use UserRegisterCmdClient.newBuilder() to construct.
+    // Use UserRegisterCmd.newBuilder() to construct.
     private UserRegisterCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
@@ -11152,11 +11600,11 @@ public final class GameMsg {
      * 用户注册
      * </pre>
      *
-     * Protobuf type {@code msg.UserRegisterCmdClient}
+     * Protobuf type {@code msg.UserRegisterCmd}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:msg.UserRegisterCmdClient)
+        // @@protoc_insertion_point(builder_implements:msg.UserRegisterCmd)
         msg.GameMsg.UserRegisterCmdOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
@@ -11171,7 +11619,7 @@ public final class GameMsg {
                 msg.GameMsg.UserRegisterCmd.class, msg.GameMsg.UserRegisterCmd.Builder.class);
       }
 
-      // Construct using msg.GameMsg.UserRegisterCmdClient.newBuilder()
+      // Construct using msg.GameMsg.UserRegisterCmd.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -11510,10 +11958,10 @@ public final class GameMsg {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:msg.UserRegisterCmdClient)
+      // @@protoc_insertion_point(builder_scope:msg.UserRegisterCmd)
     }
 
-    // @@protoc_insertion_point(class_scope:msg.UserRegisterCmdClient)
+    // @@protoc_insertion_point(class_scope:msg.UserRegisterCmd)
     private static final msg.GameMsg.UserRegisterCmd DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new msg.GameMsg.UserRegisterCmd();
@@ -12371,21 +12819,22 @@ public final class GameMsg {
       "tHpResult\022\024\n\014targetUserId\030\001 \001(\r\022\022\n\nsubtr" +
       "actHp\030\002 \001(\r\"%\n\rUserDieResult\022\024\n\014targetUs" +
       "erId\030\001 \001(\r\"2\n\014UserLoginCmd\022\020\n\010userName\030\001" +
-      " \001(\t\022\020\n\010password\030\002 \001(\t\"3\n\017UserLoginResul" +
-      "t\022\016\n\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\";\n\017U" +
-      "serRegisterCmd\022\023\n\013newUserName\030\001 \001(\t\022\023\n\013n" +
-      "ewPassword\030\002 \001(\t\"<\n\022UserRegisterResult\022\021" +
-      "\n\tnewUserId\030\001 \001(\r\022\023\n\013newUserName\030\002 \001(\t*\345" +
-      "\002\n\007MsgCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027" +
-      "WHO_ELSE_IS_HERE_RESULT\020\001\022\024\n\020USER_MOVE_T" +
-      "O_CMD\020\002\022\027\n\023USER_MOVE_TO_RESULT\020\003\022\024\n\020USER" +
-      "_QUIT_RESULT\020\004\022\021\n\rUSER_STOP_CMD\020\005\022\024\n\020USE" +
-      "R_STOP_RESULT\020\006\022\021\n\rUSER_ATTK_CMD\020\007\022\024\n\020US" +
-      "ER_ATTK_RESULT\020\010\022\033\n\027USER_SUBTRACT_HP_RES" +
-      "ULT\020\t\022\023\n\017USER_DIE_RESULT\020\n\022\022\n\016USER_LOGIN" +
-      "_CMD\020\013\022\025\n\021USER_LOGIN_RESULT\020\014\022\025\n\021USER_RE" +
-      "GISTER_CMD\020\r\022\030\n\024USER_REGISTER_RESULT\020\016B\005" +
-      "\n\003msgb\006proto3"
+      " \001(\t\022\020\n\010password\030\002 \001(\t\"j\n\017UserLoginResul" +
+      "t\022\016\n\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\n\n\002h" +
+      "p\030\003 \001(\r\022\023\n\013addressName\030\004 \001(\t\022\t\n\001x\030\005 \001(\r\022" +
+      "\t\n\001y\030\006 \001(\r\";\n\017UserRegisterCmd\022\023\n\013newUser" +
+      "Name\030\001 \001(\t\022\023\n\013newPassword\030\002 \001(\t\"<\n\022UserR" +
+      "egisterResult\022\021\n\tnewUserId\030\001 \001(\r\022\023\n\013newU" +
+      "serName\030\002 \001(\t*\345\002\n\007MsgCode\022\030\n\024WHO_ELSE_IS" +
+      "_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS_HERE_RESULT\020\001" +
+      "\022\024\n\020USER_MOVE_TO_CMD\020\002\022\027\n\023USER_MOVE_TO_R" +
+      "ESULT\020\003\022\024\n\020USER_QUIT_RESULT\020\004\022\021\n\rUSER_ST" +
+      "OP_CMD\020\005\022\024\n\020USER_STOP_RESULT\020\006\022\021\n\rUSER_A" +
+      "TTK_CMD\020\007\022\024\n\020USER_ATTK_RESULT\020\010\022\033\n\027USER_" +
+      "SUBTRACT_HP_RESULT\020\t\022\023\n\017USER_DIE_RESULT\020" +
+      "\n\022\022\n\016USER_LOGIN_CMD\020\013\022\025\n\021USER_LOGIN_RESU" +
+      "LT\020\014\022\025\n\021USER_REGISTER_CMD\020\r\022\030\n\024USER_REGI" +
+      "STER_RESULT\020\016B\005\n\003msgb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -12480,7 +12929,7 @@ public final class GameMsg {
     internal_static_msg_UserLoginResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserLoginResult_descriptor,
-        new java.lang.String[] { "UserId", "UserName", });
+        new java.lang.String[] { "UserId", "UserName", "Hp", "AddressName", "X", "Y", });
     internal_static_msg_UserRegisterCmd_descriptor =
       getDescriptor().getMessageTypes().get(13);
     internal_static_msg_UserRegisterCmd_fieldAccessorTable = new

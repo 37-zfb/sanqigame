@@ -17,18 +17,30 @@ public class Broadcaster {
 
     /**
      * 添加新的客户端 channel
+     *
      * @param newChannel
      */
     public static void addChannel(Channel newChannel) {
-        if (newChannel != null){
+        if (newChannel != null) {
             CHANNEL_GROUP.add(newChannel);
         }
     }
 
-    public static void removeChannel(Channel channel){
-        if (channel != null){
+    public static void removeChannel(Channel channel) {
+        if (channel != null) {
             CHANNEL_GROUP.remove(channel);
         }
+    }
+
+    /**
+     * 广播消息
+     * @param msg 消息对象
+     */
+    public static void broadcast(Object msg) {
+        if (null == msg) {
+            return;
+        }
+        CHANNEL_GROUP.writeAndFlush(msg);
     }
 
 }

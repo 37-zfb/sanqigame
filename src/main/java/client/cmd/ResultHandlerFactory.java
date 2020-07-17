@@ -1,4 +1,4 @@
-package server.cmdhandler;
+package client.cmd;
 
 import com.google.protobuf.GeneratedMessageV3;
 import lombok.extern.slf4j.Slf4j;
@@ -12,29 +12,27 @@ import java.util.Set;
 
 /**
  * @author 张丰博
- * <p>
- * 处理类工厂
  */
 @Slf4j
-public class CmdHandlerFactory {
+public class ResultHandlerFactory {
 
     // 消息类型 ==> 处理类
-    private static final Map<Class<?>, ICmdHandler<? extends GeneratedMessageV3>> HANDLER_MAP = new HashMap<>();
+    private static final Map<Class<?>, ICmd<? extends GeneratedMessageV3>> CMD_MAP = new HashMap<>();
 
-    private CmdHandlerFactory() {
+    private ResultHandlerFactory() {
     }
 
     /**
-     * 关联 处理类、消息类型
+     *  关联 处理类、消息类型
      */
     public static void init() {
         log.info("=== 完成 Cmd 和 Handler 的关联! ===");
 
-        // 获取 Handler 类
+        // 获取 cmdClient 类
         Set<Class<?>> listSubClazz = PackageUtil.listSubClazz(
-                ICmdHandler.class.getPackage().getName(),
+                ICmd.class.getPackage().getName(),
                 true,
-                ICmdHandler.class
+                ICmd.class
         );
 
         for (Class<?> subClazz : listSubClazz) {
@@ -49,14 +47,15 @@ public class CmdHandlerFactory {
             Class<?> msgType = null;
             for (Method clazzMethod : clazzMethods) {
 
-                if (!"handle".equals(clazzMethod.getName())) {
+                if (!"cmd".equals(clazzMethod.getName())) {
                     continue;
 
                 }
                 Class<?>[] parameterTypes = clazzMethod.getParameterTypes();
                 if (parameterTypes.length < 2 ||
+                        // 加上此句，否则可能会关联到GeneratedMessageV3
                         parameterTypes[1] == GeneratedMessageV3.class ||
-                        !GeneratedMessageV3.class.isAssignableFrom(parameterTypes[1])) {
+                        !GeneratedMessageV3.class.isAssignableFrom(parameterTypes[1]) ) {
                     continue;
                 }
 
@@ -69,10 +68,10 @@ public class CmdHandlerFactory {
 
             //创建 消息处理类
             try {
-                ICmdHandler<?> cmdHandler = (ICmdHandler<?>) subClazz.newInstance();
+                ICmd<?> cmd = (ICmd<?>) subClazz.newInstance();
                 log.info("关联 {} <==> {} ", msgType.getName(), subClazz.getName());
 
-                HANDLER_MAP.put(msgType, cmdHandler);
+                CMD_MAP.put(msgType, cmd);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -85,15 +84,14 @@ public class CmdHandlerFactory {
     }
 
     /**
-     * 通过消息类型获得对应的处理类
-     *
+     *  通过消息类型获得对应的处理类
      * @param clazz
      * @return
      */
-    public static ICmdHandler<? extends GeneratedMessageV3> getHandlerByClazz(Class<?> clazz) {
+    public static ICmd<? extends GeneratedMessageV3> getHandlerByClazz(Class<?> clazz) {
         if (clazz == null) {
             return null;
         }
-        return HANDLER_MAP.get(clazz);
+        return CMD_MAP.get(clazz);
     }
 }

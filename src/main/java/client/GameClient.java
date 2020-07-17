@@ -1,12 +1,13 @@
 package client;
 
-import client.cmd.Login;
+import client.cmd.ResultHandlerFactory;
+import client.cmd.UserLoginCmdClient;
+import client.cmd.UserRegisterCmdClient;
 import codoc.GameMsgDecoder;
 import codoc.GameMsgEncoder;
 import com.google.protobuf.GeneratedMessageV3;
-import entity.User;
+import client.model.User;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -14,9 +15,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.HttpClientCodec;
 import io.netty.handler.codec.http.HttpObjectAggregator;
-import io.netty.handler.codec.http.websocketx.*;
+import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
+import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketClientCompressionHandler;
 import lombok.extern.slf4j.Slf4j;
+import msg.GameMsg;
 import msg.GameMsgRecognizer;
 
 import java.net.URI;
@@ -31,6 +34,7 @@ public class GameClient {
 
     public static void main(String[] args) throws Exception {
         GameMsgRecognizer.init();
+        ResultHandlerFactory.init();
 
         URI uri = new URI(URL);
         String scheme = uri.getScheme() == null ? "ws" : uri.getScheme();
@@ -88,20 +92,25 @@ public class GameClient {
 
             Scanner scanner = new Scanner(System.in);
             // 根据用户指令选择：登录 or 注册
+            User loginOrReg = null;
             while (true) {
-                Login login = new Login();
                 int comCode = -1;
-                User loginOrReg = null;
                 while (true) {
                     log.info("============请选择您的操作:==============");
                     System.out.println("1、登录!");
                     System.out.println("2、注册!");
                     comCode = scanner.nextInt();
                     if (comCode == 1) {
-                        loginOrReg = login.login();
+                        // 登录
+                        UserLoginCmdClient loginCmdClient = new UserLoginCmdClient();
+                        loginOrReg = loginCmdClient.login();
+
                         break;
                     } else if (comCode == 2) {
-                        loginOrReg = login.register();
+                        // 注册
+                        UserRegisterCmdClient registerCmdClient = new UserRegisterCmdClient();
+                        loginOrReg = registerCmdClient.register();
+
                         break;
                     } else {
                         log.info("===> 命令输入有误!");
@@ -111,29 +120,28 @@ public class GameClient {
                 GeneratedMessageV3 cmd = null;
                 if (comCode == 1) {
                     // 登录 指令
-                    cmd = org.example.msg.GameMsg.UserLoginCmd.newBuilder()
+                    cmd = GameMsg.UserLoginCmd.newBuilder()
                             .setUserName(loginOrReg.getUserName())
                             .setPassword(loginOrReg.getPassword())
                             .build();
                 } else if (comCode == 2) {
                     // 注册指令
-                    cmd = org.example.msg.GameMsg.UserRegisterCmd.newBuilder()
+                    cmd = GameMsg.UserRegisterCmd.newBuilder()
                             .setNewUserName(loginOrReg.getUserName())
                             .setNewPassword(loginOrReg.getPassword())
                             .build();
-                }
+//                }
 
-                // 获得消息类型
-                Class<?> msgClass = cmd.getClass();
-                // 根据类型获得消息编码
-                int msgCode = GameMsgRecognizer.getMsgCodeByMsgClass(msgClass);
-                if (msgCode < 0) {
-                    log.error("无法识别的消息类型:{}", msgClass);
-                    return;
+                    // 获得消息类型
+                    Class<?> msgClass = cmd.getClass();
+                    // 根据类型获得消息编码
+                    int msgCode = GameMsgRecognizer.getMsgCodeByMsgClass(msgClass);
+                    if (msgCode < 0) {
+                        log.error("无法识别的消息类型:{}", msgClass);
+                        return;
+                    }
                 }
-
                 ch.writeAndFlush(cmd);
-
                 System.out.println("发送数据完毕!");
                 break;
             }
@@ -141,7 +149,7 @@ public class GameClient {
         } finally {
             group.shutdownGracefully();
         }
+
+
     }
-
-
 }

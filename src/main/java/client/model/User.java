@@ -1,4 +1,4 @@
-package entity;
+package client.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

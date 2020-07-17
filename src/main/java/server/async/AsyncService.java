@@ -94,6 +94,7 @@ public class AsyncService {
 
                     int id = userDAO.insertInto(entity);
                     entity.setId(id);
+                    entity.setPassword(null);
                 }
                 userEntity = entity;
             } catch (Exception e) {

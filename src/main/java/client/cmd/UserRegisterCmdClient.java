@@ -1,6 +1,6 @@
 package client.cmd;
 
-import entity.User;
+import client.model.User;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -15,7 +15,18 @@ public class UserRegisterCmdClient implements ICmd<GameMsg.UserRegisterResult>{
 
     @Override
     public void cmd(ChannelHandlerContext ctx, GameMsg.UserRegisterResult userRegisterResult) {
+        System.out.println("UserRegisterCmdClient,"+userRegisterResult.getClass());
+        if (ctx == null || userRegisterResult == null){
+            return;
+        }
 
+        UserLoginCmdClient loginCmdClient = new UserLoginCmdClient();
+        User user = loginCmdClient.login();
+        GameMsg.UserLoginCmd userLoginCmd = GameMsg.UserLoginCmd.newBuilder()
+                                    .setUserName(user.getUserName())
+                                    .setPassword(user.getPassword())
+                                    .build();
+        ctx.writeAndFlush(userLoginCmd);
     }
 
     /**

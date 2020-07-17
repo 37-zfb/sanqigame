@@ -3,7 +3,6 @@ package msg;
 import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.Message;
 import lombok.extern.slf4j.Slf4j;
-import org.example.msg.GameMsg;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
