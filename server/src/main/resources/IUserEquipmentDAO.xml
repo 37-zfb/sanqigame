@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IUserEquipmentDAO">
+    <resultMap id="userEquipmentEntity" type="entity.db.UserEquipmentEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="propsId" column="props_id"/>
+        <result property="isWear" column="is_wear"/>
+        <result property="durability" column="durability"/>
+        <result property="location" column="location"/>
+    </resultMap>
+
+
+
+    <select id="selectEquipmentByUserIdAndState" resultMap="userEquipmentEntity" resultType="list">
+        SELECT * FROM `user_equipment` WHERE user_id = #{userId} AND is_wear=#{state};
+    </select>
+
+    <insert id="insertEquipment" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.UserEquipmentEntity">
+        INSERT INTO `user_equipment` ( user_id, `props_id`,`is_wear`,`durability`,`location` ) VALUES ( #{userId}, #{propsId} ,#{isWear},#{durability},#{location});
+    </insert>
+
+    <update id="updateEquipmentState" parameterType="int" >
+        UPDATE `user_equipment` SET  is_wear = #{state},location=#{location} WHERE id = #{id}
+    </update>
+
+    <update id="updateEquipmentDurability" parameterType="int">
+         UPDATE `user_equipment` SET  durability = #{durability} WHERE id = #{id}
+    </update>
+
+</mapper>
+
+

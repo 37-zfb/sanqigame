@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IUserPotionDAO">
+    <resultMap id="userPotionEntity" type="entity.db.UserPotionEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="propsId" column="props_id"/>
+        <result property="number" column="number"/>
+        <result property="location" column="location"/>
+    </resultMap>
+
+    <select id="selectPotionByUserId" resultMap="userPotionEntity" resultType="list" parameterType="int">
+        SELECT * FROM `user_potion` WHERE user_id = #{userId};
+    </select>
+
+    <select id="selectPotionByUserIdAndPotionId" resultMap="userPotionEntity">
+         SELECT * FROM `user_potion` WHERE user_id = #{userId} and props_id = #{propsId};
+    </select>
+
+    <insert id="insertPotion" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="entity.db.UserPotionEntity">
+        INSERT INTO `user_potion` ( user_id, `props_id`,`number`,`location` ) VALUES ( #{userId}, #{propsId},#{number},#{location} );
+    </insert>
+
+    <update id="updatePotionNumber" parameterType="entity.db.UserPotionEntity">
+        UPDATE  `user_potion` SET `number` = #{number} where user_id = #{userId} and props_id = #{propsId};
+    </update>
+</mapper>
+
+

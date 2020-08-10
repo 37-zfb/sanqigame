@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IUserStateDAO">
+    <resultMap id="userState" type="entity.db.CurrUserStateEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="currHp" column="curr_hp"/>
+        <result property="currMp" column="curr_mp"/>
+        <result property="currSceneId" column="curr_scene_id"/>
+        <result property="baseDamage" column="base_damage"/>
+        <result property="baseDefense" column="base_defense"/>
+    </resultMap>
+
+
+    <insert id="insertUserSate" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.CurrUserStateEntity">
+        INSERT INTO `curr_user_state` ( user_id, curr_hp,curr_mp,curr_scene_id,base_damage, base_defense)
+        VALUES ( #{userId}, #{currHp},#{currMp},#{currSceneId},#{baseDamage},#{baseDefense} );
+    </insert>
+
+    <select id="selectUserStateByUserId" parameterType="int" resultMap="userState">
+        SELECT * FROM curr_user_state where user_id = #{userId};
+    </select>
+
+    <update id="updateUserState" parameterType="entity.db.CurrUserStateEntity">
+        update curr_user_state SET curr_hp = #{currHp},curr_mp=#{currMp},curr_scene_id=#{currSceneId},base_damage=#{baseDamage},base_defense=#{baseDefense} WHERE user_id=#{userId}
+    </update>
+</mapper>

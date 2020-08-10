@@ -1,0 +1,464 @@
+syntax = "proto3";
+
+package msg;
+option java_package = "msg";
+
+// 消息代号
+enum MsgCode {
+
+  WHO_ELSE_IS_HERE_CMD = 0;
+  WHO_ELSE_IS_HERE_RESULT = 1;
+
+  USER_QUIT_RESULT = 2;
+
+  ATTK_CMD = 3;
+  ATTK_RESULT = 4;
+
+  USER_SUBTRACT_HP_RESULT = 5;
+
+  DIE_RESULT = 6;
+
+  USER_LOGIN_CMD = 7;
+  USER_LOGIN_RESULT = 8;
+
+  USER_REGISTER_CMD = 9;
+  USER_REGISTER_RESULT = 10;
+
+  ATTK_MONSTER_CMD = 11;
+
+  STOP_CUR_USER_ALL_TIMER = 12;
+
+  USER_SWITCH_SCENE_CMD = 13;
+  USER_SWITCH_SCENE_RESULT = 14;
+
+  MONSTER_START_ATTK_USER = 15;
+
+  NOTICE_USER_ATTKED = 16;
+
+  USER_SKILL_ATTK_CMD = 17;
+  USER_SKILL_ATTK_RESULT = 18;
+
+  SKILL_STATE_SWITCH = 19;
+
+  ROB_EQUIPMENT_CMD = 20;
+
+  BACKPACK_CMD = 21;
+  BACKPACK_RESULT = 22;
+
+  ROB_EQUIPMENT_RESULT = 23;
+
+  USER_POTION_CMD = 24;
+  USER_POTION_RESULT = 25;
+
+  USER_RESUME_STATE_RESULT = 26;
+
+  USER_WEAR_EQUIPMENT_CMD = 27;
+  USER_WEAR_EQUIPMENT_RESULT = 28;
+
+  USER_UNDO_EQUIPMENT_CMD = 29;
+  USER_UNDO_EQUIPMENT_RESULT = 30;
+
+  DURABILITY_DEFICIENCY_RESULT = 31;
+
+  REPAIR_EQUIPMENT_CMD = 32;
+  REPAIR_EQUIPMENT_RESULT = 33;
+
+  MONSTER_DROP_HP_AUTO_DIE = 34;
+
+  DUPLICATE_CMD = 35;
+  DUPLICATE_RESULT = 36;
+};
+
+// 还有谁在场
+///////////////////////////////////////////////////////////////////////
+// 指令
+message WhoElseIsHereCmd {
+}
+
+// 结果
+message WhoElseIsHereResult {
+  // 用户信息数组
+  repeated UserInfo userInfo = 1;
+
+  // 用户信息
+  message UserInfo {
+    // 用户 Id
+    uint32 userId = 1;
+    // 用户名称
+    string userName = 2;
+
+  }
+
+}
+
+//
+// 用户退场
+///////////////////////////////////////////////////////////////////////
+// 
+// XXX 注意: 用户退场不需要指令, 因为是在断开服务器的时候执行
+// 
+// 结果
+message UserQuitResult {
+  // 退出用户 Id
+  uint32 quitUserId = 1;
+}
+
+//
+// 攻击
+///////////////////////////////////////////////////////////////////////
+// 指令
+message AttkCmd {
+  // 目标用户 Id
+  uint32 targetUserId = 1;
+  // 目标 怪
+  repeated string attkedMonsterName = 2;
+  // 怪 名
+  string monsterName = 3;
+}
+
+// 结果
+message AttkResult {
+  // 被攻击的 怪
+  uint32 monsterId = 1;
+  // 减血量
+  uint32 subHp = 2;
+}
+
+message AttkMonsterCmd {
+  //怪 名
+  string monsterName = 1;
+
+}
+
+// 用户减血结果
+message UserSubtractHpResult {
+  // 目标用户 Id
+  uint32 targetUserId = 1;
+  // 减血量
+  uint32 subtractHp = 2;
+}
+
+// 死亡结果
+message DieResult {
+  // 目标用户 Id
+  uint32 targetUserId = 1;
+  // 死亡的怪id
+  uint32 monsterId = 2;
+
+  // 爆的装备
+  uint32 propsId = 3;
+
+  //之前是否已死
+  bool isDieBefore = 4;
+
+  //道具类型
+  string propsType = 5;
+
+  // 恢复蓝的终止时间
+  uint64 resumeMpEndTime = 6;
+}
+
+//
+// 用户登录
+///////////////////////////////////////////////////////////////////////
+// 指令
+message UserLoginCmd {
+  // 用户名称
+  string userName = 1;
+  // 用户密码
+  string password = 2;
+}
+
+// 结果
+message UserLoginResult {
+  // 用户 Id,
+  // 如果是 -1 则说明登录失败
+  uint32 userId = 1;
+  // 用户名称
+  string userName = 2;
+
+  // 血量
+  uint32 hp = 3;
+
+  // 蓝量
+  uint32 mp = 4;
+
+  // 所在地
+  uint32 currSceneId = 5;
+
+  // 存放数组
+  repeated Npc npc = 6;
+
+  // npc信息
+  message Npc {
+    // 用户名称
+    string name = 1;
+    // 场景名称
+    uint32 id = 2;
+    // 说的话
+    string info = 3;
+
+  }
+
+  repeated Skill skill = 7;
+  // 技能
+  message Skill {
+    // 技能id
+    uint32 id = 1;
+  }
+
+  repeated Monster monster = 8;
+  message Monster {
+    uint32 id = 1;
+    string name = 2;
+    uint32 hp = 3;
+    bool isDie = 4;
+  }
+
+  // 装备id
+  repeated Props props = 9;
+  message Props {
+    uint32 location = 1;
+    uint32 propsId = 2;
+    uint32 durability = 3;
+    uint32 propsNumber = 4;
+    uint32 userPropsId = 5;
+  }
+
+  // 恢复蓝的终止时间
+  uint64 resumeMpEndTime = 10;
+
+  // 已穿戴装备
+  repeated WearEquipment wearEqu = 11;
+  message WearEquipment {
+    uint32 id = 1;
+    uint32 equipmentId = 2;
+    //耐久度
+    uint32 durability = 3;
+  }
+
+  uint32 professionId = 12;
+
+}
+
+// 用户注册
+message UserRegisterCmd {
+  // 用户名称
+  string newUserName = 1;
+  // 用户密码
+  string newPassword = 2;
+  // 职业id
+  uint32 professionId = 3;
+}
+// 结果
+message UserRegisterResult {
+
+  bool isSucceed = 1;
+
+}
+
+//
+// 停止所有定时任务
+///////////////////////////////////////////////////////////////////////
+// 指令
+message StopCurUserAllTimer {
+}
+
+//
+// 用户切换场景
+///////////////////////////////////////////////////////////////////////
+// 指令
+message UserSwitchSceneCmd {
+
+  uint32 toSceneId = 1;
+
+}
+//
+// 用户切换场景
+///////////////////////////////////////////////////////////////////////
+// 结果
+message UserSwitchSceneResult {
+  // 存放数组
+  repeated Npc npc = 1;
+
+  // npc信息
+  message Npc {
+    // 用户名称
+    string name = 1;
+    // 场景名称
+    uint32 sceneId = 2;
+    // 说的话
+    string info = 3;
+
+    // NPC id
+    uint32 id = 4;
+
+  }
+
+  // 怪信息数组
+  repeated MonsterInfo monsterInfo = 2;
+  // 怪信息
+  message MonsterInfo {
+    // 怪名称
+    string name = 1;
+
+    // 是否 存活
+    bool isDie = 2;
+
+    // 血量
+    uint32 hp = 3;
+
+    // id
+    uint32 monsterId = 4;
+  }
+}
+// 怪 发动攻击
+message MonsterStartAttkUser {
+}
+// 通知玩家 被怪攻击
+message NoticeUserAttked {
+  repeated uint32 monsterId = 1;
+}
+// 玩家使用技能
+message UserSkillAttkCmd {
+  // 技能id
+  uint32 skillId = 1;
+
+}
+// 玩家使用技能  结果
+message UserSkillAttkResult {
+  // 是否成功
+  bool isSuccess = 1;
+  // 目标减血量
+  uint32 subtractHp = 2;
+  // 目标名称
+  uint32 monsterId = 3;
+  // false 原因
+  string falseReason = 4;
+
+  // 恢复蓝的终止时间
+  uint64 resumeMpEndTime = 11;
+}
+// 切换技能状态； 冷却 ==> 非冷却
+message SkillStateSwitch {
+  // 技能id
+  uint32 skillId = 1;
+}
+//  抢道具
+message RobEquipmentCmd {
+  // 怪id
+  uint32 monsterId = 1;
+  //类型
+  uint32 type = 2;
+}
+// 强道具结果
+message RobEquipmentResult {
+  // 是否成功
+  bool isSucceed = 1;
+  // 类型 0：装备，1：药剂
+  uint32 type = 2;
+  // 道具id
+  uint32 propsId = 3;
+  // user equ表id
+  uint32 userEquId = 4;
+
+}
+
+// 查询背包
+message BackpackCmd {
+}
+// 查询背包结果
+message BackpackResult {
+  repeated uint32 equIdList = 1;
+
+  repeated Potion potionList = 2;
+
+  message Potion {
+    uint32 potionId = 1;
+
+    uint32 number = 2;
+  }
+}
+
+// 使用药剂
+message UserPotionCmd {
+  uint32 location = 1;
+}
+// 使用药剂结果
+message UserPotionResult {
+  bool isSuccess = 1;
+
+  uint32 location = 2;
+
+  // 恢复蓝的终止时间
+  uint64 resumeMpEndTime = 3;
+  uint64 resumeMpEndTimeAuto = 4;
+
+  // 恢复血的终止时间
+  uint64 resumeHpEndTime = 5;
+
+}
+//用户恢复状态结果
+message UserResumeStateResult {
+  // 类型
+  string type = 1;
+  // 恢复的值
+  uint32 value = 2;
+}
+// 穿戴装备命令
+message UserWearEquipmentCmd {
+  // 装备id
+  uint32 location = 1;
+  // 用户装备id
+  uint32 userEquipmentId = 2;
+}
+// 穿戴装备结果
+message UserWearEquipmentResult {
+  // 道具id
+  uint32 propsId = 1;
+  // 用户装备id
+  uint32 userEquipmentId = 2;
+  // 位置
+  uint32 location = 3;
+}
+// 脱装备
+message UserUndoEquipmentCmd {
+  // 装备id
+  uint32 propsId = 1;
+  // 用户装备id
+  uint32 userEquipmentId = 2;
+}
+// 脱装备结果
+message UserUndoEquipmentResult {
+  // 装备id
+  uint32 propsId = 1;
+  // 用户装备id
+  uint32 userEquipmentId = 2;
+}
+// 耐久度不足
+message DurabilityDeficiencyResult {
+  // 装备id
+  uint32 propsId = 1;
+  // 用户装备id
+  uint32 userEquipmentId = 2;
+}
+// 修理装备 指令
+message RepairEquipmentCmd {
+  uint32 userEquipmentId = 1;
+}
+// 修理装备 结果
+message RepairEquipmentResult {
+
+  uint32 userEquipmentId = 1;
+}
+// 自动掉血死亡
+message MonsterDropHpAutoDie {
+  uint32 monsterId = 1;
+}
+// 当前副本
+message DuplicateCmd{
+}
+// 返回副本id
+message DuplicateResult{
+  repeated string duplicateId = 1;
+}
