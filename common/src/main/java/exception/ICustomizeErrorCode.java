@@ -1,4 +1,4 @@
-package server.exception;
+package exception;
 
 public interface ICustomizeErrorCode {
     String getMessage();

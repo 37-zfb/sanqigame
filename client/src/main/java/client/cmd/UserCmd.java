@@ -4,6 +4,7 @@ import client.model.Role;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import model.duplicate.Duplicate;
 import model.profession.Skill;
 import model.props.Equipment;
 import model.props.Potion;
@@ -144,9 +145,10 @@ public class UserCmd {
                         Map<Integer, Props> backpackClient = role.getBackpackClient();
                         System.out.println("背包空间: " + backpackClient.size() + "/100");
                         System.out.println("道具如下:");
-                        for (Props props : backpackClient.values()) {
-                            System.out.println("==> " + props.getId() + "、" + props.getName() + "\t\t类型: " + props.getPropsProperty().getType().getType());
+                        for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
+                            System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
                         }
+
 
                     } else if ("9".equals(command)) {
                         // 怪发起攻击
@@ -243,7 +245,12 @@ public class UserCmd {
                         int nextInt = scanner.nextInt();
                         return GameMsg.RepairEquipmentCmd.newBuilder().setUserEquipmentId(nextInt).build();
                     } else if ("13".equals(command)) {
-                        return GameMsg.DuplicateCmd.newBuilder().build();
+                        Map<Integer, Duplicate> duplicateMap = GameData.getInstance().getDuplicateMap();
+                        for (Duplicate duplicate : duplicateMap.values()) {
+                            System.out.println(duplicate.getId()+"、"+duplicate.getName());
+                        }
+                        int id = scanner.nextInt();
+                        return GameMsg.EnterDuplicateCmd.newBuilder().setDuplicateId(id).build();
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -306,8 +313,8 @@ public class UserCmd {
             ctx.channel().writeAndFlush((GameMsg.UserUndoEquipmentCmd) cmd);
         } else if (cmd instanceof GameMsg.RepairEquipmentCmd) {
             ctx.channel().writeAndFlush((GameMsg.RepairEquipmentCmd) cmd);
-        }else if (cmd instanceof GameMsg.DuplicateCmd){
-            ctx.channel().writeAndFlush((GameMsg.DuplicateCmd)cmd);
+        }else if (cmd instanceof GameMsg.EnterDuplicateCmd){
+            ctx.channel().writeAndFlush((GameMsg.EnterDuplicateCmd)cmd);
         }
 
 

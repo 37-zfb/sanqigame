@@ -12,8 +12,8 @@ import entity.db.CurrUserStateEntity;
 import entity.db.UserEntity;
 import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
-import server.exception.CustomizeErrorCode;
-import server.exception.CustomizeException;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import server.model.*;
 import model.profession.Skill;
 import model.props.Equipment;
@@ -84,7 +84,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                     .setMp(user.getCurrMp())
                     .setCurrSceneId(user.getCurSceneId())
                     .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
-                    .setProfessionId(user.getProfessionId());
+                    .setProfessionId(user.getProfessionId())
+                    .setMoney(user.getMoney());
 
             GameData gameData = GameData.getInstance();
             //封装 当前用户的技能.
@@ -176,6 +177,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         user.setUserName(userEntity.getUserName());
         user.setBaseDamage(userState.getBaseDamage());
         user.setBaseDefense(userState.getBaseDefense());
+        user.setMoney(userState.getMoney());
 
 
         // 封装技能

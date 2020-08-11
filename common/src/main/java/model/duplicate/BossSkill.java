@@ -1,5 +1,6 @@
 package model.duplicate;
 
+import com.sun.org.apache.xpath.internal.axes.ChildTestIterator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.NoArgsConstructor;
  * @author 张丰博
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class BossSkill {
 
@@ -35,5 +35,14 @@ public class BossSkill {
      *  对技能的描述
      */
     private String info;
+
+
+    public BossSkill(Integer id,Integer bossId,String name,Integer damage,String info){
+        this.id = id;
+        this.bossId = bossId;
+        this.name = name;
+        this.damage = damage;
+        this.info = info;
+    }
 
 }

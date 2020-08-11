@@ -4,11 +4,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import model.profession.Skill;
+import model.profession.skill.AbstractSkillProperty;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import entity.db.UserEquipmentEntity;
 import scene.GameData;
+import server.GameServer;
+import server.cmdhandler.CmdHandlerFactory;
 import server.cmdhandler.ICmdHandler;
 import server.model.*;
 import model.props.Equipment;
@@ -31,6 +34,8 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
     @Autowired
     private UserService userService;
 
+
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserSkillAttkCmd cmd) {
 
@@ -43,7 +48,17 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
         if (user == null) {
             return;
         }
-        // 用户当前场景
+
+        Map<Integer, Skill> skillMap = GameData.getInstance().getProfessionMap().get(user.getProfessionId()).getSkillMap();
+        Skill skill = skillMap.get(cmd.getSkillId());
+
+        ISkillHandler<? extends AbstractSkillProperty> skillHandlerByClazz = CmdHandlerFactory.getSkillHandlerByClazz(skill.getSkillProperty().getClass());
+        skillHandlerByClazz.skillHandle(ctx, cast(skill.getSkillProperty()));
+
+
+
+
+        /*// 用户当前场景
         Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
 
         // 当前场景所有怪
@@ -81,7 +96,7 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
                 // 随机选中一个怪
                 Monster monster = monsterAliveList.remove((int) (Math.random() * monsterAliveList.size()));
                 // 减血  (0~99) + 500
-                int subHp = user.calMonsterSubHp(skill);
+                int subHp = user.calMonsterSubHp();
                 //持久化装备耐久度
                 UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
 //                for (int i = 0; i < userEquipmentArr.length; i++) {
@@ -175,7 +190,16 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
         // 响应客户端，是否成功
         GameMsg.UserSkillAttkResult userSkillAttkResult = resultBuilder.build();
 
-        ctx.channel().writeAndFlush(userSkillAttkResult);
+        ctx.channel().writeAndFlush(userSkillAttkResult);*/
+    }
+
+
+    public <SkillCmd extends AbstractSkillProperty> SkillCmd cast(AbstractSkillProperty skillProperty) {
+        if (skillProperty == null) {
+            return null;
+        }
+
+        return (SkillCmd) skillProperty;
     }
 
 

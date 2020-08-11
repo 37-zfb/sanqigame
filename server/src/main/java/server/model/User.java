@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import entity.db.UserEquipmentEntity;
 import model.UserResumeState;
+import model.duplicate.Duplicate;
 import model.profession.Profession;
 import model.profession.Skill;
 import model.props.AbstractPropsProperty;
@@ -90,9 +91,19 @@ public class User {
     private final UserEquipmentEntity[] userEquipmentArr = new UserEquipmentEntity[9];
 
     /**
+     * 当前金币
+     */
+    private int money;
+
+    /**
      * 背包
      */
     private final Map<Integer, Props> backpack = new HashMap<>();
+
+    /**
+     *  当前所在副本
+     */
+    private Duplicate currDuplicate;
 
     /**
      * 管道上下文
@@ -150,10 +161,9 @@ public class User {
      * 计算怪减血量
      * 当穿装备时，会加上装备的伤害加成
      *
-     * @param skill 技能
      * @return 血量
      */
-    public Integer calMonsterSubHp(Skill skill) {
+    public Integer calMonsterSubHp() {
 
         int equDamage = 0;
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
@@ -184,8 +194,9 @@ public class User {
 
             }
         }
+        log.info("玩家: {}, 装备伤害加成: {}", this.getUserName(),10 * equDamage);
 
-        int subHp = (int) ((Math.random() * this.getBaseDamage()) + 500 + 2 * equDamage);
+        int subHp = (int) ((Math.random() * this.getBaseDamage()) + 500 + 10 * equDamage);
 
         log.info("玩家: {},伤害: {}", this.getUserName(), subHp);
         return subHp;

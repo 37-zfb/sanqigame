@@ -59,6 +59,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         userStateEntity.setBaseDamage(user.getBaseDamage());
         userStateEntity.setBaseDefense(user.getBaseDefense());
         userStateEntity.setUserId(userId);
+        userStateEntity.setMoney(user.getMoney());
 
         // 保存用户所在地
         userService.modifyUserState(userStateEntity);

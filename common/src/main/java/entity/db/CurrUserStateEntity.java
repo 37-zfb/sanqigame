@@ -26,4 +26,6 @@ public class CurrUserStateEntity {
 
     private Integer baseDefense;
 
+    private Integer money;
+
 }

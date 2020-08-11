@@ -6,6 +6,7 @@ import entity.db.UserEquipmentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import model.UserResumeState;
+import model.duplicate.Duplicate;
 import model.profession.Skill;
 import model.props.Equipment;
 import model.props.Potion;
@@ -56,6 +57,15 @@ public class Role {
     private Integer currSceneId;
 
     /**
+     *  当前所在副本
+     */
+    private Duplicate currDuplicate;
+    /**
+     *  是否刚进副本
+     */
+    private boolean isEnter;
+
+    /**
      * mp定时器
      */
     private final Object mpMonitor = new Object();
@@ -85,6 +95,11 @@ public class Role {
      * 背包
      */
     private final Map<Integer, Props> backpackClient = new HashMap<>();
+
+    /**
+     *  金币
+     */
+    private int money;
 
     /**
      * 装备栏

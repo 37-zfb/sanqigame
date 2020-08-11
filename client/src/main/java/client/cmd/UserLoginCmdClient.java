@@ -49,6 +49,7 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
         role.setCurrMp(userLoginResult.getMp());
         role.setCurrSceneId(userLoginResult.getCurrSceneId());
         role.setProfessionId(userLoginResult.getProfessionId());
+        role.setMoney(userLoginResult.getMoney());
 
         role.getUserResumeState().setEndTimeMp(userLoginResult.getResumeMpEndTime());
         // 如果mp不满，则自动恢复

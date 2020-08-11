@@ -58,7 +58,7 @@ public class AttkCmdHandler implements ICmdHandler<GameMsg.AttkCmd> {
                 // 普通攻击
                 // 随机选中一个怪
                 Monster monster = monsterAliveList.remove((int) (Math.random() * monsterAliveList.size()));
-                int subHp = user.calMonsterSubHp(null);
+                int subHp = user.calMonsterSubHp();
                 //持久化装备耐久度
                 UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
                 Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();

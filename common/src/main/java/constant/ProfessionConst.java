@@ -21,4 +21,9 @@ public interface ProfessionConst {
      */
     int AUTO_RESUME_MP_VALUE = 1;
 
+    /**
+     *  注册用户时的金币数
+     */
+    int INIT_MONEY = 0;
+
 }

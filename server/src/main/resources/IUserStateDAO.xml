@@ -9,12 +9,13 @@
         <result property="currSceneId" column="curr_scene_id"/>
         <result property="baseDamage" column="base_damage"/>
         <result property="baseDefense" column="base_defense"/>
+        <result property="money" column="money"/>
     </resultMap>
 
 
     <insert id="insertUserSate" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.CurrUserStateEntity">
-        INSERT INTO `curr_user_state` ( user_id, curr_hp,curr_mp,curr_scene_id,base_damage, base_defense)
-        VALUES ( #{userId}, #{currHp},#{currMp},#{currSceneId},#{baseDamage},#{baseDefense} );
+        INSERT INTO `curr_user_state` ( user_id, curr_hp,curr_mp,curr_scene_id,base_damage, base_defense,money)
+        VALUES ( #{userId}, #{currHp},#{currMp},#{currSceneId},#{baseDamage},#{baseDefense},#{money} );
     </insert>
 
     <select id="selectUserStateByUserId" parameterType="int" resultMap="userState">
@@ -22,6 +23,10 @@
     </select>
 
     <update id="updateUserState" parameterType="entity.db.CurrUserStateEntity">
-        update curr_user_state SET curr_hp = #{currHp},curr_mp=#{currMp},curr_scene_id=#{currSceneId},base_damage=#{baseDamage},base_defense=#{baseDefense} WHERE user_id=#{userId}
+        update curr_user_state SET curr_hp = #{currHp},curr_mp=#{currMp},curr_scene_id=#{currSceneId},base_damage=#{baseDamage},base_defense=#{baseDefense},money=#{money} WHERE user_id=#{userId}
+    </update>
+
+    <update id="updateUserMoney" parameterType="int">
+        update curr_user_state SET money=#{money} WHERE user_id = #{userId};
     </update>
 </mapper>

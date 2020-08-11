@@ -65,8 +65,20 @@ enum MsgCode {
 
   MONSTER_DROP_HP_AUTO_DIE = 34;
 
-  DUPLICATE_CMD = 35;
-  DUPLICATE_RESULT = 36;
+  ENTER_DUPLICATE_CMD = 35;
+  ENTER_DUPLICATE_RESULT = 36;
+
+  ATTK_BOSS_CMD = 37;
+  ATTK_BOSS_RESULT = 38;
+
+  NEXT_BOSS_RESULT = 39;
+
+
+  DUPLICATE_FINISH_RESULT = 40;
+
+  USER_QUIT_DUPLICATE_RESULT = 41;
+
+
 };
 
 // 还有谁在场
@@ -239,6 +251,7 @@ message UserLoginResult {
 
   uint32 professionId = 12;
 
+  uint32 money = 13;
 }
 
 // 用户注册
@@ -455,10 +468,35 @@ message RepairEquipmentResult {
 message MonsterDropHpAutoDie {
   uint32 monsterId = 1;
 }
-// 当前副本
-message DuplicateCmd{
+// 进入副本命令
+message EnterDuplicateCmd{
+  uint32 duplicateId = 1;
 }
-// 返回副本id
-message DuplicateResult{
-  repeated string duplicateId = 1;
+// 进入副本结果
+message   EnterDuplicateResult{
+  uint32 duplicateId = 1;
+  uint64 startTime = 2;
+  uint32 bossMonsterId = 3;
+}
+// 对boss的普通攻击
+message AttkBossCmd{
+}
+// 对boss的普通攻击结果
+message AttkBossResult{
+  uint32 subHp = 1;
+}
+// 下个一个boss
+message NextBossResult{
+  uint32 bossMonsterId = 1;
+  uint64  startTime = 2;
+}
+//副本结束
+message DuplicateFinishResult{
+  // 获得的道具id集合
+  repeated uint32 propsId = 1;
+  // 金币
+  uint32 money = 2;
+}
+// 用户退出副本
+message UserQuitDuplicateResult{
 }

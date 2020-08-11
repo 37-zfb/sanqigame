@@ -14,8 +14,8 @@ import entity.db.CurrUserStateEntity;
 import entity.db.UserEntity;
 import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
-import server.exception.CustomizeErrorCode;
-import server.exception.CustomizeException;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import model.profession.Profession;
 import scene.GameData;
 
@@ -100,6 +100,7 @@ public class UserService {
         currUserState.setCurrSceneId(ProfessionConst.INIT_CURR_SCENE_ID);
         currUserState.setBaseDamage(profession.getBaseDamage());
         currUserState.setBaseDefense(profession.getBaseDefense());
+        currUserState.setMoney(ProfessionConst.INIT_MONEY);
 
         // 添加用户状态
         userState.insertUserSate(currUserState);
@@ -124,6 +125,7 @@ public class UserService {
     /**
      * 添加装备
      * 返回userEquId
+     *
      * @param equipmentEntity 装备对象
      */
     public Integer addEquipment(UserEquipmentEntity equipmentEntity) {
@@ -183,7 +185,8 @@ public class UserService {
     }
 
     /**
-     *  顽疾使用药剂
+     * 顽疾使用药剂
+     *
      * @param entity
      * @return
      */
@@ -197,30 +200,39 @@ public class UserService {
 
 
     /**
-     *  改变穿戴的装备
+     * 改变穿戴的装备
+     *
      * @param userEquipmentId
      */
-    public void modifyWearEquipment(Integer userEquipmentId,Integer state,Integer location) {
-        if (userEquipmentId==null || state == null || location == null){
-            log.info("userEquipmentId={}, state={}, location={}",userEquipmentId,state,location);
+    public void modifyWearEquipment(Integer userEquipmentId, Integer state, Integer location) {
+        if (userEquipmentId == null || state == null || location == null) {
+            log.info("userEquipmentId={}, state={}, location={}", userEquipmentId, state, location);
             return;
         }
-        userEquipmentDAO.updateEquipmentState(userEquipmentId,state,location);
+        userEquipmentDAO.updateEquipmentState(userEquipmentId, state, location);
     }
 
     public List<UserEquipmentEntity> listEquipmentWeared(Integer userId, Integer state) {
-        if (userId == null || state==null){
-            log.info("userId={},state={}",userId,state);
+        if (userId == null || state == null) {
+            log.info("userId={},state={}", userId, state);
             return null;
         }
-        return userEquipmentDAO.selectEquipmentByUserIdAndState(userId,state);
+        return userEquipmentDAO.selectEquipmentByUserIdAndState(userId, state);
     }
 
     public void modifyEquipmentDurability(Integer id, Integer durability) {
-        if (id == null || durability == null){
-            log.info("id = {},durability = {}",id,durability);
+        if (id == null || durability == null) {
+            log.info("id = {},durability = {}", id, durability);
             return;
         }
-        userEquipmentDAO.updateEquipmentDurability(id,durability);
+        userEquipmentDAO.updateEquipmentDurability(id, durability);
+    }
+
+    public void modifyMoney(Integer userId,Integer money) {
+        if (userId == null || money == null) {
+            return;
+        }
+        userState.updateUserMoney(userId,money);
+
     }
 }

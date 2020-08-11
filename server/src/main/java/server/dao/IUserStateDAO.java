@@ -1,5 +1,6 @@
 package server.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import entity.db.CurrUserStateEntity;
 
@@ -28,4 +29,12 @@ public interface IUserStateDAO {
      * @param currUserState 用户状态
      */
     void updateUserState(CurrUserStateEntity currUserState);
+
+
+    /**
+     *  通过 用户id更新当前 金币
+     * @param userId
+     * @param money
+     */
+    void updateUserMoney(@Param("userId") Integer userId,@Param("money") Integer money);
 }

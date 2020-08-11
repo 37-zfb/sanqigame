@@ -1,17 +1,16 @@
 package model.duplicate;
 
-import lombok.AllArgsConstructor;
+import constant.DuplicateConst;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import type.DuplicateType;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 张丰博
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Duplicate {
 
@@ -25,10 +24,54 @@ public class Duplicate {
      */
     private String name;
 
+    /**
+     * 进入副本后开始攻击时间
+     */
+    private long startTime;
+
+
+    /**
+     * 当前 boss
+     */
+    private BossMonster currBossMonster;
+
+    /**
+     * 通关副本后，获得的奖励道具id集合
+     */
+    private List<Integer> propsIdList;
 
     /**
      * boss集合；  bossid <==> boss对象
      */
     private final Map<Integer, BossMonster> bossMonsterMap = new HashMap<>();
+
+    public Duplicate(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    /**
+     * 选出当前boss
+     */
+    public void setMinBoss() {
+        Optional<Map.Entry<Integer, BossMonster>> min =
+                bossMonsterMap.entrySet().stream().min(Comparator.comparingInt(b -> b.getValue().getHp()));
+        this.setCurrBossMonster(min.get().getValue());
+        bossMonsterMap.remove(min.get().getKey());
+    }
+
+    public List<Integer> getPropsIdList() {
+        List<Integer> list = new ArrayList<>();
+        String[] propsId = null;
+        for (DuplicateType duplicateType : DuplicateType.values()) {
+            propsId = duplicateType.getPropsId().split(",");
+        }
+        for (int i = 0; i < DuplicateConst.PROPS_NUMBER; i++) {
+            list.add((int)(Math.random()*(propsId.length)));
+        }
+
+        return list;
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package server.exception;
+package exception;
 
 /**
  * @author 张丰博
