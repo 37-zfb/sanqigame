@@ -13,6 +13,7 @@ import java.util.Map;
 
 /**
  * @author 张丰博
+ *  副本结束，
  */
 public class DuplicateFinishResultClient implements ICmd<GameMsg.DuplicateFinishResult> {
     @Override
@@ -29,6 +30,8 @@ public class DuplicateFinishResultClient implements ICmd<GameMsg.DuplicateFinish
             System.out.println(propsMap.get(id).getName());
         }
 
+        GameMsg.UserQuitDuplicateCmd quitDuplicateCmd = GameMsg.UserQuitDuplicateCmd.newBuilder().build();
+        ctx.writeAndFlush(quitDuplicateCmd);
 
     }
 }

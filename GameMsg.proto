@@ -76,8 +76,13 @@ enum MsgCode {
 
   DUPLICATE_FINISH_RESULT = 40;
 
-  USER_QUIT_DUPLICATE_RESULT = 41;
+  USER_QUIT_DUPLICATE_CMD = 41;
+  USER_QUIT_DUPLICATE_RESULT = 42;
 
+
+  BOSS_ATTK_USER_RESULT = 43;
+
+  BOSS_SKILL_ATTK_USER_RESULT = 44;
 
 };
 
@@ -497,6 +502,20 @@ message DuplicateFinishResult{
   // 金币
   uint32 money = 2;
 }
-// 用户退出副本
+// 用户退出副本命令
+message UserQuitDuplicateCmd{
+}
+// 用户退出副本结果
 message UserQuitDuplicateResult{
+  string quitDuplicateType = 1;
+}
+// boss攻击用户
+message BossAttkUserResult{
+  // 用户减血量
+  uint32 subUserHp = 1;
+}
+// boss使用技能攻击用户
+message BossSkillAttkUserResult{
+  // 用户减血量
+  uint32 subUserHp = 1;
 }

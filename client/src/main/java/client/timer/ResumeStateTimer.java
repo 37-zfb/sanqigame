@@ -71,7 +71,7 @@ public class ResumeStateTimer {
                 if (potion.getRecordResumeNumber() < 4){
                     if (role.getCurrMp() < ProfessionConst.MP) {
                         // 增加mp 此时需要加锁；
-                        log.info("当前mp: {} ,+1", role.getCurrMp());
+                        log.info("当前mp: {} ,+100", role.getCurrMp());
                         if ((role.getCurrMp() + PotionConst.SLOW_MP_POTION_VALUE) >= ProfessionConst.MP) {
                             role.setCurrMp(ProfessionConst.MP);
                         } else {

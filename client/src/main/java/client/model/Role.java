@@ -60,10 +60,6 @@ public class Role {
      *  当前所在副本
      */
     private Duplicate currDuplicate;
-    /**
-     *  是否刚进副本
-     */
-    private boolean isEnter;
 
     /**
      * mp定时器
@@ -86,10 +82,6 @@ public class Role {
      */
     private final Map<Integer, Skill> skillMap = new HashMap<>();
 
-    /**
-     * 穿戴的装备集合
-     */
-    private List<Equipment> equipmentList = new ArrayList<>();
 
     /**
      * 背包

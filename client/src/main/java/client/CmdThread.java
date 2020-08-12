@@ -3,6 +3,7 @@ package client;
 import client.cmd.UserCmd;
 import client.model.Role;
 import io.netty.channel.ChannelHandlerContext;
+import lombok.extern.slf4j.Slf4j;
 import model.scene.Npc;
 
 import java.util.Collection;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author 张丰博
  */
+@Slf4j
 public class CmdThread {
 
     private static final CmdThread CMD_THREAD = new CmdThread();
@@ -52,8 +54,8 @@ public class CmdThread {
 
         ex.submit(() -> {
             try {
-                Thread.sleep(200);
-
+                Thread.sleep(100);
+                log.info("当前线程 {}", Thread.currentThread().getName());
                 Object cmd = UserCmd.operation(role, npcList,ctx);
                 UserCmd.sendCmd(ctx,  cmd);
 
@@ -64,4 +66,6 @@ public class CmdThread {
         });
 
     }
+
+
 }

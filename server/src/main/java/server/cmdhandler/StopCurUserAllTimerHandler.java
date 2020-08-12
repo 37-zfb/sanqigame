@@ -1,5 +1,6 @@
 package server.cmdhandler;
 
+import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import model.scene.Scene;
 import scene.GameData;
 import server.model.User;
 import server.model.UserManager;
+import server.timer.BossAttackTimer;
 import server.timer.MonsterAttakTimer;
 
 import java.util.List;
@@ -51,7 +53,6 @@ public class StopCurUserAllTimerHandler implements ICmdHandler<GameMsg.StopCurUs
                 MonsterAttakTimer.getInstance().removeTask(runnableScheduledFuture);
             }
         }
-
 
     }
 

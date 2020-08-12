@@ -1,5 +1,6 @@
 package client;
 
+import client.cmd.UserCmd;
 import client.model.Role;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import model.profession.Skill;
 import msg.GameMsg;
 import scene.GameData;
 
+import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
@@ -25,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 public class BossThread {
 
     private static final BossThread BOSS_THREAD = new BossThread();
+
+
 
     private BossThread() {
     }
@@ -60,6 +64,7 @@ public class BossThread {
 
         ex.submit(() -> {
             try {
+                log.info("当前线程 {}", Thread.currentThread().getName());
 
                 Duplicate currDuplicate = role.getCurrDuplicate();
 
@@ -73,12 +78,6 @@ public class BossThread {
                 BossMonster currBossMonster = role.getCurrDuplicate().getCurrBossMonster();
                 System.out.println("第 " + (monsterMap.size() - bossMonsterMap.size()) + " 个 Boss");
                 System.out.println("boss: " + currBossMonster.getBossName() + " hp: " + currBossMonster.getHp());
-                // 准备时间
-                if (role.isEnter()) {
-                    System.out.println(Math.ceil(currTime / 1000.0) + " 秒后,战斗开始;");
-                    Thread.sleep((long) (Math.ceil(currTime / 1000.0) * 1000));
-                }
-
 
                 sendCmd(ctx,role);
 
@@ -97,6 +96,7 @@ public class BossThread {
     }
 
 
+
     private void sendCmd(ChannelHandlerContext ctx,Role role) {
         // 判断 role 对象中是否有 Duplicate对象 来区分，去哪个线程
         while (true) {
@@ -111,7 +111,8 @@ public class BossThread {
             System.out.println("======>7:卸下装备;");
             System.out.println("======>8:修理装备;");
 
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner  = new Scanner(System.in);
+
             String command = scanner.nextLine();
 
             if ("1".equals(command)) {
@@ -134,17 +135,17 @@ public class BossThread {
                 break;
 
             } else if ("3".equals(command)) {
-
+                break;
             } else if ("4".equals(command)) {
-
+                break;
             } else if ("5".equals(command)) {
-
+                break;
             } else if ("6".equals(command)) {
-
+                break;
             } else if ("7".equals(command)) {
-
+                break;
             } else if ("8".equals(command)) {
-
+                break;
             } else {
                 log.error("指令错误,请重新输入;");
             }

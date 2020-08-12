@@ -188,9 +188,21 @@ public final class GameMsg {
      */
     DUPLICATE_FINISH_RESULT(40),
     /**
-     * <code>USER_QUIT_DUPLICATE_RESULT = 41;</code>
+     * <code>USER_QUIT_DUPLICATE_CMD = 41;</code>
      */
-    USER_QUIT_DUPLICATE_RESULT(41),
+    USER_QUIT_DUPLICATE_CMD(41),
+    /**
+     * <code>USER_QUIT_DUPLICATE_RESULT = 42;</code>
+     */
+    USER_QUIT_DUPLICATE_RESULT(42),
+    /**
+     * <code>BOSS_ATTK_USER_RESULT = 43;</code>
+     */
+    BOSS_ATTK_USER_RESULT(43),
+    /**
+     * <code>BOSS_SKILL_ATTK_USER_RESULT = 44;</code>
+     */
+    BOSS_SKILL_ATTK_USER_RESULT(44),
     UNRECOGNIZED(-1),
     ;
 
@@ -359,9 +371,21 @@ public final class GameMsg {
      */
     public static final int DUPLICATE_FINISH_RESULT_VALUE = 40;
     /**
-     * <code>USER_QUIT_DUPLICATE_RESULT = 41;</code>
+     * <code>USER_QUIT_DUPLICATE_CMD = 41;</code>
      */
-    public static final int USER_QUIT_DUPLICATE_RESULT_VALUE = 41;
+    public static final int USER_QUIT_DUPLICATE_CMD_VALUE = 41;
+    /**
+     * <code>USER_QUIT_DUPLICATE_RESULT = 42;</code>
+     */
+    public static final int USER_QUIT_DUPLICATE_RESULT_VALUE = 42;
+    /**
+     * <code>BOSS_ATTK_USER_RESULT = 43;</code>
+     */
+    public static final int BOSS_ATTK_USER_RESULT_VALUE = 43;
+    /**
+     * <code>BOSS_SKILL_ATTK_USER_RESULT = 44;</code>
+     */
+    public static final int BOSS_SKILL_ATTK_USER_RESULT_VALUE = 44;
 
 
     public final int getNumber() {
@@ -429,7 +453,10 @@ public final class GameMsg {
         case 38: return ATTK_BOSS_RESULT;
         case 39: return NEXT_BOSS_RESULT;
         case 40: return DUPLICATE_FINISH_RESULT;
-        case 41: return USER_QUIT_DUPLICATE_RESULT;
+        case 41: return USER_QUIT_DUPLICATE_CMD;
+        case 42: return USER_QUIT_DUPLICATE_RESULT;
+        case 43: return BOSS_ATTK_USER_RESULT;
+        case 44: return BOSS_SKILL_ATTK_USER_RESULT;
         default: return null;
       }
     }
@@ -36504,34 +36531,34 @@ public final class GameMsg {
 
   }
 
-  public interface UserQuitDuplicateResultOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:msg.UserQuitDuplicateResult)
+  public interface UserQuitDuplicateCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserQuitDuplicateCmd)
       com.google.protobuf.MessageOrBuilder {
   }
   /**
    * <pre>
-   * 用户退出副本
+   * 用户退出副本命令
    * </pre>
    *
-   * Protobuf type {@code msg.UserQuitDuplicateResult}
+   * Protobuf type {@code msg.UserQuitDuplicateCmd}
    */
-  public  static final class UserQuitDuplicateResult extends
+  public  static final class UserQuitDuplicateCmd extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:msg.UserQuitDuplicateResult)
-      UserQuitDuplicateResultOrBuilder {
+      // @@protoc_insertion_point(message_implements:msg.UserQuitDuplicateCmd)
+      UserQuitDuplicateCmdOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use UserQuitDuplicateResult.newBuilder() to construct.
-    private UserQuitDuplicateResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use UserQuitDuplicateCmd.newBuilder() to construct.
+    private UserQuitDuplicateCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private UserQuitDuplicateResult() {
+    private UserQuitDuplicateCmd() {
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new UserQuitDuplicateResult();
+      return new UserQuitDuplicateCmd();
     }
 
     @java.lang.Override
@@ -36539,7 +36566,7 @@ public final class GameMsg {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private UserQuitDuplicateResult(
+    private UserQuitDuplicateCmd(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -36578,15 +36605,15 @@ public final class GameMsg {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return msg.GameMsg.internal_static_msg_UserQuitDuplicateResult_descriptor;
+      return msg.GameMsg.internal_static_msg_UserQuitDuplicateCmd_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return msg.GameMsg.internal_static_msg_UserQuitDuplicateResult_fieldAccessorTable
+      return msg.GameMsg.internal_static_msg_UserQuitDuplicateCmd_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              msg.GameMsg.UserQuitDuplicateResult.class, msg.GameMsg.UserQuitDuplicateResult.Builder.class);
+              msg.GameMsg.UserQuitDuplicateCmd.class, msg.GameMsg.UserQuitDuplicateCmd.Builder.class);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -36622,10 +36649,10 @@ public final class GameMsg {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof msg.GameMsg.UserQuitDuplicateResult)) {
+      if (!(obj instanceof msg.GameMsg.UserQuitDuplicateCmd)) {
         return super.equals(obj);
       }
-      msg.GameMsg.UserQuitDuplicateResult other = (msg.GameMsg.UserQuitDuplicateResult) obj;
+      msg.GameMsg.UserQuitDuplicateCmd other = (msg.GameMsg.UserQuitDuplicateCmd) obj;
 
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -36638,6 +36665,497 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitDuplicateCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserQuitDuplicateCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 用户退出副本命令
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserQuitDuplicateCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserQuitDuplicateCmd)
+        msg.GameMsg.UserQuitDuplicateCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserQuitDuplicateCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserQuitDuplicateCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserQuitDuplicateCmd.class, msg.GameMsg.UserQuitDuplicateCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserQuitDuplicateCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserQuitDuplicateCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitDuplicateCmd getDefaultInstanceForType() {
+        return msg.GameMsg.UserQuitDuplicateCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitDuplicateCmd build() {
+        msg.GameMsg.UserQuitDuplicateCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitDuplicateCmd buildPartial() {
+        msg.GameMsg.UserQuitDuplicateCmd result = new msg.GameMsg.UserQuitDuplicateCmd(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserQuitDuplicateCmd) {
+          return mergeFrom((msg.GameMsg.UserQuitDuplicateCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserQuitDuplicateCmd other) {
+        if (other == msg.GameMsg.UserQuitDuplicateCmd.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserQuitDuplicateCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserQuitDuplicateCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserQuitDuplicateCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserQuitDuplicateCmd)
+    private static final msg.GameMsg.UserQuitDuplicateCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserQuitDuplicateCmd();
+    }
+
+    public static msg.GameMsg.UserQuitDuplicateCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserQuitDuplicateCmd>
+        PARSER = new com.google.protobuf.AbstractParser<UserQuitDuplicateCmd>() {
+      @java.lang.Override
+      public UserQuitDuplicateCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserQuitDuplicateCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserQuitDuplicateCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserQuitDuplicateCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserQuitDuplicateCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserQuitDuplicateResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserQuitDuplicateResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string quitDuplicateType = 1;</code>
+     * @return The quitDuplicateType.
+     */
+    java.lang.String getQuitDuplicateType();
+    /**
+     * <code>string quitDuplicateType = 1;</code>
+     * @return The bytes for quitDuplicateType.
+     */
+    com.google.protobuf.ByteString
+        getQuitDuplicateTypeBytes();
+  }
+  /**
+   * <pre>
+   * 用户退出副本结果
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserQuitDuplicateResult}
+   */
+  public  static final class UserQuitDuplicateResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserQuitDuplicateResult)
+      UserQuitDuplicateResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserQuitDuplicateResult.newBuilder() to construct.
+    private UserQuitDuplicateResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserQuitDuplicateResult() {
+      quitDuplicateType_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserQuitDuplicateResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserQuitDuplicateResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              quitDuplicateType_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserQuitDuplicateResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserQuitDuplicateResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserQuitDuplicateResult.class, msg.GameMsg.UserQuitDuplicateResult.Builder.class);
+    }
+
+    public static final int QUITDUPLICATETYPE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object quitDuplicateType_;
+    /**
+     * <code>string quitDuplicateType = 1;</code>
+     * @return The quitDuplicateType.
+     */
+    public java.lang.String getQuitDuplicateType() {
+      java.lang.Object ref = quitDuplicateType_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        quitDuplicateType_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string quitDuplicateType = 1;</code>
+     * @return The bytes for quitDuplicateType.
+     */
+    public com.google.protobuf.ByteString
+        getQuitDuplicateTypeBytes() {
+      java.lang.Object ref = quitDuplicateType_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        quitDuplicateType_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getQuitDuplicateTypeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, quitDuplicateType_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getQuitDuplicateTypeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, quitDuplicateType_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserQuitDuplicateResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserQuitDuplicateResult other = (msg.GameMsg.UserQuitDuplicateResult) obj;
+
+      if (!getQuitDuplicateType()
+          .equals(other.getQuitDuplicateType())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + QUITDUPLICATETYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getQuitDuplicateType().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -36735,7 +37253,7 @@ public final class GameMsg {
     }
     /**
      * <pre>
-     * 用户退出副本
+     * 用户退出副本结果
      * </pre>
      *
      * Protobuf type {@code msg.UserQuitDuplicateResult}
@@ -36775,6 +37293,8 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        quitDuplicateType_ = "";
+
         return this;
       }
 
@@ -36801,6 +37321,7 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.UserQuitDuplicateResult buildPartial() {
         msg.GameMsg.UserQuitDuplicateResult result = new msg.GameMsg.UserQuitDuplicateResult(this);
+        result.quitDuplicateType_ = quitDuplicateType_;
         onBuilt();
         return result;
       }
@@ -36849,6 +37370,10 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.UserQuitDuplicateResult other) {
         if (other == msg.GameMsg.UserQuitDuplicateResult.getDefaultInstance()) return this;
+        if (!other.getQuitDuplicateType().isEmpty()) {
+          quitDuplicateType_ = other.quitDuplicateType_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -36875,6 +37400,82 @@ public final class GameMsg {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private java.lang.Object quitDuplicateType_ = "";
+      /**
+       * <code>string quitDuplicateType = 1;</code>
+       * @return The quitDuplicateType.
+       */
+      public java.lang.String getQuitDuplicateType() {
+        java.lang.Object ref = quitDuplicateType_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          quitDuplicateType_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string quitDuplicateType = 1;</code>
+       * @return The bytes for quitDuplicateType.
+       */
+      public com.google.protobuf.ByteString
+          getQuitDuplicateTypeBytes() {
+        java.lang.Object ref = quitDuplicateType_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          quitDuplicateType_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string quitDuplicateType = 1;</code>
+       * @param value The quitDuplicateType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setQuitDuplicateType(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        quitDuplicateType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string quitDuplicateType = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearQuitDuplicateType() {
+        
+        quitDuplicateType_ = getDefaultInstance().getQuitDuplicateType();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string quitDuplicateType = 1;</code>
+       * @param value The bytes for quitDuplicateType to set.
+       * @return This builder for chaining.
+       */
+      public Builder setQuitDuplicateTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        quitDuplicateType_ = value;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -36925,6 +37526,1034 @@ public final class GameMsg {
 
     @java.lang.Override
     public msg.GameMsg.UserQuitDuplicateResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface BossAttkUserResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.BossAttkUserResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * 用户减血量
+     * </pre>
+     *
+     * <code>uint32 subUserHp = 1;</code>
+     * @return The subUserHp.
+     */
+    int getSubUserHp();
+  }
+  /**
+   * <pre>
+   * boss攻击用户
+   * </pre>
+   *
+   * Protobuf type {@code msg.BossAttkUserResult}
+   */
+  public  static final class BossAttkUserResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.BossAttkUserResult)
+      BossAttkUserResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BossAttkUserResult.newBuilder() to construct.
+    private BossAttkUserResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BossAttkUserResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BossAttkUserResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private BossAttkUserResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              subUserHp_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_BossAttkUserResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_BossAttkUserResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.BossAttkUserResult.class, msg.GameMsg.BossAttkUserResult.Builder.class);
+    }
+
+    public static final int SUBUSERHP_FIELD_NUMBER = 1;
+    private int subUserHp_;
+    /**
+     * <pre>
+     * 用户减血量
+     * </pre>
+     *
+     * <code>uint32 subUserHp = 1;</code>
+     * @return The subUserHp.
+     */
+    public int getSubUserHp() {
+      return subUserHp_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (subUserHp_ != 0) {
+        output.writeUInt32(1, subUserHp_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (subUserHp_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, subUserHp_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.BossAttkUserResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.BossAttkUserResult other = (msg.GameMsg.BossAttkUserResult) obj;
+
+      if (getSubUserHp()
+          != other.getSubUserHp()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUBUSERHP_FIELD_NUMBER;
+      hash = (53 * hash) + getSubUserHp();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossAttkUserResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.BossAttkUserResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * boss攻击用户
+     * </pre>
+     *
+     * Protobuf type {@code msg.BossAttkUserResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.BossAttkUserResult)
+        msg.GameMsg.BossAttkUserResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_BossAttkUserResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_BossAttkUserResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.BossAttkUserResult.class, msg.GameMsg.BossAttkUserResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.BossAttkUserResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        subUserHp_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_BossAttkUserResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossAttkUserResult getDefaultInstanceForType() {
+        return msg.GameMsg.BossAttkUserResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossAttkUserResult build() {
+        msg.GameMsg.BossAttkUserResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossAttkUserResult buildPartial() {
+        msg.GameMsg.BossAttkUserResult result = new msg.GameMsg.BossAttkUserResult(this);
+        result.subUserHp_ = subUserHp_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.BossAttkUserResult) {
+          return mergeFrom((msg.GameMsg.BossAttkUserResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.BossAttkUserResult other) {
+        if (other == msg.GameMsg.BossAttkUserResult.getDefaultInstance()) return this;
+        if (other.getSubUserHp() != 0) {
+          setSubUserHp(other.getSubUserHp());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.BossAttkUserResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.BossAttkUserResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int subUserHp_ ;
+      /**
+       * <pre>
+       * 用户减血量
+       * </pre>
+       *
+       * <code>uint32 subUserHp = 1;</code>
+       * @return The subUserHp.
+       */
+      public int getSubUserHp() {
+        return subUserHp_;
+      }
+      /**
+       * <pre>
+       * 用户减血量
+       * </pre>
+       *
+       * <code>uint32 subUserHp = 1;</code>
+       * @param value The subUserHp to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSubUserHp(int value) {
+        
+        subUserHp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 用户减血量
+       * </pre>
+       *
+       * <code>uint32 subUserHp = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSubUserHp() {
+        
+        subUserHp_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.BossAttkUserResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.BossAttkUserResult)
+    private static final msg.GameMsg.BossAttkUserResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.BossAttkUserResult();
+    }
+
+    public static msg.GameMsg.BossAttkUserResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BossAttkUserResult>
+        PARSER = new com.google.protobuf.AbstractParser<BossAttkUserResult>() {
+      @java.lang.Override
+      public BossAttkUserResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new BossAttkUserResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<BossAttkUserResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BossAttkUserResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.BossAttkUserResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface BossSkillAttkUserResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.BossSkillAttkUserResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * 用户减血量
+     * </pre>
+     *
+     * <code>uint32 subUserHp = 1;</code>
+     * @return The subUserHp.
+     */
+    int getSubUserHp();
+  }
+  /**
+   * <pre>
+   * boss使用技能攻击用户
+   * </pre>
+   *
+   * Protobuf type {@code msg.BossSkillAttkUserResult}
+   */
+  public  static final class BossSkillAttkUserResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.BossSkillAttkUserResult)
+      BossSkillAttkUserResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BossSkillAttkUserResult.newBuilder() to construct.
+    private BossSkillAttkUserResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BossSkillAttkUserResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BossSkillAttkUserResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private BossSkillAttkUserResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              subUserHp_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_BossSkillAttkUserResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_BossSkillAttkUserResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.BossSkillAttkUserResult.class, msg.GameMsg.BossSkillAttkUserResult.Builder.class);
+    }
+
+    public static final int SUBUSERHP_FIELD_NUMBER = 1;
+    private int subUserHp_;
+    /**
+     * <pre>
+     * 用户减血量
+     * </pre>
+     *
+     * <code>uint32 subUserHp = 1;</code>
+     * @return The subUserHp.
+     */
+    public int getSubUserHp() {
+      return subUserHp_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (subUserHp_ != 0) {
+        output.writeUInt32(1, subUserHp_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (subUserHp_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, subUserHp_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.BossSkillAttkUserResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.BossSkillAttkUserResult other = (msg.GameMsg.BossSkillAttkUserResult) obj;
+
+      if (getSubUserHp()
+          != other.getSubUserHp()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUBUSERHP_FIELD_NUMBER;
+      hash = (53 * hash) + getSubUserHp();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossSkillAttkUserResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.BossSkillAttkUserResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * boss使用技能攻击用户
+     * </pre>
+     *
+     * Protobuf type {@code msg.BossSkillAttkUserResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.BossSkillAttkUserResult)
+        msg.GameMsg.BossSkillAttkUserResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_BossSkillAttkUserResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_BossSkillAttkUserResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.BossSkillAttkUserResult.class, msg.GameMsg.BossSkillAttkUserResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.BossSkillAttkUserResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        subUserHp_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_BossSkillAttkUserResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossSkillAttkUserResult getDefaultInstanceForType() {
+        return msg.GameMsg.BossSkillAttkUserResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossSkillAttkUserResult build() {
+        msg.GameMsg.BossSkillAttkUserResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossSkillAttkUserResult buildPartial() {
+        msg.GameMsg.BossSkillAttkUserResult result = new msg.GameMsg.BossSkillAttkUserResult(this);
+        result.subUserHp_ = subUserHp_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.BossSkillAttkUserResult) {
+          return mergeFrom((msg.GameMsg.BossSkillAttkUserResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.BossSkillAttkUserResult other) {
+        if (other == msg.GameMsg.BossSkillAttkUserResult.getDefaultInstance()) return this;
+        if (other.getSubUserHp() != 0) {
+          setSubUserHp(other.getSubUserHp());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.BossSkillAttkUserResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.BossSkillAttkUserResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int subUserHp_ ;
+      /**
+       * <pre>
+       * 用户减血量
+       * </pre>
+       *
+       * <code>uint32 subUserHp = 1;</code>
+       * @return The subUserHp.
+       */
+      public int getSubUserHp() {
+        return subUserHp_;
+      }
+      /**
+       * <pre>
+       * 用户减血量
+       * </pre>
+       *
+       * <code>uint32 subUserHp = 1;</code>
+       * @param value The subUserHp to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSubUserHp(int value) {
+        
+        subUserHp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 用户减血量
+       * </pre>
+       *
+       * <code>uint32 subUserHp = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSubUserHp() {
+        
+        subUserHp_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.BossSkillAttkUserResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.BossSkillAttkUserResult)
+    private static final msg.GameMsg.BossSkillAttkUserResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.BossSkillAttkUserResult();
+    }
+
+    public static msg.GameMsg.BossSkillAttkUserResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BossSkillAttkUserResult>
+        PARSER = new com.google.protobuf.AbstractParser<BossSkillAttkUserResult>() {
+      @java.lang.Override
+      public BossSkillAttkUserResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new BossSkillAttkUserResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<BossSkillAttkUserResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BossSkillAttkUserResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.BossSkillAttkUserResult getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -37181,10 +38810,25 @@ public final class GameMsg {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_DuplicateFinishResult_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserQuitDuplicateCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserQuitDuplicateCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_UserQuitDuplicateResult_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_UserQuitDuplicateResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_BossAttkUserResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_BossAttkUserResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_BossSkillAttkUserResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_BossSkillAttkUserResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -37277,35 +38921,41 @@ public final class GameMsg {
       "\n\016AttkBossResult\022\r\n\005subHp\030\001 \001(\r\":\n\016NextB" +
       "ossResult\022\025\n\rbossMonsterId\030\001 \001(\r\022\021\n\tstar" +
       "tTime\030\002 \001(\004\"7\n\025DuplicateFinishResult\022\017\n\007" +
-      "propsId\030\001 \003(\r\022\r\n\005money\030\002 \001(\r\"\031\n\027UserQuit" +
-      "DuplicateResult*\261\010\n\007MsgCode\022\030\n\024WHO_ELSE_" +
-      "IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS_HERE_RESULT" +
-      "\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017" +
-      "\n\013ATTK_RESULT\020\004\022\033\n\027USER_SUBTRACT_HP_RESU" +
-      "LT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016USER_LOGIN_CMD\020\007" +
-      "\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n\021USER_REGISTER" +
-      "_CMD\020\t\022\030\n\024USER_REGISTER_RESULT\020\n\022\024\n\020ATTK" +
-      "_MONSTER_CMD\020\013\022\033\n\027STOP_CUR_USER_ALL_TIME" +
-      "R\020\014\022\031\n\025USER_SWITCH_SCENE_CMD\020\r\022\034\n\030USER_S" +
-      "WITCH_SCENE_RESULT\020\016\022\033\n\027MONSTER_START_AT" +
-      "TK_USER\020\017\022\026\n\022NOTICE_USER_ATTKED\020\020\022\027\n\023USE" +
-      "R_SKILL_ATTK_CMD\020\021\022\032\n\026USER_SKILL_ATTK_RE" +
-      "SULT\020\022\022\026\n\022SKILL_STATE_SWITCH\020\023\022\025\n\021ROB_EQ" +
-      "UIPMENT_CMD\020\024\022\020\n\014BACKPACK_CMD\020\025\022\023\n\017BACKP" +
-      "ACK_RESULT\020\026\022\030\n\024ROB_EQUIPMENT_RESULT\020\027\022\023" +
-      "\n\017USER_POTION_CMD\020\030\022\026\n\022USER_POTION_RESUL" +
-      "T\020\031\022\034\n\030USER_RESUME_STATE_RESULT\020\032\022\033\n\027USE" +
-      "R_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032USER_WEAR_EQUI" +
-      "PMENT_RESULT\020\034\022\033\n\027USER_UNDO_EQUIPMENT_CM" +
-      "D\020\035\022\036\n\032USER_UNDO_EQUIPMENT_RESULT\020\036\022 \n\034D" +
-      "URABILITY_DEFICIENCY_RESULT\020\037\022\030\n\024REPAIR_" +
-      "EQUIPMENT_CMD\020 \022\033\n\027REPAIR_EQUIPMENT_RESU" +
-      "LT\020!\022\034\n\030MONSTER_DROP_HP_AUTO_DIE\020\"\022\027\n\023EN" +
-      "TER_DUPLICATE_CMD\020#\022\032\n\026ENTER_DUPLICATE_R" +
-      "ESULT\020$\022\021\n\rATTK_BOSS_CMD\020%\022\024\n\020ATTK_BOSS_" +
-      "RESULT\020&\022\024\n\020NEXT_BOSS_RESULT\020\'\022\033\n\027DUPLIC" +
-      "ATE_FINISH_RESULT\020(\022\036\n\032USER_QUIT_DUPLICA" +
-      "TE_RESULT\020)B\005\n\003msgb\006proto3"
+      "propsId\030\001 \003(\r\022\r\n\005money\030\002 \001(\r\"\026\n\024UserQuit" +
+      "DuplicateCmd\"4\n\027UserQuitDuplicateResult\022" +
+      "\031\n\021quitDuplicateType\030\001 \001(\t\"\'\n\022BossAttkUs" +
+      "erResult\022\021\n\tsubUserHp\030\001 \001(\r\",\n\027BossSkill" +
+      "AttkUserResult\022\021\n\tsubUserHp\030\001 \001(\r*\212\t\n\007Ms" +
+      "gCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_E" +
+      "LSE_IS_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RESULT" +
+      "\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027USE" +
+      "R_SUBTRACT_HP_RESULT\020\005\022\016\n\nDIE_RESULT\020\006\022\022" +
+      "\n\016USER_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RESULT\020" +
+      "\010\022\025\n\021USER_REGISTER_CMD\020\t\022\030\n\024USER_REGISTE" +
+      "R_RESULT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027STOP" +
+      "_CUR_USER_ALL_TIMER\020\014\022\031\n\025USER_SWITCH_SCE" +
+      "NE_CMD\020\r\022\034\n\030USER_SWITCH_SCENE_RESULT\020\016\022\033" +
+      "\n\027MONSTER_START_ATTK_USER\020\017\022\026\n\022NOTICE_US" +
+      "ER_ATTKED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021\022\032\n\026" +
+      "USER_SKILL_ATTK_RESULT\020\022\022\026\n\022SKILL_STATE_" +
+      "SWITCH\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014BACKP" +
+      "ACK_CMD\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024ROB_EQ" +
+      "UIPMENT_RESULT\020\027\022\023\n\017USER_POTION_CMD\020\030\022\026\n" +
+      "\022USER_POTION_RESULT\020\031\022\034\n\030USER_RESUME_STA" +
+      "TE_RESULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_CMD\020\033" +
+      "\022\036\n\032USER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027USER" +
+      "_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_EQUIP" +
+      "MENT_RESULT\020\036\022 \n\034DURABILITY_DEFICIENCY_R" +
+      "ESULT\020\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n\027REP" +
+      "AIR_EQUIPMENT_RESULT\020!\022\034\n\030MONSTER_DROP_H" +
+      "P_AUTO_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020#\022\032\n" +
+      "\026ENTER_DUPLICATE_RESULT\020$\022\021\n\rATTK_BOSS_C" +
+      "MD\020%\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_BOSS_" +
+      "RESULT\020\'\022\033\n\027DUPLICATE_FINISH_RESULT\020(\022\033\n" +
+      "\027USER_QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_QUIT_" +
+      "DUPLICATE_RESULT\020*\022\031\n\025BOSS_ATTK_USER_RES" +
+      "ULT\020+\022\037\n\033BOSS_SKILL_ATTK_USER_RESULT\020,B\005" +
+      "\n\003msgb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -37611,12 +39261,30 @@ public final class GameMsg {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DuplicateFinishResult_descriptor,
         new java.lang.String[] { "PropsId", "Money", });
-    internal_static_msg_UserQuitDuplicateResult_descriptor =
+    internal_static_msg_UserQuitDuplicateCmd_descriptor =
       getDescriptor().getMessageTypes().get(41);
+    internal_static_msg_UserQuitDuplicateCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserQuitDuplicateCmd_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_UserQuitDuplicateResult_descriptor =
+      getDescriptor().getMessageTypes().get(42);
     internal_static_msg_UserQuitDuplicateResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitDuplicateResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "QuitDuplicateType", });
+    internal_static_msg_BossAttkUserResult_descriptor =
+      getDescriptor().getMessageTypes().get(43);
+    internal_static_msg_BossAttkUserResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_BossAttkUserResult_descriptor,
+        new java.lang.String[] { "SubUserHp", });
+    internal_static_msg_BossSkillAttkUserResult_descriptor =
+      getDescriptor().getMessageTypes().get(44);
+    internal_static_msg_BossSkillAttkUserResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_BossSkillAttkUserResult_descriptor,
+        new java.lang.String[] { "SubUserHp", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

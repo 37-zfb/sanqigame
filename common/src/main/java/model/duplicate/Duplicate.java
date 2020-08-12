@@ -56,8 +56,13 @@ public class Duplicate {
     public void setMinBoss() {
         Optional<Map.Entry<Integer, BossMonster>> min =
                 bossMonsterMap.entrySet().stream().min(Comparator.comparingInt(b -> b.getValue().getHp()));
-        this.setCurrBossMonster(min.get().getValue());
-        bossMonsterMap.remove(min.get().getKey());
+
+        Map.Entry<Integer, BossMonster> bossMonsterEntry = min.get();
+        // 进入此房间时间，
+        bossMonsterEntry.getValue().setEnterRoomTime(System.currentTimeMillis());
+
+        this.setCurrBossMonster(bossMonsterEntry.getValue());
+        bossMonsterMap.remove(bossMonsterEntry.getKey());
     }
 
     public List<Integer> getPropsIdList() {

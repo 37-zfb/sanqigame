@@ -1,5 +1,6 @@
 package client.cmd.duplicate;
 
+import client.BossThread;
 import client.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
@@ -18,14 +19,13 @@ public class UserQuitDuplicateResultClient implements ICmd<GameMsg.UserQuitDupli
 
         MyUtil.checkIsNull(ctx, userQuitDuplicateResult);
 
+        // 用户退出类型
+        String quitDuplicateType = userQuitDuplicateResult.getQuitDuplicateType();
         Role role = Role.getInstance();
-        role.setEnter(false);
-
         role.setCurrDuplicate(null);
-
-
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
 
+        System.out.println(quitDuplicateType);
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }
 }

@@ -21,6 +21,7 @@ import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
 import server.service.UserService;
+import server.timer.BossAttackTimer;
 import type.DuplicateType;
 import type.PropsType;
 import util.MyUtil;
@@ -30,6 +31,7 @@ import java.util.Map;
 
 /**
  * @author 张丰博
+ * 普通攻击boss
  */
 @Component
 @Slf4j
@@ -44,15 +46,35 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
         Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
         User user = UserManager.getUserById(userId);
 
+        // 当前副本
         Duplicate currDuplicate = user.getCurrDuplicate();
 
+        // 计算攻击伤害
         Integer subHp = user.calMonsterSubHp();
 
+        // 当前boss
         BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
+
+        if ((currBossMonster.getEnterRoomTime() + DuplicateConst.BOSS_TIME) < System.currentTimeMillis()) {
+            // 此时副本已超时，返回公共地图
+            log.error("用户: {} , 副本: {} , boss: {} , 超时;", user.getUserName(), currDuplicate.getName(), currBossMonster.getBossName());
+            user.setCurrDuplicate(null);
+            // 用户退出
+            GameMsg.UserQuitDuplicateResult userQuitDuplicateResult =
+                    GameMsg.UserQuitDuplicateResult.newBuilder().setQuitDuplicateType(DuplicateConst.USER_ABNORMAL_QUIT_DUPLICATE).build();
+            ctx.writeAndFlush(userQuitDuplicateResult);
+            return;
+        }
+
         if (currBossMonster.getHp() < subHp) {
+
+            currBossMonster.setHp(0);
+            // boss已死，取消定时任务
+            BossAttackTimer.getInstance().cancelTask(currBossMonster.getScheduledFuture());
+
             // 剩余血量 小于 应减少的值 boss已死
-            //
             if (currDuplicate.getBossMonsterMap().size() > 0) {
+
                 // 此时副本中还存在boss
                 currDuplicate.setMinBoss();
                 GameMsg.NextBossResult nextBossResult = GameMsg.NextBossResult.newBuilder()
@@ -60,12 +82,12 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                         .setStartTime(System.currentTimeMillis() + DuplicateConst.INIT_TIME)
                         .build();
                 ctx.writeAndFlush(nextBossResult);
-
             } else {
                 // 此时副本已通关，计算奖励，退出副本
                 System.out.println("计算奖励,存入数据库");
-                List<Integer> propsIdList = currDuplicate.getPropsIdList();
 
+
+                List<Integer> propsIdList = currDuplicate.getPropsIdList();
                 GameMsg.DuplicateFinishResult.Builder newBuilder = GameMsg.DuplicateFinishResult.newBuilder();
                 for (Integer id : propsIdList) {
                     newBuilder.addPropsId(id);
@@ -74,26 +96,36 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                 for (DuplicateType duplicateType : DuplicateType.values()) {
                     if (duplicateType.getName().equals(currDuplicate.getName())) {
                         newBuilder.setMoney(duplicateType.getMoney());
-                        user.setMoney(user.getMoney()+duplicateType.getMoney());
+                        user.setMoney(user.getMoney() + duplicateType.getMoney());
                     }
                 }
                 // 添加数据库
+                userService.modifyMoney(userId, user.getMoney());
+                // 副本得到的奖励进行持久化
+                addProps(propsIdList, user);
+
                 GameMsg.DuplicateFinishResult duplicateFinishResult = newBuilder.build();
                 ctx.writeAndFlush(duplicateFinishResult);
 
-                userService.modifyMoney(userId,user.getMoney());
-                // 副本得到的奖励进行持久化
-                addProps(propsIdList,user);
-
-                user.setCurrDuplicate(null);
-                // 用户退出
-                GameMsg.UserQuitDuplicateResult userQuitDuplicateResult = GameMsg.UserQuitDuplicateResult.newBuilder().build();
-                ctx.writeAndFlush(userQuitDuplicateResult);
 
             }
         } else {
             // 剩余血量 大于 应减少的值
             currBossMonster.setHp(currBossMonster.getHp() - subHp);
+
+            synchronized (currBossMonster.getChooseUserMonitor()) {
+                Map<Integer, Integer> userIdMap = currBossMonster.getUserIdMap();
+                if (!userIdMap.containsKey(userId)) {
+                    userIdMap.put(userId, subHp);
+                } else {
+                    Integer oldSubHp = userIdMap.get(userId);
+                    userIdMap.put(userId, oldSubHp + subHp);
+                }
+            }
+
+
+            // 设置boss定时器，
+            BossAttackTimer.getInstance().bossNormalAttack(currBossMonster);
             GameMsg.AttkBossResult attkBossResult = GameMsg.AttkBossResult.newBuilder().setSubHp(subHp).build();
             ctx.writeAndFlush(attkBossResult);
         }
@@ -101,6 +133,12 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
     }
 
 
+    /**
+     * 副本通关，持久化奖励
+     *
+     * @param propsIdList 道具id集合
+     * @param user        用户
+     */
     private void addProps(List<Integer> propsIdList, User user) {
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
         Map<Integer, Props> backpack = user.getBackpack();
@@ -147,17 +185,17 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                 boolean isExist = false;
                 for (Props pro : backpack.values()) {
                     // 查询背包中是否有该药剂
-                    if (potion.getId().equals(pro.getId())){
+                    if (potion.getId().equals(pro.getId())) {
                         // 背包中已有该药剂
                         Potion po = (Potion) pro.getPropsProperty();
-                        po.setNumber(po.getNumber()+1);
+                        po.setNumber(po.getNumber() + 1);
                         isExist = true;
                     }
 
                 }
 
                 // 背包中还没有该药剂
-                if (!isExist){
+                if (!isExist) {
 
                     UserPotionEntity userPotionEntity = new UserPotionEntity();
                     userPotionEntity.setUserId(user.getUserId());
@@ -170,7 +208,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                             Props pro = new Props();
                             pro.setId(propsId);
                             pro.setName(props.getName());
-                            po = new Potion(null,propsId,potion.getCdTime(),potion.getInfo(),potion.getResumeFigure(),potion.getPercent(),1);
+                            po = new Potion(null, propsId, potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), 1);
                             pro.setPropsProperty(po);
 
                             userPotionEntity.setLocation(i);

@@ -84,6 +84,11 @@ public class User {
      * 基础防御
      */
     private int baseDefense;
+    /**
+     * 附加属性
+     */
+    private int weakenDefense = 0;
+
 
     /**
      * 装备栏
@@ -101,7 +106,7 @@ public class User {
     private final Map<Integer, Props> backpack = new HashMap<>();
 
     /**
-     *  当前所在副本
+     * 当前所在副本
      */
     private Duplicate currDuplicate;
 
@@ -119,11 +124,22 @@ public class User {
      * mp监视器
      */
     private final Object mpMonitor = new Object();
+    /**
+     * hp 监视器
+     */
+    private final Object hpMonitor = new Object();
 
     /**
      * mp自动回复任务
      */
     private ScheduledFuture<?> mpTask;
+
+
+    /**
+     * 掉血自动回复任务
+     */
+    private ScheduledFuture<?> subHpTask;
+    private int subHpNumber = 0;
 
 
     /**
@@ -145,7 +161,7 @@ public class User {
 
     public void resumeMpPotionTime() {
         if (currMp < ProfessionConst.MP) {
-            // 记录当前时间
+            // 当前蓝量差值
             int value = ProfessionConst.MP - currMp;
             // 设置恢复结束时间
             this.userResumeState.setEndTimeMp(System.currentTimeMillis() + value * 1000 - 400 * 1000);
@@ -194,7 +210,7 @@ public class User {
 
             }
         }
-        log.info("玩家: {}, 装备伤害加成: {}", this.getUserName(),10 * equDamage);
+        log.info("玩家: {}, 装备伤害加成: {}", this.getUserName(), 10 * equDamage);
 
         int subHp = (int) ((Math.random() * this.getBaseDamage()) + 500 + 10 * equDamage);
 
@@ -221,74 +237,77 @@ public class User {
      * 计算当前mp
      */
     public void calCurrMp() {
-
-        Potion potion = getPotion(PotionType.MP);
-        if (currMp >= ProfessionConst.MP){
-            potion.setUsedEndTime(0L);
-            potion.setUsedStartTime(0L);
-        }else {
-            Long endTimeMp = potion.getUsedEndTime();
-            if (endTimeMp != 0 && endTimeMp >= System.currentTimeMillis()) {
-                // 此时药效未使用完
-                long startTime = potion.getUsedStartTime();
-                int v = (int) ((System.currentTimeMillis() - startTime) / 4000) * 400;
-                currMp += v;
-                potion.setUsedStartTime(System.currentTimeMillis());
-            } else if (endTimeMp != 0) {
-                // 此时药效使用完
-                int v = (int)((endTimeMp - potion.getUsedStartTime())/4000) * 400;
-                if (ProfessionConst.MP <= (currMp+v)){
-                    currMp = ProfessionConst.MP;
-                }else {
-                    currMp += v;
-                }
+        synchronized (this.mpMonitor) {
+            Potion potion = getPotion(PotionType.MP);
+            if (currMp >= ProfessionConst.MP) {
                 potion.setUsedEndTime(0L);
                 potion.setUsedStartTime(0L);
+            } else {
+                Long endTimeMp = potion.getUsedEndTime();
+                if (endTimeMp != 0 && endTimeMp >= System.currentTimeMillis()) {
+                    // 此时药效未使用完
+                    long startTime = potion.getUsedStartTime();
+                    int v = (int) ((System.currentTimeMillis() - startTime) / 4000) * 400;
+                    currMp += v;
+                    potion.setUsedStartTime(System.currentTimeMillis());
+                } else if (endTimeMp != 0) {
+                    // 此时药效使用完
+                    int v = (int) ((endTimeMp - potion.getUsedStartTime()) / 4000) * 400;
+                    if (ProfessionConst.MP <= (currMp + v)) {
+                        currMp = ProfessionConst.MP;
+                    } else {
+                        currMp += v;
+                    }
+                    potion.setUsedEndTime(0L);
+                    potion.setUsedStartTime(0L);
+                }
+            }
+
+            // 自动恢复mp
+            Long endTimeMp = this.getUserResumeState().getEndTimeMp();
+            if (endTimeMp >= System.currentTimeMillis()) {
+                // 此时在恢复中
+                int v = (int) (System.currentTimeMillis() - this.userResumeState.getStartTimeMp()) / 1000;
+                currMp = currMp + v;
+            } else {
+                // 此时已经恢复完了
+                currMp = ProfessionConst.MP;
             }
         }
 
-
-        Long endTimeMp = this.getUserResumeState().getEndTimeMp();
-        if (endTimeMp >= System.currentTimeMillis()) {
-            // 此时在恢复中
-            int v = (int) (System.currentTimeMillis() - this.userResumeState.getStartTimeMp()) / 1000;
-            currMp = currMp + v;
-        } else {
-            // 此时已经恢复完了
-            currMp = ProfessionConst.MP;
-        }
     }
 
     /**
      * 计算当前血量
      */
     public void calCurrHp() {
-        Potion potion = getPotion(PotionType.HP);
-        if (currHp >= ProfessionConst.HP){
-            potion.setUsedEndTime(0L);
-            potion.setUsedStartTime(0L);
-            return;
-        }
-
-        Long endTimeHp = potion.getUsedEndTime();
-        if (endTimeHp != 0 && endTimeHp >= System.currentTimeMillis()) {
-            // 此时药效未使用完
-            long startTime = potion.getUsedStartTime();
-            int v = (int) ((System.currentTimeMillis() - startTime) / 4000) * 400;
-            currHp += v;
-            potion.setUsedStartTime(System.currentTimeMillis());
-        } else if (endTimeHp != 0) {
-            // 此时药效使用完
-            int v = (int)((endTimeHp - potion.getUsedStartTime())/4000) * 400;
-            if (ProfessionConst.HP <= (currHp+v)){
-                currHp = ProfessionConst.HP;
-            }else {
-                currHp += v;
+        synchronized (this.hpMonitor) {
+            Potion potion = getPotion(PotionType.HP);
+            if (currHp >= ProfessionConst.HP) {
+                potion.setUsedEndTime(0L);
+                potion.setUsedStartTime(0L);
+                return;
             }
-            potion.setUsedEndTime(0L);
-            potion.setUsedStartTime(0L);
-        }
 
+            Long endTimeHp = potion.getUsedEndTime();
+            if (endTimeHp != 0 && endTimeHp >= System.currentTimeMillis()) {
+                // 此时药效未使用完
+                long startTime = potion.getUsedStartTime();
+                int v = (int) ((System.currentTimeMillis() - startTime) / 4000) * 400;
+                currHp += v;
+                potion.setUsedStartTime(System.currentTimeMillis());
+            } else if (endTimeHp != 0) {
+                // 此时药效使用完
+                int v = (int) ((endTimeHp - potion.getUsedStartTime()) / 4000) * 400;
+                if (ProfessionConst.HP <= (currHp + v)) {
+                    currHp = ProfessionConst.HP;
+                } else {
+                    currHp += v;
+                }
+                potion.setUsedEndTime(0L);
+                potion.setUsedStartTime(0L);
+            }
+        }
     }
 
     /**

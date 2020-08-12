@@ -24,7 +24,6 @@ public class AttkBossResultClient implements ICmd<GameMsg.AttkBossResult> {
         BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
         currBossMonster.setHp(currBossMonster.getHp()-subHp);
 
-        role.setEnter(false);
 
         BossThread.getInstance().process(ctx, role);
     }

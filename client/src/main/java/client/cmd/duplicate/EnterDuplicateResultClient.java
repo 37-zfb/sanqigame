@@ -51,12 +51,12 @@ public class EnterDuplicateResultClient implements ICmd<GameMsg.EnterDuplicateRe
 
         // 设置当前副本
         role.setCurrDuplicate(duplicate);
-        role.setEnter(true);
         // 设置当前怪
 //        role.getCurrDuplicate().setCurrBossMonster(bossMonsterMap.get(enterDuplicateResult.getBossMonsterId()));
         duplicate.setMinBoss();
 
         //此时，已进入副本；进入另一个线程？？？
         BossThread.getInstance().process(ctx,role);
+
     }
 }

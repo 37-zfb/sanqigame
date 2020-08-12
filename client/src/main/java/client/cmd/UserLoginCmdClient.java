@@ -3,6 +3,7 @@ package client.cmd;
 import client.CmdThread;
 import client.GameClient;
 import client.model.Role;
+import client.model.SceneData;
 import client.model.User;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
@@ -67,8 +68,7 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
         }
 
 
-        Scene scene = GameData.getInstance().getSceneMap().get(role.getCurrSceneId());
-
+        Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
         // 封装当前场景的 npc
         List<GameMsg.UserLoginResult.Npc> npcList = userLoginResult.getNpcList();
         Map<Integer, Npc> npcMap = scene.getNpcMap();

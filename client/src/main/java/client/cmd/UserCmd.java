@@ -27,6 +27,7 @@ import java.util.Scanner;
 public class UserCmd {
 
 
+
     /**
      * @param role    角色对象
      * @param npcList npc集合
