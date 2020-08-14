@@ -1,17 +1,17 @@
 package server.cmdhandler;
 
 import constant.EquipmentConst;
+import constant.GoodsConst;
+import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import model.GoodsLimitNumber;
+import model.duplicate.store.Goods;
 import model.props.AbstractPropsProperty;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import entity.db.CurrUserStateEntity;
-import entity.db.UserEntity;
-import entity.db.UserEquipmentEntity;
-import entity.db.UserPotionEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import server.model.*;
@@ -25,8 +25,11 @@ import model.scene.Scene;
 import scene.GameData;
 import server.service.UserService;
 import server.Broadcast;
+import type.GoodsLimitBuyType;
 import type.PropsType;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -118,23 +121,22 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             //  背包中的道具(装备、药剂等)
             Map<Integer, Props> backpack = user.getBackpack();
             for (Map.Entry<Integer, Props> propsEntry : backpack.entrySet()) {
-                GameMsg.UserLoginResult.Props.Builder propsResult = GameMsg.UserLoginResult.Props.newBuilder()
+                GameMsg.Props.Builder propsResult = GameMsg.Props.newBuilder()
                         .setLocation(propsEntry.getKey())
                         .setPropsId(propsEntry.getValue().getId());
 
                 AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
-                if (propsProperty.getType() == PropsType.Equipment){
+                if (propsProperty.getType() == PropsType.Equipment) {
                     Equipment equipment = (Equipment) propsProperty;
                     // equipment.getId() 是数据库中的user_equipment中的id
                     propsResult.setDurability(equipment.getDurability()).setUserPropsId(equipment.getId());
-                }else if (propsProperty.getType() == PropsType.Potion){
+                } else if (propsProperty.getType() == PropsType.Potion) {
                     Potion potion = (Potion) propsProperty;
                     //potion.getId() 是数据库中的 user_potion中的id
                     propsResult.setPropsNumber(potion.getNumber()).setUserPropsId(potion.getId());
                 }
                 resultBuilder.addProps(propsResult);
             }
-
 
 
             UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
@@ -148,6 +150,17 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                     resultBuilder.addWearEqu(builder);
                 }
             }
+
+
+            Map<Integer, Integer> goodsAllowNumber = user.getGoodsAllowNumber();
+            for (Map.Entry<Integer, Integer> integerEntry : goodsAllowNumber.entrySet()) {
+                GameMsg.UserLoginResult.GoodsLimit goodsLimit = GameMsg.UserLoginResult.GoodsLimit.newBuilder()
+                        .setGoodsId(integerEntry.getKey())
+                        .setGoodsNumber(integerEntry.getValue())
+                        .build();
+                resultBuilder.addGoodLimits(goodsLimit);
+            }
+
 
             loginResult = resultBuilder.build();
         } catch (CustomizeException e) {
@@ -185,12 +198,13 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         Map<Integer, Skill> currSkillMap = user.getSkillMap();
         for (Skill skill : skillMap.values()) {
             currSkillMap.put(skill.getId(),
-                    new Skill(skill.getId(), skill.getProfessionId(), skill.getName(), skill.getCdTime(), skill.getIntroduce(), skill.getConsumeMp(),skill.getSkillProperty()));
+                    new Skill(skill.getId(), skill.getProfessionId(), skill.getName(), skill.getCdTime(), skill.getIntroduce(), skill.getConsumeMp(), skill.getSkillProperty()));
         }
 
 
         loadBackpack(user);
         loadWearEqu(user);
+        loadLimitNumber(user);
         // 启动定时器
 //        user.startTimer();
         // 设置mp恢复结束时间
@@ -201,7 +215,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     }
 
     /**
-     *  加载背包中的道具
+     * 加载背包中的道具
+     *
      * @param user
      */
     private void loadBackpack(User user) {
@@ -220,8 +235,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             Props props = propsMap.get(equipmentEntity.getPropsId());
             Equipment equipment = (Equipment) props.getPropsProperty();
             //equipmentEntity.getId() 是数据库中的user_equipment中的id
-            backpack.put(equipmentEntity.getLocation(),new Props(props.getId(),props.getName(),new Equipment(equipmentEntity.getId(),
-                    props.getId(),equipmentEntity.getDurability(),equipment.getDamage(),equipment.getEquipmentType())));
+            backpack.put(equipmentEntity.getLocation(), new Props(props.getId(), props.getName(), new Equipment(equipmentEntity.getId(),
+                    props.getId(), equipmentEntity.getDurability(), equipment.getDamage(), equipment.getEquipmentType())));
         }
 
         for (UserPotionEntity potionEntity : listPotion) {
@@ -229,19 +244,57 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             Props props = propsMap.get(potionEntity.getPropsId());
             Potion potion = (Potion) props.getPropsProperty();
             //potionEntity.getId() 是数据库 user_potion中的id
-            backpack.put(potionEntity.getLocation(),new Props(props.getId(),props.getName(),new Potion(potionEntity.getId(),potion.getPropsId(),
-                    potion.getCdTime(),potion.getInfo(),potion.getResumeFigure(),potion.getPercent(),potionEntity.getNumber())));
+            backpack.put(potionEntity.getLocation(), new Props(props.getId(), props.getName(), new Potion(potionEntity.getId(), potion.getPropsId(),
+                    potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), potionEntity.getNumber())));
         }
     }
 
+    /**
+     * 加载穿戴的装备
+     *
+     * @param user
+     */
     private void loadWearEqu(User user) {
         UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
         List<UserEquipmentEntity> listEquipment = userService.listEquipmentWeared(user.getUserId(), EquipmentConst.WEAR);
         for (int i = 0; i < listEquipment.size(); i++) {
             userEquipmentArr[i] = listEquipment.get(i);
         }
+    }
 
+    /**
+     * 加载限制数量
+     *
+     * @param user
+     */
+    private void loadLimitNumber(User user) {
+
+        Map<Integer, Goods> goodsMap = GameData.getInstance().getGoodsMap();
+
+        Map<Integer, Integer> goodsAllowNumber = user.getGoodsAllowNumber();
+
+        // 今天日期
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currDate = dateFormat.format(new Date());
+
+        List<UserBuyGoodsLimitEntity> userBuyGoodsLimitEntities = userService.listUserBuyGoodsLimitEntity(user.getUserId(), currDate);
+//        if (userBuyGoodsLimitEntities == null){
+        // 今天，用户还没有购买限购商品;
+        for (GoodsLimitBuyType goodsLimitBuyType : GoodsLimitBuyType.values()) {
+            goodsAllowNumber.put(goodsLimitBuyType.getGoodsId(), goodsLimitBuyType.getLimitNumber());
+        }
+//        }else {
+        for (UserBuyGoodsLimitEntity goodsLimitEntity : userBuyGoodsLimitEntities) {
+            Goods goods = goodsMap.get(goodsLimitEntity.getGoodsId());
+            goodsAllowNumber.put(goodsLimitEntity.getGoodsId(), goods.getNumberLimit() - goodsLimitEntity.getNumber());
+        }
+//            for (GoodsLimitBuyType goodsLimitBuyType : GoodsLimitBuyType.values()) {
+//                goodsAllowNumber.putIfAbsent(goodsLimitBuyType.getGoodsId(),goodsLimitBuyType.getLimitNumber());
+//            }
+
+//        }
 
     }
+
 
 }

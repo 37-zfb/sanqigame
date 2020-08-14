@@ -84,6 +84,9 @@ enum MsgCode {
 
   BOSS_SKILL_ATTK_USER_RESULT = 44;
 
+  USER_BUY_GOODS_CMD = 45;
+  USER_BUY_GOODS_RESULT = 46;
+
 };
 
 // 还有谁在场
@@ -234,13 +237,7 @@ message UserLoginResult {
 
   // 装备id
   repeated Props props = 9;
-  message Props {
-    uint32 location = 1;
-    uint32 propsId = 2;
-    uint32 durability = 3;
-    uint32 propsNumber = 4;
-    uint32 userPropsId = 5;
-  }
+
 
   // 恢复蓝的终止时间
   uint64 resumeMpEndTime = 10;
@@ -257,7 +254,21 @@ message UserLoginResult {
   uint32 professionId = 12;
 
   uint32 money = 13;
+
+  repeated GoodsLimit goodLimits = 14;
+  message GoodsLimit{
+    uint32 goodsId = 1;
+    uint32 goodsNumber = 2;
+  }
 }
+message Props {
+  uint32 location = 1;
+  uint32 propsId = 2;
+  uint32 durability = 3;
+  uint32 propsNumber = 4;
+  uint32 userPropsId = 5;
+}
+
 
 // 用户注册
 message UserRegisterCmd {
@@ -501,6 +512,8 @@ message DuplicateFinishResult{
   repeated uint32 propsId = 1;
   // 金币
   uint32 money = 2;
+
+  repeated Props props = 3;
 }
 // 用户退出副本命令
 message UserQuitDuplicateCmd{
@@ -518,4 +531,27 @@ message BossAttkUserResult{
 message BossSkillAttkUserResult{
   // 用户减血量
   uint32 subUserHp = 1;
+}
+// 展示商店
+// 命令
+message UserBuyGoodsCmd{
+  uint32 goodsId = 1;
+  uint32 goodsNumber = 2;
+}
+// 展示商店
+// 结果
+message UserBuyGoodsResult{
+  // 是否成功
+  bool isSuccess = 1;
+  // 背包中的道具，前后端同步一下数据
+  repeated Props props = 2;
+  // 购买的商品id
+  uint32 goodsId = 3;
+  // 购买的商品数量
+  uint32 goodsNumber = 4;
+
+  // 失败码
+  uint32 code = 5;
+  // 失败原因
+  string reason = 6;
 }

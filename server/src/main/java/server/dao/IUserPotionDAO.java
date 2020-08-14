@@ -32,7 +32,7 @@ public interface IUserPotionDAO {
      * @param potionId
      * @return
      */
-    UserPotionEntity selectPotionByUserIdAndPotionId(@Param("userId") int userId,@Param("potionId") int potionId);
+    UserPotionEntity selectPotionByUserIdAndPotionId(@Param("userId") int userId,@Param("propsId") int potionId);
 
     /**
      *  根据玩家id查询药剂

@@ -5,6 +5,7 @@ import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import model.duplicate.Duplicate;
+import model.duplicate.store.Goods;
 import model.profession.Skill;
 import model.props.Equipment;
 import model.props.Potion;
@@ -25,7 +26,6 @@ import java.util.Scanner;
  */
 @Slf4j
 public class UserCmd {
-
 
 
     /**
@@ -65,7 +65,7 @@ public class UserCmd {
                     System.out.println("======>11:卸下装备;");
                     System.out.println("======>12:修理装备;");
                     System.out.println("======>13:副本;");
-
+                    System.out.println("======>14:商店;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -147,7 +147,12 @@ public class UserCmd {
                         System.out.println("背包空间: " + backpackClient.size() + "/100");
                         System.out.println("道具如下:");
                         for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
-                            System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
+                            if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Equipment){
+                                System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
+                            }else if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Potion){
+                                Potion potion = (Potion) propsEntry.getValue().getPropsProperty();
+                                System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType()+" \t\t数量: "+potion.getNumber());
+                            }
                         }
 
 
@@ -248,10 +253,40 @@ public class UserCmd {
                     } else if ("13".equals(command)) {
                         Map<Integer, Duplicate> duplicateMap = GameData.getInstance().getDuplicateMap();
                         for (Duplicate duplicate : duplicateMap.values()) {
-                            System.out.println(duplicate.getId()+"、"+duplicate.getName());
+                            System.out.println(duplicate.getId() + "、" + duplicate.getName());
                         }
                         int id = scanner.nextInt();
                         return GameMsg.EnterDuplicateCmd.newBuilder().setDuplicateId(id).build();
+                    } else if ("14".equals(command)) {
+                        Map<Integer, Integer> goodsAllowNumber = role.getGoodsAllowNumber();
+                        // 商店, 放在客户端展示商品列表;
+                        GameData gameData = GameData.getInstance();
+                        Map<Integer, Goods> goodsMap = gameData.getGoodsMap();
+                        Map<Integer, Props> propsMap = gameData.getPropsMap();
+                        for (Goods goods : goodsMap.values()) {
+                            Props props = propsMap.get(goods.getPropsId());
+                            if (props.getPropsProperty().getType() != PropsType.Equipment){
+                                System.out.println(goods.getId() + "、" + props.getName() + "  还能购买: "+ goodsAllowNumber.get(goods.getId()));
+
+                            }else {
+                                System.out.println(goods.getId() + "、" + props.getName() + "  ");
+                            }
+
+                        }
+
+                        System.out.println("===>请选择要购买的商品: ");
+                        int goodsId = scanner.nextInt();
+                        GameMsg.UserBuyGoodsCmd.Builder goodsBuilder = GameMsg.UserBuyGoodsCmd.newBuilder();
+                        goodsBuilder.setGoodsId(goodsId);
+                        goodsBuilder.setGoodsNumber(1);
+                        if (propsMap.get(goodsMap.get(goodsId).getPropsId()).getPropsProperty().getType() == PropsType.Potion) {
+                            System.out.println("请输入购买的数量: ");
+                            int number = scanner.nextInt();
+                            goodsBuilder.setGoodsNumber(number);
+                        }
+
+                        GameMsg.UserBuyGoodsCmd userBuyGoodsCmd = goodsBuilder.build();
+                        return userBuyGoodsCmd;
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -314,8 +349,10 @@ public class UserCmd {
             ctx.channel().writeAndFlush((GameMsg.UserUndoEquipmentCmd) cmd);
         } else if (cmd instanceof GameMsg.RepairEquipmentCmd) {
             ctx.channel().writeAndFlush((GameMsg.RepairEquipmentCmd) cmd);
-        }else if (cmd instanceof GameMsg.EnterDuplicateCmd){
-            ctx.channel().writeAndFlush((GameMsg.EnterDuplicateCmd)cmd);
+        } else if (cmd instanceof GameMsg.EnterDuplicateCmd) {
+            ctx.channel().writeAndFlush((GameMsg.EnterDuplicateCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserBuyGoodsCmd) {
+            ctx.channel().writeAndFlush((GameMsg.UserBuyGoodsCmd) cmd);
         }
 
 

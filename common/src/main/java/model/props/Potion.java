@@ -78,6 +78,11 @@ public class Potion extends AbstractPropsProperty {
         return PropsType.Potion;
     }
 
+    @Override
+    public PropsType isLimit() {
+        return PropsType.Limit;
+    }
+
 
     public Potion(Integer id, Integer propsId, float cdTime, String info, Integer resumeFigure, float percent) {
         super(id, propsId);

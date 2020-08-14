@@ -1,23 +1,18 @@
 package server.service;
 
 import constant.EquipmentConst;
+import constant.GoodsConst;
 import constant.ProfessionConst;
+import entity.db.*;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import lombok.extern.slf4j.Slf4j;
+import model.profession.Profession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import server.dao.IUserDAO;
-import server.dao.IUserEquipmentDAO;
-import server.dao.IUserPotionDAO;
-import server.dao.IUserStateDAO;
-import entity.db.CurrUserStateEntity;
-import entity.db.UserEntity;
-import entity.db.UserEquipmentEntity;
-import entity.db.UserPotionEntity;
-import exception.CustomizeErrorCode;
-import exception.CustomizeException;
-import model.profession.Profession;
 import scene.GameData;
+import server.dao.*;
 
 import java.util.List;
 
@@ -39,6 +34,9 @@ public class UserService {
 
     @Autowired
     private IUserPotionDAO userPotionDAO;
+
+    @Autowired
+    private IUserGoodsLimitDAO userGoodsLimitDAO;
 
     /**
      * 通过userId获得当前用户信息
@@ -161,13 +159,13 @@ public class UserService {
         if (entity == null) {
             // 没有该药剂
             userPotionDAO.insertPotion(userPotionEntity);
-        } else if (entity.getNumber() < 99) {
+        } else if (userPotionEntity.getNumber() < 99) {
             // 已有药剂，且未达到上限
-            entity.setNumber(entity.getNumber() + 1);
+            entity.setNumber(userPotionEntity.getNumber());
             userPotionDAO.updatePotionNumber(entity);
         } else if (entity.getNumber() >= 99) {
             // 已有药剂，且达到上限,此时不在添加
-
+            throw new CustomizeException(CustomizeErrorCode.PROPS_REACH_LIMIT);
         }
 
     }
@@ -212,6 +210,12 @@ public class UserService {
         userEquipmentDAO.updateEquipmentState(userEquipmentId, state, location);
     }
 
+    /**
+     *  查询已穿戴的装备
+     * @param userId
+     * @param state
+     * @return
+     */
     public List<UserEquipmentEntity> listEquipmentWeared(Integer userId, Integer state) {
         if (userId == null || state == null) {
             log.info("userId={},state={}", userId, state);
@@ -220,6 +224,11 @@ public class UserService {
         return userEquipmentDAO.selectEquipmentByUserIdAndState(userId, state);
     }
 
+    /**
+     *  修改装备的耐久度
+     * @param id
+     * @param durability
+     */
     public void modifyEquipmentDurability(Integer id, Integer durability) {
         if (id == null || durability == null) {
             log.info("id = {},durability = {}", id, durability);
@@ -228,11 +237,41 @@ public class UserService {
         userEquipmentDAO.updateEquipmentDurability(id, durability);
     }
 
+    /**
+     *  修改 钱
+     * @param userId
+     * @param money
+     */
     public void modifyMoney(Integer userId,Integer money) {
         if (userId == null || money == null) {
             return;
         }
         userState.updateUserMoney(userId,money);
+    }
 
+
+    public List<UserBuyGoodsLimitEntity> listUserBuyGoodsLimitEntity( Integer userId, String date){
+        if (userId == null || date == null){
+            return null;
+        }
+        return userGoodsLimitDAO.selectEntitiesByUserIdAndDate(userId, date);
+    }
+
+
+
+    public void AddLimitNumber(UserBuyGoodsLimitEntity goodsLimitEntity) {
+        if (goodsLimitEntity == null ){
+            return;
+        }
+
+        userGoodsLimitDAO.insertEntity(goodsLimitEntity);
+
+    }
+
+    public void modifyLimitNumber(UserBuyGoodsLimitEntity userBuyGoodsLimitEntity ) {
+        if (userBuyGoodsLimitEntity == null){
+            return;
+        }
+        userGoodsLimitDAO.updateLimitNumber( userBuyGoodsLimitEntity);
     }
 }

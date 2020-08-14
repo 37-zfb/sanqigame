@@ -85,9 +85,9 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
 
         //封装背包中的物品
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-        List<GameMsg.UserLoginResult.Props> propsList = userLoginResult.getPropsList();
+        List<GameMsg.Props> propsList = userLoginResult.getPropsList();
         Map<Integer, Props> backpackClient = role.getBackpackClient();
-        for (GameMsg.UserLoginResult.Props props : propsList) {
+        for (GameMsg.Props props : propsList) {
             Props pro = propsMap.get(props.getPropsId());
             if (pro.getPropsProperty().getType() == PropsType.Equipment){
                 Equipment equipment = (Equipment) pro.getPropsProperty();
@@ -130,8 +130,14 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
         }
 
 
-        // 下一步 操作
+        Map<Integer, Integer> goodsAllowNumber = role.getGoodsAllowNumber();
+        List<GameMsg.UserLoginResult.GoodsLimit> goodLimitsList = userLoginResult.getGoodLimitsList();
+        for (GameMsg.UserLoginResult.GoodsLimit goodsLimit : goodLimitsList) {
+            goodsAllowNumber.put(goodsLimit.getGoodsId(),goodsLimit.getGoodsNumber());
+        }
 
+
+        // 下一步 操作
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }
 

@@ -203,6 +203,14 @@ public final class GameMsg {
      * <code>BOSS_SKILL_ATTK_USER_RESULT = 44;</code>
      */
     BOSS_SKILL_ATTK_USER_RESULT(44),
+    /**
+     * <code>USER_BUY_GOODS_CMD = 45;</code>
+     */
+    USER_BUY_GOODS_CMD(45),
+    /**
+     * <code>USER_BUY_GOODS_RESULT = 46;</code>
+     */
+    USER_BUY_GOODS_RESULT(46),
     UNRECOGNIZED(-1),
     ;
 
@@ -386,6 +394,14 @@ public final class GameMsg {
      * <code>BOSS_SKILL_ATTK_USER_RESULT = 44;</code>
      */
     public static final int BOSS_SKILL_ATTK_USER_RESULT_VALUE = 44;
+    /**
+     * <code>USER_BUY_GOODS_CMD = 45;</code>
+     */
+    public static final int USER_BUY_GOODS_CMD_VALUE = 45;
+    /**
+     * <code>USER_BUY_GOODS_RESULT = 46;</code>
+     */
+    public static final int USER_BUY_GOODS_RESULT_VALUE = 46;
 
 
     public final int getNumber() {
@@ -457,6 +473,8 @@ public final class GameMsg {
         case 42: return USER_QUIT_DUPLICATE_RESULT;
         case 43: return BOSS_ATTK_USER_RESULT;
         case 44: return BOSS_SKILL_ATTK_USER_RESULT;
+        case 45: return USER_BUY_GOODS_CMD;
+        case 46: return USER_BUY_GOODS_RESULT;
         default: return null;
       }
     }
@@ -7877,24 +7895,24 @@ public final class GameMsg {
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    java.util.List<msg.GameMsg.UserLoginResult.Props> 
+    java.util.List<msg.GameMsg.Props> 
         getPropsList();
     /**
      * <pre>
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    msg.GameMsg.UserLoginResult.Props getProps(int index);
+    msg.GameMsg.Props getProps(int index);
     /**
      * <pre>
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
     int getPropsCount();
     /**
@@ -7902,18 +7920,18 @@ public final class GameMsg {
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    java.util.List<? extends msg.GameMsg.UserLoginResult.PropsOrBuilder> 
+    java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
         getPropsOrBuilderList();
     /**
      * <pre>
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    msg.GameMsg.UserLoginResult.PropsOrBuilder getPropsOrBuilder(
+    msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
         int index);
 
     /**
@@ -7981,6 +7999,30 @@ public final class GameMsg {
      * @return The money.
      */
     int getMoney();
+
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    java.util.List<msg.GameMsg.UserLoginResult.GoodsLimit> 
+        getGoodLimitsList();
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    msg.GameMsg.UserLoginResult.GoodsLimit getGoodLimits(int index);
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    int getGoodLimitsCount();
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    java.util.List<? extends msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder> 
+        getGoodLimitsOrBuilderList();
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder getGoodLimitsOrBuilder(
+        int index);
   }
   /**
    * <pre>
@@ -8005,6 +8047,7 @@ public final class GameMsg {
       monster_ = java.util.Collections.emptyList();
       props_ = java.util.Collections.emptyList();
       wearEqu_ = java.util.Collections.emptyList();
+      goodLimits_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -8093,11 +8136,11 @@ public final class GameMsg {
             }
             case 74: {
               if (!((mutable_bitField0_ & 0x00000008) != 0)) {
-                props_ = new java.util.ArrayList<msg.GameMsg.UserLoginResult.Props>();
+                props_ = new java.util.ArrayList<msg.GameMsg.Props>();
                 mutable_bitField0_ |= 0x00000008;
               }
               props_.add(
-                  input.readMessage(msg.GameMsg.UserLoginResult.Props.parser(), extensionRegistry));
+                  input.readMessage(msg.GameMsg.Props.parser(), extensionRegistry));
               break;
             }
             case 80: {
@@ -8122,6 +8165,15 @@ public final class GameMsg {
             case 104: {
 
               money_ = input.readUInt32();
+              break;
+            }
+            case 114: {
+              if (!((mutable_bitField0_ & 0x00000020) != 0)) {
+                goodLimits_ = new java.util.ArrayList<msg.GameMsg.UserLoginResult.GoodsLimit>();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              goodLimits_.add(
+                  input.readMessage(msg.GameMsg.UserLoginResult.GoodsLimit.parser(), extensionRegistry));
               break;
             }
             default: {
@@ -8153,6 +8205,9 @@ public final class GameMsg {
         }
         if (((mutable_bitField0_ & 0x00000010) != 0)) {
           wearEqu_ = java.util.Collections.unmodifiableList(wearEqu_);
+        }
+        if (((mutable_bitField0_ & 0x00000020) != 0)) {
+          goodLimits_ = java.util.Collections.unmodifiableList(goodLimits_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -10338,764 +10393,6 @@ public final class GameMsg {
 
     }
 
-    public interface PropsOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:msg.UserLoginResult.Props)
-        com.google.protobuf.MessageOrBuilder {
-
-      /**
-       * <code>uint32 location = 1;</code>
-       * @return The location.
-       */
-      int getLocation();
-
-      /**
-       * <code>uint32 propsId = 2;</code>
-       * @return The propsId.
-       */
-      int getPropsId();
-
-      /**
-       * <code>uint32 durability = 3;</code>
-       * @return The durability.
-       */
-      int getDurability();
-
-      /**
-       * <code>uint32 propsNumber = 4;</code>
-       * @return The propsNumber.
-       */
-      int getPropsNumber();
-
-      /**
-       * <code>uint32 userPropsId = 5;</code>
-       * @return The userPropsId.
-       */
-      int getUserPropsId();
-    }
-    /**
-     * Protobuf type {@code msg.UserLoginResult.Props}
-     */
-    public  static final class Props extends
-        com.google.protobuf.GeneratedMessageV3 implements
-        // @@protoc_insertion_point(message_implements:msg.UserLoginResult.Props)
-        PropsOrBuilder {
-    private static final long serialVersionUID = 0L;
-      // Use Props.newBuilder() to construct.
-      private Props(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-        super(builder);
-      }
-      private Props() {
-      }
-
-      @java.lang.Override
-      @SuppressWarnings({"unused"})
-      protected java.lang.Object newInstance(
-          UnusedPrivateParameter unused) {
-        return new Props();
-      }
-
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet
-      getUnknownFields() {
-        return this.unknownFields;
-      }
-      private Props(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        this();
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-            com.google.protobuf.UnknownFieldSet.newBuilder();
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 8: {
-
-                location_ = input.readUInt32();
-                break;
-              }
-              case 16: {
-
-                propsId_ = input.readUInt32();
-                break;
-              }
-              case 24: {
-
-                durability_ = input.readUInt32();
-                break;
-              }
-              case 32: {
-
-                propsNumber_ = input.readUInt32();
-                break;
-              }
-              case 40: {
-
-                userPropsId_ = input.readUInt32();
-                break;
-              }
-              default: {
-                if (!parseUnknownField(
-                    input, unknownFields, extensionRegistry, tag)) {
-                  done = true;
-                }
-                break;
-              }
-            }
-          }
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(this);
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(
-              e).setUnfinishedMessage(this);
-        } finally {
-          this.unknownFields = unknownFields.build();
-          makeExtensionsImmutable();
-        }
-      }
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return msg.GameMsg.internal_static_msg_UserLoginResult_Props_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return msg.GameMsg.internal_static_msg_UserLoginResult_Props_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                msg.GameMsg.UserLoginResult.Props.class, msg.GameMsg.UserLoginResult.Props.Builder.class);
-      }
-
-      public static final int LOCATION_FIELD_NUMBER = 1;
-      private int location_;
-      /**
-       * <code>uint32 location = 1;</code>
-       * @return The location.
-       */
-      public int getLocation() {
-        return location_;
-      }
-
-      public static final int PROPSID_FIELD_NUMBER = 2;
-      private int propsId_;
-      /**
-       * <code>uint32 propsId = 2;</code>
-       * @return The propsId.
-       */
-      public int getPropsId() {
-        return propsId_;
-      }
-
-      public static final int DURABILITY_FIELD_NUMBER = 3;
-      private int durability_;
-      /**
-       * <code>uint32 durability = 3;</code>
-       * @return The durability.
-       */
-      public int getDurability() {
-        return durability_;
-      }
-
-      public static final int PROPSNUMBER_FIELD_NUMBER = 4;
-      private int propsNumber_;
-      /**
-       * <code>uint32 propsNumber = 4;</code>
-       * @return The propsNumber.
-       */
-      public int getPropsNumber() {
-        return propsNumber_;
-      }
-
-      public static final int USERPROPSID_FIELD_NUMBER = 5;
-      private int userPropsId_;
-      /**
-       * <code>uint32 userPropsId = 5;</code>
-       * @return The userPropsId.
-       */
-      public int getUserPropsId() {
-        return userPropsId_;
-      }
-
-      private byte memoizedIsInitialized = -1;
-      @java.lang.Override
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-      }
-
-      @java.lang.Override
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        if (location_ != 0) {
-          output.writeUInt32(1, location_);
-        }
-        if (propsId_ != 0) {
-          output.writeUInt32(2, propsId_);
-        }
-        if (durability_ != 0) {
-          output.writeUInt32(3, durability_);
-        }
-        if (propsNumber_ != 0) {
-          output.writeUInt32(4, propsNumber_);
-        }
-        if (userPropsId_ != 0) {
-          output.writeUInt32(5, userPropsId_);
-        }
-        unknownFields.writeTo(output);
-      }
-
-      @java.lang.Override
-      public int getSerializedSize() {
-        int size = memoizedSize;
-        if (size != -1) return size;
-
-        size = 0;
-        if (location_ != 0) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(1, location_);
-        }
-        if (propsId_ != 0) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(2, propsId_);
-        }
-        if (durability_ != 0) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(3, durability_);
-        }
-        if (propsNumber_ != 0) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(4, propsNumber_);
-        }
-        if (userPropsId_ != 0) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(5, userPropsId_);
-        }
-        size += unknownFields.getSerializedSize();
-        memoizedSize = size;
-        return size;
-      }
-
-      @java.lang.Override
-      public boolean equals(final java.lang.Object obj) {
-        if (obj == this) {
-         return true;
-        }
-        if (!(obj instanceof msg.GameMsg.UserLoginResult.Props)) {
-          return super.equals(obj);
-        }
-        msg.GameMsg.UserLoginResult.Props other = (msg.GameMsg.UserLoginResult.Props) obj;
-
-        if (getLocation()
-            != other.getLocation()) return false;
-        if (getPropsId()
-            != other.getPropsId()) return false;
-        if (getDurability()
-            != other.getDurability()) return false;
-        if (getPropsNumber()
-            != other.getPropsNumber()) return false;
-        if (getUserPropsId()
-            != other.getUserPropsId()) return false;
-        if (!unknownFields.equals(other.unknownFields)) return false;
-        return true;
-      }
-
-      @java.lang.Override
-      public int hashCode() {
-        if (memoizedHashCode != 0) {
-          return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        hash = (37 * hash) + LOCATION_FIELD_NUMBER;
-        hash = (53 * hash) + getLocation();
-        hash = (37 * hash) + PROPSID_FIELD_NUMBER;
-        hash = (53 * hash) + getPropsId();
-        hash = (37 * hash) + DURABILITY_FIELD_NUMBER;
-        hash = (53 * hash) + getDurability();
-        hash = (37 * hash) + PROPSNUMBER_FIELD_NUMBER;
-        hash = (53 * hash) + getPropsNumber();
-        hash = (37 * hash) + USERPROPSID_FIELD_NUMBER;
-        hash = (53 * hash) + getUserPropsId();
-        hash = (29 * hash) + unknownFields.hashCode();
-        memoizedHashCode = hash;
-        return hash;
-      }
-
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          java.nio.ByteBuffer data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          java.nio.ByteBuffer data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input);
-      }
-      public static msg.GameMsg.UserLoginResult.Props parseFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessageV3
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      @java.lang.Override
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-      }
-      public static Builder newBuilder(msg.GameMsg.UserLoginResult.Props prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-      }
-      @java.lang.Override
-      public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE
-            ? new Builder() : new Builder().mergeFrom(this);
-      }
-
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      /**
-       * Protobuf type {@code msg.UserLoginResult.Props}
-       */
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:msg.UserLoginResult.Props)
-          msg.GameMsg.UserLoginResult.PropsOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return msg.GameMsg.internal_static_msg_UserLoginResult_Props_descriptor;
-        }
-
-        @java.lang.Override
-        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return msg.GameMsg.internal_static_msg_UserLoginResult_Props_fieldAccessorTable
-              .ensureFieldAccessorsInitialized(
-                  msg.GameMsg.UserLoginResult.Props.class, msg.GameMsg.UserLoginResult.Props.Builder.class);
-        }
-
-        // Construct using msg.GameMsg.UserLoginResult.Props.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessageV3
-                  .alwaysUseFieldBuilders) {
-          }
-        }
-        @java.lang.Override
-        public Builder clear() {
-          super.clear();
-          location_ = 0;
-
-          propsId_ = 0;
-
-          durability_ = 0;
-
-          propsNumber_ = 0;
-
-          userPropsId_ = 0;
-
-          return this;
-        }
-
-        @java.lang.Override
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return msg.GameMsg.internal_static_msg_UserLoginResult_Props_descriptor;
-        }
-
-        @java.lang.Override
-        public msg.GameMsg.UserLoginResult.Props getDefaultInstanceForType() {
-          return msg.GameMsg.UserLoginResult.Props.getDefaultInstance();
-        }
-
-        @java.lang.Override
-        public msg.GameMsg.UserLoginResult.Props build() {
-          msg.GameMsg.UserLoginResult.Props result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-
-        @java.lang.Override
-        public msg.GameMsg.UserLoginResult.Props buildPartial() {
-          msg.GameMsg.UserLoginResult.Props result = new msg.GameMsg.UserLoginResult.Props(this);
-          result.location_ = location_;
-          result.propsId_ = propsId_;
-          result.durability_ = durability_;
-          result.propsNumber_ = propsNumber_;
-          result.userPropsId_ = userPropsId_;
-          onBuilt();
-          return result;
-        }
-
-        @java.lang.Override
-        public Builder clone() {
-          return super.clone();
-        }
-        @java.lang.Override
-        public Builder setField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            java.lang.Object value) {
-          return super.setField(field, value);
-        }
-        @java.lang.Override
-        public Builder clearField(
-            com.google.protobuf.Descriptors.FieldDescriptor field) {
-          return super.clearField(field);
-        }
-        @java.lang.Override
-        public Builder clearOneof(
-            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-          return super.clearOneof(oneof);
-        }
-        @java.lang.Override
-        public Builder setRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index, java.lang.Object value) {
-          return super.setRepeatedField(field, index, value);
-        }
-        @java.lang.Override
-        public Builder addRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            java.lang.Object value) {
-          return super.addRepeatedField(field, value);
-        }
-        @java.lang.Override
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof msg.GameMsg.UserLoginResult.Props) {
-            return mergeFrom((msg.GameMsg.UserLoginResult.Props)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-
-        public Builder mergeFrom(msg.GameMsg.UserLoginResult.Props other) {
-          if (other == msg.GameMsg.UserLoginResult.Props.getDefaultInstance()) return this;
-          if (other.getLocation() != 0) {
-            setLocation(other.getLocation());
-          }
-          if (other.getPropsId() != 0) {
-            setPropsId(other.getPropsId());
-          }
-          if (other.getDurability() != 0) {
-            setDurability(other.getDurability());
-          }
-          if (other.getPropsNumber() != 0) {
-            setPropsNumber(other.getPropsNumber());
-          }
-          if (other.getUserPropsId() != 0) {
-            setUserPropsId(other.getUserPropsId());
-          }
-          this.mergeUnknownFields(other.unknownFields);
-          onChanged();
-          return this;
-        }
-
-        @java.lang.Override
-        public final boolean isInitialized() {
-          return true;
-        }
-
-        @java.lang.Override
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          msg.GameMsg.UserLoginResult.Props parsedMessage = null;
-          try {
-            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            parsedMessage = (msg.GameMsg.UserLoginResult.Props) e.getUnfinishedMessage();
-            throw e.unwrapIOException();
-          } finally {
-            if (parsedMessage != null) {
-              mergeFrom(parsedMessage);
-            }
-          }
-          return this;
-        }
-
-        private int location_ ;
-        /**
-         * <code>uint32 location = 1;</code>
-         * @return The location.
-         */
-        public int getLocation() {
-          return location_;
-        }
-        /**
-         * <code>uint32 location = 1;</code>
-         * @param value The location to set.
-         * @return This builder for chaining.
-         */
-        public Builder setLocation(int value) {
-          
-          location_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>uint32 location = 1;</code>
-         * @return This builder for chaining.
-         */
-        public Builder clearLocation() {
-          
-          location_ = 0;
-          onChanged();
-          return this;
-        }
-
-        private int propsId_ ;
-        /**
-         * <code>uint32 propsId = 2;</code>
-         * @return The propsId.
-         */
-        public int getPropsId() {
-          return propsId_;
-        }
-        /**
-         * <code>uint32 propsId = 2;</code>
-         * @param value The propsId to set.
-         * @return This builder for chaining.
-         */
-        public Builder setPropsId(int value) {
-          
-          propsId_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>uint32 propsId = 2;</code>
-         * @return This builder for chaining.
-         */
-        public Builder clearPropsId() {
-          
-          propsId_ = 0;
-          onChanged();
-          return this;
-        }
-
-        private int durability_ ;
-        /**
-         * <code>uint32 durability = 3;</code>
-         * @return The durability.
-         */
-        public int getDurability() {
-          return durability_;
-        }
-        /**
-         * <code>uint32 durability = 3;</code>
-         * @param value The durability to set.
-         * @return This builder for chaining.
-         */
-        public Builder setDurability(int value) {
-          
-          durability_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>uint32 durability = 3;</code>
-         * @return This builder for chaining.
-         */
-        public Builder clearDurability() {
-          
-          durability_ = 0;
-          onChanged();
-          return this;
-        }
-
-        private int propsNumber_ ;
-        /**
-         * <code>uint32 propsNumber = 4;</code>
-         * @return The propsNumber.
-         */
-        public int getPropsNumber() {
-          return propsNumber_;
-        }
-        /**
-         * <code>uint32 propsNumber = 4;</code>
-         * @param value The propsNumber to set.
-         * @return This builder for chaining.
-         */
-        public Builder setPropsNumber(int value) {
-          
-          propsNumber_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>uint32 propsNumber = 4;</code>
-         * @return This builder for chaining.
-         */
-        public Builder clearPropsNumber() {
-          
-          propsNumber_ = 0;
-          onChanged();
-          return this;
-        }
-
-        private int userPropsId_ ;
-        /**
-         * <code>uint32 userPropsId = 5;</code>
-         * @return The userPropsId.
-         */
-        public int getUserPropsId() {
-          return userPropsId_;
-        }
-        /**
-         * <code>uint32 userPropsId = 5;</code>
-         * @param value The userPropsId to set.
-         * @return This builder for chaining.
-         */
-        public Builder setUserPropsId(int value) {
-          
-          userPropsId_ = value;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>uint32 userPropsId = 5;</code>
-         * @return This builder for chaining.
-         */
-        public Builder clearUserPropsId() {
-          
-          userPropsId_ = 0;
-          onChanged();
-          return this;
-        }
-        @java.lang.Override
-        public final Builder setUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return super.setUnknownFields(unknownFields);
-        }
-
-        @java.lang.Override
-        public final Builder mergeUnknownFields(
-            final com.google.protobuf.UnknownFieldSet unknownFields) {
-          return super.mergeUnknownFields(unknownFields);
-        }
-
-
-        // @@protoc_insertion_point(builder_scope:msg.UserLoginResult.Props)
-      }
-
-      // @@protoc_insertion_point(class_scope:msg.UserLoginResult.Props)
-      private static final msg.GameMsg.UserLoginResult.Props DEFAULT_INSTANCE;
-      static {
-        DEFAULT_INSTANCE = new msg.GameMsg.UserLoginResult.Props();
-      }
-
-      public static msg.GameMsg.UserLoginResult.Props getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-      }
-
-      private static final com.google.protobuf.Parser<Props>
-          PARSER = new com.google.protobuf.AbstractParser<Props>() {
-        @java.lang.Override
-        public Props parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          return new Props(input, extensionRegistry);
-        }
-      };
-
-      public static com.google.protobuf.Parser<Props> parser() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Parser<Props> getParserForType() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public msg.GameMsg.UserLoginResult.Props getDefaultInstanceForType() {
-        return DEFAULT_INSTANCE;
-      }
-
-    }
-
     public interface WearEquipmentOrBuilder extends
         // @@protoc_insertion_point(interface_extends:msg.UserLoginResult.WearEquipment)
         com.google.protobuf.MessageOrBuilder {
@@ -11738,6 +11035,560 @@ public final class GameMsg {
 
     }
 
+    public interface GoodsLimitOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:msg.UserLoginResult.GoodsLimit)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>uint32 goodsId = 1;</code>
+       * @return The goodsId.
+       */
+      int getGoodsId();
+
+      /**
+       * <code>uint32 goodsNumber = 2;</code>
+       * @return The goodsNumber.
+       */
+      int getGoodsNumber();
+    }
+    /**
+     * Protobuf type {@code msg.UserLoginResult.GoodsLimit}
+     */
+    public  static final class GoodsLimit extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:msg.UserLoginResult.GoodsLimit)
+        GoodsLimitOrBuilder {
+    private static final long serialVersionUID = 0L;
+      // Use GoodsLimit.newBuilder() to construct.
+      private GoodsLimit(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private GoodsLimit() {
+      }
+
+      @java.lang.Override
+      @SuppressWarnings({"unused"})
+      protected java.lang.Object newInstance(
+          UnusedPrivateParameter unused) {
+        return new GoodsLimit();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return this.unknownFields;
+      }
+      private GoodsLimit(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+            com.google.protobuf.UnknownFieldSet.newBuilder();
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+
+                goodsId_ = input.readUInt32();
+                break;
+              }
+              case 16: {
+
+                goodsNumber_ = input.readUInt32();
+                break;
+              }
+              default: {
+                if (!parseUnknownField(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          this.unknownFields = unknownFields.build();
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserLoginResult_GoodsLimit_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserLoginResult_GoodsLimit_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserLoginResult.GoodsLimit.class, msg.GameMsg.UserLoginResult.GoodsLimit.Builder.class);
+      }
+
+      public static final int GOODSID_FIELD_NUMBER = 1;
+      private int goodsId_;
+      /**
+       * <code>uint32 goodsId = 1;</code>
+       * @return The goodsId.
+       */
+      public int getGoodsId() {
+        return goodsId_;
+      }
+
+      public static final int GOODSNUMBER_FIELD_NUMBER = 2;
+      private int goodsNumber_;
+      /**
+       * <code>uint32 goodsNumber = 2;</code>
+       * @return The goodsNumber.
+       */
+      public int getGoodsNumber() {
+        return goodsNumber_;
+      }
+
+      private byte memoizedIsInitialized = -1;
+      @java.lang.Override
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      @java.lang.Override
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (goodsId_ != 0) {
+          output.writeUInt32(1, goodsId_);
+        }
+        if (goodsNumber_ != 0) {
+          output.writeUInt32(2, goodsNumber_);
+        }
+        unknownFields.writeTo(output);
+      }
+
+      @java.lang.Override
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (goodsId_ != 0) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeUInt32Size(1, goodsId_);
+        }
+        if (goodsNumber_ != 0) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeUInt32Size(2, goodsNumber_);
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
+      }
+
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof msg.GameMsg.UserLoginResult.GoodsLimit)) {
+          return super.equals(obj);
+        }
+        msg.GameMsg.UserLoginResult.GoodsLimit other = (msg.GameMsg.UserLoginResult.GoodsLimit) obj;
+
+        if (getGoodsId()
+            != other.getGoodsId()) return false;
+        if (getGoodsNumber()
+            != other.getGoodsNumber()) return false;
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + GOODSID_FIELD_NUMBER;
+        hash = (53 * hash) + getGoodsId();
+        hash = (37 * hash) + GOODSNUMBER_FIELD_NUMBER;
+        hash = (53 * hash) + getGoodsNumber();
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          java.nio.ByteBuffer data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          java.nio.ByteBuffer data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static msg.GameMsg.UserLoginResult.GoodsLimit parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      @java.lang.Override
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(msg.GameMsg.UserLoginResult.GoodsLimit prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      @java.lang.Override
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code msg.UserLoginResult.GoodsLimit}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:msg.UserLoginResult.GoodsLimit)
+          msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return msg.GameMsg.internal_static_msg_UserLoginResult_GoodsLimit_descriptor;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return msg.GameMsg.internal_static_msg_UserLoginResult_GoodsLimit_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  msg.GameMsg.UserLoginResult.GoodsLimit.class, msg.GameMsg.UserLoginResult.GoodsLimit.Builder.class);
+        }
+
+        // Construct using msg.GameMsg.UserLoginResult.GoodsLimit.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        @java.lang.Override
+        public Builder clear() {
+          super.clear();
+          goodsId_ = 0;
+
+          goodsNumber_ = 0;
+
+          return this;
+        }
+
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return msg.GameMsg.internal_static_msg_UserLoginResult_GoodsLimit_descriptor;
+        }
+
+        @java.lang.Override
+        public msg.GameMsg.UserLoginResult.GoodsLimit getDefaultInstanceForType() {
+          return msg.GameMsg.UserLoginResult.GoodsLimit.getDefaultInstance();
+        }
+
+        @java.lang.Override
+        public msg.GameMsg.UserLoginResult.GoodsLimit build() {
+          msg.GameMsg.UserLoginResult.GoodsLimit result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        @java.lang.Override
+        public msg.GameMsg.UserLoginResult.GoodsLimit buildPartial() {
+          msg.GameMsg.UserLoginResult.GoodsLimit result = new msg.GameMsg.UserLoginResult.GoodsLimit(this);
+          result.goodsId_ = goodsId_;
+          result.goodsNumber_ = goodsNumber_;
+          onBuilt();
+          return result;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.setField(field, value);
+        }
+        @java.lang.Override
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+        @java.lang.Override
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            java.lang.Object value) {
+          return super.addRepeatedField(field, value);
+        }
+        @java.lang.Override
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof msg.GameMsg.UserLoginResult.GoodsLimit) {
+            return mergeFrom((msg.GameMsg.UserLoginResult.GoodsLimit)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(msg.GameMsg.UserLoginResult.GoodsLimit other) {
+          if (other == msg.GameMsg.UserLoginResult.GoodsLimit.getDefaultInstance()) return this;
+          if (other.getGoodsId() != 0) {
+            setGoodsId(other.getGoodsId());
+          }
+          if (other.getGoodsNumber() != 0) {
+            setGoodsNumber(other.getGoodsNumber());
+          }
+          this.mergeUnknownFields(other.unknownFields);
+          onChanged();
+          return this;
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          msg.GameMsg.UserLoginResult.GoodsLimit parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (msg.GameMsg.UserLoginResult.GoodsLimit) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+
+        private int goodsId_ ;
+        /**
+         * <code>uint32 goodsId = 1;</code>
+         * @return The goodsId.
+         */
+        public int getGoodsId() {
+          return goodsId_;
+        }
+        /**
+         * <code>uint32 goodsId = 1;</code>
+         * @param value The goodsId to set.
+         * @return This builder for chaining.
+         */
+        public Builder setGoodsId(int value) {
+          
+          goodsId_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>uint32 goodsId = 1;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearGoodsId() {
+          
+          goodsId_ = 0;
+          onChanged();
+          return this;
+        }
+
+        private int goodsNumber_ ;
+        /**
+         * <code>uint32 goodsNumber = 2;</code>
+         * @return The goodsNumber.
+         */
+        public int getGoodsNumber() {
+          return goodsNumber_;
+        }
+        /**
+         * <code>uint32 goodsNumber = 2;</code>
+         * @param value The goodsNumber to set.
+         * @return This builder for chaining.
+         */
+        public Builder setGoodsNumber(int value) {
+          
+          goodsNumber_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>uint32 goodsNumber = 2;</code>
+         * @return This builder for chaining.
+         */
+        public Builder clearGoodsNumber() {
+          
+          goodsNumber_ = 0;
+          onChanged();
+          return this;
+        }
+        @java.lang.Override
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.setUnknownFields(unknownFields);
+        }
+
+        @java.lang.Override
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:msg.UserLoginResult.GoodsLimit)
+      }
+
+      // @@protoc_insertion_point(class_scope:msg.UserLoginResult.GoodsLimit)
+      private static final msg.GameMsg.UserLoginResult.GoodsLimit DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new msg.GameMsg.UserLoginResult.GoodsLimit();
+      }
+
+      public static msg.GameMsg.UserLoginResult.GoodsLimit getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<GoodsLimit>
+          PARSER = new com.google.protobuf.AbstractParser<GoodsLimit>() {
+        @java.lang.Override
+        public GoodsLimit parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+          return new GoodsLimit(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<GoodsLimit> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<GoodsLimit> getParserForType() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserLoginResult.GoodsLimit getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
     public static final int USERID_FIELD_NUMBER = 1;
     private int userId_;
     /**
@@ -11965,15 +11816,15 @@ public final class GameMsg {
     }
 
     public static final int PROPS_FIELD_NUMBER = 9;
-    private java.util.List<msg.GameMsg.UserLoginResult.Props> props_;
+    private java.util.List<msg.GameMsg.Props> props_;
     /**
      * <pre>
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    public java.util.List<msg.GameMsg.UserLoginResult.Props> getPropsList() {
+    public java.util.List<msg.GameMsg.Props> getPropsList() {
       return props_;
     }
     /**
@@ -11981,9 +11832,9 @@ public final class GameMsg {
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    public java.util.List<? extends msg.GameMsg.UserLoginResult.PropsOrBuilder> 
+    public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
         getPropsOrBuilderList() {
       return props_;
     }
@@ -11992,7 +11843,7 @@ public final class GameMsg {
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
     public int getPropsCount() {
       return props_.size();
@@ -12002,9 +11853,9 @@ public final class GameMsg {
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    public msg.GameMsg.UserLoginResult.Props getProps(int index) {
+    public msg.GameMsg.Props getProps(int index) {
       return props_.get(index);
     }
     /**
@@ -12012,9 +11863,9 @@ public final class GameMsg {
      * 装备id
      * </pre>
      *
-     * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+     * <code>repeated .msg.Props props = 9;</code>
      */
-    public msg.GameMsg.UserLoginResult.PropsOrBuilder getPropsOrBuilder(
+    public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
         int index) {
       return props_.get(index);
     }
@@ -12108,6 +11959,41 @@ public final class GameMsg {
       return money_;
     }
 
+    public static final int GOODLIMITS_FIELD_NUMBER = 14;
+    private java.util.List<msg.GameMsg.UserLoginResult.GoodsLimit> goodLimits_;
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    public java.util.List<msg.GameMsg.UserLoginResult.GoodsLimit> getGoodLimitsList() {
+      return goodLimits_;
+    }
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder> 
+        getGoodLimitsOrBuilderList() {
+      return goodLimits_;
+    }
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    public int getGoodLimitsCount() {
+      return goodLimits_.size();
+    }
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    public msg.GameMsg.UserLoginResult.GoodsLimit getGoodLimits(int index) {
+      return goodLimits_.get(index);
+    }
+    /**
+     * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+     */
+    public msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder getGoodLimitsOrBuilder(
+        int index) {
+      return goodLimits_.get(index);
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -12160,6 +12046,9 @@ public final class GameMsg {
       }
       if (money_ != 0) {
         output.writeUInt32(13, money_);
+      }
+      for (int i = 0; i < goodLimits_.size(); i++) {
+        output.writeMessage(14, goodLimits_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -12221,6 +12110,10 @@ public final class GameMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(13, money_);
       }
+      for (int i = 0; i < goodLimits_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(14, goodLimits_.get(i));
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -12262,6 +12155,8 @@ public final class GameMsg {
           != other.getProfessionId()) return false;
       if (getMoney()
           != other.getMoney()) return false;
+      if (!getGoodLimitsList()
+          .equals(other.getGoodLimitsList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -12310,6 +12205,10 @@ public final class GameMsg {
       hash = (53 * hash) + getProfessionId();
       hash = (37 * hash) + MONEY_FIELD_NUMBER;
       hash = (53 * hash) + getMoney();
+      if (getGoodLimitsCount() > 0) {
+        hash = (37 * hash) + GOODLIMITS_FIELD_NUMBER;
+        hash = (53 * hash) + getGoodLimitsList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -12447,6 +12346,7 @@ public final class GameMsg {
           getMonsterFieldBuilder();
           getPropsFieldBuilder();
           getWearEquFieldBuilder();
+          getGoodLimitsFieldBuilder();
         }
       }
       @java.lang.Override
@@ -12498,6 +12398,12 @@ public final class GameMsg {
 
         money_ = 0;
 
+        if (goodLimitsBuilder_ == null) {
+          goodLimits_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+        } else {
+          goodLimitsBuilder_.clear();
+        }
         return this;
       }
 
@@ -12578,6 +12484,15 @@ public final class GameMsg {
         }
         result.professionId_ = professionId_;
         result.money_ = money_;
+        if (goodLimitsBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) != 0)) {
+            goodLimits_ = java.util.Collections.unmodifiableList(goodLimits_);
+            bitField0_ = (bitField0_ & ~0x00000020);
+          }
+          result.goodLimits_ = goodLimits_;
+        } else {
+          result.goodLimits_ = goodLimitsBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -12780,6 +12695,32 @@ public final class GameMsg {
         }
         if (other.getMoney() != 0) {
           setMoney(other.getMoney());
+        }
+        if (goodLimitsBuilder_ == null) {
+          if (!other.goodLimits_.isEmpty()) {
+            if (goodLimits_.isEmpty()) {
+              goodLimits_ = other.goodLimits_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+            } else {
+              ensureGoodLimitsIsMutable();
+              goodLimits_.addAll(other.goodLimits_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.goodLimits_.isEmpty()) {
+            if (goodLimitsBuilder_.isEmpty()) {
+              goodLimitsBuilder_.dispose();
+              goodLimitsBuilder_ = null;
+              goodLimits_ = other.goodLimits_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+              goodLimitsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getGoodLimitsFieldBuilder() : null;
+            } else {
+              goodLimitsBuilder_.addAllMessages(other.goodLimits_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -13870,26 +13811,26 @@ public final class GameMsg {
         return monsterBuilder_;
       }
 
-      private java.util.List<msg.GameMsg.UserLoginResult.Props> props_ =
+      private java.util.List<msg.GameMsg.Props> props_ =
         java.util.Collections.emptyList();
       private void ensurePropsIsMutable() {
         if (!((bitField0_ & 0x00000008) != 0)) {
-          props_ = new java.util.ArrayList<msg.GameMsg.UserLoginResult.Props>(props_);
+          props_ = new java.util.ArrayList<msg.GameMsg.Props>(props_);
           bitField0_ |= 0x00000008;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          msg.GameMsg.UserLoginResult.Props, msg.GameMsg.UserLoginResult.Props.Builder, msg.GameMsg.UserLoginResult.PropsOrBuilder> propsBuilder_;
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> propsBuilder_;
 
       /**
        * <pre>
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public java.util.List<msg.GameMsg.UserLoginResult.Props> getPropsList() {
+      public java.util.List<msg.GameMsg.Props> getPropsList() {
         if (propsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(props_);
         } else {
@@ -13901,7 +13842,7 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public int getPropsCount() {
         if (propsBuilder_ == null) {
@@ -13915,9 +13856,9 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public msg.GameMsg.UserLoginResult.Props getProps(int index) {
+      public msg.GameMsg.Props getProps(int index) {
         if (propsBuilder_ == null) {
           return props_.get(index);
         } else {
@@ -13929,10 +13870,10 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder setProps(
-          int index, msg.GameMsg.UserLoginResult.Props value) {
+          int index, msg.GameMsg.Props value) {
         if (propsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -13950,10 +13891,10 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder setProps(
-          int index, msg.GameMsg.UserLoginResult.Props.Builder builderForValue) {
+          int index, msg.GameMsg.Props.Builder builderForValue) {
         if (propsBuilder_ == null) {
           ensurePropsIsMutable();
           props_.set(index, builderForValue.build());
@@ -13968,9 +13909,9 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public Builder addProps(msg.GameMsg.UserLoginResult.Props value) {
+      public Builder addProps(msg.GameMsg.Props value) {
         if (propsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -13988,10 +13929,10 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder addProps(
-          int index, msg.GameMsg.UserLoginResult.Props value) {
+          int index, msg.GameMsg.Props value) {
         if (propsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -14009,10 +13950,10 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder addProps(
-          msg.GameMsg.UserLoginResult.Props.Builder builderForValue) {
+          msg.GameMsg.Props.Builder builderForValue) {
         if (propsBuilder_ == null) {
           ensurePropsIsMutable();
           props_.add(builderForValue.build());
@@ -14027,10 +13968,10 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder addProps(
-          int index, msg.GameMsg.UserLoginResult.Props.Builder builderForValue) {
+          int index, msg.GameMsg.Props.Builder builderForValue) {
         if (propsBuilder_ == null) {
           ensurePropsIsMutable();
           props_.add(index, builderForValue.build());
@@ -14045,10 +13986,10 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder addAllProps(
-          java.lang.Iterable<? extends msg.GameMsg.UserLoginResult.Props> values) {
+          java.lang.Iterable<? extends msg.GameMsg.Props> values) {
         if (propsBuilder_ == null) {
           ensurePropsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -14064,7 +14005,7 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder clearProps() {
         if (propsBuilder_ == null) {
@@ -14081,7 +14022,7 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
       public Builder removeProps(int index) {
         if (propsBuilder_ == null) {
@@ -14098,9 +14039,9 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public msg.GameMsg.UserLoginResult.Props.Builder getPropsBuilder(
+      public msg.GameMsg.Props.Builder getPropsBuilder(
           int index) {
         return getPropsFieldBuilder().getBuilder(index);
       }
@@ -14109,9 +14050,9 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public msg.GameMsg.UserLoginResult.PropsOrBuilder getPropsOrBuilder(
+      public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
           int index) {
         if (propsBuilder_ == null) {
           return props_.get(index);  } else {
@@ -14123,9 +14064,9 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public java.util.List<? extends msg.GameMsg.UserLoginResult.PropsOrBuilder> 
+      public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
            getPropsOrBuilderList() {
         if (propsBuilder_ != null) {
           return propsBuilder_.getMessageOrBuilderList();
@@ -14138,41 +14079,41 @@ public final class GameMsg {
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public msg.GameMsg.UserLoginResult.Props.Builder addPropsBuilder() {
+      public msg.GameMsg.Props.Builder addPropsBuilder() {
         return getPropsFieldBuilder().addBuilder(
-            msg.GameMsg.UserLoginResult.Props.getDefaultInstance());
+            msg.GameMsg.Props.getDefaultInstance());
       }
       /**
        * <pre>
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public msg.GameMsg.UserLoginResult.Props.Builder addPropsBuilder(
+      public msg.GameMsg.Props.Builder addPropsBuilder(
           int index) {
         return getPropsFieldBuilder().addBuilder(
-            index, msg.GameMsg.UserLoginResult.Props.getDefaultInstance());
+            index, msg.GameMsg.Props.getDefaultInstance());
       }
       /**
        * <pre>
        * 装备id
        * </pre>
        *
-       * <code>repeated .msg.UserLoginResult.Props props = 9;</code>
+       * <code>repeated .msg.Props props = 9;</code>
        */
-      public java.util.List<msg.GameMsg.UserLoginResult.Props.Builder> 
+      public java.util.List<msg.GameMsg.Props.Builder> 
            getPropsBuilderList() {
         return getPropsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          msg.GameMsg.UserLoginResult.Props, msg.GameMsg.UserLoginResult.Props.Builder, msg.GameMsg.UserLoginResult.PropsOrBuilder> 
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> 
           getPropsFieldBuilder() {
         if (propsBuilder_ == null) {
           propsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              msg.GameMsg.UserLoginResult.Props, msg.GameMsg.UserLoginResult.Props.Builder, msg.GameMsg.UserLoginResult.PropsOrBuilder>(
+              msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder>(
                   props_,
                   ((bitField0_ & 0x00000008) != 0),
                   getParentForChildren(),
@@ -14595,6 +14536,246 @@ public final class GameMsg {
         onChanged();
         return this;
       }
+
+      private java.util.List<msg.GameMsg.UserLoginResult.GoodsLimit> goodLimits_ =
+        java.util.Collections.emptyList();
+      private void ensureGoodLimitsIsMutable() {
+        if (!((bitField0_ & 0x00000020) != 0)) {
+          goodLimits_ = new java.util.ArrayList<msg.GameMsg.UserLoginResult.GoodsLimit>(goodLimits_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.UserLoginResult.GoodsLimit, msg.GameMsg.UserLoginResult.GoodsLimit.Builder, msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder> goodLimitsBuilder_;
+
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public java.util.List<msg.GameMsg.UserLoginResult.GoodsLimit> getGoodLimitsList() {
+        if (goodLimitsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(goodLimits_);
+        } else {
+          return goodLimitsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public int getGoodLimitsCount() {
+        if (goodLimitsBuilder_ == null) {
+          return goodLimits_.size();
+        } else {
+          return goodLimitsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public msg.GameMsg.UserLoginResult.GoodsLimit getGoodLimits(int index) {
+        if (goodLimitsBuilder_ == null) {
+          return goodLimits_.get(index);
+        } else {
+          return goodLimitsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder setGoodLimits(
+          int index, msg.GameMsg.UserLoginResult.GoodsLimit value) {
+        if (goodLimitsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureGoodLimitsIsMutable();
+          goodLimits_.set(index, value);
+          onChanged();
+        } else {
+          goodLimitsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder setGoodLimits(
+          int index, msg.GameMsg.UserLoginResult.GoodsLimit.Builder builderForValue) {
+        if (goodLimitsBuilder_ == null) {
+          ensureGoodLimitsIsMutable();
+          goodLimits_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          goodLimitsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder addGoodLimits(msg.GameMsg.UserLoginResult.GoodsLimit value) {
+        if (goodLimitsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureGoodLimitsIsMutable();
+          goodLimits_.add(value);
+          onChanged();
+        } else {
+          goodLimitsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder addGoodLimits(
+          int index, msg.GameMsg.UserLoginResult.GoodsLimit value) {
+        if (goodLimitsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureGoodLimitsIsMutable();
+          goodLimits_.add(index, value);
+          onChanged();
+        } else {
+          goodLimitsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder addGoodLimits(
+          msg.GameMsg.UserLoginResult.GoodsLimit.Builder builderForValue) {
+        if (goodLimitsBuilder_ == null) {
+          ensureGoodLimitsIsMutable();
+          goodLimits_.add(builderForValue.build());
+          onChanged();
+        } else {
+          goodLimitsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder addGoodLimits(
+          int index, msg.GameMsg.UserLoginResult.GoodsLimit.Builder builderForValue) {
+        if (goodLimitsBuilder_ == null) {
+          ensureGoodLimitsIsMutable();
+          goodLimits_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          goodLimitsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder addAllGoodLimits(
+          java.lang.Iterable<? extends msg.GameMsg.UserLoginResult.GoodsLimit> values) {
+        if (goodLimitsBuilder_ == null) {
+          ensureGoodLimitsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, goodLimits_);
+          onChanged();
+        } else {
+          goodLimitsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder clearGoodLimits() {
+        if (goodLimitsBuilder_ == null) {
+          goodLimits_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+          onChanged();
+        } else {
+          goodLimitsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public Builder removeGoodLimits(int index) {
+        if (goodLimitsBuilder_ == null) {
+          ensureGoodLimitsIsMutable();
+          goodLimits_.remove(index);
+          onChanged();
+        } else {
+          goodLimitsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public msg.GameMsg.UserLoginResult.GoodsLimit.Builder getGoodLimitsBuilder(
+          int index) {
+        return getGoodLimitsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder getGoodLimitsOrBuilder(
+          int index) {
+        if (goodLimitsBuilder_ == null) {
+          return goodLimits_.get(index);  } else {
+          return goodLimitsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder> 
+           getGoodLimitsOrBuilderList() {
+        if (goodLimitsBuilder_ != null) {
+          return goodLimitsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(goodLimits_);
+        }
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public msg.GameMsg.UserLoginResult.GoodsLimit.Builder addGoodLimitsBuilder() {
+        return getGoodLimitsFieldBuilder().addBuilder(
+            msg.GameMsg.UserLoginResult.GoodsLimit.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public msg.GameMsg.UserLoginResult.GoodsLimit.Builder addGoodLimitsBuilder(
+          int index) {
+        return getGoodLimitsFieldBuilder().addBuilder(
+            index, msg.GameMsg.UserLoginResult.GoodsLimit.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.UserLoginResult.GoodsLimit goodLimits = 14;</code>
+       */
+      public java.util.List<msg.GameMsg.UserLoginResult.GoodsLimit.Builder> 
+           getGoodLimitsBuilderList() {
+        return getGoodLimitsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.UserLoginResult.GoodsLimit, msg.GameMsg.UserLoginResult.GoodsLimit.Builder, msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder> 
+          getGoodLimitsFieldBuilder() {
+        if (goodLimitsBuilder_ == null) {
+          goodLimitsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.UserLoginResult.GoodsLimit, msg.GameMsg.UserLoginResult.GoodsLimit.Builder, msg.GameMsg.UserLoginResult.GoodsLimitOrBuilder>(
+                  goodLimits_,
+                  ((bitField0_ & 0x00000020) != 0),
+                  getParentForChildren(),
+                  isClean());
+          goodLimits_ = null;
+        }
+        return goodLimitsBuilder_;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -14643,6 +14824,764 @@ public final class GameMsg {
 
     @java.lang.Override
     public msg.GameMsg.UserLoginResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PropsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.Props)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 location = 1;</code>
+     * @return The location.
+     */
+    int getLocation();
+
+    /**
+     * <code>uint32 propsId = 2;</code>
+     * @return The propsId.
+     */
+    int getPropsId();
+
+    /**
+     * <code>uint32 durability = 3;</code>
+     * @return The durability.
+     */
+    int getDurability();
+
+    /**
+     * <code>uint32 propsNumber = 4;</code>
+     * @return The propsNumber.
+     */
+    int getPropsNumber();
+
+    /**
+     * <code>uint32 userPropsId = 5;</code>
+     * @return The userPropsId.
+     */
+    int getUserPropsId();
+  }
+  /**
+   * Protobuf type {@code msg.Props}
+   */
+  public  static final class Props extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.Props)
+      PropsOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Props.newBuilder() to construct.
+    private Props(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Props() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new Props();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Props(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              location_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+
+              propsId_ = input.readUInt32();
+              break;
+            }
+            case 24: {
+
+              durability_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+
+              propsNumber_ = input.readUInt32();
+              break;
+            }
+            case 40: {
+
+              userPropsId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_Props_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_Props_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.Props.class, msg.GameMsg.Props.Builder.class);
+    }
+
+    public static final int LOCATION_FIELD_NUMBER = 1;
+    private int location_;
+    /**
+     * <code>uint32 location = 1;</code>
+     * @return The location.
+     */
+    public int getLocation() {
+      return location_;
+    }
+
+    public static final int PROPSID_FIELD_NUMBER = 2;
+    private int propsId_;
+    /**
+     * <code>uint32 propsId = 2;</code>
+     * @return The propsId.
+     */
+    public int getPropsId() {
+      return propsId_;
+    }
+
+    public static final int DURABILITY_FIELD_NUMBER = 3;
+    private int durability_;
+    /**
+     * <code>uint32 durability = 3;</code>
+     * @return The durability.
+     */
+    public int getDurability() {
+      return durability_;
+    }
+
+    public static final int PROPSNUMBER_FIELD_NUMBER = 4;
+    private int propsNumber_;
+    /**
+     * <code>uint32 propsNumber = 4;</code>
+     * @return The propsNumber.
+     */
+    public int getPropsNumber() {
+      return propsNumber_;
+    }
+
+    public static final int USERPROPSID_FIELD_NUMBER = 5;
+    private int userPropsId_;
+    /**
+     * <code>uint32 userPropsId = 5;</code>
+     * @return The userPropsId.
+     */
+    public int getUserPropsId() {
+      return userPropsId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (location_ != 0) {
+        output.writeUInt32(1, location_);
+      }
+      if (propsId_ != 0) {
+        output.writeUInt32(2, propsId_);
+      }
+      if (durability_ != 0) {
+        output.writeUInt32(3, durability_);
+      }
+      if (propsNumber_ != 0) {
+        output.writeUInt32(4, propsNumber_);
+      }
+      if (userPropsId_ != 0) {
+        output.writeUInt32(5, userPropsId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (location_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, location_);
+      }
+      if (propsId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, propsId_);
+      }
+      if (durability_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, durability_);
+      }
+      if (propsNumber_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, propsNumber_);
+      }
+      if (userPropsId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(5, userPropsId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.Props)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.Props other = (msg.GameMsg.Props) obj;
+
+      if (getLocation()
+          != other.getLocation()) return false;
+      if (getPropsId()
+          != other.getPropsId()) return false;
+      if (getDurability()
+          != other.getDurability()) return false;
+      if (getPropsNumber()
+          != other.getPropsNumber()) return false;
+      if (getUserPropsId()
+          != other.getUserPropsId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + getLocation();
+      hash = (37 * hash) + PROPSID_FIELD_NUMBER;
+      hash = (53 * hash) + getPropsId();
+      hash = (37 * hash) + DURABILITY_FIELD_NUMBER;
+      hash = (53 * hash) + getDurability();
+      hash = (37 * hash) + PROPSNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getPropsNumber();
+      hash = (37 * hash) + USERPROPSID_FIELD_NUMBER;
+      hash = (53 * hash) + getUserPropsId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.Props parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.Props parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.Props parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.Props parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.Props parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.Props parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.Props parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.Props parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.Props parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.Props parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.Props parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.Props parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.Props prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.Props}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.Props)
+        msg.GameMsg.PropsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_Props_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_Props_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.Props.class, msg.GameMsg.Props.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.Props.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        location_ = 0;
+
+        propsId_ = 0;
+
+        durability_ = 0;
+
+        propsNumber_ = 0;
+
+        userPropsId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_Props_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.Props getDefaultInstanceForType() {
+        return msg.GameMsg.Props.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.Props build() {
+        msg.GameMsg.Props result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.Props buildPartial() {
+        msg.GameMsg.Props result = new msg.GameMsg.Props(this);
+        result.location_ = location_;
+        result.propsId_ = propsId_;
+        result.durability_ = durability_;
+        result.propsNumber_ = propsNumber_;
+        result.userPropsId_ = userPropsId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.Props) {
+          return mergeFrom((msg.GameMsg.Props)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.Props other) {
+        if (other == msg.GameMsg.Props.getDefaultInstance()) return this;
+        if (other.getLocation() != 0) {
+          setLocation(other.getLocation());
+        }
+        if (other.getPropsId() != 0) {
+          setPropsId(other.getPropsId());
+        }
+        if (other.getDurability() != 0) {
+          setDurability(other.getDurability());
+        }
+        if (other.getPropsNumber() != 0) {
+          setPropsNumber(other.getPropsNumber());
+        }
+        if (other.getUserPropsId() != 0) {
+          setUserPropsId(other.getUserPropsId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.Props parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.Props) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int location_ ;
+      /**
+       * <code>uint32 location = 1;</code>
+       * @return The location.
+       */
+      public int getLocation() {
+        return location_;
+      }
+      /**
+       * <code>uint32 location = 1;</code>
+       * @param value The location to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLocation(int value) {
+        
+        location_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 location = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearLocation() {
+        
+        location_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int propsId_ ;
+      /**
+       * <code>uint32 propsId = 2;</code>
+       * @return The propsId.
+       */
+      public int getPropsId() {
+        return propsId_;
+      }
+      /**
+       * <code>uint32 propsId = 2;</code>
+       * @param value The propsId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPropsId(int value) {
+        
+        propsId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 propsId = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPropsId() {
+        
+        propsId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int durability_ ;
+      /**
+       * <code>uint32 durability = 3;</code>
+       * @return The durability.
+       */
+      public int getDurability() {
+        return durability_;
+      }
+      /**
+       * <code>uint32 durability = 3;</code>
+       * @param value The durability to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDurability(int value) {
+        
+        durability_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 durability = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDurability() {
+        
+        durability_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int propsNumber_ ;
+      /**
+       * <code>uint32 propsNumber = 4;</code>
+       * @return The propsNumber.
+       */
+      public int getPropsNumber() {
+        return propsNumber_;
+      }
+      /**
+       * <code>uint32 propsNumber = 4;</code>
+       * @param value The propsNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPropsNumber(int value) {
+        
+        propsNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 propsNumber = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPropsNumber() {
+        
+        propsNumber_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int userPropsId_ ;
+      /**
+       * <code>uint32 userPropsId = 5;</code>
+       * @return The userPropsId.
+       */
+      public int getUserPropsId() {
+        return userPropsId_;
+      }
+      /**
+       * <code>uint32 userPropsId = 5;</code>
+       * @param value The userPropsId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUserPropsId(int value) {
+        
+        userPropsId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 userPropsId = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUserPropsId() {
+        
+        userPropsId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.Props)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.Props)
+    private static final msg.GameMsg.Props DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.Props();
+    }
+
+    public static msg.GameMsg.Props getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Props>
+        PARSER = new com.google.protobuf.AbstractParser<Props>() {
+      @java.lang.Override
+      public Props parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Props(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Props> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Props> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.Props getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -35811,6 +36750,30 @@ public final class GameMsg {
      * @return The money.
      */
     int getMoney();
+
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    java.util.List<msg.GameMsg.Props> 
+        getPropsList();
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    msg.GameMsg.Props getProps(int index);
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    int getPropsCount();
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList();
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index);
   }
   /**
    * <pre>
@@ -35830,6 +36793,7 @@ public final class GameMsg {
     }
     private DuplicateFinishResult() {
       propsId_ = emptyIntList();
+      props_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -35889,6 +36853,15 @@ public final class GameMsg {
               money_ = input.readUInt32();
               break;
             }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                props_ = new java.util.ArrayList<msg.GameMsg.Props>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              props_.add(
+                  input.readMessage(msg.GameMsg.Props.parser(), extensionRegistry));
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -35906,6 +36879,9 @@ public final class GameMsg {
       } finally {
         if (((mutable_bitField0_ & 0x00000001) != 0)) {
           propsId_.makeImmutable(); // C
+        }
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
+          props_ = java.util.Collections.unmodifiableList(props_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -35977,6 +36953,41 @@ public final class GameMsg {
       return money_;
     }
 
+    public static final int PROPS_FIELD_NUMBER = 3;
+    private java.util.List<msg.GameMsg.Props> props_;
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    public java.util.List<msg.GameMsg.Props> getPropsList() {
+      return props_;
+    }
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList() {
+      return props_;
+    }
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    public int getPropsCount() {
+      return props_.size();
+    }
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    public msg.GameMsg.Props getProps(int index) {
+      return props_.get(index);
+    }
+    /**
+     * <code>repeated .msg.Props props = 3;</code>
+     */
+    public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index) {
+      return props_.get(index);
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -36001,6 +37012,9 @@ public final class GameMsg {
       }
       if (money_ != 0) {
         output.writeUInt32(2, money_);
+      }
+      for (int i = 0; i < props_.size(); i++) {
+        output.writeMessage(3, props_.get(i));
       }
       unknownFields.writeTo(output);
     }
@@ -36029,6 +37043,10 @@ public final class GameMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(2, money_);
       }
+      for (int i = 0; i < props_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, props_.get(i));
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -36048,6 +37066,8 @@ public final class GameMsg {
           .equals(other.getPropsIdList())) return false;
       if (getMoney()
           != other.getMoney()) return false;
+      if (!getPropsList()
+          .equals(other.getPropsList())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -36065,6 +37085,10 @@ public final class GameMsg {
       }
       hash = (37 * hash) + MONEY_FIELD_NUMBER;
       hash = (53 * hash) + getMoney();
+      if (getPropsCount() > 0) {
+        hash = (37 * hash) + PROPS_FIELD_NUMBER;
+        hash = (53 * hash) + getPropsList().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -36197,6 +37221,7 @@ public final class GameMsg {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getPropsFieldBuilder();
         }
       }
       @java.lang.Override
@@ -36206,6 +37231,12 @@ public final class GameMsg {
         bitField0_ = (bitField0_ & ~0x00000001);
         money_ = 0;
 
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          propsBuilder_.clear();
+        }
         return this;
       }
 
@@ -36239,6 +37270,15 @@ public final class GameMsg {
         }
         result.propsId_ = propsId_;
         result.money_ = money_;
+        if (propsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            props_ = java.util.Collections.unmodifiableList(props_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.props_ = props_;
+        } else {
+          result.props_ = propsBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -36299,6 +37339,32 @@ public final class GameMsg {
         }
         if (other.getMoney() != 0) {
           setMoney(other.getMoney());
+        }
+        if (propsBuilder_ == null) {
+          if (!other.props_.isEmpty()) {
+            if (props_.isEmpty()) {
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensurePropsIsMutable();
+              props_.addAll(other.props_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.props_.isEmpty()) {
+            if (propsBuilder_.isEmpty()) {
+              propsBuilder_.dispose();
+              propsBuilder_ = null;
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              propsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPropsFieldBuilder() : null;
+            } else {
+              propsBuilder_.addAllMessages(other.props_);
+            }
+          }
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -36477,6 +37543,246 @@ public final class GameMsg {
         money_ = 0;
         onChanged();
         return this;
+      }
+
+      private java.util.List<msg.GameMsg.Props> props_ =
+        java.util.Collections.emptyList();
+      private void ensurePropsIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          props_ = new java.util.ArrayList<msg.GameMsg.Props>(props_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> propsBuilder_;
+
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public java.util.List<msg.GameMsg.Props> getPropsList() {
+        if (propsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(props_);
+        } else {
+          return propsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public int getPropsCount() {
+        if (propsBuilder_ == null) {
+          return props_.size();
+        } else {
+          return propsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public msg.GameMsg.Props getProps(int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);
+        } else {
+          return propsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.set(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder addProps(msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder addProps(
+          msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder addAllProps(
+          java.lang.Iterable<? extends msg.GameMsg.Props> values) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, props_);
+          onChanged();
+        } else {
+          propsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder clearProps() {
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          propsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public Builder removeProps(int index) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.remove(index);
+          onChanged();
+        } else {
+          propsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public msg.GameMsg.Props.Builder getPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+          int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);  } else {
+          return propsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+           getPropsOrBuilderList() {
+        if (propsBuilder_ != null) {
+          return propsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(props_);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder() {
+        return getPropsFieldBuilder().addBuilder(
+            msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().addBuilder(
+            index, msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.Props props = 3;</code>
+       */
+      public java.util.List<msg.GameMsg.Props.Builder> 
+           getPropsBuilderList() {
+        return getPropsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> 
+          getPropsFieldBuilder() {
+        if (propsBuilder_ == null) {
+          propsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder>(
+                  props_,
+                  ((bitField0_ & 0x00000002) != 0),
+                  getParentForChildren(),
+                  isClean());
+          props_ = null;
+        }
+        return propsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -38559,6 +39865,2017 @@ public final class GameMsg {
 
   }
 
+  public interface UserBuyGoodsCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserBuyGoodsCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 goodsId = 1;</code>
+     * @return The goodsId.
+     */
+    int getGoodsId();
+
+    /**
+     * <code>uint32 goodsNumber = 2;</code>
+     * @return The goodsNumber.
+     */
+    int getGoodsNumber();
+  }
+  /**
+   * <pre>
+   * 展示商店
+   * 命令
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserBuyGoodsCmd}
+   */
+  public  static final class UserBuyGoodsCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserBuyGoodsCmd)
+      UserBuyGoodsCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserBuyGoodsCmd.newBuilder() to construct.
+    private UserBuyGoodsCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserBuyGoodsCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserBuyGoodsCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserBuyGoodsCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              goodsId_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+
+              goodsNumber_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserBuyGoodsCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserBuyGoodsCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserBuyGoodsCmd.class, msg.GameMsg.UserBuyGoodsCmd.Builder.class);
+    }
+
+    public static final int GOODSID_FIELD_NUMBER = 1;
+    private int goodsId_;
+    /**
+     * <code>uint32 goodsId = 1;</code>
+     * @return The goodsId.
+     */
+    public int getGoodsId() {
+      return goodsId_;
+    }
+
+    public static final int GOODSNUMBER_FIELD_NUMBER = 2;
+    private int goodsNumber_;
+    /**
+     * <code>uint32 goodsNumber = 2;</code>
+     * @return The goodsNumber.
+     */
+    public int getGoodsNumber() {
+      return goodsNumber_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (goodsId_ != 0) {
+        output.writeUInt32(1, goodsId_);
+      }
+      if (goodsNumber_ != 0) {
+        output.writeUInt32(2, goodsNumber_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (goodsId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, goodsId_);
+      }
+      if (goodsNumber_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, goodsNumber_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserBuyGoodsCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserBuyGoodsCmd other = (msg.GameMsg.UserBuyGoodsCmd) obj;
+
+      if (getGoodsId()
+          != other.getGoodsId()) return false;
+      if (getGoodsNumber()
+          != other.getGoodsNumber()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + GOODSID_FIELD_NUMBER;
+      hash = (53 * hash) + getGoodsId();
+      hash = (37 * hash) + GOODSNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getGoodsNumber();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserBuyGoodsCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserBuyGoodsCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 展示商店
+     * 命令
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserBuyGoodsCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserBuyGoodsCmd)
+        msg.GameMsg.UserBuyGoodsCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserBuyGoodsCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserBuyGoodsCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserBuyGoodsCmd.class, msg.GameMsg.UserBuyGoodsCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserBuyGoodsCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        goodsId_ = 0;
+
+        goodsNumber_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserBuyGoodsCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserBuyGoodsCmd getDefaultInstanceForType() {
+        return msg.GameMsg.UserBuyGoodsCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserBuyGoodsCmd build() {
+        msg.GameMsg.UserBuyGoodsCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserBuyGoodsCmd buildPartial() {
+        msg.GameMsg.UserBuyGoodsCmd result = new msg.GameMsg.UserBuyGoodsCmd(this);
+        result.goodsId_ = goodsId_;
+        result.goodsNumber_ = goodsNumber_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserBuyGoodsCmd) {
+          return mergeFrom((msg.GameMsg.UserBuyGoodsCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserBuyGoodsCmd other) {
+        if (other == msg.GameMsg.UserBuyGoodsCmd.getDefaultInstance()) return this;
+        if (other.getGoodsId() != 0) {
+          setGoodsId(other.getGoodsId());
+        }
+        if (other.getGoodsNumber() != 0) {
+          setGoodsNumber(other.getGoodsNumber());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserBuyGoodsCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserBuyGoodsCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int goodsId_ ;
+      /**
+       * <code>uint32 goodsId = 1;</code>
+       * @return The goodsId.
+       */
+      public int getGoodsId() {
+        return goodsId_;
+      }
+      /**
+       * <code>uint32 goodsId = 1;</code>
+       * @param value The goodsId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGoodsId(int value) {
+        
+        goodsId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 goodsId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGoodsId() {
+        
+        goodsId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int goodsNumber_ ;
+      /**
+       * <code>uint32 goodsNumber = 2;</code>
+       * @return The goodsNumber.
+       */
+      public int getGoodsNumber() {
+        return goodsNumber_;
+      }
+      /**
+       * <code>uint32 goodsNumber = 2;</code>
+       * @param value The goodsNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGoodsNumber(int value) {
+        
+        goodsNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 goodsNumber = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGoodsNumber() {
+        
+        goodsNumber_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserBuyGoodsCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserBuyGoodsCmd)
+    private static final msg.GameMsg.UserBuyGoodsCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserBuyGoodsCmd();
+    }
+
+    public static msg.GameMsg.UserBuyGoodsCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserBuyGoodsCmd>
+        PARSER = new com.google.protobuf.AbstractParser<UserBuyGoodsCmd>() {
+      @java.lang.Override
+      public UserBuyGoodsCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserBuyGoodsCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserBuyGoodsCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserBuyGoodsCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserBuyGoodsCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserBuyGoodsResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserBuyGoodsResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * 是否成功
+     * </pre>
+     *
+     * <code>bool isSuccess = 1;</code>
+     * @return The isSuccess.
+     */
+    boolean getIsSuccess();
+
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    java.util.List<msg.GameMsg.Props> 
+        getPropsList();
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    msg.GameMsg.Props getProps(int index);
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    int getPropsCount();
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList();
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index);
+
+    /**
+     * <pre>
+     * 购买的商品id
+     * </pre>
+     *
+     * <code>uint32 goodsId = 3;</code>
+     * @return The goodsId.
+     */
+    int getGoodsId();
+
+    /**
+     * <pre>
+     * 购买的商品数量
+     * </pre>
+     *
+     * <code>uint32 goodsNumber = 4;</code>
+     * @return The goodsNumber.
+     */
+    int getGoodsNumber();
+
+    /**
+     * <pre>
+     * 失败码
+     * </pre>
+     *
+     * <code>uint32 code = 5;</code>
+     * @return The code.
+     */
+    int getCode();
+
+    /**
+     * <pre>
+     * 失败原因
+     * </pre>
+     *
+     * <code>string reason = 6;</code>
+     * @return The reason.
+     */
+    java.lang.String getReason();
+    /**
+     * <pre>
+     * 失败原因
+     * </pre>
+     *
+     * <code>string reason = 6;</code>
+     * @return The bytes for reason.
+     */
+    com.google.protobuf.ByteString
+        getReasonBytes();
+  }
+  /**
+   * <pre>
+   * 展示商店
+   * 结果
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserBuyGoodsResult}
+   */
+  public  static final class UserBuyGoodsResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserBuyGoodsResult)
+      UserBuyGoodsResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserBuyGoodsResult.newBuilder() to construct.
+    private UserBuyGoodsResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserBuyGoodsResult() {
+      props_ = java.util.Collections.emptyList();
+      reason_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserBuyGoodsResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserBuyGoodsResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              isSuccess_ = input.readBool();
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                props_ = new java.util.ArrayList<msg.GameMsg.Props>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              props_.add(
+                  input.readMessage(msg.GameMsg.Props.parser(), extensionRegistry));
+              break;
+            }
+            case 24: {
+
+              goodsId_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+
+              goodsNumber_ = input.readUInt32();
+              break;
+            }
+            case 40: {
+
+              code_ = input.readUInt32();
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              reason_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          props_ = java.util.Collections.unmodifiableList(props_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserBuyGoodsResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserBuyGoodsResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserBuyGoodsResult.class, msg.GameMsg.UserBuyGoodsResult.Builder.class);
+    }
+
+    public static final int ISSUCCESS_FIELD_NUMBER = 1;
+    private boolean isSuccess_;
+    /**
+     * <pre>
+     * 是否成功
+     * </pre>
+     *
+     * <code>bool isSuccess = 1;</code>
+     * @return The isSuccess.
+     */
+    public boolean getIsSuccess() {
+      return isSuccess_;
+    }
+
+    public static final int PROPS_FIELD_NUMBER = 2;
+    private java.util.List<msg.GameMsg.Props> props_;
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public java.util.List<msg.GameMsg.Props> getPropsList() {
+      return props_;
+    }
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList() {
+      return props_;
+    }
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public int getPropsCount() {
+      return props_.size();
+    }
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public msg.GameMsg.Props getProps(int index) {
+      return props_.get(index);
+    }
+    /**
+     * <pre>
+     * 背包中的道具，前后端同步一下数据
+     * </pre>
+     *
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index) {
+      return props_.get(index);
+    }
+
+    public static final int GOODSID_FIELD_NUMBER = 3;
+    private int goodsId_;
+    /**
+     * <pre>
+     * 购买的商品id
+     * </pre>
+     *
+     * <code>uint32 goodsId = 3;</code>
+     * @return The goodsId.
+     */
+    public int getGoodsId() {
+      return goodsId_;
+    }
+
+    public static final int GOODSNUMBER_FIELD_NUMBER = 4;
+    private int goodsNumber_;
+    /**
+     * <pre>
+     * 购买的商品数量
+     * </pre>
+     *
+     * <code>uint32 goodsNumber = 4;</code>
+     * @return The goodsNumber.
+     */
+    public int getGoodsNumber() {
+      return goodsNumber_;
+    }
+
+    public static final int CODE_FIELD_NUMBER = 5;
+    private int code_;
+    /**
+     * <pre>
+     * 失败码
+     * </pre>
+     *
+     * <code>uint32 code = 5;</code>
+     * @return The code.
+     */
+    public int getCode() {
+      return code_;
+    }
+
+    public static final int REASON_FIELD_NUMBER = 6;
+    private volatile java.lang.Object reason_;
+    /**
+     * <pre>
+     * 失败原因
+     * </pre>
+     *
+     * <code>string reason = 6;</code>
+     * @return The reason.
+     */
+    public java.lang.String getReason() {
+      java.lang.Object ref = reason_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        reason_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 失败原因
+     * </pre>
+     *
+     * <code>string reason = 6;</code>
+     * @return The bytes for reason.
+     */
+    public com.google.protobuf.ByteString
+        getReasonBytes() {
+      java.lang.Object ref = reason_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        reason_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (isSuccess_ != false) {
+        output.writeBool(1, isSuccess_);
+      }
+      for (int i = 0; i < props_.size(); i++) {
+        output.writeMessage(2, props_.get(i));
+      }
+      if (goodsId_ != 0) {
+        output.writeUInt32(3, goodsId_);
+      }
+      if (goodsNumber_ != 0) {
+        output.writeUInt32(4, goodsNumber_);
+      }
+      if (code_ != 0) {
+        output.writeUInt32(5, code_);
+      }
+      if (!getReasonBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, reason_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (isSuccess_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, isSuccess_);
+      }
+      for (int i = 0; i < props_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, props_.get(i));
+      }
+      if (goodsId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, goodsId_);
+      }
+      if (goodsNumber_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, goodsNumber_);
+      }
+      if (code_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(5, code_);
+      }
+      if (!getReasonBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, reason_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserBuyGoodsResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserBuyGoodsResult other = (msg.GameMsg.UserBuyGoodsResult) obj;
+
+      if (getIsSuccess()
+          != other.getIsSuccess()) return false;
+      if (!getPropsList()
+          .equals(other.getPropsList())) return false;
+      if (getGoodsId()
+          != other.getGoodsId()) return false;
+      if (getGoodsNumber()
+          != other.getGoodsNumber()) return false;
+      if (getCode()
+          != other.getCode()) return false;
+      if (!getReason()
+          .equals(other.getReason())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ISSUCCESS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsSuccess());
+      if (getPropsCount() > 0) {
+        hash = (37 * hash) + PROPS_FIELD_NUMBER;
+        hash = (53 * hash) + getPropsList().hashCode();
+      }
+      hash = (37 * hash) + GOODSID_FIELD_NUMBER;
+      hash = (53 * hash) + getGoodsId();
+      hash = (37 * hash) + GOODSNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getGoodsNumber();
+      hash = (37 * hash) + CODE_FIELD_NUMBER;
+      hash = (53 * hash) + getCode();
+      hash = (37 * hash) + REASON_FIELD_NUMBER;
+      hash = (53 * hash) + getReason().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserBuyGoodsResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserBuyGoodsResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 展示商店
+     * 结果
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserBuyGoodsResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserBuyGoodsResult)
+        msg.GameMsg.UserBuyGoodsResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserBuyGoodsResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserBuyGoodsResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserBuyGoodsResult.class, msg.GameMsg.UserBuyGoodsResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserBuyGoodsResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getPropsFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        isSuccess_ = false;
+
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          propsBuilder_.clear();
+        }
+        goodsId_ = 0;
+
+        goodsNumber_ = 0;
+
+        code_ = 0;
+
+        reason_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserBuyGoodsResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserBuyGoodsResult getDefaultInstanceForType() {
+        return msg.GameMsg.UserBuyGoodsResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserBuyGoodsResult build() {
+        msg.GameMsg.UserBuyGoodsResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserBuyGoodsResult buildPartial() {
+        msg.GameMsg.UserBuyGoodsResult result = new msg.GameMsg.UserBuyGoodsResult(this);
+        int from_bitField0_ = bitField0_;
+        result.isSuccess_ = isSuccess_;
+        if (propsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            props_ = java.util.Collections.unmodifiableList(props_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.props_ = props_;
+        } else {
+          result.props_ = propsBuilder_.build();
+        }
+        result.goodsId_ = goodsId_;
+        result.goodsNumber_ = goodsNumber_;
+        result.code_ = code_;
+        result.reason_ = reason_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserBuyGoodsResult) {
+          return mergeFrom((msg.GameMsg.UserBuyGoodsResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserBuyGoodsResult other) {
+        if (other == msg.GameMsg.UserBuyGoodsResult.getDefaultInstance()) return this;
+        if (other.getIsSuccess() != false) {
+          setIsSuccess(other.getIsSuccess());
+        }
+        if (propsBuilder_ == null) {
+          if (!other.props_.isEmpty()) {
+            if (props_.isEmpty()) {
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePropsIsMutable();
+              props_.addAll(other.props_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.props_.isEmpty()) {
+            if (propsBuilder_.isEmpty()) {
+              propsBuilder_.dispose();
+              propsBuilder_ = null;
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              propsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPropsFieldBuilder() : null;
+            } else {
+              propsBuilder_.addAllMessages(other.props_);
+            }
+          }
+        }
+        if (other.getGoodsId() != 0) {
+          setGoodsId(other.getGoodsId());
+        }
+        if (other.getGoodsNumber() != 0) {
+          setGoodsNumber(other.getGoodsNumber());
+        }
+        if (other.getCode() != 0) {
+          setCode(other.getCode());
+        }
+        if (!other.getReason().isEmpty()) {
+          reason_ = other.reason_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserBuyGoodsResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserBuyGoodsResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private boolean isSuccess_ ;
+      /**
+       * <pre>
+       * 是否成功
+       * </pre>
+       *
+       * <code>bool isSuccess = 1;</code>
+       * @return The isSuccess.
+       */
+      public boolean getIsSuccess() {
+        return isSuccess_;
+      }
+      /**
+       * <pre>
+       * 是否成功
+       * </pre>
+       *
+       * <code>bool isSuccess = 1;</code>
+       * @param value The isSuccess to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIsSuccess(boolean value) {
+        
+        isSuccess_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 是否成功
+       * </pre>
+       *
+       * <code>bool isSuccess = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIsSuccess() {
+        
+        isSuccess_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<msg.GameMsg.Props> props_ =
+        java.util.Collections.emptyList();
+      private void ensurePropsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          props_ = new java.util.ArrayList<msg.GameMsg.Props>(props_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> propsBuilder_;
+
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public java.util.List<msg.GameMsg.Props> getPropsList() {
+        if (propsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(props_);
+        } else {
+          return propsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public int getPropsCount() {
+        if (propsBuilder_ == null) {
+          return props_.size();
+        } else {
+          return propsBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props getProps(int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);
+        } else {
+          return propsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.set(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(
+          msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addAllProps(
+          java.lang.Iterable<? extends msg.GameMsg.Props> values) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, props_);
+          onChanged();
+        } else {
+          propsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder clearProps() {
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          propsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder removeProps(int index) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.remove(index);
+          onChanged();
+        } else {
+          propsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props.Builder getPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+          int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);  } else {
+          return propsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+           getPropsOrBuilderList() {
+        if (propsBuilder_ != null) {
+          return propsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(props_);
+        }
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder() {
+        return getPropsFieldBuilder().addBuilder(
+            msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().addBuilder(
+            index, msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * 背包中的道具，前后端同步一下数据
+       * </pre>
+       *
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public java.util.List<msg.GameMsg.Props.Builder> 
+           getPropsBuilderList() {
+        return getPropsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> 
+          getPropsFieldBuilder() {
+        if (propsBuilder_ == null) {
+          propsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder>(
+                  props_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          props_ = null;
+        }
+        return propsBuilder_;
+      }
+
+      private int goodsId_ ;
+      /**
+       * <pre>
+       * 购买的商品id
+       * </pre>
+       *
+       * <code>uint32 goodsId = 3;</code>
+       * @return The goodsId.
+       */
+      public int getGoodsId() {
+        return goodsId_;
+      }
+      /**
+       * <pre>
+       * 购买的商品id
+       * </pre>
+       *
+       * <code>uint32 goodsId = 3;</code>
+       * @param value The goodsId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGoodsId(int value) {
+        
+        goodsId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 购买的商品id
+       * </pre>
+       *
+       * <code>uint32 goodsId = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGoodsId() {
+        
+        goodsId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int goodsNumber_ ;
+      /**
+       * <pre>
+       * 购买的商品数量
+       * </pre>
+       *
+       * <code>uint32 goodsNumber = 4;</code>
+       * @return The goodsNumber.
+       */
+      public int getGoodsNumber() {
+        return goodsNumber_;
+      }
+      /**
+       * <pre>
+       * 购买的商品数量
+       * </pre>
+       *
+       * <code>uint32 goodsNumber = 4;</code>
+       * @param value The goodsNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setGoodsNumber(int value) {
+        
+        goodsNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 购买的商品数量
+       * </pre>
+       *
+       * <code>uint32 goodsNumber = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearGoodsNumber() {
+        
+        goodsNumber_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int code_ ;
+      /**
+       * <pre>
+       * 失败码
+       * </pre>
+       *
+       * <code>uint32 code = 5;</code>
+       * @return The code.
+       */
+      public int getCode() {
+        return code_;
+      }
+      /**
+       * <pre>
+       * 失败码
+       * </pre>
+       *
+       * <code>uint32 code = 5;</code>
+       * @param value The code to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCode(int value) {
+        
+        code_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 失败码
+       * </pre>
+       *
+       * <code>uint32 code = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCode() {
+        
+        code_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object reason_ = "";
+      /**
+       * <pre>
+       * 失败原因
+       * </pre>
+       *
+       * <code>string reason = 6;</code>
+       * @return The reason.
+       */
+      public java.lang.String getReason() {
+        java.lang.Object ref = reason_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          reason_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 失败原因
+       * </pre>
+       *
+       * <code>string reason = 6;</code>
+       * @return The bytes for reason.
+       */
+      public com.google.protobuf.ByteString
+          getReasonBytes() {
+        java.lang.Object ref = reason_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          reason_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 失败原因
+       * </pre>
+       *
+       * <code>string reason = 6;</code>
+       * @param value The reason to set.
+       * @return This builder for chaining.
+       */
+      public Builder setReason(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        reason_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 失败原因
+       * </pre>
+       *
+       * <code>string reason = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearReason() {
+        
+        reason_ = getDefaultInstance().getReason();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 失败原因
+       * </pre>
+       *
+       * <code>string reason = 6;</code>
+       * @param value The bytes for reason to set.
+       * @return This builder for chaining.
+       */
+      public Builder setReasonBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        reason_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserBuyGoodsResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserBuyGoodsResult)
+    private static final msg.GameMsg.UserBuyGoodsResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserBuyGoodsResult();
+    }
+
+    public static msg.GameMsg.UserBuyGoodsResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserBuyGoodsResult>
+        PARSER = new com.google.protobuf.AbstractParser<UserBuyGoodsResult>() {
+      @java.lang.Override
+      public UserBuyGoodsResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserBuyGoodsResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserBuyGoodsResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserBuyGoodsResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserBuyGoodsResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_WhoElseIsHereCmd_descriptor;
   private static final 
@@ -38630,15 +41947,20 @@ public final class GameMsg {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_UserLoginResult_Monster_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_msg_UserLoginResult_Props_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_msg_UserLoginResult_Props_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_UserLoginResult_WearEquipment_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_UserLoginResult_WearEquipment_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserLoginResult_GoodsLimit_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserLoginResult_GoodsLimit_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_Props_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_Props_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_UserRegisterCmd_descriptor;
   private static final 
@@ -38829,6 +42151,16 @@ public final class GameMsg {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_BossSkillAttkUserResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserBuyGoodsCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserBuyGoodsCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserBuyGoodsResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserBuyGoodsResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -38853,109 +42185,118 @@ public final class GameMsg {
       "rId\030\002 \001(\r\022\017\n\007propsId\030\003 \001(\r\022\023\n\013isDieBefor" +
       "e\030\004 \001(\010\022\021\n\tpropsType\030\005 \001(\t\022\027\n\017resumeMpEn" +
       "dTime\030\006 \001(\004\"2\n\014UserLoginCmd\022\020\n\010userName\030" +
-      "\001 \001(\t\022\020\n\010password\030\002 \001(\t\"\263\005\n\017UserLoginRes" +
+      "\001 \001(\t\022\020\n\010password\030\002 \001(\t\"\242\005\n\017UserLoginRes" +
       "ult\022\016\n\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\n\n" +
       "\002hp\030\003 \001(\r\022\n\n\002mp\030\004 \001(\r\022\023\n\013currSceneId\030\005 \001" +
       "(\r\022%\n\003npc\030\006 \003(\0132\030.msg.UserLoginResult.Np" +
       "c\022)\n\005skill\030\007 \003(\0132\032.msg.UserLoginResult.S" +
       "kill\022-\n\007monster\030\010 \003(\0132\034.msg.UserLoginRes" +
-      "ult.Monster\022)\n\005props\030\t \003(\0132\032.msg.UserLog" +
-      "inResult.Props\022\027\n\017resumeMpEndTime\030\n \001(\004\022" +
-      "3\n\007wearEqu\030\013 \003(\0132\".msg.UserLoginResult.W" +
-      "earEquipment\022\024\n\014professionId\030\014 \001(\r\022\r\n\005mo" +
-      "ney\030\r \001(\r\032-\n\003Npc\022\014\n\004name\030\001 \001(\t\022\n\n\002id\030\002 \001" +
-      "(\r\022\014\n\004info\030\003 \001(\t\032\023\n\005Skill\022\n\n\002id\030\001 \001(\r\032>\n" +
-      "\007Monster\022\n\n\002id\030\001 \001(\r\022\014\n\004name\030\002 \001(\t\022\n\n\002hp" +
-      "\030\003 \001(\r\022\r\n\005isDie\030\004 \001(\010\032h\n\005Props\022\020\n\010locati" +
-      "on\030\001 \001(\r\022\017\n\007propsId\030\002 \001(\r\022\022\n\ndurability\030" +
-      "\003 \001(\r\022\023\n\013propsNumber\030\004 \001(\r\022\023\n\013userPropsI" +
-      "d\030\005 \001(\r\032D\n\rWearEquipment\022\n\n\002id\030\001 \001(\r\022\023\n\013" +
-      "equipmentId\030\002 \001(\r\022\022\n\ndurability\030\003 \001(\r\"Q\n" +
-      "\017UserRegisterCmd\022\023\n\013newUserName\030\001 \001(\t\022\023\n" +
-      "\013newPassword\030\002 \001(\t\022\024\n\014professionId\030\003 \001(\r" +
-      "\"\'\n\022UserRegisterResult\022\021\n\tisSucceed\030\001 \001(" +
-      "\010\"\025\n\023StopCurUserAllTimer\"\'\n\022UserSwitchSc" +
-      "eneCmd\022\021\n\ttoSceneId\030\001 \001(\r\"\214\002\n\025UserSwitch" +
-      "SceneResult\022+\n\003npc\030\001 \003(\0132\036.msg.UserSwitc" +
-      "hSceneResult.Npc\022;\n\013monsterInfo\030\002 \003(\0132&." +
-      "msg.UserSwitchSceneResult.MonsterInfo\032>\n" +
-      "\003Npc\022\014\n\004name\030\001 \001(\t\022\017\n\007sceneId\030\002 \001(\r\022\014\n\004i" +
-      "nfo\030\003 \001(\t\022\n\n\002id\030\004 \001(\r\032I\n\013MonsterInfo\022\014\n\004" +
-      "name\030\001 \001(\t\022\r\n\005isDie\030\002 \001(\010\022\n\n\002hp\030\003 \001(\r\022\021\n" +
-      "\tmonsterId\030\004 \001(\r\"\026\n\024MonsterStartAttkUser" +
-      "\"%\n\020NoticeUserAttked\022\021\n\tmonsterId\030\001 \003(\r\"" +
-      "#\n\020UserSkillAttkCmd\022\017\n\007skillId\030\001 \001(\r\"}\n\023" +
-      "UserSkillAttkResult\022\021\n\tisSuccess\030\001 \001(\010\022\022" +
-      "\n\nsubtractHp\030\002 \001(\r\022\021\n\tmonsterId\030\003 \001(\r\022\023\n" +
-      "\013falseReason\030\004 \001(\t\022\027\n\017resumeMpEndTime\030\013 " +
-      "\001(\004\"#\n\020SkillStateSwitch\022\017\n\007skillId\030\001 \001(\r" +
-      "\"2\n\017RobEquipmentCmd\022\021\n\tmonsterId\030\001 \001(\r\022\014" +
-      "\n\004type\030\002 \001(\r\"Y\n\022RobEquipmentResult\022\021\n\tis" +
-      "Succeed\030\001 \001(\010\022\014\n\004type\030\002 \001(\r\022\017\n\007propsId\030\003" +
-      " \001(\r\022\021\n\tuserEquId\030\004 \001(\r\"\r\n\013BackpackCmd\"\177" +
-      "\n\016BackpackResult\022\021\n\tequIdList\030\001 \003(\r\022.\n\np" +
-      "otionList\030\002 \003(\0132\032.msg.BackpackResult.Pot" +
-      "ion\032*\n\006Potion\022\020\n\010potionId\030\001 \001(\r\022\016\n\006numbe" +
-      "r\030\002 \001(\r\"!\n\rUserPotionCmd\022\020\n\010location\030\001 \001" +
-      "(\r\"\206\001\n\020UserPotionResult\022\021\n\tisSuccess\030\001 \001" +
-      "(\010\022\020\n\010location\030\002 \001(\r\022\027\n\017resumeMpEndTime\030" +
-      "\003 \001(\004\022\033\n\023resumeMpEndTimeAuto\030\004 \001(\004\022\027\n\017re" +
-      "sumeHpEndTime\030\005 \001(\004\"4\n\025UserResumeStateRe" +
-      "sult\022\014\n\004type\030\001 \001(\t\022\r\n\005value\030\002 \001(\r\"A\n\024Use" +
-      "rWearEquipmentCmd\022\020\n\010location\030\001 \001(\r\022\027\n\017u" +
-      "serEquipmentId\030\002 \001(\r\"U\n\027UserWearEquipmen" +
-      "tResult\022\017\n\007propsId\030\001 \001(\r\022\027\n\017userEquipmen" +
-      "tId\030\002 \001(\r\022\020\n\010location\030\003 \001(\r\"@\n\024UserUndoE" +
-      "quipmentCmd\022\017\n\007propsId\030\001 \001(\r\022\027\n\017userEqui" +
-      "pmentId\030\002 \001(\r\"C\n\027UserUndoEquipmentResult" +
-      "\022\017\n\007propsId\030\001 \001(\r\022\027\n\017userEquipmentId\030\002 \001" +
-      "(\r\"F\n\032DurabilityDeficiencyResult\022\017\n\007prop" +
-      "sId\030\001 \001(\r\022\027\n\017userEquipmentId\030\002 \001(\r\"-\n\022Re" +
-      "pairEquipmentCmd\022\027\n\017userEquipmentId\030\001 \001(" +
-      "\r\"0\n\025RepairEquipmentResult\022\027\n\017userEquipm" +
-      "entId\030\001 \001(\r\")\n\024MonsterDropHpAutoDie\022\021\n\tm" +
-      "onsterId\030\001 \001(\r\"(\n\021EnterDuplicateCmd\022\023\n\013d" +
-      "uplicateId\030\001 \001(\r\"U\n\024EnterDuplicateResult" +
-      "\022\023\n\013duplicateId\030\001 \001(\r\022\021\n\tstartTime\030\002 \001(\004" +
-      "\022\025\n\rbossMonsterId\030\003 \001(\r\"\r\n\013AttkBossCmd\"\037" +
-      "\n\016AttkBossResult\022\r\n\005subHp\030\001 \001(\r\":\n\016NextB" +
-      "ossResult\022\025\n\rbossMonsterId\030\001 \001(\r\022\021\n\tstar" +
-      "tTime\030\002 \001(\004\"7\n\025DuplicateFinishResult\022\017\n\007" +
-      "propsId\030\001 \003(\r\022\r\n\005money\030\002 \001(\r\"\026\n\024UserQuit" +
-      "DuplicateCmd\"4\n\027UserQuitDuplicateResult\022" +
-      "\031\n\021quitDuplicateType\030\001 \001(\t\"\'\n\022BossAttkUs" +
-      "erResult\022\021\n\tsubUserHp\030\001 \001(\r\",\n\027BossSkill" +
-      "AttkUserResult\022\021\n\tsubUserHp\030\001 \001(\r*\212\t\n\007Ms" +
-      "gCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_E" +
-      "LSE_IS_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RESULT" +
-      "\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027USE" +
-      "R_SUBTRACT_HP_RESULT\020\005\022\016\n\nDIE_RESULT\020\006\022\022" +
-      "\n\016USER_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RESULT\020" +
-      "\010\022\025\n\021USER_REGISTER_CMD\020\t\022\030\n\024USER_REGISTE" +
-      "R_RESULT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027STOP" +
-      "_CUR_USER_ALL_TIMER\020\014\022\031\n\025USER_SWITCH_SCE" +
-      "NE_CMD\020\r\022\034\n\030USER_SWITCH_SCENE_RESULT\020\016\022\033" +
-      "\n\027MONSTER_START_ATTK_USER\020\017\022\026\n\022NOTICE_US" +
-      "ER_ATTKED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021\022\032\n\026" +
-      "USER_SKILL_ATTK_RESULT\020\022\022\026\n\022SKILL_STATE_" +
-      "SWITCH\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014BACKP" +
-      "ACK_CMD\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024ROB_EQ" +
-      "UIPMENT_RESULT\020\027\022\023\n\017USER_POTION_CMD\020\030\022\026\n" +
-      "\022USER_POTION_RESULT\020\031\022\034\n\030USER_RESUME_STA" +
-      "TE_RESULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_CMD\020\033" +
-      "\022\036\n\032USER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027USER" +
-      "_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_EQUIP" +
-      "MENT_RESULT\020\036\022 \n\034DURABILITY_DEFICIENCY_R" +
-      "ESULT\020\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n\027REP" +
-      "AIR_EQUIPMENT_RESULT\020!\022\034\n\030MONSTER_DROP_H" +
-      "P_AUTO_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020#\022\032\n" +
-      "\026ENTER_DUPLICATE_RESULT\020$\022\021\n\rATTK_BOSS_C" +
-      "MD\020%\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_BOSS_" +
-      "RESULT\020\'\022\033\n\027DUPLICATE_FINISH_RESULT\020(\022\033\n" +
-      "\027USER_QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_QUIT_" +
-      "DUPLICATE_RESULT\020*\022\031\n\025BOSS_ATTK_USER_RES" +
-      "ULT\020+\022\037\n\033BOSS_SKILL_ATTK_USER_RESULT\020,B\005" +
-      "\n\003msgb\006proto3"
+      "ult.Monster\022\031\n\005props\030\t \003(\0132\n.msg.Props\022\027" +
+      "\n\017resumeMpEndTime\030\n \001(\004\0223\n\007wearEqu\030\013 \003(\013" +
+      "2\".msg.UserLoginResult.WearEquipment\022\024\n\014" +
+      "professionId\030\014 \001(\r\022\r\n\005money\030\r \001(\r\0223\n\ngoo" +
+      "dLimits\030\016 \003(\0132\037.msg.UserLoginResult.Good" +
+      "sLimit\032-\n\003Npc\022\014\n\004name\030\001 \001(\t\022\n\n\002id\030\002 \001(\r\022" +
+      "\014\n\004info\030\003 \001(\t\032\023\n\005Skill\022\n\n\002id\030\001 \001(\r\032>\n\007Mo" +
+      "nster\022\n\n\002id\030\001 \001(\r\022\014\n\004name\030\002 \001(\t\022\n\n\002hp\030\003 " +
+      "\001(\r\022\r\n\005isDie\030\004 \001(\010\032D\n\rWearEquipment\022\n\n\002i" +
+      "d\030\001 \001(\r\022\023\n\013equipmentId\030\002 \001(\r\022\022\n\ndurabili" +
+      "ty\030\003 \001(\r\0322\n\nGoodsLimit\022\017\n\007goodsId\030\001 \001(\r\022" +
+      "\023\n\013goodsNumber\030\002 \001(\r\"h\n\005Props\022\020\n\010locatio" +
+      "n\030\001 \001(\r\022\017\n\007propsId\030\002 \001(\r\022\022\n\ndurability\030\003" +
+      " \001(\r\022\023\n\013propsNumber\030\004 \001(\r\022\023\n\013userPropsId" +
+      "\030\005 \001(\r\"Q\n\017UserRegisterCmd\022\023\n\013newUserName" +
+      "\030\001 \001(\t\022\023\n\013newPassword\030\002 \001(\t\022\024\n\014professio" +
+      "nId\030\003 \001(\r\"\'\n\022UserRegisterResult\022\021\n\tisSuc" +
+      "ceed\030\001 \001(\010\"\025\n\023StopCurUserAllTimer\"\'\n\022Use" +
+      "rSwitchSceneCmd\022\021\n\ttoSceneId\030\001 \001(\r\"\214\002\n\025U" +
+      "serSwitchSceneResult\022+\n\003npc\030\001 \003(\0132\036.msg." +
+      "UserSwitchSceneResult.Npc\022;\n\013monsterInfo" +
+      "\030\002 \003(\0132&.msg.UserSwitchSceneResult.Monst" +
+      "erInfo\032>\n\003Npc\022\014\n\004name\030\001 \001(\t\022\017\n\007sceneId\030\002" +
+      " \001(\r\022\014\n\004info\030\003 \001(\t\022\n\n\002id\030\004 \001(\r\032I\n\013Monste" +
+      "rInfo\022\014\n\004name\030\001 \001(\t\022\r\n\005isDie\030\002 \001(\010\022\n\n\002hp" +
+      "\030\003 \001(\r\022\021\n\tmonsterId\030\004 \001(\r\"\026\n\024MonsterStar" +
+      "tAttkUser\"%\n\020NoticeUserAttked\022\021\n\tmonster" +
+      "Id\030\001 \003(\r\"#\n\020UserSkillAttkCmd\022\017\n\007skillId\030" +
+      "\001 \001(\r\"}\n\023UserSkillAttkResult\022\021\n\tisSucces" +
+      "s\030\001 \001(\010\022\022\n\nsubtractHp\030\002 \001(\r\022\021\n\tmonsterId" +
+      "\030\003 \001(\r\022\023\n\013falseReason\030\004 \001(\t\022\027\n\017resumeMpE" +
+      "ndTime\030\013 \001(\004\"#\n\020SkillStateSwitch\022\017\n\007skil" +
+      "lId\030\001 \001(\r\"2\n\017RobEquipmentCmd\022\021\n\tmonsterI" +
+      "d\030\001 \001(\r\022\014\n\004type\030\002 \001(\r\"Y\n\022RobEquipmentRes" +
+      "ult\022\021\n\tisSucceed\030\001 \001(\010\022\014\n\004type\030\002 \001(\r\022\017\n\007" +
+      "propsId\030\003 \001(\r\022\021\n\tuserEquId\030\004 \001(\r\"\r\n\013Back" +
+      "packCmd\"\177\n\016BackpackResult\022\021\n\tequIdList\030\001" +
+      " \003(\r\022.\n\npotionList\030\002 \003(\0132\032.msg.BackpackR" +
+      "esult.Potion\032*\n\006Potion\022\020\n\010potionId\030\001 \001(\r" +
+      "\022\016\n\006number\030\002 \001(\r\"!\n\rUserPotionCmd\022\020\n\010loc" +
+      "ation\030\001 \001(\r\"\206\001\n\020UserPotionResult\022\021\n\tisSu" +
+      "ccess\030\001 \001(\010\022\020\n\010location\030\002 \001(\r\022\027\n\017resumeM" +
+      "pEndTime\030\003 \001(\004\022\033\n\023resumeMpEndTimeAuto\030\004 " +
+      "\001(\004\022\027\n\017resumeHpEndTime\030\005 \001(\004\"4\n\025UserResu" +
+      "meStateResult\022\014\n\004type\030\001 \001(\t\022\r\n\005value\030\002 \001" +
+      "(\r\"A\n\024UserWearEquipmentCmd\022\020\n\010location\030\001" +
+      " \001(\r\022\027\n\017userEquipmentId\030\002 \001(\r\"U\n\027UserWea" +
+      "rEquipmentResult\022\017\n\007propsId\030\001 \001(\r\022\027\n\017use" +
+      "rEquipmentId\030\002 \001(\r\022\020\n\010location\030\003 \001(\r\"@\n\024" +
+      "UserUndoEquipmentCmd\022\017\n\007propsId\030\001 \001(\r\022\027\n" +
+      "\017userEquipmentId\030\002 \001(\r\"C\n\027UserUndoEquipm" +
+      "entResult\022\017\n\007propsId\030\001 \001(\r\022\027\n\017userEquipm" +
+      "entId\030\002 \001(\r\"F\n\032DurabilityDeficiencyResul" +
+      "t\022\017\n\007propsId\030\001 \001(\r\022\027\n\017userEquipmentId\030\002 " +
+      "\001(\r\"-\n\022RepairEquipmentCmd\022\027\n\017userEquipme" +
+      "ntId\030\001 \001(\r\"0\n\025RepairEquipmentResult\022\027\n\017u" +
+      "serEquipmentId\030\001 \001(\r\")\n\024MonsterDropHpAut" +
+      "oDie\022\021\n\tmonsterId\030\001 \001(\r\"(\n\021EnterDuplicat" +
+      "eCmd\022\023\n\013duplicateId\030\001 \001(\r\"U\n\024EnterDuplic" +
+      "ateResult\022\023\n\013duplicateId\030\001 \001(\r\022\021\n\tstartT" +
+      "ime\030\002 \001(\004\022\025\n\rbossMonsterId\030\003 \001(\r\"\r\n\013Attk" +
+      "BossCmd\"\037\n\016AttkBossResult\022\r\n\005subHp\030\001 \001(\r" +
+      "\":\n\016NextBossResult\022\025\n\rbossMonsterId\030\001 \001(" +
+      "\r\022\021\n\tstartTime\030\002 \001(\004\"R\n\025DuplicateFinishR" +
+      "esult\022\017\n\007propsId\030\001 \003(\r\022\r\n\005money\030\002 \001(\r\022\031\n" +
+      "\005props\030\003 \003(\0132\n.msg.Props\"\026\n\024UserQuitDupl" +
+      "icateCmd\"4\n\027UserQuitDuplicateResult\022\031\n\021q" +
+      "uitDuplicateType\030\001 \001(\t\"\'\n\022BossAttkUserRe" +
+      "sult\022\021\n\tsubUserHp\030\001 \001(\r\",\n\027BossSkillAttk" +
+      "UserResult\022\021\n\tsubUserHp\030\001 \001(\r\"7\n\017UserBuy" +
+      "GoodsCmd\022\017\n\007goodsId\030\001 \001(\r\022\023\n\013goodsNumber" +
+      "\030\002 \001(\r\"\206\001\n\022UserBuyGoodsResult\022\021\n\tisSucce" +
+      "ss\030\001 \001(\010\022\031\n\005props\030\002 \003(\0132\n.msg.Props\022\017\n\007g" +
+      "oodsId\030\003 \001(\r\022\023\n\013goodsNumber\030\004 \001(\r\022\014\n\004cod" +
+      "e\030\005 \001(\r\022\016\n\006reason\030\006 \001(\t*\275\t\n\007MsgCode\022\030\n\024W" +
+      "HO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS_HER" +
+      "E_RESULT\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014\n\010ATTK" +
+      "_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027USER_SUBTRACT" +
+      "_HP_RESULT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016USER_LOG" +
+      "IN_CMD\020\007\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n\021USER_" +
+      "REGISTER_CMD\020\t\022\030\n\024USER_REGISTER_RESULT\020\n" +
+      "\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027STOP_CUR_USER_" +
+      "ALL_TIMER\020\014\022\031\n\025USER_SWITCH_SCENE_CMD\020\r\022\034" +
+      "\n\030USER_SWITCH_SCENE_RESULT\020\016\022\033\n\027MONSTER_" +
+      "START_ATTK_USER\020\017\022\026\n\022NOTICE_USER_ATTKED\020" +
+      "\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021\022\032\n\026USER_SKILL" +
+      "_ATTK_RESULT\020\022\022\026\n\022SKILL_STATE_SWITCH\020\023\022\025" +
+      "\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014BACKPACK_CMD\020\025\022" +
+      "\023\n\017BACKPACK_RESULT\020\026\022\030\n\024ROB_EQUIPMENT_RE" +
+      "SULT\020\027\022\023\n\017USER_POTION_CMD\020\030\022\026\n\022USER_POTI" +
+      "ON_RESULT\020\031\022\034\n\030USER_RESUME_STATE_RESULT\020" +
+      "\032\022\033\n\027USER_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032USER_W" +
+      "EAR_EQUIPMENT_RESULT\020\034\022\033\n\027USER_UNDO_EQUI" +
+      "PMENT_CMD\020\035\022\036\n\032USER_UNDO_EQUIPMENT_RESUL" +
+      "T\020\036\022 \n\034DURABILITY_DEFICIENCY_RESULT\020\037\022\030\n" +
+      "\024REPAIR_EQUIPMENT_CMD\020 \022\033\n\027REPAIR_EQUIPM" +
+      "ENT_RESULT\020!\022\034\n\030MONSTER_DROP_HP_AUTO_DIE" +
+      "\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020#\022\032\n\026ENTER_DUP" +
+      "LICATE_RESULT\020$\022\021\n\rATTK_BOSS_CMD\020%\022\024\n\020AT" +
+      "TK_BOSS_RESULT\020&\022\024\n\020NEXT_BOSS_RESULT\020\'\022\033" +
+      "\n\027DUPLICATE_FINISH_RESULT\020(\022\033\n\027USER_QUIT" +
+      "_DUPLICATE_CMD\020)\022\036\n\032USER_QUIT_DUPLICATE_" +
+      "RESULT\020*\022\031\n\025BOSS_ATTK_USER_RESULT\020+\022\037\n\033B" +
+      "OSS_SKILL_ATTK_USER_RESULT\020,\022\026\n\022USER_BUY" +
+      "_GOODS_CMD\020-\022\031\n\025USER_BUY_GOODS_RESULT\020.B" +
+      "\005\n\003msgb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -39026,7 +42367,7 @@ public final class GameMsg {
     internal_static_msg_UserLoginResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserLoginResult_descriptor,
-        new java.lang.String[] { "UserId", "UserName", "Hp", "Mp", "CurrSceneId", "Npc", "Skill", "Monster", "Props", "ResumeMpEndTime", "WearEqu", "ProfessionId", "Money", });
+        new java.lang.String[] { "UserId", "UserName", "Hp", "Mp", "CurrSceneId", "Npc", "Skill", "Monster", "Props", "ResumeMpEndTime", "WearEqu", "ProfessionId", "Money", "GoodLimits", });
     internal_static_msg_UserLoginResult_Npc_descriptor =
       internal_static_msg_UserLoginResult_descriptor.getNestedTypes().get(0);
     internal_static_msg_UserLoginResult_Npc_fieldAccessorTable = new
@@ -39045,44 +42386,50 @@ public final class GameMsg {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserLoginResult_Monster_descriptor,
         new java.lang.String[] { "Id", "Name", "Hp", "IsDie", });
-    internal_static_msg_UserLoginResult_Props_descriptor =
-      internal_static_msg_UserLoginResult_descriptor.getNestedTypes().get(3);
-    internal_static_msg_UserLoginResult_Props_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_msg_UserLoginResult_Props_descriptor,
-        new java.lang.String[] { "Location", "PropsId", "Durability", "PropsNumber", "UserPropsId", });
     internal_static_msg_UserLoginResult_WearEquipment_descriptor =
-      internal_static_msg_UserLoginResult_descriptor.getNestedTypes().get(4);
+      internal_static_msg_UserLoginResult_descriptor.getNestedTypes().get(3);
     internal_static_msg_UserLoginResult_WearEquipment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserLoginResult_WearEquipment_descriptor,
         new java.lang.String[] { "Id", "EquipmentId", "Durability", });
-    internal_static_msg_UserRegisterCmd_descriptor =
+    internal_static_msg_UserLoginResult_GoodsLimit_descriptor =
+      internal_static_msg_UserLoginResult_descriptor.getNestedTypes().get(4);
+    internal_static_msg_UserLoginResult_GoodsLimit_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserLoginResult_GoodsLimit_descriptor,
+        new java.lang.String[] { "GoodsId", "GoodsNumber", });
+    internal_static_msg_Props_descriptor =
       getDescriptor().getMessageTypes().get(10);
+    internal_static_msg_Props_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_Props_descriptor,
+        new java.lang.String[] { "Location", "PropsId", "Durability", "PropsNumber", "UserPropsId", });
+    internal_static_msg_UserRegisterCmd_descriptor =
+      getDescriptor().getMessageTypes().get(11);
     internal_static_msg_UserRegisterCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserRegisterCmd_descriptor,
         new java.lang.String[] { "NewUserName", "NewPassword", "ProfessionId", });
     internal_static_msg_UserRegisterResult_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_msg_UserRegisterResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserRegisterResult_descriptor,
         new java.lang.String[] { "IsSucceed", });
     internal_static_msg_StopCurUserAllTimer_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_msg_StopCurUserAllTimer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_StopCurUserAllTimer_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserSwitchSceneCmd_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_msg_UserSwitchSceneCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserSwitchSceneCmd_descriptor,
         new java.lang.String[] { "ToSceneId", });
     internal_static_msg_UserSwitchSceneResult_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_msg_UserSwitchSceneResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserSwitchSceneResult_descriptor,
@@ -39100,55 +42447,55 @@ public final class GameMsg {
         internal_static_msg_UserSwitchSceneResult_MonsterInfo_descriptor,
         new java.lang.String[] { "Name", "IsDie", "Hp", "MonsterId", });
     internal_static_msg_MonsterStartAttkUser_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_msg_MonsterStartAttkUser_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_MonsterStartAttkUser_descriptor,
         new java.lang.String[] { });
     internal_static_msg_NoticeUserAttked_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_msg_NoticeUserAttked_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_NoticeUserAttked_descriptor,
         new java.lang.String[] { "MonsterId", });
     internal_static_msg_UserSkillAttkCmd_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_msg_UserSkillAttkCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserSkillAttkCmd_descriptor,
         new java.lang.String[] { "SkillId", });
     internal_static_msg_UserSkillAttkResult_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_msg_UserSkillAttkResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserSkillAttkResult_descriptor,
         new java.lang.String[] { "IsSuccess", "SubtractHp", "MonsterId", "FalseReason", "ResumeMpEndTime", });
     internal_static_msg_SkillStateSwitch_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_msg_SkillStateSwitch_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_SkillStateSwitch_descriptor,
         new java.lang.String[] { "SkillId", });
     internal_static_msg_RobEquipmentCmd_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_msg_RobEquipmentCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_RobEquipmentCmd_descriptor,
         new java.lang.String[] { "MonsterId", "Type", });
     internal_static_msg_RobEquipmentResult_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_msg_RobEquipmentResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_RobEquipmentResult_descriptor,
         new java.lang.String[] { "IsSucceed", "Type", "PropsId", "UserEquId", });
     internal_static_msg_BackpackCmd_descriptor =
-      getDescriptor().getMessageTypes().get(22);
+      getDescriptor().getMessageTypes().get(23);
     internal_static_msg_BackpackCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BackpackCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_BackpackResult_descriptor =
-      getDescriptor().getMessageTypes().get(23);
+      getDescriptor().getMessageTypes().get(24);
     internal_static_msg_BackpackResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BackpackResult_descriptor,
@@ -39160,131 +42507,143 @@ public final class GameMsg {
         internal_static_msg_BackpackResult_Potion_descriptor,
         new java.lang.String[] { "PotionId", "Number", });
     internal_static_msg_UserPotionCmd_descriptor =
-      getDescriptor().getMessageTypes().get(24);
+      getDescriptor().getMessageTypes().get(25);
     internal_static_msg_UserPotionCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserPotionCmd_descriptor,
         new java.lang.String[] { "Location", });
     internal_static_msg_UserPotionResult_descriptor =
-      getDescriptor().getMessageTypes().get(25);
+      getDescriptor().getMessageTypes().get(26);
     internal_static_msg_UserPotionResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserPotionResult_descriptor,
         new java.lang.String[] { "IsSuccess", "Location", "ResumeMpEndTime", "ResumeMpEndTimeAuto", "ResumeHpEndTime", });
     internal_static_msg_UserResumeStateResult_descriptor =
-      getDescriptor().getMessageTypes().get(26);
+      getDescriptor().getMessageTypes().get(27);
     internal_static_msg_UserResumeStateResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserResumeStateResult_descriptor,
         new java.lang.String[] { "Type", "Value", });
     internal_static_msg_UserWearEquipmentCmd_descriptor =
-      getDescriptor().getMessageTypes().get(27);
+      getDescriptor().getMessageTypes().get(28);
     internal_static_msg_UserWearEquipmentCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserWearEquipmentCmd_descriptor,
         new java.lang.String[] { "Location", "UserEquipmentId", });
     internal_static_msg_UserWearEquipmentResult_descriptor =
-      getDescriptor().getMessageTypes().get(28);
+      getDescriptor().getMessageTypes().get(29);
     internal_static_msg_UserWearEquipmentResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserWearEquipmentResult_descriptor,
         new java.lang.String[] { "PropsId", "UserEquipmentId", "Location", });
     internal_static_msg_UserUndoEquipmentCmd_descriptor =
-      getDescriptor().getMessageTypes().get(29);
+      getDescriptor().getMessageTypes().get(30);
     internal_static_msg_UserUndoEquipmentCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserUndoEquipmentCmd_descriptor,
         new java.lang.String[] { "PropsId", "UserEquipmentId", });
     internal_static_msg_UserUndoEquipmentResult_descriptor =
-      getDescriptor().getMessageTypes().get(30);
+      getDescriptor().getMessageTypes().get(31);
     internal_static_msg_UserUndoEquipmentResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserUndoEquipmentResult_descriptor,
         new java.lang.String[] { "PropsId", "UserEquipmentId", });
     internal_static_msg_DurabilityDeficiencyResult_descriptor =
-      getDescriptor().getMessageTypes().get(31);
+      getDescriptor().getMessageTypes().get(32);
     internal_static_msg_DurabilityDeficiencyResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DurabilityDeficiencyResult_descriptor,
         new java.lang.String[] { "PropsId", "UserEquipmentId", });
     internal_static_msg_RepairEquipmentCmd_descriptor =
-      getDescriptor().getMessageTypes().get(32);
+      getDescriptor().getMessageTypes().get(33);
     internal_static_msg_RepairEquipmentCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_RepairEquipmentCmd_descriptor,
         new java.lang.String[] { "UserEquipmentId", });
     internal_static_msg_RepairEquipmentResult_descriptor =
-      getDescriptor().getMessageTypes().get(33);
+      getDescriptor().getMessageTypes().get(34);
     internal_static_msg_RepairEquipmentResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_RepairEquipmentResult_descriptor,
         new java.lang.String[] { "UserEquipmentId", });
     internal_static_msg_MonsterDropHpAutoDie_descriptor =
-      getDescriptor().getMessageTypes().get(34);
+      getDescriptor().getMessageTypes().get(35);
     internal_static_msg_MonsterDropHpAutoDie_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_MonsterDropHpAutoDie_descriptor,
         new java.lang.String[] { "MonsterId", });
     internal_static_msg_EnterDuplicateCmd_descriptor =
-      getDescriptor().getMessageTypes().get(35);
+      getDescriptor().getMessageTypes().get(36);
     internal_static_msg_EnterDuplicateCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_EnterDuplicateCmd_descriptor,
         new java.lang.String[] { "DuplicateId", });
     internal_static_msg_EnterDuplicateResult_descriptor =
-      getDescriptor().getMessageTypes().get(36);
+      getDescriptor().getMessageTypes().get(37);
     internal_static_msg_EnterDuplicateResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_EnterDuplicateResult_descriptor,
         new java.lang.String[] { "DuplicateId", "StartTime", "BossMonsterId", });
     internal_static_msg_AttkBossCmd_descriptor =
-      getDescriptor().getMessageTypes().get(37);
+      getDescriptor().getMessageTypes().get(38);
     internal_static_msg_AttkBossCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AttkBossCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_AttkBossResult_descriptor =
-      getDescriptor().getMessageTypes().get(38);
+      getDescriptor().getMessageTypes().get(39);
     internal_static_msg_AttkBossResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AttkBossResult_descriptor,
         new java.lang.String[] { "SubHp", });
     internal_static_msg_NextBossResult_descriptor =
-      getDescriptor().getMessageTypes().get(39);
+      getDescriptor().getMessageTypes().get(40);
     internal_static_msg_NextBossResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_NextBossResult_descriptor,
         new java.lang.String[] { "BossMonsterId", "StartTime", });
     internal_static_msg_DuplicateFinishResult_descriptor =
-      getDescriptor().getMessageTypes().get(40);
+      getDescriptor().getMessageTypes().get(41);
     internal_static_msg_DuplicateFinishResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DuplicateFinishResult_descriptor,
-        new java.lang.String[] { "PropsId", "Money", });
+        new java.lang.String[] { "PropsId", "Money", "Props", });
     internal_static_msg_UserQuitDuplicateCmd_descriptor =
-      getDescriptor().getMessageTypes().get(41);
+      getDescriptor().getMessageTypes().get(42);
     internal_static_msg_UserQuitDuplicateCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitDuplicateCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserQuitDuplicateResult_descriptor =
-      getDescriptor().getMessageTypes().get(42);
+      getDescriptor().getMessageTypes().get(43);
     internal_static_msg_UserQuitDuplicateResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitDuplicateResult_descriptor,
         new java.lang.String[] { "QuitDuplicateType", });
     internal_static_msg_BossAttkUserResult_descriptor =
-      getDescriptor().getMessageTypes().get(43);
+      getDescriptor().getMessageTypes().get(44);
     internal_static_msg_BossAttkUserResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BossAttkUserResult_descriptor,
         new java.lang.String[] { "SubUserHp", });
     internal_static_msg_BossSkillAttkUserResult_descriptor =
-      getDescriptor().getMessageTypes().get(44);
+      getDescriptor().getMessageTypes().get(45);
     internal_static_msg_BossSkillAttkUserResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BossSkillAttkUserResult_descriptor,
         new java.lang.String[] { "SubUserHp", });
+    internal_static_msg_UserBuyGoodsCmd_descriptor =
+      getDescriptor().getMessageTypes().get(46);
+    internal_static_msg_UserBuyGoodsCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserBuyGoodsCmd_descriptor,
+        new java.lang.String[] { "GoodsId", "GoodsNumber", });
+    internal_static_msg_UserBuyGoodsResult_descriptor =
+      getDescriptor().getMessageTypes().get(47);
+    internal_static_msg_UserBuyGoodsResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserBuyGoodsResult_descriptor,
+        new java.lang.String[] { "IsSuccess", "Props", "GoodsId", "GoodsNumber", "Code", "Reason", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

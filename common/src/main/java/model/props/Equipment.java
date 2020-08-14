@@ -45,4 +45,9 @@ public class Equipment extends AbstractPropsProperty {
     public PropsType getType() {
         return PropsType.Equipment;
     }
+
+    @Override
+    public PropsType isLimit() {
+        return PropsType.NoLimit;
+    }
 }

@@ -17,4 +17,8 @@ public interface PotionConst {
     int SLOW_MP_POTION_VALUE = 100;
     int SLOW_HP_POTION_VALUE = 100;
 
+    /**
+     *  药剂上限数量
+     */
+    int POTION_MAX_NUMBER = 99;
 }

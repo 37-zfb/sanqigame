@@ -14,7 +14,17 @@ public enum PropsType {
     /**
      *  药剂
      */
-    Potion("药剂")
+    Potion("药剂"),
+
+    /**
+     *  限购
+     */
+    Limit("限购"),
+
+    /**
+     *  不限购
+     */
+    NoLimit("不限购"),
     ;
 
     /**

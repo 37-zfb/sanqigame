@@ -33,13 +33,12 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
 
         GameMsg.UserQuitDuplicateResult.Builder newBuilder = GameMsg.UserQuitDuplicateResult.newBuilder();
         if (user.getCurrHp() <= 0){
-            user.setCurrHp(ProfessionConst.HP);
-            user.setCurrMp(ProfessionConst.MP);
             newBuilder.setQuitDuplicateType(DuplicateConst.USER_KILLED);
         }else {
             newBuilder.setQuitDuplicateType(DuplicateConst.USER_NORMAL_QUIT_DUPLICATE);
         }
-
+        user.setCurrHp(ProfessionConst.HP);
+        user.setCurrMp(ProfessionConst.MP);
         // 用户退出
         GameMsg.UserQuitDuplicateResult userQuitDuplicateResult = newBuilder.build();
 

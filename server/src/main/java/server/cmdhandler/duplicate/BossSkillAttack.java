@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import model.duplicate.BossMonster;
 import model.duplicate.BossSkill;
 import server.model.User;
+import server.timer.UserAutomaticSubHpTimer;
 import type.BossMonsterType;
 
 /**
@@ -62,9 +63,11 @@ public class BossSkillAttack {
         BossSkill bossSkill = bossMonster.getBossSkillMap().get(3);
         int subHp = (int) ((Math.random() * bossSkill.getDamage()) + 200) - (int) ((Math.random() * (user.getBaseDefense() - user.getWeakenDefense())));
         user.setCurrHp(user.getCurrHp() - subHp);
-        log.info("用户: {} ,受到boss技能加成: {} , 降低防御100持续10;", user.getUserName(), subHp);
+        log.info("用户: {} ,受到boss技能加成: {} , 进入出血状态;", user.getUserName(), subHp);
 
         //记录
+        // 使用定时器
+        UserAutomaticSubHpTimer.getInstance().userSubHpAuto(user, 10);
 
     }
 
@@ -93,7 +96,7 @@ public class BossSkillAttack {
         BossSkill bossSkill = bossMonster.getBossSkillMap().get(1);
         int subHp = (int) ((Math.random() * bossSkill.getDamage()) + 200) - (int) ((Math.random() * (user.getBaseDefense() - user.getWeakenDefense())));
         user.setCurrHp(user.getCurrHp() - subHp);
-        log.info("用户: {} ,受到boss技能加成: {} , 降低防御100持续10;", user.getUserName(), subHp);
+        log.info("用户: {} ,受到boss技能加成: {};", user.getUserName(), subHp);
     }
 
 }

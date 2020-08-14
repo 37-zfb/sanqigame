@@ -5,12 +5,15 @@ import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import model.GoodsLimitNumber;
 import model.UserResumeState;
 import model.duplicate.Duplicate;
 import model.profession.Skill;
 import model.props.Equipment;
 import model.props.Potion;
 import model.props.Props;
+import scene.GameData;
+import type.EquipmentType;
 import type.PotionType;
 
 import java.util.ArrayList;
@@ -32,9 +35,9 @@ public class Role {
     private Integer id;
 
     /**
-     *  职业id
+     * 职业id
      */
-    private Integer professionId ;
+    private Integer professionId;
 
     /**
      * 用户名
@@ -57,7 +60,7 @@ public class Role {
     private Integer currSceneId;
 
     /**
-     *  当前所在副本
+     * 当前所在副本
      */
     private Duplicate currDuplicate;
 
@@ -89,7 +92,7 @@ public class Role {
     private final Map<Integer, Props> backpackClient = new HashMap<>();
 
     /**
-     *  金币
+     * 金币
      */
     private int money;
 
@@ -107,6 +110,13 @@ public class Role {
      */
     private ScheduledFuture<?> hpTask;
 
+
+    /**
+     *  限购商品，允许购买的个数
+     */
+    private final Map<Integer,Integer> goodsAllowNumber = new HashMap<>();
+
+
     private static final Role role = new Role();
 
     private Role() {
@@ -119,22 +129,37 @@ public class Role {
     public void startResumeMp() {
         if (currMp < ProfessionConst.MP && this.getUserResumeState().getEndTimeMp() > System.currentTimeMillis()) {
             // 此时需要恢复mp状态,并且定时器没有启动
-            if (mpTask == null){
+            if (mpTask == null) {
                 ResumeStateTimer.getInstance().resumeStateAutomatic(role);
             }
         }
     }
 
     /**
-     *  使用 药剂 缓慢恢复
+     * 使用 药剂 缓慢恢复
      */
-    public void startPotionResumeState(Potion potion){
-        if (potion.getInfo().contains(PotionType.HP.getType())){
+    public void startPotionResumeState(Potion potion) {
+        if (potion.getInfo().contains(PotionType.HP.getType())) {
             ResumeStateTimer.getInstance().resumeStatePotionHp(this, potion);
-        }else if (potion.getInfo().contains(PotionType.MP.getType())){
+        } else if (potion.getInfo().contains(PotionType.MP.getType())) {
             ResumeStateTimer.getInstance().resumeStatePotionMp(this, potion);
         }
     }
 
+
+    public void decreaseDurability() {
+        Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
+        for (UserEquipmentEntity userEquipmentEntity : userEquipmentEntityArr) {
+            if (userEquipmentEntity == null) {
+                continue;
+            }
+            Props props = propsMap.get(userEquipmentEntity.getPropsId());
+            if (((Equipment) props.getPropsProperty()).getEquipmentType() == EquipmentType.Weapon) {
+                // 持久化武器耐久度
+                userEquipmentEntity.setDurability(userEquipmentEntity.getDurability() - 1);
+                break;
+            }
+        }
+    }
 
 }

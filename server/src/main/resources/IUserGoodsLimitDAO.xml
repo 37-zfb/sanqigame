@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IUserGoodsLimitDAO">
+    <resultMap id="userBuyGoodsLimitEntity" type="entity.db.UserBuyGoodsLimitEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="date" column="date"/>
+        <result property="number" column="number"/>
+    </resultMap>
+
+
+    <select id="selectEntitiesByUserIdAndDate" resultMap="userBuyGoodsLimitEntity" resultType="list">
+        SELECT * FROM `user_buy_goods_limit` WHERE user_id = #{userId}  AND `date`=#{date};
+    </select>
+
+    <insert id="insertEntity" parameterType="entity.db.UserBuyGoodsLimitEntity" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="id">
+        INSERT INTO `user_buy_goods_limit` ( user_id, `goods_id`,`date`,`number` ) VALUES ( #{userId}, #{goodsId} ,#{date},#{number});
+    </insert>
+
+    <update id="updateLimitNumber" parameterType="entity.db.UserBuyGoodsLimitEntity">
+         UPDATE `user_buy_goods_limit` SET  `number` = #{number} WHERE user_id = #{userId} AND `date` = #{date} AND goods_id=#{goodsId};
+    </update>
+</mapper>

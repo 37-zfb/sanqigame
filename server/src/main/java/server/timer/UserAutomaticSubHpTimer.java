@@ -40,9 +40,7 @@ public class UserAutomaticSubHpTimer {
                             // 防止多线程执行时，减血超减
                             synchronized (user.getHpMonitor()) {
                                 //
-
                                 user.calCurrHp();
-
                                 if (user.getSubHpNumber() < subHpNumber && user.getCurrHp() > 20) {
 
                                     log.info("用户 {}:血量 {} -20", user.getUserName(), user.getCurrHp());

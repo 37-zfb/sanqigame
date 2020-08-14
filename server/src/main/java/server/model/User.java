@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import entity.db.UserEquipmentEntity;
+import model.GoodsLimitNumber;
 import model.UserResumeState;
 import model.duplicate.Duplicate;
 import model.profession.Profession;
@@ -124,6 +125,7 @@ public class User {
      * mp监视器
      */
     private final Object mpMonitor = new Object();
+
     /**
      * hp 监视器
      */
@@ -141,6 +143,11 @@ public class User {
     private ScheduledFuture<?> subHpTask;
     private int subHpNumber = 0;
 
+
+    /**
+     *  限购商品，允许购买个数; 商品id <==> 允许购买个数
+     */
+    private final Map<Integer,Integer> goodsAllowNumber = new HashMap<>();
 
     /**
      * 设置恢复mp终止时间

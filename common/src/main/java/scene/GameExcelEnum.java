@@ -21,7 +21,13 @@ public enum GameExcelEnum {
     /**
      *  副本
      */
-    Duplicate("duplicate.xls");
+    Duplicate("duplicate.xls"),
+    /**
+     *  商店
+     */
+    Store("store.xls")
+
+    ;
 
     /**
      * 文件名称

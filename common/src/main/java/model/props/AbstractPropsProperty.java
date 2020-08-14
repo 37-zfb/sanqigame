@@ -33,4 +33,10 @@ public abstract class AbstractPropsProperty {
      * @return
      */
     public abstract PropsType getType();
+
+    /**
+     *  是否限购
+     * @return
+     */
+    public abstract PropsType isLimit();
 }

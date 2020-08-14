@@ -11,13 +11,18 @@ import entity.conf.props.PropsEntity;
 import entity.conf.scene.MonsterEntity;
 import entity.conf.scene.NpcEntity;
 import entity.conf.scene.SceneEntity;
+import entity.conf.store.GoodsEntity;
 import lombok.Setter;
 import model.duplicate.BossMonster;
 import model.duplicate.BossSkill;
 import model.duplicate.Duplicate;
+import model.duplicate.store.Goods;
 import model.profession.Profession;
 import model.profession.Skill;
-import model.profession.skill.*;
+import model.profession.skill.PastorSkillProperty;
+import model.profession.skill.SorceressSkillProperty;
+import model.profession.skill.SummonerSkillProperty;
+import model.profession.skill.WarriorSkillProperty;
 import model.props.Equipment;
 import model.props.Potion;
 import model.props.Props;
@@ -48,18 +53,20 @@ public class GameData {
      */
     private final Map<Integer, Profession> professionMap = new HashMap<>();
 
-
     /**
      * id  道具
      */
     private final Map<Integer, Props> propsMap = new HashMap<>();
-
 
     /**
      * id  副本
      */
     private final Map<Integer, Duplicate> duplicateMap = new HashMap<>();
 
+    /**
+     *  id  商品
+     */
+    private final Map<Integer, Goods> goodsMap = new HashMap<>();
 
     private static final GameData GAME_DATA = new GameData();
 
@@ -99,6 +106,10 @@ public class GameData {
     private List<BossEntity> bossEntityList;
     private List<BossSkillEntity> bossSkillEntityList;
 
+    /**
+     *  商品
+     */
+    private List<GoodsEntity>  goodsEntityList;
 
     /**
      * 初始化游戏数据
@@ -108,7 +119,15 @@ public class GameData {
         initProps();
         initProfession();
         initDuplicate();
+        initStore();
+    }
 
+    private void initStore(){
+        for (GoodsEntity goodsEntity : goodsEntityList) {
+            goodsMap.putIfAbsent(goodsEntity.getId(), new Goods(goodsEntity.getId(),goodsEntity.getPropsId(),goodsEntity.getNumberLimit(),goodsEntity.getInfo(),goodsEntity.getPrice()));
+        }
+
+        goodsEntityList = null;
     }
 
     private void initDuplicate(){
@@ -128,7 +147,8 @@ public class GameData {
             }
 
         }
-
+        duplicateEntityList = null;
+        bossSkillEntityList = null;
 
 
     }
@@ -270,5 +290,9 @@ public class GameData {
 
     public Map<Integer, Duplicate> getDuplicateMap() {
         return duplicateMap;
+    }
+
+    public Map<Integer, Goods> getGoodsMap() {
+        return goodsMap;
     }
 }

@@ -1,10 +1,7 @@
 package scene;
 
 
-import entity.conf.duplicate.BossEntity;
-import entity.conf.duplicate.BossSkillEntity;
-import entity.conf.duplicate.DuplicateEntity;
-import entity.conf.profession.*;
+import entity.conf.profession.WarriorSkillPropertyEntity;
 
 /**
  * @author 张丰博
@@ -72,7 +69,11 @@ public enum GameExcelSheetEnum {
     /**
      *  boss技能
      */
-    BossSkillEntity("BossSkillEntity", entity.conf.duplicate.BossSkillEntity.class)
+    BossSkillEntity("BossSkillEntity", entity.conf.duplicate.BossSkillEntity.class),
+    /**
+     *  商店
+     */
+    GoodsEntity("GoodsEntity", entity.conf.store.GoodsEntity.class)
     ;
 
 
