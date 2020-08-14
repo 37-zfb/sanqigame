@@ -7,6 +7,8 @@ import constant.ProfessionConst;
 import entity.db.CurrUserStateEntity;
 import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import scene.GameData;
+import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
@@ -184,97 +187,33 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
      */
     private void addProps(List<Integer> propsIdList, User user) {
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-        Map<Integer, Props> backpack = user.getBackpack();
-
-        if (backpack.size() >= BackPackConst.MAX_CAPACITY) {
-            // 此时背包已满，
-            return;
-        }
 
         for (Integer propsId : propsIdList) {
             Props props = propsMap.get(propsId);
-            log.info("获得道具的id: {}", propsId);
-            if (props.getPropsProperty().getType() == PropsType.Equipment) {
-                // 此道具是 装备
-                Equipment equipment = (Equipment) props.getPropsProperty();
 
-                //封装
-                UserEquipmentEntity userEquipmentEntity = new UserEquipmentEntity();
-                userEquipmentEntity.setIsWear(EquipmentConst.NO_WEAR);
-                userEquipmentEntity.setDurability(EquipmentConst.MAX_DURABILITY);
-                userEquipmentEntity.setPropsId(equipment.getPropsId());
-                userEquipmentEntity.setUserId(user.getUserId());
+            try {
 
-                Equipment equ = null;
-                for (int i = 1; i < BackPackConst.MAX_CAPACITY; i++) {
-                    if (!backpack.keySet().contains(i)) {
-                        Props pro = new Props();
-                        pro.setId(propsId);
-                        pro.setName(props.getName());
-                        equ = new Equipment(null, pro.getId(), EquipmentConst.MAX_DURABILITY, equipment.getDamage(), equipment.getEquipmentType());
-                        pro.setPropsProperty(equ);
+                if (props.getPropsProperty().getType() == PropsType.Equipment) {
+                    // 添加装备到数据库;  条件不满足时有异常抛出
+                    PublicMethod.getInstance().addEquipment(user, props);
 
-                        backpack.put(i, pro);
-                        userEquipmentEntity.setLocation(i);
-                        break;
-                    }
-                }
-                userService.addEquipment(userEquipmentEntity);
-                equ.setId(userEquipmentEntity.getId());
-
-            } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-                // 此道具是 药剂
-                Potion potion = (Potion) props.getPropsProperty();
-
-                UserPotionEntity userPotionEntity = new UserPotionEntity();
-                userPotionEntity.setUserId(user.getUserId());
-                userPotionEntity.setPropsId(propsId);
-
-                boolean isExist = false;
-                for (Props pro : backpack.values()) {
-                    // 查询背包中是否有该药剂
-                    if (potion.getPropsId().equals(pro.getId())) {
-                        // 背包中已有该药剂
-                        Potion po = (Potion) pro.getPropsProperty();
-                        po.setNumber(po.getNumber() + 1);
-
-                        // 构建基础类，
-                        userPotionEntity.setNumber(po.getNumber());
-
-                        isExist = true;
-                    }
-
+                } else if (props.getPropsProperty().getType() == PropsType.Potion) {
+                    PublicMethod.getInstance().addPotion(props, user, 1);
                 }
 
-                // 背包中还没有该药剂
-                if (!isExist) {
+                log.info("获得道具的id: {}", propsId);
+
+            }catch (CustomizeException e){
+                log.info("获得道具失败, 道具id: {}", propsId);
+                //此时给玩家发邮件
 
 
-                    userPotionEntity.setNumber(1);
 
-                    Potion po = null;
-                    for (int i = 1; i < BackPackConst.MAX_CAPACITY; i++) {
-                        if (!backpack.keySet().contains(i)) {
-                            Props pro = new Props();
-                            pro.setId(propsId);
-                            pro.setName(props.getName());
-                            po = new Potion(null, propsId, potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), 1);
-                            pro.setPropsProperty(po);
-
-                            userPotionEntity.setLocation(i);
-
-                            backpack.put(i, pro);
-                            break;
-                        }
-                    }
-
-                }
-                userService.addPotion(userPotionEntity);
-                userPotionEntity.setId(userPotionEntity.getId());
+                log.error(e.getMessage(), e);
             }
 
         }
-
     }
+
 
 }

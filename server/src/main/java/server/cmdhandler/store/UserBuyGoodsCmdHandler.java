@@ -20,6 +20,7 @@ import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import scene.GameData;
+import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
@@ -181,13 +182,17 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
         Props props = propsMap.get(propsId);
         log.info("获得道具的id: {}", propsId);
         if (props.getPropsProperty().getType() == PropsType.Equipment) {
-            addEquipment(user, props);
+            PublicMethod.getInstance().addEquipment(user, props);
+//            addEquipment(user, props);
         } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-            addPotion(props, user, number);
+            PublicMethod.getInstance().addPotion(props, user, number);
+//            addPotion(props, user, number);
         }
 
 
     }
+
+
 
     private void addEquipment(User user, Props props) {
 
@@ -227,10 +232,8 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
 
     }
 
-
     /**
      * 添加药剂
-     *
      * @param props
      * @param user
      * @param number
