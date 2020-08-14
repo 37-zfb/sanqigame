@@ -2,6 +2,7 @@ package client;
 
 import client.cmd.UserCmd;
 import client.model.Role;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import model.duplicate.BossMonster;
@@ -27,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 public class BossThread {
 
     private static final BossThread BOSS_THREAD = new BossThread();
-
 
 
     private BossThread() {
@@ -79,7 +79,7 @@ public class BossThread {
                 System.out.println("第 " + (monsterMap.size() - bossMonsterMap.size()) + " 个 Boss");
                 System.out.println("boss: " + currBossMonster.getBossName() + " hp: " + currBossMonster.getHp());
 
-                sendCmd(ctx,role);
+                sendCmd(ctx, role);
 
 //                //怪已死，移除集合
 //                bossMonsterMap.remove(bossMonsterEntry.get().getKey());
@@ -96,31 +96,30 @@ public class BossThread {
     }
 
 
-
-    private void sendCmd(ChannelHandlerContext ctx,Role role) {
+    private void sendCmd(ChannelHandlerContext ctx, Role role) {
         // 判断 role 对象中是否有 Duplicate对象 来区分，去哪个线程
         while (true) {
 
             log.info("请选择您的操作: ");
             System.out.println("======>1:普通攻击;");
             System.out.println("======>2:技能列表;");
-            System.out.println("======>3:使用MP/HP药剂;");
-            System.out.println("======>4:背包;");
-            System.out.println("======>5:装备栏;");
-            System.out.println("======>6:穿戴装备;");
-            System.out.println("======>7:卸下装备;");
-            System.out.println("======>8:修理装备;");
+//            System.out.println("======>3:使用MP/HP药剂;");
+//            System.out.println("======>4:背包;");
+//            System.out.println("======>5:装备栏;");
+//            System.out.println("======>6:穿戴装备;");
+//            System.out.println("======>7:卸下装备;");
+//            System.out.println("======>8:修理装备;");
+            System.out.println("======>9:退出副本;");
 
-            Scanner scanner  = new Scanner(System.in);
-
+            Scanner scanner = new Scanner(System.in);
             String command = scanner.nextLine();
 
-            if ("1".equals(command)) {
+            if ("1".equals(command) && role.getCurrHp() > 0) {
                 GameMsg.AttkBossCmd attkBossCmd = GameMsg.AttkBossCmd.newBuilder().build();
                 // 发送数据
                 ctx.writeAndFlush(attkBossCmd);
                 break;
-            } else if ("2".equals(command)) {
+            } else if ("2".equals(command) && role.getCurrHp() > 0) {
 
                 System.out.println("当前所拥有技能如下: ");
                 for (Skill skill : role.getSkillMap().values()) {
@@ -146,7 +145,15 @@ public class BossThread {
                 break;
             } else if ("8".equals(command)) {
                 break;
+            } else if ("9".equals(command)) {
+                // 退出副本
+                GameMsg.UserQuitDuplicateCmd quitDuplicateCmd = GameMsg.UserQuitDuplicateCmd.newBuilder().build();
+                ctx.writeAndFlush(quitDuplicateCmd);
+                break;
             } else {
+                if (role.getCurrHp() == 0){
+                    System.out.println("已死亡,请退出副本;");
+                }
                 log.error("指令错误,请重新输入;");
             }
         }

@@ -246,6 +246,11 @@ public class User {
     public void calCurrMp() {
         synchronized (this.mpMonitor) {
             Potion potion = getPotion(PotionType.MP);
+
+            if (potion == null){
+                return;
+            }
+
             if (currMp >= ProfessionConst.MP) {
                 potion.setUsedEndTime(0L);
                 potion.setUsedStartTime(0L);
@@ -290,7 +295,10 @@ public class User {
     public void calCurrHp() {
         synchronized (this.hpMonitor) {
             Potion potion = getPotion(PotionType.HP);
-            if (currHp >= ProfessionConst.HP) {
+            if (potion == null ){
+                return;
+            }
+            if ( currHp >= ProfessionConst.HP) {
                 potion.setUsedEndTime(0L);
                 potion.setUsedStartTime(0L);
                 return;

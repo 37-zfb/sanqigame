@@ -73,6 +73,14 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
             ctx.writeAndFlush(userQuitDuplicateResult);
             return;
         }
+        // 此时用户的血量
+        user.calCurrHp();
+        if (user.getCurrHp() <= 0){
+            // 用户阵亡，被boss打死
+            // 发送死亡消息
+
+            return;
+        }
 
         if (currBossMonster.getHp() < subHp) {
 

@@ -74,12 +74,6 @@ public class DuplicateFinishResultClient implements ICmd<GameMsg.DuplicateFinish
         }
 
 
-
-
-
-
-
-
         GameMsg.UserQuitDuplicateCmd quitDuplicateCmd = GameMsg.UserQuitDuplicateCmd.newBuilder().build();
         ctx.writeAndFlush(quitDuplicateCmd);
 

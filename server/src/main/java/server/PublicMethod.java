@@ -7,10 +7,13 @@ import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.AttributeKey;
 import model.props.Equipment;
 import model.props.Potion;
 import model.props.Props;
 import server.model.User;
+import server.model.UserManager;
 import server.service.UserService;
 
 import java.util.Map;
@@ -141,5 +144,19 @@ public final class PublicMethod {
         userPotionEntity.setId(userPotionEntity.getId());
     }
 
+
+
+    public User getUser(ChannelHandlerContext ctx){
+        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
+        if (userId == null){
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_MANAGER);
+        }
+        User user = UserManager.getUserById(userId);
+        if (user == null){
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_MANAGER);
+        }
+
+        return user;
+    }
 
 }

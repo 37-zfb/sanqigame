@@ -34,7 +34,6 @@ public class UserRegisterCmdHandler implements ICmdHandler<GameMsg.UserRegisterC
         userEntity.setPassword(userRegisterCmd.getNewPassword());
         userEntity.setProfessionId(userRegisterCmd.getProfessionId());
 
-
         GameMsg.UserRegisterResult.Builder registerResultBuilder = GameMsg.UserRegisterResult.newBuilder();
         GameMsg.UserRegisterResult registerResult = null;
 

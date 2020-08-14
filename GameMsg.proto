@@ -84,8 +84,14 @@ enum MsgCode {
 
   BOSS_SKILL_ATTK_USER_RESULT = 44;
 
-  USER_BUY_GOODS_CMD = 45;
-  USER_BUY_GOODS_RESULT = 46;
+  BOSS_KILL_USER_RESULT = 45;
+
+  USER_BUY_GOODS_CMD = 46;
+  USER_BUY_GOODS_RESULT = 47;
+
+  USER_CHAT_INFO_CMD = 48;
+  USER_CHAT_INFO_RESULT = 49;
+
 
 };
 
@@ -554,4 +560,29 @@ message UserBuyGoodsResult{
   uint32 code = 5;
   // 失败原因
   string reason = 6;
+}
+// boss 击杀 玩家
+message BossKillUserResult{
+  // 玩家id
+  uint32 targetUserId = 1;
+}
+// 用户聊天
+// 指令
+message UserChatInfoCmd{
+  // 用户id
+  uint32 targetUserId = 1;
+  // 聊天内容
+  string info = 2;
+  // 聊天类型; 私聊or群聊???
+  string type = 3;
+}
+// 用户聊天
+// 结果
+message UserChatInfoResult{
+  // 用户名称
+  string userName = 1;
+  //类型
+  string type = 2;
+  //信息
+  string info = 3;
 }

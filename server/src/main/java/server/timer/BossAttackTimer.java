@@ -59,8 +59,8 @@ public class BossAttackTimer {
                             }
 
                             // boss的普通攻击
-                            int subHp = bossMonster.calUserSubHp(user.getBaseDefense(),user.getWeakenDefense());
-//                            int subHp = 5000;
+//                            int subHp = bossMonster.calUserSubHp(user.getBaseDefense(),user.getWeakenDefense());
+                            int subHp = 5000;
 
                             // 防止多线程执行时，减血超减
                             synchronized (user.getHpMonitor()) {
@@ -77,11 +77,11 @@ public class BossAttackTimer {
                                 if (user.getCurrHp() <= 0 || (user.getCurrHp() - subHp) <= 0) {
                                     log.info("用户: {} 已死亡;", user.getUserName());
                                     user.setCurrHp(0);
-                                    // 发送死亡消息
-                                    GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
+                                    // boss打死了玩家;
+                                    GameMsg.BossKillUserResult bossKillUserResult = GameMsg.BossKillUserResult.newBuilder()
                                             .setTargetUserId(user.getUserId())
                                             .build();
-                                    user.getCtx().writeAndFlush(dieResult);
+                                    user.getCtx().writeAndFlush(bossKillUserResult);
                                 } else {
                                     log.info("用户: {} , 当前血量: {} , 受到伤害减血: {}", user.getUserName(), user.getCurrHp(), subHp);
                                     // 普通攻击数 加一;

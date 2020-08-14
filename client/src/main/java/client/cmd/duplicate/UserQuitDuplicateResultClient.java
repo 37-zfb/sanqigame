@@ -5,6 +5,7 @@ import client.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
+import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import model.scene.Scene;
 import msg.GameMsg;
@@ -23,7 +24,8 @@ public class UserQuitDuplicateResultClient implements ICmd<GameMsg.UserQuitDupli
         String quitDuplicateType = userQuitDuplicateResult.getQuitDuplicateType();
         Role role = Role.getInstance();
         role.setCurrDuplicate(null);
-
+        role.setCurrHp(ProfessionConst.HP);
+        role.setCurrMp(ProfessionConst.MP);
 
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
 

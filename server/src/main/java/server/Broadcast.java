@@ -6,6 +6,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import scene.GameData;
 
+import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -60,9 +61,10 @@ public class Broadcast {
 
 
     /**
-     *  广播消息
+     * 单个场景广播消息
+     *
      * @param sceneId 当前场景id
-     * @param msg 消息
+     * @param msg     消息
      */
     public static void broadcast(Integer sceneId, Object msg) {
         if (sceneId != null) {
@@ -70,5 +72,19 @@ public class Broadcast {
         }
     }
 
+    /**
+     * 全服广播消息
+     *
+     * @param msg 消息
+     */
+    public static void allBroadcast(Object msg) {
+        if (msg == null) {
+            return;
+        }
+        for (ChannelGroup channelGroup : CHANNEL_GROUP_MAP.values()) {
+            channelGroup.writeAndFlush(msg);
+        }
+
+    }
 
 }

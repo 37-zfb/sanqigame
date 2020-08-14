@@ -11,7 +11,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     BACKPACK_SPACE_INSUFFICIENT(-550,"背包空间不足;"),
     PROPS_REACH_LIMIT(-551,"此道具已达上限;"),
     USER_MONEY_INSUFFICIENT(-552,"用户金币不足;"),
-    ALLOW_BUY_NUMBER_INSUFFICIENT(-553,"商品剩余数量不足;")
+    ALLOW_BUY_NUMBER_INSUFFICIENT(-553,"商品剩余数量不足;"),
+    USER_NOT_MANAGER(-415,"用户没有被管理;")
     ;
 
     private String message;

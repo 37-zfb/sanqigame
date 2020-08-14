@@ -14,6 +14,7 @@ import model.scene.Npc;
 import model.scene.Scene;
 import msg.GameMsg;
 import scene.GameData;
+import type.ChatType;
 import type.EquipmentType;
 import type.PropsType;
 
@@ -66,6 +67,7 @@ public class UserCmd {
                     System.out.println("======>12:修理装备;");
                     System.out.println("======>13:副本;");
                     System.out.println("======>14:商店;");
+                    System.out.println("======>15:聊天;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -93,7 +95,7 @@ public class UserCmd {
                         return targetId;
                     } else if ("2".equals(command)) {
                         // 当前场景实体
-                        return null;
+                        return GameMsg.WhoElseIsHereCmd.newBuilder().build();
                     } else if ("3".equals(command)) {
                         // 普通攻击
                         GameMsg.AttkCmd.Builder cmdBuilder = GameMsg.AttkCmd.newBuilder();
@@ -147,11 +149,11 @@ public class UserCmd {
                         System.out.println("背包空间: " + backpackClient.size() + "/100");
                         System.out.println("道具如下:");
                         for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
-                            if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Equipment){
+                            if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Equipment) {
                                 System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
-                            }else if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Potion){
+                            } else if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Potion) {
                                 Potion potion = (Potion) propsEntry.getValue().getPropsProperty();
-                                System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType()+" \t\t数量: "+potion.getNumber());
+                                System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType() + " \t\t数量: " + potion.getNumber());
                             }
                         }
 
@@ -265,10 +267,10 @@ public class UserCmd {
                         Map<Integer, Props> propsMap = gameData.getPropsMap();
                         for (Goods goods : goodsMap.values()) {
                             Props props = propsMap.get(goods.getPropsId());
-                            if (props.getPropsProperty().getType() != PropsType.Equipment){
-                                System.out.println(goods.getId() + "、" + props.getName() + "  还能购买: "+ goodsAllowNumber.get(goods.getId()));
+                            if (props.getPropsProperty().getType() != PropsType.Equipment) {
+                                System.out.println(goods.getId() + "、" + props.getName() + "  还能购买: " + goodsAllowNumber.get(goods.getId()));
 
-                            }else {
+                            } else {
                                 System.out.println(goods.getId() + "、" + props.getName() + "  ");
                             }
 
@@ -287,6 +289,28 @@ public class UserCmd {
 
                         GameMsg.UserBuyGoodsCmd userBuyGoodsCmd = goodsBuilder.build();
                         return userBuyGoodsCmd;
+                    } else if ("15".equals(command)) {
+                        // 聊天
+                        System.out.println("1、私聊;");
+                        System.out.println("2、群聊;");
+                        int cmd = scanner.nextInt();
+                        if (cmd == 1) {
+                            // 私聊
+                            role.setChat(true);
+                            return GameMsg.WhoElseIsHereCmd.newBuilder().build();
+                        } else if (cmd == 2) {
+                            // 群聊
+
+                            System.out.println("请输入信息:");
+                            String info = scanner.next();
+
+                            return GameMsg.UserChatInfoCmd.newBuilder()
+                                    .setType(ChatType.PUBLIC_CHAT.getChatType())
+                                    .setInfo(info)
+                                    .build();
+                        }
+
+
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -319,11 +343,8 @@ public class UserCmd {
                     .build();
             ctx.channel().writeAndFlush(userSwitchSceneCmd);
 
-        } else if (cmd == null) {
-
-            GameMsg.WhoElseIsHereCmd isHereCmd = GameMsg.WhoElseIsHereCmd.newBuilder().build();
-            ctx.channel().writeAndFlush(isHereCmd);
-
+        } else if (cmd instanceof GameMsg.WhoElseIsHereCmd) {
+            ctx.channel().writeAndFlush((GameMsg.WhoElseIsHereCmd) cmd);
         } else if (cmd instanceof GameMsg.AttkCmd.Builder) {
 
             GameMsg.AttkCmd.Builder cmdBuilder = (GameMsg.AttkCmd.Builder) cmd;
@@ -353,6 +374,8 @@ public class UserCmd {
             ctx.channel().writeAndFlush((GameMsg.EnterDuplicateCmd) cmd);
         } else if (cmd instanceof GameMsg.UserBuyGoodsCmd) {
             ctx.channel().writeAndFlush((GameMsg.UserBuyGoodsCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserChatInfoCmd) {
+            ctx.writeAndFlush((GameMsg.UserChatInfoCmd) cmd);
         }
 
 

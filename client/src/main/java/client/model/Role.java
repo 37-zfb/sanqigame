@@ -117,6 +117,8 @@ public class Role {
     private final Map<Integer,Integer> goodsAllowNumber = new HashMap<>();
 
 
+    private boolean isChat = false;
+
     private static final Role role = new Role();
 
     private Role() {

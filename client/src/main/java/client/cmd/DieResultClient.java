@@ -34,17 +34,11 @@ public class DieResultClient implements ICmd<GameMsg.DieResult> {
 
         if (dieResult.getTargetUserId() == role.getId()) {
             // 用户阵亡
-            if (role.getCurrDuplicate() != null){
-                // 用户在副本中阵亡,清空副本
-                System.out.println("您已阵亡,副本: "+role.getCurrDuplicate().getName()+" ,Boss: "+role.getCurrDuplicate().getCurrBossMonster().getBossName());
 
-                GameMsg.UserQuitDuplicateCmd build = GameMsg.UserQuitDuplicateCmd.newBuilder().build();
-                ctx.writeAndFlush(build);
-            }else {
-                // 清空正在攻击自己的怪
-                GameMsg.StopCurUserAllTimer stopCurUserAllTimer = GameMsg.StopCurUserAllTimer.newBuilder().build();
-                ctx.channel().writeAndFlush(stopCurUserAllTimer);
-            }
+            // 清空正在攻击自己的怪
+            GameMsg.StopCurUserAllTimer stopCurUserAllTimer = GameMsg.StopCurUserAllTimer.newBuilder().build();
+            ctx.channel().writeAndFlush(stopCurUserAllTimer);
+
         } else if (dieResult.getMonsterId() != 0) {
             // 怪被击杀  怪id
             int monsterId = dieResult.getMonsterId();
