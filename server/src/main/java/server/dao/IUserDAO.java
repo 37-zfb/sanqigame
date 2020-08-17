@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import entity.db.UserEntity;
 
+import java.util.List;
+
 /**
  * @author 张丰博
  */
@@ -23,4 +25,10 @@ public interface IUserDAO {
      * @return 用户id
      */
     int insertInto(UserEntity newUserEntity);
+
+    /**
+     *  查询所有的用户
+     * @return
+     */
+    List<UserEntity> selectAllUser();
 }

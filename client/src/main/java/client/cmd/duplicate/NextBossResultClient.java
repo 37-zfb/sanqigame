@@ -1,6 +1,6 @@
 package client.cmd.duplicate;
 
-import client.BossThread;
+import client.thread.BossThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import io.netty.channel.ChannelHandlerContext;

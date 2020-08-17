@@ -1,20 +1,13 @@
 package client.cmd.duplicate;
 
-import client.BossThread;
+import client.thread.BossThread;
 import client.cmd.ICmd;
 import client.model.Role;
-import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import model.duplicate.BossMonster;
 import model.duplicate.Duplicate;
-import model.props.Equipment;
-import model.props.Props;
 import msg.GameMsg;
-import scene.GameData;
-import type.EquipmentType;
 import util.MyUtil;
-
-import java.util.Map;
 
 /**
  * @author 张丰博

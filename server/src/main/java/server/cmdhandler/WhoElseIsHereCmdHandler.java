@@ -48,8 +48,8 @@ public class WhoElseIsHereCmdHandler implements ICmdHandler<GameMsg.WhoElseIsHer
         for (User user : listUser) {
             if (user.getCurSceneId().equals(curSceneId)) {
                 // 用户信息
-                GameMsg.WhoElseIsHereResult.UserInfo userInfo =
-                        GameMsg.WhoElseIsHereResult.UserInfo.newBuilder()
+                GameMsg.UserInfo userInfo =
+                        GameMsg.UserInfo.newBuilder()
                                 .setUserId(user.getUserId())
                                 .setUserName(user.getUserName())
                                 .build();

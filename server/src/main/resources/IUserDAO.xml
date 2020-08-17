@@ -12,6 +12,10 @@
         SELECT id, user_name, `password` ,`profession_id` FROM `user` WHERE user_name = #{userName};
     </select>
 
+    <select id="selectAllUser" resultMap="userEntity" resultType="list">
+        SELECT id, user_name  FROM `user`;
+    </select>
+
     <insert id="insertInto" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.UserEntity">
         INSERT INTO `user` ( user_name, `password`,`profession_id` ) VALUES ( #{userName}, #{password},#{professionId} );
     </insert>

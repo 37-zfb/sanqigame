@@ -1,4 +1,4 @@
-package client;
+package client.thread;
 
 import client.cmd.UserCmd;
 import client.model.Role;

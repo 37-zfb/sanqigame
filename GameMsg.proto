@@ -92,8 +92,41 @@ enum MsgCode {
   USER_CHAT_INFO_CMD = 48;
   USER_CHAT_INFO_RESULT = 49;
 
+  SEND_MAIL_CMD = 50;
+  SEND_MAIL_RESULT = 51;
 
-};
+  ALL_USER_CMD = 52;
+  ALL_USER_RESULT = 53;
+
+  NOTICE_USER_GET_MAIL_RESULT = 54;
+
+  USER_SEE_MAIL_CMD = 55;
+  USER_SEE_MAIL_RESULT = 56;
+
+  USER_RECEIVE_MAIL_CMD = 57;
+  USER_RECEIVE_MAIL_RESULT = 58;
+
+  USER_ENTER_ARENA_CMD = 59;
+  USER_ENTER_ARENA_RESULT = 60;
+
+  USER_CHOOSE_OPPONENT_CMD = 61;
+  USER_CHOOSE_OPPONENT_RESULT = 62;
+
+  TARGET_USER_CHALLENGE_RESULT = 63;
+
+  TARGET_USER_RESPONSE_CMD = 64;
+  TARGET_USER_RESPONSE_RESULT = 65;
+
+  USER_QUIT_ARENA_CMD = 66;
+  USER_QUIT_ARENA_RESULT = 67;
+
+
+  USER_ATTACK_CMD = 68;
+  USER_ATTACK_RESULT = 69;
+
+  USER_DIE_RESULT = 70;
+
+}
 
 // 还有谁在场
 ///////////////////////////////////////////////////////////////////////
@@ -105,18 +138,15 @@ message WhoElseIsHereCmd {
 message WhoElseIsHereResult {
   // 用户信息数组
   repeated UserInfo userInfo = 1;
-
-  // 用户信息
-  message UserInfo {
-    // 用户 Id
-    uint32 userId = 1;
-    // 用户名称
-    string userName = 2;
-
-  }
+}
+// 用户信息
+message UserInfo {
+  // 用户 Id
+  uint32 userId = 1;
+  // 用户名称
+  string userName = 2;
 
 }
-
 //
 // 用户退场
 ///////////////////////////////////////////////////////////////////////
@@ -156,13 +186,6 @@ message AttkMonsterCmd {
 
 }
 
-// 用户减血结果
-message UserSubtractHpResult {
-  // 目标用户 Id
-  uint32 targetUserId = 1;
-  // 减血量
-  uint32 subtractHp = 2;
-}
 
 // 死亡结果
 message DieResult {
@@ -244,7 +267,6 @@ message UserLoginResult {
   // 装备id
   repeated Props props = 9;
 
-
   // 恢复蓝的终止时间
   uint64 resumeMpEndTime = 10;
 
@@ -257,15 +279,19 @@ message UserLoginResult {
     uint32 durability = 3;
   }
 
+  // 角色id
   uint32 professionId = 12;
 
+  //金币
   uint32 money = 13;
-
+  // 商品
   repeated GoodsLimit goodLimits = 14;
-  message GoodsLimit{
+  message GoodsLimit {
     uint32 goodsId = 1;
     uint32 goodsNumber = 2;
   }
+  // 未读邮件信息
+  repeated MailInfo mailInfo = 15;
 }
 message Props {
   uint32 location = 1;
@@ -274,7 +300,6 @@ message Props {
   uint32 propsNumber = 4;
   uint32 userPropsId = 5;
 }
-
 
 // 用户注册
 message UserRegisterCmd {
@@ -491,29 +516,29 @@ message MonsterDropHpAutoDie {
   uint32 monsterId = 1;
 }
 // 进入副本命令
-message EnterDuplicateCmd{
+message EnterDuplicateCmd {
   uint32 duplicateId = 1;
 }
 // 进入副本结果
-message   EnterDuplicateResult{
+message EnterDuplicateResult {
   uint32 duplicateId = 1;
   uint64 startTime = 2;
   uint32 bossMonsterId = 3;
 }
 // 对boss的普通攻击
-message AttkBossCmd{
+message AttkBossCmd {
 }
 // 对boss的普通攻击结果
-message AttkBossResult{
+message AttkBossResult {
   uint32 subHp = 1;
 }
 // 下个一个boss
-message NextBossResult{
+message NextBossResult {
   uint32 bossMonsterId = 1;
-  uint64  startTime = 2;
+  uint64 startTime = 2;
 }
 //副本结束
-message DuplicateFinishResult{
+message DuplicateFinishResult {
   // 获得的道具id集合
   repeated uint32 propsId = 1;
   // 金币
@@ -522,31 +547,31 @@ message DuplicateFinishResult{
   repeated Props props = 3;
 }
 // 用户退出副本命令
-message UserQuitDuplicateCmd{
+message UserQuitDuplicateCmd {
 }
 // 用户退出副本结果
-message UserQuitDuplicateResult{
+message UserQuitDuplicateResult {
   string quitDuplicateType = 1;
 }
 // boss攻击用户
-message BossAttkUserResult{
+message BossAttkUserResult {
   // 用户减血量
   uint32 subUserHp = 1;
 }
 // boss使用技能攻击用户
-message BossSkillAttkUserResult{
+message BossSkillAttkUserResult {
   // 用户减血量
   uint32 subUserHp = 1;
 }
 // 展示商店
 // 命令
-message UserBuyGoodsCmd{
+message UserBuyGoodsCmd {
   uint32 goodsId = 1;
   uint32 goodsNumber = 2;
 }
 // 展示商店
 // 结果
-message UserBuyGoodsResult{
+message UserBuyGoodsResult {
   // 是否成功
   bool isSuccess = 1;
   // 背包中的道具，前后端同步一下数据
@@ -562,13 +587,13 @@ message UserBuyGoodsResult{
   string reason = 6;
 }
 // boss 击杀 玩家
-message BossKillUserResult{
+message BossKillUserResult {
   // 玩家id
   uint32 targetUserId = 1;
 }
 // 用户聊天
 // 指令
-message UserChatInfoCmd{
+message UserChatInfoCmd {
   // 用户id
   uint32 targetUserId = 1;
   // 聊天内容
@@ -578,7 +603,7 @@ message UserChatInfoCmd{
 }
 // 用户聊天
 // 结果
-message UserChatInfoResult{
+message UserChatInfoResult {
   // 用户名称
   string userName = 1;
   //类型
@@ -586,3 +611,129 @@ message UserChatInfoResult{
   //信息
   string info = 3;
 }
+// 发送邮件
+// 指令
+message SendMailCmd {
+  // 要发送的道具id
+  uint32 propsId = 1;
+  // 该道具的数量
+  uint32 number = 2;
+  // 发件人名称
+  uint32 srcUserId = 3;
+  // 收件人id
+  uint32 targetUserId = 4;
+  // 钱
+  uint32 money = 5;
+  // 标题
+  string title = 6;
+}
+// 发送邮件结果
+message SendMailResult {
+  bool isSuccess = 1;
+}
+// 所有的用户
+// 命令
+message AllUserCmd {
+}
+// 所有用户
+// 结果
+message AllUserResult {
+  // 用户数组信息
+  repeated UserInfo userInfo = 1;
+}
+// 通知用户获得邮件
+message NoticeUserGetMailResult {
+  // 邮件信息
+  MailInfo mailInfo = 1;
+}
+// 用户查看邮箱，指令
+message UserSeeMailCmd {
+}
+// 用户查看邮箱，结果
+message UserSeeMailResult {
+  repeated MailInfo mailInfo = 1;
+}
+// 邮箱信息
+message MailInfo {
+  // 邮件id
+  uint32 mailId = 1;
+  // 发送者
+  string srcUserName = 2;
+  // 邮件标题
+  string title = 3;
+}
+// 用户接受邮件指令
+message UserReceiveMailCmd {
+  // -1时，表示一键领取全部
+  uint32 mailId = 1;
+}
+// 用户接受邮件结果
+message UserReceiveMailResult {
+  // 领取成功的邮件id
+  repeated uint32 mailId = 1;
+}
+// 进入竞技场
+message UserEnterArenaCmd {
+}
+// 进入竞技场结果
+message UserEnterArenaResult {
+  repeated UserInfo userInfo = 1;
+}
+
+//用户选择对手，命令
+message UserChooseOpponentCmd {
+  uint32 userId = 1;
+}
+// 用户选择对手，结果
+message UserChooseOpponentResult {
+  // 是否接受挑战
+  bool acceptChallenge = 1;
+  // 发起者id
+  uint32 originateUserId = 2;
+  //
+  uint32 originatedUserId = 3;
+}
+// 询问目标用户是否接受挑战
+message TargetUserChallengeResult{
+  // 发起者id
+  uint32 originateUserId = 1;
+}
+// 目标用户响应
+message TargetUserResponseCmd{
+  // 是否同意
+  bool isAgree = 1;
+  // 发起者id
+  uint32 originateUserId = 2;
+}
+// 用户退出竞技场，指令
+message UserQuitArenaCmd{
+}
+// 用户退出竞技场，结果
+message UserQuitArenaResult{
+  UserInfo userInfo = 1;
+}
+
+
+// 用户在竞技场中，普通攻击指令
+message UserAttackCmd{
+  uint32 targetUserId = 1;
+}
+// 用户在竞技场中，普通攻击结果
+message UserAttackResult{
+  // 发动攻击的用户 Id
+  uint32 attackUserId = 1;
+  // 目标用户 Id
+  uint32 targetUserId = 2;
+}
+// 用户减血结果
+message UserSubtractHpResult {
+  // 目标用户 Id
+  uint32 targetUserId = 1;
+  // 减血量
+  uint32 subtractHp = 2;
+}
+// 用户死亡结果
+message UserDieResult{
+  uint32 targetUserId = 1;
+}
+

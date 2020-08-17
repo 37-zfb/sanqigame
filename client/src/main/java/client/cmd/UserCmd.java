@@ -1,6 +1,8 @@
 package client.cmd;
 
+import client.model.MailClient;
 import client.model.Role;
+import client.model.client.MailEntityClient;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import msg.GameMsg;
 import scene.GameData;
 import type.ChatType;
 import type.EquipmentType;
+import type.MailType;
 import type.PropsType;
 
 import java.util.Collection;
@@ -44,11 +47,15 @@ public class UserCmd {
                 Scene scene = GameData.getInstance().getSceneMap().get(currSceneId);
                 String curSceneName = scene.getName();
                 log.info("============所在地: {} ==============", scene.getName());
-                log.info("============当前场景的npc个数: {}", (npcList == null ? 0 : npcList.size()));
-                if (npcList != null) {
-                    for (Npc npc : npcList) {
-                        log.info("===>> npc 名称: {}", npc.getName());
-                    }
+//                log.info("============当前场景的npc个数: {}", (npcList == null ? 0 : npcList.size()));
+//                if (npcList != null) {
+//                    for (Npc npc : npcList) {
+//                        log.info("===>> npc 名称: {}", npc.getName());
+//                    }
+//                }
+
+                if (role.getMail().isHave()) {
+                    log.info("======> {}", "存在未领取的邮件");
                 }
 
                 while (true) {
@@ -68,6 +75,9 @@ public class UserCmd {
                     System.out.println("======>13:副本;");
                     System.out.println("======>14:商店;");
                     System.out.println("======>15:聊天;");
+                    System.out.println("======>16:发送邮件;");
+                    System.out.println("======>17:邮箱;");
+                    System.out.println("======>18:进入竞技场;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -309,13 +319,40 @@ public class UserCmd {
                                     .setInfo(info)
                                     .build();
                         }
+                    } else if ("16".equals(command)) {
+                        // 先根据名字找到对应的用户
+                        return GameMsg.AllUserCmd.newBuilder().build();
+                    } else if ("17".equals(command)) {
+                        // 查看邮箱
+                        MailClient mail = role.getMail();
+                        if (mail.isHave()) {
+                            Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
+                            System.out.println("0、全部领取;");
+                            for (MailEntityClient mailEntityClient : mailMap.values()) {
+                                System.out.println(mailEntityClient.getId() + "、" + mailEntityClient.getTitle() + "。 来自:" + mailEntityClient.getSrcUserName());
+                            }
+                            System.out.println("===================");
 
+                            int mailId = scanner.nextInt();
+                            GameMsg.UserReceiveMailCmd.Builder newBuilder = GameMsg.UserReceiveMailCmd.newBuilder();
+                            if (mailId == 0) {
+                                newBuilder.setMailId(MailType.RECEIVE_ALL.getState());
+                            } else {
+                                newBuilder.setMailId(mailId);
+                            }
+                            return newBuilder.build();
 
+                        } else {
+                            System.out.println("没有邮件");
+                            continue;
+                        }
+                    }else if ("18".equals(command)) {
+                        // 进入竞技场
+                        return GameMsg.UserEnterArenaCmd.newBuilder().build();
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
                     }
-
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -335,28 +372,21 @@ public class UserCmd {
         if (cmd instanceof Integer) {
             // 移动，场景切换
             Integer sceneId = (Integer) cmd;
-
             Role.getInstance().setCurrSceneId(sceneId);
-
             GameMsg.UserSwitchSceneCmd userSwitchSceneCmd = GameMsg.UserSwitchSceneCmd.newBuilder()
                     .setToSceneId(sceneId)
                     .build();
             ctx.channel().writeAndFlush(userSwitchSceneCmd);
-
         } else if (cmd instanceof GameMsg.WhoElseIsHereCmd) {
             ctx.channel().writeAndFlush((GameMsg.WhoElseIsHereCmd) cmd);
         } else if (cmd instanceof GameMsg.AttkCmd.Builder) {
-
             GameMsg.AttkCmd.Builder cmdBuilder = (GameMsg.AttkCmd.Builder) cmd;
             GameMsg.AttkCmd attkCmd = cmdBuilder.build();
             ctx.channel().writeAndFlush(attkCmd);
-
         } else if (cmd instanceof GameMsg.MonsterStartAttkUser.Builder) {
-
             GameMsg.MonsterStartAttkUser.Builder builder = (GameMsg.MonsterStartAttkUser.Builder) cmd;
             GameMsg.MonsterStartAttkUser monsterStartAttkUser = builder.build();
             ctx.channel().writeAndFlush(monsterStartAttkUser);
-
         } else if (cmd instanceof GameMsg.UserSkillAttkCmd) {
             GameMsg.UserSkillAttkCmd userSkillAttkCmd = (GameMsg.UserSkillAttkCmd) cmd;
             ctx.channel().writeAndFlush(userSkillAttkCmd);
@@ -376,6 +406,14 @@ public class UserCmd {
             ctx.channel().writeAndFlush((GameMsg.UserBuyGoodsCmd) cmd);
         } else if (cmd instanceof GameMsg.UserChatInfoCmd) {
             ctx.writeAndFlush((GameMsg.UserChatInfoCmd) cmd);
+        } else if (cmd instanceof GameMsg.AllUserCmd) {
+            ctx.writeAndFlush((GameMsg.AllUserCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserSeeMailCmd) {
+            ctx.writeAndFlush((GameMsg.UserSeeMailCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserReceiveMailCmd) {
+            ctx.writeAndFlush((GameMsg.UserReceiveMailCmd) cmd);
+        }else if (cmd instanceof GameMsg.UserEnterArenaCmd){
+            ctx.writeAndFlush((GameMsg.UserEnterArenaCmd)cmd);
         }
 
 

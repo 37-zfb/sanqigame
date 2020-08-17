@@ -5,8 +5,8 @@ import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import model.GoodsLimitNumber;
 import model.UserResumeState;
+import client.model.arena.PlayArenaClient;
 import model.duplicate.Duplicate;
 import model.profession.Skill;
 import model.props.Equipment;
@@ -16,9 +16,7 @@ import scene.GameData;
 import type.EquipmentType;
 import type.PotionType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 
@@ -47,7 +45,7 @@ public class Role {
     /**
      * 当前血量
      */
-    private Integer currHp;
+    private volatile Integer currHp;
 
     /**
      * 当前 蓝量
@@ -74,7 +72,6 @@ public class Role {
      */
     private final Object hpMonitor = new Object();
 
-
     /**
      * 恢复状态
      */
@@ -90,6 +87,11 @@ public class Role {
      * 背包
      */
     private final Map<Integer, Props> backpackClient = new HashMap<>();
+
+    /**
+     *  邮件
+     */
+    private final MailClient mail = new MailClient();
 
     /**
      * 金币
@@ -116,6 +118,10 @@ public class Role {
      */
     private final Map<Integer,Integer> goodsAllowNumber = new HashMap<>();
 
+    /**
+     *  竞技场
+     */
+    private final PlayArenaClient playArenaClient = new PlayArenaClient();
 
     private boolean isChat = false;
 

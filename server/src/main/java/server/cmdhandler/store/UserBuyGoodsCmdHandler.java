@@ -81,7 +81,7 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
                     addProps(props.getId(), user, goodsNumber);
 
                     UserBuyGoodsLimitEntity userBuyGoodsLimitEntity = createEntity(user, goods, goodsNumber);
-                    userService.AddLimitNumber(userBuyGoodsLimitEntity);
+                    userService.addLimitNumber(userBuyGoodsLimitEntity);
 
                 } else {
                     addProps(props.getId(), user, goodsNumber);

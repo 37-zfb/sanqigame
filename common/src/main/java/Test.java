@@ -1,28 +1,22 @@
-
-
-import java.util.concurrent.Exchanger;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author 张丰博
  */
 public class Test {
     public static void main(String[] args) {
-        Exchanger<String> stringExchanger = new Exchanger<>();
-        new Thread(() -> {
-            try {
-                System.out.println("BB"+stringExchanger.exchange("BBB"));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-        try {
-            System.out.println("AA"+stringExchanger.exchange("AAA"));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+        Calendar calendar = Calendar.getInstance();
+        Date time = calendar.getTime();
+        System.out.println(format.format(time));
 
+        calendar.set(Calendar.DATE,calendar.get(Calendar.DATE)-20);
+        Date time1 = calendar.getTime();
+        System.out.println(format.format(time1));
 
     }
 }

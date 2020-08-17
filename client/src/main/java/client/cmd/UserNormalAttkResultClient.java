@@ -1,6 +1,6 @@
 package client.cmd;
 
-import client.CmdThread;
+import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import constant.SceneConst;

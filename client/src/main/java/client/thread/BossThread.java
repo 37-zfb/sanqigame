@@ -1,8 +1,6 @@
-package client;
+package client.thread;
 
-import client.cmd.UserCmd;
 import client.model.Role;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import model.duplicate.BossMonster;
@@ -11,10 +9,7 @@ import model.profession.Skill;
 import msg.GameMsg;
 import scene.GameData;
 
-import java.io.InputStreamReader;
-import java.util.Comparator;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;

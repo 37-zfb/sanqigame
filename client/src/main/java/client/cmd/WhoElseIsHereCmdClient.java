@@ -1,6 +1,6 @@
 package client.cmd;
 
-import client.CmdThread;
+import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
@@ -32,9 +32,9 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
 
         // 保存服务的响应的
         // 1、用户信息
-        List<GameMsg.WhoElseIsHereResult.UserInfo> userInfoList = result.getUserInfoList();
+        List<GameMsg.UserInfo> userInfoList = result.getUserInfoList();
         System.out.println("============当前场景的用户个数:  " + userInfoList.size());
-        for (GameMsg.WhoElseIsHereResult.UserInfo userInfo : userInfoList) {
+        for (GameMsg.UserInfo userInfo : userInfoList) {
             // 获得用户信息
             System.out.println("============用户id:"+userInfo.getUserId()+"、 名字: " + userInfo.getUserName());
         }

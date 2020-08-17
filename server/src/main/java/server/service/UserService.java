@@ -249,7 +249,12 @@ public class UserService {
         userState.updateUserMoney(userId,money);
     }
 
-
+    /**
+     *  查询用户当天限制商品购买数
+     * @param userId
+     * @param date
+     * @return
+     */
     public List<UserBuyGoodsLimitEntity> listUserBuyGoodsLimitEntity( Integer userId, String date){
         if (userId == null || date == null){
             return null;
@@ -258,20 +263,35 @@ public class UserService {
     }
 
 
-
-    public void AddLimitNumber(UserBuyGoodsLimitEntity goodsLimitEntity) {
+    /**
+     *  添加购买数量
+     * @param goodsLimitEntity
+     */
+    public void addLimitNumber(UserBuyGoodsLimitEntity goodsLimitEntity) {
         if (goodsLimitEntity == null ){
             return;
         }
-
         userGoodsLimitDAO.insertEntity(goodsLimitEntity);
-
     }
 
+    /**
+     *  修改购买数量
+     * @param userBuyGoodsLimitEntity
+     */
     public void modifyLimitNumber(UserBuyGoodsLimitEntity userBuyGoodsLimitEntity ) {
         if (userBuyGoodsLimitEntity == null){
             return;
         }
         userGoodsLimitDAO.updateLimitNumber( userBuyGoodsLimitEntity);
     }
+
+    /**
+     *  查询所有用户
+     * @return
+     */
+    public List<UserEntity> listUser() {
+        return userDAO.selectAllUser();
+    }
+
+
 }

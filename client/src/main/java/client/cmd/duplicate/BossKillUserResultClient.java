@@ -1,6 +1,5 @@
 package client.cmd.duplicate;
 
-import client.BossThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import io.netty.channel.ChannelHandlerContext;
@@ -19,8 +18,8 @@ public class BossKillUserResultClient implements ICmd<GameMsg.BossKillUserResult
             role.setCurrHp(0);
         }
         System.out.println("您已阵亡,副本: "+role.getCurrDuplicate().getName()+" ,Boss: "+role.getCurrDuplicate().getCurrBossMonster().getBossName());
-
-        BossThread.getInstance().process(ctx, role);
+        System.out.println("请推出副本;");
+//        BossThread.getInstance().process(ctx, role);
 
     }
 }

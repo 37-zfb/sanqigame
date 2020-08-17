@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * @author 张丰博
  */
-public class Broadcast {
+public final class Broadcast {
 
     /**
      * k:场景id <==> v:ChannelGroup

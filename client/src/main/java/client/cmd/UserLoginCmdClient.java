@@ -1,10 +1,12 @@
 package client.cmd;
 
-import client.CmdThread;
+import client.thread.CmdThread;
 import client.GameClient;
+import client.model.MailClient;
 import client.model.Role;
 import client.model.SceneData;
 import client.model.User;
+import client.model.client.MailEntityClient;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -129,18 +131,33 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
 
         }
 
-
+        // 限量商品
         Map<Integer, Integer> goodsAllowNumber = role.getGoodsAllowNumber();
         List<GameMsg.UserLoginResult.GoodsLimit> goodLimitsList = userLoginResult.getGoodLimitsList();
         for (GameMsg.UserLoginResult.GoodsLimit goodsLimit : goodLimitsList) {
             goodsAllowNumber.put(goodsLimit.getGoodsId(),goodsLimit.getGoodsNumber());
         }
 
+        // 初始化邮件系统
+        initMail(role,userLoginResult);
 
         // 下一步 操作
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }
 
+
+    private void initMail(Role  role,GameMsg.UserLoginResult userLoginResult){
+        // 初始化邮件系统
+        MailClient mail = role.getMail();
+        Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
+        List<GameMsg.MailInfo> mailInfoList = userLoginResult.getMailInfoList();
+        for (GameMsg.MailInfo mailInfo : mailInfoList) {
+            mailMap.put(mailInfo.getMailId(),new MailEntityClient(mailInfo.getMailId(),mailInfo.getSrcUserName(),mailInfo.getTitle()));
+        }
+        if (mailMap.size() > 0){
+            mail.setHave(true);
+        }
+    }
 
     /**
      * 登录

@@ -1,6 +1,6 @@
 package client.cmd.chat;
 
-import client.CmdThread;
+import client.thread.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;

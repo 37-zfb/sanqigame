@@ -1,17 +1,14 @@
 package server.model;
 
-import constant.PotionConst;
 import constant.ProfessionConst;
+import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import entity.db.UserEquipmentEntity;
-import model.GoodsLimitNumber;
 import model.UserResumeState;
 import model.duplicate.Duplicate;
-import model.profession.Profession;
 import model.profession.Skill;
 import model.props.AbstractPropsProperty;
 import model.props.Equipment;
@@ -59,7 +56,7 @@ public class User {
     /**
      * 当前蓝量
      */
-    private int currMp;
+    private volatile int currMp;
 
     /**
      * 当前场景
@@ -148,6 +145,18 @@ public class User {
      *  限购商品，允许购买个数; 商品id <==> 允许购买个数
      */
     private final Map<Integer,Integer> goodsAllowNumber = new HashMap<>();
+
+
+    /**
+     *  邮件系统
+     */
+    private final PlayMail mail = new PlayMail();
+
+    /**
+     *  竞技场
+     */
+    private PlayArena playArena;
+
 
     /**
      * 设置恢复mp终止时间
@@ -324,6 +333,16 @@ public class User {
             }
         }
     }
+
+    /**
+     *  计算目标用户减血量
+     * @param defense 目标用户防御
+     */
+    public int calTargetUserSubHp(Integer defense){
+        Integer subHp = calMonsterSubHp();
+        return subHp - defense*2;
+    }
+
 
     /**
      * @return

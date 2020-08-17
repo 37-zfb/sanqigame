@@ -1,10 +1,11 @@
 package client.cmd.store;
 
-import client.CmdThread;
+import client.thread.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
+import model.duplicate.store.Goods;
 import model.props.Equipment;
 import model.props.Potion;
 import model.props.Props;
@@ -33,8 +34,14 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
 
             int goodsId = userBuyGoodsResult.getGoodsId();
             int goodsNumber = userBuyGoodsResult.getGoodsNumber();
-            Integer allowNumber = role.getGoodsAllowNumber().get(goodsId);
-            role.getGoodsAllowNumber().put(goodsId,(allowNumber-goodsNumber));
+
+            Map<Integer, Goods> goodsMap = GameData.getInstance().getGoodsMap();
+            Goods goods = goodsMap.get(goodsId);
+            Props props1 = GameData.getInstance().getPropsMap().get(goods.getPropsId());
+            if (props1.getPropsProperty().isLimit() == PropsType.Limit){
+                Integer allowNumber = role.getGoodsAllowNumber().get(goodsId);
+                role.getGoodsAllowNumber().put(goodsId,(allowNumber-goodsNumber));
+            }
 
             //封装背包中的物品
             Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
@@ -55,6 +62,8 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
 
                     backpackClient.put(props.getLocation(), new Props(props.getPropsId(), pro.getName(), propsProperty));
                 }else if (pro.getPropsProperty().getType() == PropsType.Potion){
+
+
                     Potion potion = (Potion) pro.getPropsProperty();
 
                     Potion propsProperty =
@@ -69,6 +78,8 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
 
                     backpackClient.put(props.getLocation(),new Props(props.getPropsId(),pro.getName(), propsProperty));
                 }
+
+
             }
 
 

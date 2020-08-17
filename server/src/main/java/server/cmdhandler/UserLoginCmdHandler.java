@@ -23,6 +23,7 @@ import model.scene.Monster;
 import model.scene.Npc;
 import model.scene.Scene;
 import scene.GameData;
+import server.service.MailService;
 import server.service.UserService;
 import server.Broadcast;
 import type.GoodsLimitBuyType;
@@ -44,6 +45,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserLoginCmd cmd) {
@@ -161,6 +164,17 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                 resultBuilder.addGoodLimits(goodsLimit);
             }
 
+            Map<Integer, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
+            for (DbSendMailEntity mailEntity : mailEntityMap.values()) {
+                //
+                GameMsg.MailInfo mailInfo = GameMsg.MailInfo.newBuilder()
+                        .setSrcUserName(mailEntity.getSrcUserName())
+                        .setTitle(mailEntity.getTitle())
+                        .setMailId(mailEntity.getId())
+                        .build();
+                resultBuilder.addMailInfo(mailInfo);
+            }
+
 
             loginResult = resultBuilder.build();
         } catch (CustomizeException e) {
@@ -205,6 +219,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         loadBackpack(user);
         loadWearEqu(user);
         loadLimitNumber(user);
+        loadMail(user);
         // 启动定时器
 //        user.startTimer();
         // 设置mp恢复结束时间
@@ -212,6 +227,19 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
 
 
         return user;
+    }
+
+    /**
+     *  加载未读的邮件
+     * @param user
+     */
+    private void loadMail(User user) {
+        List<DbSendMailEntity> mailEntityList = mailService.listMailWithinTenDay(user.getUserId());
+        PlayMail mail = user.getMail();
+        Map<Integer, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
+        for (DbSendMailEntity dbSendMailEntity : mailEntityList) {
+            mailEntityMap.put(dbSendMailEntity.getId(),dbSendMailEntity);
+        }
     }
 
     /**

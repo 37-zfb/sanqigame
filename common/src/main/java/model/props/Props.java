@@ -36,5 +36,4 @@ public class Props {
         this.name = name;
         this.propsProperty = propsProperty;
     }
-
 }

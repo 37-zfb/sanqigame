@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import entity.db.CurrUserStateEntity;
 import server.model.User;
 import server.model.UserManager;
+import server.service.MailService;
 import server.service.UserService;
 
 /**
@@ -47,8 +48,10 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
 
         ApplicationContext context = GameServer.APPLICATION_CONTEXT;
         UserService userService = context.getBean(UserService.class);
+        MailService mailService = context.getBean(MailService.class);
 
         User user = UserManager.getUserById(userId);
+        user.setCurrDuplicate(null);
         CurrUserStateEntity userStateEntity = new CurrUserStateEntity();
         user.calCurrHp();
         userStateEntity.setCurrHp(user.getCurrHp());
@@ -60,15 +63,17 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         userStateEntity.setBaseDefense(user.getBaseDefense());
         userStateEntity.setUserId(userId);
         userStateEntity.setMoney(user.getMoney());
-
         // 保存用户所在地
         userService.modifyUserState(userStateEntity);
+        // 持久化,邮件
+        mailService.modifyMailState(user.getMail().getMailEntityMap().values());
 
         // 移除管道
         Broadcast.removeChannel(user.getCurSceneId(),ctx.channel());
 
         // 移除用户
         UserManager.removeUser(userId);
+        ArenaManager.removeUser(user);
 
 //        // 广播用户离场的消息
 //        GameMsg.UserQuitResult.Builder resultBuilder = GameMsg.UserQuitResult.newBuilder();

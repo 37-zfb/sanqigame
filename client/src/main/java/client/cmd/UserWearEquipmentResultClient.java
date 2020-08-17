@@ -1,6 +1,6 @@
 package client.cmd;
 
-import client.CmdThread;
+import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,7 +10,6 @@ import entity.db.UserEquipmentEntity;
 import model.props.Equipment;
 import scene.GameData;
 
-import java.util.List;
 import java.util.Map;
 
 /**
