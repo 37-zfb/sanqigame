@@ -1,6 +1,7 @@
 package client.cmd;
 
 import client.model.MailClient;
+import client.model.PlayUserClient;
 import client.model.Role;
 import client.model.client.MailEntityClient;
 import entity.db.UserEquipmentEntity;
@@ -54,6 +55,17 @@ public class UserCmd {
 //                    }
 //                }
 
+                if (role.getTEAM_CLIENT().getTeamLeaderId() != null) {
+                    log.info("======> 队伍成员如下: ");
+                    for (PlayUserClient playUserClient : role.getTEAM_CLIENT().getTeamMember()) {
+                        if (playUserClient != null && playUserClient.getUserId().equals(role.getTEAM_CLIENT().getTeamLeaderId())) {
+                            log.info("队长: {}", playUserClient.getUserName());
+                        } else if (playUserClient != null) {
+                            log.info("队员: {}", playUserClient.getUserName());
+                        }
+                    }
+                }
+
                 if (role.getMail().isHave()) {
                     log.info("======> {}", "存在未领取的邮件");
                 }
@@ -78,6 +90,10 @@ public class UserCmd {
                     System.out.println("======>16:发送邮件;");
                     System.out.println("======>17:邮箱;");
                     System.out.println("======>18:进入竞技场;");
+                    System.out.println("======>19:组队;");
+                    System.out.println("======>20:加入队伍;");
+                    System.out.println("======>21:不加队伍;");
+                    System.out.println("======>22:退出队伍;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -270,7 +286,7 @@ public class UserCmd {
                         int id = scanner.nextInt();
                         return GameMsg.EnterDuplicateCmd.newBuilder().setDuplicateId(id).build();
                     } else if ("14".equals(command)) {
-                        Map<Integer, Integer> goodsAllowNumber = role.getGoodsAllowNumber();
+                        Map<Integer, Integer> goodsAllowNumber = role.getGOODS_ALLOW_NUMBER();
                         // 商店, 放在客户端展示商品列表;
                         GameData gameData = GameData.getInstance();
                         Map<Integer, Goods> goodsMap = gameData.getGoodsMap();
@@ -332,7 +348,6 @@ public class UserCmd {
                                 System.out.println(mailEntityClient.getId() + "、" + mailEntityClient.getTitle() + "。 来自:" + mailEntityClient.getSrcUserName());
                             }
                             System.out.println("===================");
-
                             int mailId = scanner.nextInt();
                             GameMsg.UserReceiveMailCmd.Builder newBuilder = GameMsg.UserReceiveMailCmd.newBuilder();
                             if (mailId == 0) {
@@ -341,14 +356,37 @@ public class UserCmd {
                                 newBuilder.setMailId(mailId);
                             }
                             return newBuilder.build();
-
                         } else {
                             System.out.println("没有邮件");
                             continue;
                         }
-                    }else if ("18".equals(command)) {
+                    } else if ("18".equals(command)) {
                         // 进入竞技场
                         return GameMsg.UserEnterArenaCmd.newBuilder().build();
+                    } else if ("19".equals(command)) {
+                        // 组队
+                        role.setTeam(true);
+                        return GameMsg.WhoElseIsHereCmd.newBuilder().build();
+                    } else if ("20".equals(command)) {
+                        // 加入队伍
+                        role.setAnswer(true);
+                        GameMsg.UserJoinTeamCmd userJoinTeamCmd = GameMsg.UserJoinTeamCmd.newBuilder()
+                                .setIsJoin(true)
+                                .setOriginateUserId(role.getTEAM_CLIENT().getOriginateUserId())
+                                .build();
+                        return userJoinTeamCmd;
+                    } else if ("21".equals(command)) {
+                        // 不加队伍
+                        role.getTEAM_CLIENT().setOriginateUserId(null);
+                        GameMsg.UserJoinTeamCmd userJoinTeamCmd = GameMsg.UserJoinTeamCmd.newBuilder()
+                                .setIsJoin(false)
+                                .build();
+                        return userJoinTeamCmd;
+                    } else if ("22".equals(command)) {
+                        //  退出队伍
+                        return GameMsg.UserQuitTeamCmd.newBuilder()
+                                .setUserId(role.getId())
+                                .build();
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -412,8 +450,13 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.UserSeeMailCmd) cmd);
         } else if (cmd instanceof GameMsg.UserReceiveMailCmd) {
             ctx.writeAndFlush((GameMsg.UserReceiveMailCmd) cmd);
-        }else if (cmd instanceof GameMsg.UserEnterArenaCmd){
-            ctx.writeAndFlush((GameMsg.UserEnterArenaCmd)cmd);
+        } else if (cmd instanceof GameMsg.UserEnterArenaCmd) {
+            ctx.writeAndFlush((GameMsg.UserEnterArenaCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserJoinTeamCmd) {
+            ctx.writeAndFlush((GameMsg.UserJoinTeamCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserQuitTeamCmd) {
+            ctx.writeAndFlush((GameMsg.UserQuitTeamCmd) cmd)
+            ;
         }
 
 

@@ -4,7 +4,7 @@ import client.model.Role;
 import client.model.arena.PlayArenaClient;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import client.model.arena.ArenaUser;
+import client.model.PlayUserClient;
 import msg.GameMsg;
 
 import java.util.Map;
@@ -69,7 +69,7 @@ public class ArenaThread {
     private void sendCmd(ChannelHandlerContext ctx, Role role) {
         while (true) {
 
-            PlayArenaClient playArenaClient = role.getPlayArenaClient();
+            PlayArenaClient playArenaClient = role.getARENA_CLIENT();
 
 
             log.info("请选择您的操作: ");
@@ -85,8 +85,8 @@ public class ArenaThread {
             String command = scanner.nextLine();
 
             if ("1".equals(command)) {
-                Map<Integer, ArenaUser> arenaUserMap = role.getPlayArenaClient().getArenaUserMap();
-                for (ArenaUser arenaUser : arenaUserMap.values()) {
+                Map<Integer, PlayUserClient> arenaUserMap = role.getARENA_CLIENT().getArenaUserMap();
+                for (PlayUserClient arenaUser : arenaUserMap.values()) {
                     System.out.println(arenaUser.getUserId() + "、" + arenaUser.getUserName());
                 }
 
@@ -98,7 +98,7 @@ public class ArenaThread {
                 break;
             } else if ("2".equals(command)) {
                 if (playArenaClient.getChallengeUser() != null){
-                    ArenaUser challengeUser = playArenaClient.getChallengeUser();
+                    PlayUserClient challengeUser = playArenaClient.getChallengeUser();
 
                     GameMsg.UserAttackCmd userAttackCmd = GameMsg.UserAttackCmd.newBuilder()
                             .setTargetUserId(challengeUser.getUserId())
@@ -119,9 +119,9 @@ public class ArenaThread {
                 GameMsg.TargetUserResponseCmd targetUserResponseCmd =
                         GameMsg.TargetUserResponseCmd.newBuilder()
                                 .setIsAgree(true)
-                                .setOriginateUserId(role.getPlayArenaClient().getOriginateUserId())
+                                .setOriginateUserId(role.getARENA_CLIENT().getOriginateUserId())
                                 .build();
-                role.getPlayArenaClient().setOriginateUserId(null);
+                role.getARENA_CLIENT().setOriginateUserId(null);
                 ctx.writeAndFlush(targetUserResponseCmd);
                 break;
             } else if ("8".equals(command)) {
@@ -129,9 +129,9 @@ public class ArenaThread {
                 GameMsg.TargetUserResponseCmd targetUserResponseCmd =
                         GameMsg.TargetUserResponseCmd.newBuilder()
                                 .setIsAgree(false)
-                                .setOriginateUserId(role.getPlayArenaClient().getOriginateUserId())
+                                .setOriginateUserId(role.getARENA_CLIENT().getOriginateUserId())
                                 .build();
-                role.getPlayArenaClient().setOriginateUserId(null);
+                role.getARENA_CLIENT().setOriginateUserId(null);
                 ctx.writeAndFlush(targetUserResponseCmd);
                 break;
             } else if ("9".equals(command)) {

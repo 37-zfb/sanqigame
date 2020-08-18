@@ -126,6 +126,16 @@ enum MsgCode {
 
   USER_DIE_RESULT = 70;
 
+  USER_TEAM_UP_CMD = 71;
+  USER_TEAM_UP_RESULT = 72;
+
+  ASK_TEAM_UP_RESULT = 73;
+
+  USER_JOIN_TEAM_CMD = 74;
+  USER_JOIN_TEAM_RESULT = 75;
+  USER_QUIT_TEAM_CMD = 76;
+  USER_QUIT_TEAM_RESULT = 77;
+  USER_ENTER_TEAM_FAIL_RESULT = 78;
 }
 
 // 还有谁在场
@@ -712,8 +722,6 @@ message UserQuitArenaCmd{
 message UserQuitArenaResult{
   UserInfo userInfo = 1;
 }
-
-
 // 用户在竞技场中，普通攻击指令
 message UserAttackCmd{
   uint32 targetUserId = 1;
@@ -737,3 +745,42 @@ message UserDieResult{
   uint32 targetUserId = 1;
 }
 
+
+
+// 用户组队申请，指令
+message UserTeamUpCmd{
+  uint32 targetUserId = 1;
+}
+// 用户组队申请，结果
+message UserTeamUpResult{
+
+}
+// 询问用户是否同意组队
+message AskTeamUpResult{
+  //发起者id
+  uint32  originateUserId = 1;
+  // 发起者姓名
+  string originateUserName = 2;
+}
+// 用户加入队伍 指令
+message UserJoinTeamCmd{
+  bool isJoin = 1;
+  uint32 originateUserId = 2;
+}
+// 用户加入队伍 结果
+message UserJoinTeamResult{
+  repeated UserInfo userInfo = 1;
+  uint32 teamLeaderId = 2;
+  bool isJoin = 3;
+}
+// 用户退出队伍 指令
+message UserQuitTeamCmd{
+  uint32 userId = 1;
+}
+// 用户退出队伍 结果
+message UserQuitTeamResult{
+  UserInfo userInfo = 1;
+}
+// 加入队伍失败
+message UserEnterTeamFailResult{
+}

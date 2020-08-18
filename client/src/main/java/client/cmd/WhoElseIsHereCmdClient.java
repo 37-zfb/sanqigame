@@ -40,21 +40,7 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
         }
 
         // 不是聊天
-        if (!role.isChat()){
-            // 2、npc信息
-            Map<Integer, Npc> npcMap = scene.getNpcMap();
-            System.out.println("============当前场景的Npc个数:  " + npcMap.size());
-            for (Npc npc : npcMap.values()) {
-                System.out.println("============Npc:  " + npc.getName());
-            }
-
-            // 3、怪信息
-            Map<Integer, Monster> monsterMap = scene.getMonsterMap();
-            System.out.println("============当前场景的怪个数:  " + monsterMap.size());
-            for (Monster monster : monsterMap.values()) {
-                System.out.println("============怪:  " + monster.getName() + " ," + " 状态: " + (monster.isDie() ? "已被击杀" : "存活") + " , 血量: " + monster.getHp());
-            }
-        }else {
+        if (role.isChat()){
             // 聊天
             Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
@@ -72,7 +58,32 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
                     .setType(ChatType.PRIVATE_CHAT.getChatType())
                     .build();
             ctx.writeAndFlush(userChatInfoCmd);
+        }else if (role.isTeam()){
+            //
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("选择用户: ");
+            int userId = scanner.nextInt();
+            GameMsg.UserTeamUpCmd userTeamUpCmd = GameMsg.UserTeamUpCmd.newBuilder()
+                    .setTargetUserId(userId)
+                    .build();
+            ctx.writeAndFlush(userTeamUpCmd);
+        }else{
+            // 2、npc信息
+            Map<Integer, Npc> npcMap = scene.getNpcMap();
+            System.out.println("============当前场景的Npc个数:  " + npcMap.size());
+            for (Npc npc : npcMap.values()) {
+                System.out.println("============Npc:  " + npc.getName());
+            }
+
+            // 3、怪信息
+            Map<Integer, Monster> monsterMap = scene.getMonsterMap();
+            System.out.println("============当前场景的怪个数:  " + monsterMap.size());
+            for (Monster monster : monsterMap.values()) {
+                System.out.println("============怪:  " + monster.getName() + " ," + " 状态: " + (monster.isDie() ? "已被击杀" : "存活") + " , 血量: " + monster.getHp());
+            }
         }
+
+
 
 
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());

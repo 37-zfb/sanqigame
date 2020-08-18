@@ -1,4 +1,4 @@
-package client.model.arena;
+package client.model;
 
 import constant.ProfessionConst;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class ArenaUser {
+public class PlayUserClient {
 
     /**
      *  用户id
@@ -24,14 +24,14 @@ public class ArenaUser {
     /**
      *  当前血量
      */
-    private Integer currMp = ProfessionConst.HP;
+    private volatile Integer currMp = ProfessionConst.HP;
 
     /**
      * 当前蓝量
      */
     private volatile Integer currHp = ProfessionConst.MP;
 
-    public ArenaUser(Integer userId,String userName){
+    public PlayUserClient(Integer userId, String userName){
         this.userId = userId;
         this.userName = userName;
     }

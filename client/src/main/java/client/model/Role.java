@@ -1,5 +1,6 @@
 package client.model;
 
+import client.model.team.PlayTeamClient;
 import client.timer.ResumeStateTimer;
 import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
@@ -116,14 +117,23 @@ public class Role {
     /**
      *  限购商品，允许购买的个数
      */
-    private final Map<Integer,Integer> goodsAllowNumber = new HashMap<>();
+    private final Map<Integer,Integer> GOODS_ALLOW_NUMBER = new HashMap<>();
 
     /**
      *  竞技场
      */
-    private final PlayArenaClient playArenaClient = new PlayArenaClient();
+    private final PlayArenaClient ARENA_CLIENT = new PlayArenaClient();
+
+    /**
+     * 组队系统
+     */
+    private final PlayTeamClient TEAM_CLIENT = new PlayTeamClient();
 
     private boolean isChat = false;
+
+    private boolean isTeam = false;
+
+    private boolean isAnswer = false;
 
     private static final Role role = new Role();
 

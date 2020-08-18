@@ -307,6 +307,38 @@ public final class GameMsg {
      * <code>USER_DIE_RESULT = 70;</code>
      */
     USER_DIE_RESULT(70),
+    /**
+     * <code>USER_TEAM_UP_CMD = 71;</code>
+     */
+    USER_TEAM_UP_CMD(71),
+    /**
+     * <code>USER_TEAM_UP_RESULT = 72;</code>
+     */
+    USER_TEAM_UP_RESULT(72),
+    /**
+     * <code>ASK_TEAM_UP_RESULT = 73;</code>
+     */
+    ASK_TEAM_UP_RESULT(73),
+    /**
+     * <code>USER_JOIN_TEAM_CMD = 74;</code>
+     */
+    USER_JOIN_TEAM_CMD(74),
+    /**
+     * <code>USER_JOIN_TEAM_RESULT = 75;</code>
+     */
+    USER_JOIN_TEAM_RESULT(75),
+    /**
+     * <code>USER_QUIT_TEAM_CMD = 76;</code>
+     */
+    USER_QUIT_TEAM_CMD(76),
+    /**
+     * <code>USER_QUIT_TEAM_RESULT = 77;</code>
+     */
+    USER_QUIT_TEAM_RESULT(77),
+    /**
+     * <code>USER_ENTER_TEAM_FAIL_RESULT = 78;</code>
+     */
+    USER_ENTER_TEAM_FAIL_RESULT(78),
     UNRECOGNIZED(-1),
     ;
 
@@ -594,6 +626,38 @@ public final class GameMsg {
      * <code>USER_DIE_RESULT = 70;</code>
      */
     public static final int USER_DIE_RESULT_VALUE = 70;
+    /**
+     * <code>USER_TEAM_UP_CMD = 71;</code>
+     */
+    public static final int USER_TEAM_UP_CMD_VALUE = 71;
+    /**
+     * <code>USER_TEAM_UP_RESULT = 72;</code>
+     */
+    public static final int USER_TEAM_UP_RESULT_VALUE = 72;
+    /**
+     * <code>ASK_TEAM_UP_RESULT = 73;</code>
+     */
+    public static final int ASK_TEAM_UP_RESULT_VALUE = 73;
+    /**
+     * <code>USER_JOIN_TEAM_CMD = 74;</code>
+     */
+    public static final int USER_JOIN_TEAM_CMD_VALUE = 74;
+    /**
+     * <code>USER_JOIN_TEAM_RESULT = 75;</code>
+     */
+    public static final int USER_JOIN_TEAM_RESULT_VALUE = 75;
+    /**
+     * <code>USER_QUIT_TEAM_CMD = 76;</code>
+     */
+    public static final int USER_QUIT_TEAM_CMD_VALUE = 76;
+    /**
+     * <code>USER_QUIT_TEAM_RESULT = 77;</code>
+     */
+    public static final int USER_QUIT_TEAM_RESULT_VALUE = 77;
+    /**
+     * <code>USER_ENTER_TEAM_FAIL_RESULT = 78;</code>
+     */
+    public static final int USER_ENTER_TEAM_FAIL_RESULT_VALUE = 78;
 
 
     public final int getNumber() {
@@ -691,6 +755,14 @@ public final class GameMsg {
         case 68: return USER_ATTACK_CMD;
         case 69: return USER_ATTACK_RESULT;
         case 70: return USER_DIE_RESULT;
+        case 71: return USER_TEAM_UP_CMD;
+        case 72: return USER_TEAM_UP_RESULT;
+        case 73: return ASK_TEAM_UP_RESULT;
+        case 74: return USER_JOIN_TEAM_CMD;
+        case 75: return USER_JOIN_TEAM_RESULT;
+        case 76: return USER_QUIT_TEAM_CMD;
+        case 77: return USER_QUIT_TEAM_RESULT;
+        case 78: return USER_ENTER_TEAM_FAIL_RESULT;
         default: return null;
       }
     }
@@ -58125,6 +58197,4666 @@ public final class GameMsg {
 
   }
 
+  public interface UserTeamUpCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserTeamUpCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 targetUserId = 1;</code>
+     * @return The targetUserId.
+     */
+    int getTargetUserId();
+  }
+  /**
+   * <pre>
+   * 用户组队申请，指令
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserTeamUpCmd}
+   */
+  public  static final class UserTeamUpCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserTeamUpCmd)
+      UserTeamUpCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserTeamUpCmd.newBuilder() to construct.
+    private UserTeamUpCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserTeamUpCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserTeamUpCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserTeamUpCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              targetUserId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserTeamUpCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserTeamUpCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserTeamUpCmd.class, msg.GameMsg.UserTeamUpCmd.Builder.class);
+    }
+
+    public static final int TARGETUSERID_FIELD_NUMBER = 1;
+    private int targetUserId_;
+    /**
+     * <code>uint32 targetUserId = 1;</code>
+     * @return The targetUserId.
+     */
+    public int getTargetUserId() {
+      return targetUserId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (targetUserId_ != 0) {
+        output.writeUInt32(1, targetUserId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (targetUserId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, targetUserId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserTeamUpCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserTeamUpCmd other = (msg.GameMsg.UserTeamUpCmd) obj;
+
+      if (getTargetUserId()
+          != other.getTargetUserId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TARGETUSERID_FIELD_NUMBER;
+      hash = (53 * hash) + getTargetUserId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserTeamUpCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserTeamUpCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 用户组队申请，指令
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserTeamUpCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserTeamUpCmd)
+        msg.GameMsg.UserTeamUpCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserTeamUpCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserTeamUpCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserTeamUpCmd.class, msg.GameMsg.UserTeamUpCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserTeamUpCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        targetUserId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserTeamUpCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserTeamUpCmd getDefaultInstanceForType() {
+        return msg.GameMsg.UserTeamUpCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserTeamUpCmd build() {
+        msg.GameMsg.UserTeamUpCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserTeamUpCmd buildPartial() {
+        msg.GameMsg.UserTeamUpCmd result = new msg.GameMsg.UserTeamUpCmd(this);
+        result.targetUserId_ = targetUserId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserTeamUpCmd) {
+          return mergeFrom((msg.GameMsg.UserTeamUpCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserTeamUpCmd other) {
+        if (other == msg.GameMsg.UserTeamUpCmd.getDefaultInstance()) return this;
+        if (other.getTargetUserId() != 0) {
+          setTargetUserId(other.getTargetUserId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserTeamUpCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserTeamUpCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int targetUserId_ ;
+      /**
+       * <code>uint32 targetUserId = 1;</code>
+       * @return The targetUserId.
+       */
+      public int getTargetUserId() {
+        return targetUserId_;
+      }
+      /**
+       * <code>uint32 targetUserId = 1;</code>
+       * @param value The targetUserId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTargetUserId(int value) {
+        
+        targetUserId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 targetUserId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTargetUserId() {
+        
+        targetUserId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserTeamUpCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserTeamUpCmd)
+    private static final msg.GameMsg.UserTeamUpCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserTeamUpCmd();
+    }
+
+    public static msg.GameMsg.UserTeamUpCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserTeamUpCmd>
+        PARSER = new com.google.protobuf.AbstractParser<UserTeamUpCmd>() {
+      @java.lang.Override
+      public UserTeamUpCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserTeamUpCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserTeamUpCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserTeamUpCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserTeamUpCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserTeamUpResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserTeamUpResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   * 用户组队申请，结果
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserTeamUpResult}
+   */
+  public  static final class UserTeamUpResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserTeamUpResult)
+      UserTeamUpResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserTeamUpResult.newBuilder() to construct.
+    private UserTeamUpResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserTeamUpResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserTeamUpResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserTeamUpResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserTeamUpResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserTeamUpResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserTeamUpResult.class, msg.GameMsg.UserTeamUpResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserTeamUpResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserTeamUpResult other = (msg.GameMsg.UserTeamUpResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserTeamUpResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserTeamUpResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 用户组队申请，结果
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserTeamUpResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserTeamUpResult)
+        msg.GameMsg.UserTeamUpResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserTeamUpResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserTeamUpResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserTeamUpResult.class, msg.GameMsg.UserTeamUpResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserTeamUpResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserTeamUpResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserTeamUpResult getDefaultInstanceForType() {
+        return msg.GameMsg.UserTeamUpResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserTeamUpResult build() {
+        msg.GameMsg.UserTeamUpResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserTeamUpResult buildPartial() {
+        msg.GameMsg.UserTeamUpResult result = new msg.GameMsg.UserTeamUpResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserTeamUpResult) {
+          return mergeFrom((msg.GameMsg.UserTeamUpResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserTeamUpResult other) {
+        if (other == msg.GameMsg.UserTeamUpResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserTeamUpResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserTeamUpResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserTeamUpResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserTeamUpResult)
+    private static final msg.GameMsg.UserTeamUpResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserTeamUpResult();
+    }
+
+    public static msg.GameMsg.UserTeamUpResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserTeamUpResult>
+        PARSER = new com.google.protobuf.AbstractParser<UserTeamUpResult>() {
+      @java.lang.Override
+      public UserTeamUpResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserTeamUpResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserTeamUpResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserTeamUpResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserTeamUpResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AskTeamUpResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.AskTeamUpResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *发起者id
+     * </pre>
+     *
+     * <code>uint32 originateUserId = 1;</code>
+     * @return The originateUserId.
+     */
+    int getOriginateUserId();
+
+    /**
+     * <pre>
+     * 发起者姓名
+     * </pre>
+     *
+     * <code>string originateUserName = 2;</code>
+     * @return The originateUserName.
+     */
+    java.lang.String getOriginateUserName();
+    /**
+     * <pre>
+     * 发起者姓名
+     * </pre>
+     *
+     * <code>string originateUserName = 2;</code>
+     * @return The bytes for originateUserName.
+     */
+    com.google.protobuf.ByteString
+        getOriginateUserNameBytes();
+  }
+  /**
+   * <pre>
+   * 询问用户是否同意组队
+   * </pre>
+   *
+   * Protobuf type {@code msg.AskTeamUpResult}
+   */
+  public  static final class AskTeamUpResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.AskTeamUpResult)
+      AskTeamUpResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use AskTeamUpResult.newBuilder() to construct.
+    private AskTeamUpResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AskTeamUpResult() {
+      originateUserName_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AskTeamUpResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AskTeamUpResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              originateUserId_ = input.readUInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              originateUserName_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_AskTeamUpResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_AskTeamUpResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.AskTeamUpResult.class, msg.GameMsg.AskTeamUpResult.Builder.class);
+    }
+
+    public static final int ORIGINATEUSERID_FIELD_NUMBER = 1;
+    private int originateUserId_;
+    /**
+     * <pre>
+     *发起者id
+     * </pre>
+     *
+     * <code>uint32 originateUserId = 1;</code>
+     * @return The originateUserId.
+     */
+    public int getOriginateUserId() {
+      return originateUserId_;
+    }
+
+    public static final int ORIGINATEUSERNAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object originateUserName_;
+    /**
+     * <pre>
+     * 发起者姓名
+     * </pre>
+     *
+     * <code>string originateUserName = 2;</code>
+     * @return The originateUserName.
+     */
+    public java.lang.String getOriginateUserName() {
+      java.lang.Object ref = originateUserName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        originateUserName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * 发起者姓名
+     * </pre>
+     *
+     * <code>string originateUserName = 2;</code>
+     * @return The bytes for originateUserName.
+     */
+    public com.google.protobuf.ByteString
+        getOriginateUserNameBytes() {
+      java.lang.Object ref = originateUserName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        originateUserName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (originateUserId_ != 0) {
+        output.writeUInt32(1, originateUserId_);
+      }
+      if (!getOriginateUserNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, originateUserName_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (originateUserId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, originateUserId_);
+      }
+      if (!getOriginateUserNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, originateUserName_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.AskTeamUpResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.AskTeamUpResult other = (msg.GameMsg.AskTeamUpResult) obj;
+
+      if (getOriginateUserId()
+          != other.getOriginateUserId()) return false;
+      if (!getOriginateUserName()
+          .equals(other.getOriginateUserName())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ORIGINATEUSERID_FIELD_NUMBER;
+      hash = (53 * hash) + getOriginateUserId();
+      hash = (37 * hash) + ORIGINATEUSERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getOriginateUserName().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.AskTeamUpResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.AskTeamUpResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 询问用户是否同意组队
+     * </pre>
+     *
+     * Protobuf type {@code msg.AskTeamUpResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.AskTeamUpResult)
+        msg.GameMsg.AskTeamUpResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_AskTeamUpResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_AskTeamUpResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.AskTeamUpResult.class, msg.GameMsg.AskTeamUpResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.AskTeamUpResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        originateUserId_ = 0;
+
+        originateUserName_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_AskTeamUpResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.AskTeamUpResult getDefaultInstanceForType() {
+        return msg.GameMsg.AskTeamUpResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.AskTeamUpResult build() {
+        msg.GameMsg.AskTeamUpResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.AskTeamUpResult buildPartial() {
+        msg.GameMsg.AskTeamUpResult result = new msg.GameMsg.AskTeamUpResult(this);
+        result.originateUserId_ = originateUserId_;
+        result.originateUserName_ = originateUserName_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.AskTeamUpResult) {
+          return mergeFrom((msg.GameMsg.AskTeamUpResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.AskTeamUpResult other) {
+        if (other == msg.GameMsg.AskTeamUpResult.getDefaultInstance()) return this;
+        if (other.getOriginateUserId() != 0) {
+          setOriginateUserId(other.getOriginateUserId());
+        }
+        if (!other.getOriginateUserName().isEmpty()) {
+          originateUserName_ = other.originateUserName_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.AskTeamUpResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.AskTeamUpResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int originateUserId_ ;
+      /**
+       * <pre>
+       *发起者id
+       * </pre>
+       *
+       * <code>uint32 originateUserId = 1;</code>
+       * @return The originateUserId.
+       */
+      public int getOriginateUserId() {
+        return originateUserId_;
+      }
+      /**
+       * <pre>
+       *发起者id
+       * </pre>
+       *
+       * <code>uint32 originateUserId = 1;</code>
+       * @param value The originateUserId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginateUserId(int value) {
+        
+        originateUserId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *发起者id
+       * </pre>
+       *
+       * <code>uint32 originateUserId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOriginateUserId() {
+        
+        originateUserId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object originateUserName_ = "";
+      /**
+       * <pre>
+       * 发起者姓名
+       * </pre>
+       *
+       * <code>string originateUserName = 2;</code>
+       * @return The originateUserName.
+       */
+      public java.lang.String getOriginateUserName() {
+        java.lang.Object ref = originateUserName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          originateUserName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 发起者姓名
+       * </pre>
+       *
+       * <code>string originateUserName = 2;</code>
+       * @return The bytes for originateUserName.
+       */
+      public com.google.protobuf.ByteString
+          getOriginateUserNameBytes() {
+        java.lang.Object ref = originateUserName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          originateUserName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * 发起者姓名
+       * </pre>
+       *
+       * <code>string originateUserName = 2;</code>
+       * @param value The originateUserName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginateUserName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        originateUserName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 发起者姓名
+       * </pre>
+       *
+       * <code>string originateUserName = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOriginateUserName() {
+        
+        originateUserName_ = getDefaultInstance().getOriginateUserName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 发起者姓名
+       * </pre>
+       *
+       * <code>string originateUserName = 2;</code>
+       * @param value The bytes for originateUserName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginateUserNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        originateUserName_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.AskTeamUpResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.AskTeamUpResult)
+    private static final msg.GameMsg.AskTeamUpResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.AskTeamUpResult();
+    }
+
+    public static msg.GameMsg.AskTeamUpResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AskTeamUpResult>
+        PARSER = new com.google.protobuf.AbstractParser<AskTeamUpResult>() {
+      @java.lang.Override
+      public AskTeamUpResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AskTeamUpResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AskTeamUpResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AskTeamUpResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.AskTeamUpResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserJoinTeamCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserJoinTeamCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool isJoin = 1;</code>
+     * @return The isJoin.
+     */
+    boolean getIsJoin();
+
+    /**
+     * <code>uint32 originateUserId = 2;</code>
+     * @return The originateUserId.
+     */
+    int getOriginateUserId();
+  }
+  /**
+   * <pre>
+   * 用户加入队伍 指令
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserJoinTeamCmd}
+   */
+  public  static final class UserJoinTeamCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserJoinTeamCmd)
+      UserJoinTeamCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserJoinTeamCmd.newBuilder() to construct.
+    private UserJoinTeamCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserJoinTeamCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserJoinTeamCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserJoinTeamCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              isJoin_ = input.readBool();
+              break;
+            }
+            case 16: {
+
+              originateUserId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserJoinTeamCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserJoinTeamCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserJoinTeamCmd.class, msg.GameMsg.UserJoinTeamCmd.Builder.class);
+    }
+
+    public static final int ISJOIN_FIELD_NUMBER = 1;
+    private boolean isJoin_;
+    /**
+     * <code>bool isJoin = 1;</code>
+     * @return The isJoin.
+     */
+    public boolean getIsJoin() {
+      return isJoin_;
+    }
+
+    public static final int ORIGINATEUSERID_FIELD_NUMBER = 2;
+    private int originateUserId_;
+    /**
+     * <code>uint32 originateUserId = 2;</code>
+     * @return The originateUserId.
+     */
+    public int getOriginateUserId() {
+      return originateUserId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (isJoin_ != false) {
+        output.writeBool(1, isJoin_);
+      }
+      if (originateUserId_ != 0) {
+        output.writeUInt32(2, originateUserId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (isJoin_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, isJoin_);
+      }
+      if (originateUserId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, originateUserId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserJoinTeamCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserJoinTeamCmd other = (msg.GameMsg.UserJoinTeamCmd) obj;
+
+      if (getIsJoin()
+          != other.getIsJoin()) return false;
+      if (getOriginateUserId()
+          != other.getOriginateUserId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ISJOIN_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsJoin());
+      hash = (37 * hash) + ORIGINATEUSERID_FIELD_NUMBER;
+      hash = (53 * hash) + getOriginateUserId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserJoinTeamCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserJoinTeamCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 用户加入队伍 指令
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserJoinTeamCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserJoinTeamCmd)
+        msg.GameMsg.UserJoinTeamCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserJoinTeamCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserJoinTeamCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserJoinTeamCmd.class, msg.GameMsg.UserJoinTeamCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserJoinTeamCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        isJoin_ = false;
+
+        originateUserId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserJoinTeamCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserJoinTeamCmd getDefaultInstanceForType() {
+        return msg.GameMsg.UserJoinTeamCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserJoinTeamCmd build() {
+        msg.GameMsg.UserJoinTeamCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserJoinTeamCmd buildPartial() {
+        msg.GameMsg.UserJoinTeamCmd result = new msg.GameMsg.UserJoinTeamCmd(this);
+        result.isJoin_ = isJoin_;
+        result.originateUserId_ = originateUserId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserJoinTeamCmd) {
+          return mergeFrom((msg.GameMsg.UserJoinTeamCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserJoinTeamCmd other) {
+        if (other == msg.GameMsg.UserJoinTeamCmd.getDefaultInstance()) return this;
+        if (other.getIsJoin() != false) {
+          setIsJoin(other.getIsJoin());
+        }
+        if (other.getOriginateUserId() != 0) {
+          setOriginateUserId(other.getOriginateUserId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserJoinTeamCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserJoinTeamCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private boolean isJoin_ ;
+      /**
+       * <code>bool isJoin = 1;</code>
+       * @return The isJoin.
+       */
+      public boolean getIsJoin() {
+        return isJoin_;
+      }
+      /**
+       * <code>bool isJoin = 1;</code>
+       * @param value The isJoin to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIsJoin(boolean value) {
+        
+        isJoin_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isJoin = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIsJoin() {
+        
+        isJoin_ = false;
+        onChanged();
+        return this;
+      }
+
+      private int originateUserId_ ;
+      /**
+       * <code>uint32 originateUserId = 2;</code>
+       * @return The originateUserId.
+       */
+      public int getOriginateUserId() {
+        return originateUserId_;
+      }
+      /**
+       * <code>uint32 originateUserId = 2;</code>
+       * @param value The originateUserId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginateUserId(int value) {
+        
+        originateUserId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 originateUserId = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOriginateUserId() {
+        
+        originateUserId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserJoinTeamCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserJoinTeamCmd)
+    private static final msg.GameMsg.UserJoinTeamCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserJoinTeamCmd();
+    }
+
+    public static msg.GameMsg.UserJoinTeamCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserJoinTeamCmd>
+        PARSER = new com.google.protobuf.AbstractParser<UserJoinTeamCmd>() {
+      @java.lang.Override
+      public UserJoinTeamCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserJoinTeamCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserJoinTeamCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserJoinTeamCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserJoinTeamCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserJoinTeamResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserJoinTeamResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    java.util.List<msg.GameMsg.UserInfo> 
+        getUserInfoList();
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    msg.GameMsg.UserInfo getUserInfo(int index);
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    int getUserInfoCount();
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    java.util.List<? extends msg.GameMsg.UserInfoOrBuilder> 
+        getUserInfoOrBuilderList();
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    msg.GameMsg.UserInfoOrBuilder getUserInfoOrBuilder(
+        int index);
+
+    /**
+     * <code>uint32 teamLeaderId = 2;</code>
+     * @return The teamLeaderId.
+     */
+    int getTeamLeaderId();
+
+    /**
+     * <code>bool isJoin = 3;</code>
+     * @return The isJoin.
+     */
+    boolean getIsJoin();
+  }
+  /**
+   * <pre>
+   * 用户加入队伍 结果
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserJoinTeamResult}
+   */
+  public  static final class UserJoinTeamResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserJoinTeamResult)
+      UserJoinTeamResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserJoinTeamResult.newBuilder() to construct.
+    private UserJoinTeamResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserJoinTeamResult() {
+      userInfo_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserJoinTeamResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserJoinTeamResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                userInfo_ = new java.util.ArrayList<msg.GameMsg.UserInfo>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              userInfo_.add(
+                  input.readMessage(msg.GameMsg.UserInfo.parser(), extensionRegistry));
+              break;
+            }
+            case 16: {
+
+              teamLeaderId_ = input.readUInt32();
+              break;
+            }
+            case 24: {
+
+              isJoin_ = input.readBool();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          userInfo_ = java.util.Collections.unmodifiableList(userInfo_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserJoinTeamResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserJoinTeamResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserJoinTeamResult.class, msg.GameMsg.UserJoinTeamResult.Builder.class);
+    }
+
+    public static final int USERINFO_FIELD_NUMBER = 1;
+    private java.util.List<msg.GameMsg.UserInfo> userInfo_;
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    public java.util.List<msg.GameMsg.UserInfo> getUserInfoList() {
+      return userInfo_;
+    }
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.UserInfoOrBuilder> 
+        getUserInfoOrBuilderList() {
+      return userInfo_;
+    }
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    public int getUserInfoCount() {
+      return userInfo_.size();
+    }
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    public msg.GameMsg.UserInfo getUserInfo(int index) {
+      return userInfo_.get(index);
+    }
+    /**
+     * <code>repeated .msg.UserInfo userInfo = 1;</code>
+     */
+    public msg.GameMsg.UserInfoOrBuilder getUserInfoOrBuilder(
+        int index) {
+      return userInfo_.get(index);
+    }
+
+    public static final int TEAMLEADERID_FIELD_NUMBER = 2;
+    private int teamLeaderId_;
+    /**
+     * <code>uint32 teamLeaderId = 2;</code>
+     * @return The teamLeaderId.
+     */
+    public int getTeamLeaderId() {
+      return teamLeaderId_;
+    }
+
+    public static final int ISJOIN_FIELD_NUMBER = 3;
+    private boolean isJoin_;
+    /**
+     * <code>bool isJoin = 3;</code>
+     * @return The isJoin.
+     */
+    public boolean getIsJoin() {
+      return isJoin_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < userInfo_.size(); i++) {
+        output.writeMessage(1, userInfo_.get(i));
+      }
+      if (teamLeaderId_ != 0) {
+        output.writeUInt32(2, teamLeaderId_);
+      }
+      if (isJoin_ != false) {
+        output.writeBool(3, isJoin_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < userInfo_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, userInfo_.get(i));
+      }
+      if (teamLeaderId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, teamLeaderId_);
+      }
+      if (isJoin_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, isJoin_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserJoinTeamResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserJoinTeamResult other = (msg.GameMsg.UserJoinTeamResult) obj;
+
+      if (!getUserInfoList()
+          .equals(other.getUserInfoList())) return false;
+      if (getTeamLeaderId()
+          != other.getTeamLeaderId()) return false;
+      if (getIsJoin()
+          != other.getIsJoin()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getUserInfoCount() > 0) {
+        hash = (37 * hash) + USERINFO_FIELD_NUMBER;
+        hash = (53 * hash) + getUserInfoList().hashCode();
+      }
+      hash = (37 * hash) + TEAMLEADERID_FIELD_NUMBER;
+      hash = (53 * hash) + getTeamLeaderId();
+      hash = (37 * hash) + ISJOIN_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsJoin());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserJoinTeamResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserJoinTeamResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 用户加入队伍 结果
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserJoinTeamResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserJoinTeamResult)
+        msg.GameMsg.UserJoinTeamResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserJoinTeamResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserJoinTeamResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserJoinTeamResult.class, msg.GameMsg.UserJoinTeamResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserJoinTeamResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getUserInfoFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (userInfoBuilder_ == null) {
+          userInfo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          userInfoBuilder_.clear();
+        }
+        teamLeaderId_ = 0;
+
+        isJoin_ = false;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserJoinTeamResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserJoinTeamResult getDefaultInstanceForType() {
+        return msg.GameMsg.UserJoinTeamResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserJoinTeamResult build() {
+        msg.GameMsg.UserJoinTeamResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserJoinTeamResult buildPartial() {
+        msg.GameMsg.UserJoinTeamResult result = new msg.GameMsg.UserJoinTeamResult(this);
+        int from_bitField0_ = bitField0_;
+        if (userInfoBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            userInfo_ = java.util.Collections.unmodifiableList(userInfo_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.userInfo_ = userInfo_;
+        } else {
+          result.userInfo_ = userInfoBuilder_.build();
+        }
+        result.teamLeaderId_ = teamLeaderId_;
+        result.isJoin_ = isJoin_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserJoinTeamResult) {
+          return mergeFrom((msg.GameMsg.UserJoinTeamResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserJoinTeamResult other) {
+        if (other == msg.GameMsg.UserJoinTeamResult.getDefaultInstance()) return this;
+        if (userInfoBuilder_ == null) {
+          if (!other.userInfo_.isEmpty()) {
+            if (userInfo_.isEmpty()) {
+              userInfo_ = other.userInfo_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureUserInfoIsMutable();
+              userInfo_.addAll(other.userInfo_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.userInfo_.isEmpty()) {
+            if (userInfoBuilder_.isEmpty()) {
+              userInfoBuilder_.dispose();
+              userInfoBuilder_ = null;
+              userInfo_ = other.userInfo_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              userInfoBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getUserInfoFieldBuilder() : null;
+            } else {
+              userInfoBuilder_.addAllMessages(other.userInfo_);
+            }
+          }
+        }
+        if (other.getTeamLeaderId() != 0) {
+          setTeamLeaderId(other.getTeamLeaderId());
+        }
+        if (other.getIsJoin() != false) {
+          setIsJoin(other.getIsJoin());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserJoinTeamResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserJoinTeamResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<msg.GameMsg.UserInfo> userInfo_ =
+        java.util.Collections.emptyList();
+      private void ensureUserInfoIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          userInfo_ = new java.util.ArrayList<msg.GameMsg.UserInfo>(userInfo_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.UserInfo, msg.GameMsg.UserInfo.Builder, msg.GameMsg.UserInfoOrBuilder> userInfoBuilder_;
+
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.UserInfo> getUserInfoList() {
+        if (userInfoBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(userInfo_);
+        } else {
+          return userInfoBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public int getUserInfoCount() {
+        if (userInfoBuilder_ == null) {
+          return userInfo_.size();
+        } else {
+          return userInfoBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public msg.GameMsg.UserInfo getUserInfo(int index) {
+        if (userInfoBuilder_ == null) {
+          return userInfo_.get(index);
+        } else {
+          return userInfoBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder setUserInfo(
+          int index, msg.GameMsg.UserInfo value) {
+        if (userInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureUserInfoIsMutable();
+          userInfo_.set(index, value);
+          onChanged();
+        } else {
+          userInfoBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder setUserInfo(
+          int index, msg.GameMsg.UserInfo.Builder builderForValue) {
+        if (userInfoBuilder_ == null) {
+          ensureUserInfoIsMutable();
+          userInfo_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          userInfoBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder addUserInfo(msg.GameMsg.UserInfo value) {
+        if (userInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureUserInfoIsMutable();
+          userInfo_.add(value);
+          onChanged();
+        } else {
+          userInfoBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder addUserInfo(
+          int index, msg.GameMsg.UserInfo value) {
+        if (userInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureUserInfoIsMutable();
+          userInfo_.add(index, value);
+          onChanged();
+        } else {
+          userInfoBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder addUserInfo(
+          msg.GameMsg.UserInfo.Builder builderForValue) {
+        if (userInfoBuilder_ == null) {
+          ensureUserInfoIsMutable();
+          userInfo_.add(builderForValue.build());
+          onChanged();
+        } else {
+          userInfoBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder addUserInfo(
+          int index, msg.GameMsg.UserInfo.Builder builderForValue) {
+        if (userInfoBuilder_ == null) {
+          ensureUserInfoIsMutable();
+          userInfo_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          userInfoBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder addAllUserInfo(
+          java.lang.Iterable<? extends msg.GameMsg.UserInfo> values) {
+        if (userInfoBuilder_ == null) {
+          ensureUserInfoIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, userInfo_);
+          onChanged();
+        } else {
+          userInfoBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder clearUserInfo() {
+        if (userInfoBuilder_ == null) {
+          userInfo_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          userInfoBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder removeUserInfo(int index) {
+        if (userInfoBuilder_ == null) {
+          ensureUserInfoIsMutable();
+          userInfo_.remove(index);
+          onChanged();
+        } else {
+          userInfoBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public msg.GameMsg.UserInfo.Builder getUserInfoBuilder(
+          int index) {
+        return getUserInfoFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public msg.GameMsg.UserInfoOrBuilder getUserInfoOrBuilder(
+          int index) {
+        if (userInfoBuilder_ == null) {
+          return userInfo_.get(index);  } else {
+          return userInfoBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.UserInfoOrBuilder> 
+           getUserInfoOrBuilderList() {
+        if (userInfoBuilder_ != null) {
+          return userInfoBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(userInfo_);
+        }
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public msg.GameMsg.UserInfo.Builder addUserInfoBuilder() {
+        return getUserInfoFieldBuilder().addBuilder(
+            msg.GameMsg.UserInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public msg.GameMsg.UserInfo.Builder addUserInfoBuilder(
+          int index) {
+        return getUserInfoFieldBuilder().addBuilder(
+            index, msg.GameMsg.UserInfo.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.UserInfo userInfo = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.UserInfo.Builder> 
+           getUserInfoBuilderList() {
+        return getUserInfoFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.UserInfo, msg.GameMsg.UserInfo.Builder, msg.GameMsg.UserInfoOrBuilder> 
+          getUserInfoFieldBuilder() {
+        if (userInfoBuilder_ == null) {
+          userInfoBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.UserInfo, msg.GameMsg.UserInfo.Builder, msg.GameMsg.UserInfoOrBuilder>(
+                  userInfo_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          userInfo_ = null;
+        }
+        return userInfoBuilder_;
+      }
+
+      private int teamLeaderId_ ;
+      /**
+       * <code>uint32 teamLeaderId = 2;</code>
+       * @return The teamLeaderId.
+       */
+      public int getTeamLeaderId() {
+        return teamLeaderId_;
+      }
+      /**
+       * <code>uint32 teamLeaderId = 2;</code>
+       * @param value The teamLeaderId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTeamLeaderId(int value) {
+        
+        teamLeaderId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 teamLeaderId = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTeamLeaderId() {
+        
+        teamLeaderId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private boolean isJoin_ ;
+      /**
+       * <code>bool isJoin = 3;</code>
+       * @return The isJoin.
+       */
+      public boolean getIsJoin() {
+        return isJoin_;
+      }
+      /**
+       * <code>bool isJoin = 3;</code>
+       * @param value The isJoin to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIsJoin(boolean value) {
+        
+        isJoin_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isJoin = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIsJoin() {
+        
+        isJoin_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserJoinTeamResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserJoinTeamResult)
+    private static final msg.GameMsg.UserJoinTeamResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserJoinTeamResult();
+    }
+
+    public static msg.GameMsg.UserJoinTeamResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserJoinTeamResult>
+        PARSER = new com.google.protobuf.AbstractParser<UserJoinTeamResult>() {
+      @java.lang.Override
+      public UserJoinTeamResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserJoinTeamResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserJoinTeamResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserJoinTeamResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserJoinTeamResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserQuitTeamCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserQuitTeamCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 userId = 1;</code>
+     * @return The userId.
+     */
+    int getUserId();
+  }
+  /**
+   * <pre>
+   * 用户退出队伍 指令
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserQuitTeamCmd}
+   */
+  public  static final class UserQuitTeamCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserQuitTeamCmd)
+      UserQuitTeamCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserQuitTeamCmd.newBuilder() to construct.
+    private UserQuitTeamCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserQuitTeamCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserQuitTeamCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserQuitTeamCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              userId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserQuitTeamCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserQuitTeamCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserQuitTeamCmd.class, msg.GameMsg.UserQuitTeamCmd.Builder.class);
+    }
+
+    public static final int USERID_FIELD_NUMBER = 1;
+    private int userId_;
+    /**
+     * <code>uint32 userId = 1;</code>
+     * @return The userId.
+     */
+    public int getUserId() {
+      return userId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (userId_ != 0) {
+        output.writeUInt32(1, userId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (userId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, userId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserQuitTeamCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserQuitTeamCmd other = (msg.GameMsg.UserQuitTeamCmd) obj;
+
+      if (getUserId()
+          != other.getUserId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERID_FIELD_NUMBER;
+      hash = (53 * hash) + getUserId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitTeamCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserQuitTeamCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 用户退出队伍 指令
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserQuitTeamCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserQuitTeamCmd)
+        msg.GameMsg.UserQuitTeamCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserQuitTeamCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserQuitTeamCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserQuitTeamCmd.class, msg.GameMsg.UserQuitTeamCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserQuitTeamCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        userId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserQuitTeamCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitTeamCmd getDefaultInstanceForType() {
+        return msg.GameMsg.UserQuitTeamCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitTeamCmd build() {
+        msg.GameMsg.UserQuitTeamCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitTeamCmd buildPartial() {
+        msg.GameMsg.UserQuitTeamCmd result = new msg.GameMsg.UserQuitTeamCmd(this);
+        result.userId_ = userId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserQuitTeamCmd) {
+          return mergeFrom((msg.GameMsg.UserQuitTeamCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserQuitTeamCmd other) {
+        if (other == msg.GameMsg.UserQuitTeamCmd.getDefaultInstance()) return this;
+        if (other.getUserId() != 0) {
+          setUserId(other.getUserId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserQuitTeamCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserQuitTeamCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int userId_ ;
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @return The userId.
+       */
+      public int getUserId() {
+        return userId_;
+      }
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @param value The userId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUserId(int value) {
+        
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUserId() {
+        
+        userId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserQuitTeamCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserQuitTeamCmd)
+    private static final msg.GameMsg.UserQuitTeamCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserQuitTeamCmd();
+    }
+
+    public static msg.GameMsg.UserQuitTeamCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserQuitTeamCmd>
+        PARSER = new com.google.protobuf.AbstractParser<UserQuitTeamCmd>() {
+      @java.lang.Override
+      public UserQuitTeamCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserQuitTeamCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserQuitTeamCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserQuitTeamCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserQuitTeamCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserQuitTeamResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserQuitTeamResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.msg.UserInfo userInfo = 1;</code>
+     * @return Whether the userInfo field is set.
+     */
+    boolean hasUserInfo();
+    /**
+     * <code>.msg.UserInfo userInfo = 1;</code>
+     * @return The userInfo.
+     */
+    msg.GameMsg.UserInfo getUserInfo();
+    /**
+     * <code>.msg.UserInfo userInfo = 1;</code>
+     */
+    msg.GameMsg.UserInfoOrBuilder getUserInfoOrBuilder();
+  }
+  /**
+   * <pre>
+   * 用户退出队伍 结果
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserQuitTeamResult}
+   */
+  public  static final class UserQuitTeamResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserQuitTeamResult)
+      UserQuitTeamResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserQuitTeamResult.newBuilder() to construct.
+    private UserQuitTeamResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserQuitTeamResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserQuitTeamResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserQuitTeamResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              msg.GameMsg.UserInfo.Builder subBuilder = null;
+              if (userInfo_ != null) {
+                subBuilder = userInfo_.toBuilder();
+              }
+              userInfo_ = input.readMessage(msg.GameMsg.UserInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(userInfo_);
+                userInfo_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserQuitTeamResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserQuitTeamResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserQuitTeamResult.class, msg.GameMsg.UserQuitTeamResult.Builder.class);
+    }
+
+    public static final int USERINFO_FIELD_NUMBER = 1;
+    private msg.GameMsg.UserInfo userInfo_;
+    /**
+     * <code>.msg.UserInfo userInfo = 1;</code>
+     * @return Whether the userInfo field is set.
+     */
+    public boolean hasUserInfo() {
+      return userInfo_ != null;
+    }
+    /**
+     * <code>.msg.UserInfo userInfo = 1;</code>
+     * @return The userInfo.
+     */
+    public msg.GameMsg.UserInfo getUserInfo() {
+      return userInfo_ == null ? msg.GameMsg.UserInfo.getDefaultInstance() : userInfo_;
+    }
+    /**
+     * <code>.msg.UserInfo userInfo = 1;</code>
+     */
+    public msg.GameMsg.UserInfoOrBuilder getUserInfoOrBuilder() {
+      return getUserInfo();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (userInfo_ != null) {
+        output.writeMessage(1, getUserInfo());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (userInfo_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getUserInfo());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserQuitTeamResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserQuitTeamResult other = (msg.GameMsg.UserQuitTeamResult) obj;
+
+      if (hasUserInfo() != other.hasUserInfo()) return false;
+      if (hasUserInfo()) {
+        if (!getUserInfo()
+            .equals(other.getUserInfo())) return false;
+      }
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasUserInfo()) {
+        hash = (37 * hash) + USERINFO_FIELD_NUMBER;
+        hash = (53 * hash) + getUserInfo().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserQuitTeamResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserQuitTeamResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 用户退出队伍 结果
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserQuitTeamResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserQuitTeamResult)
+        msg.GameMsg.UserQuitTeamResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserQuitTeamResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserQuitTeamResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserQuitTeamResult.class, msg.GameMsg.UserQuitTeamResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserQuitTeamResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (userInfoBuilder_ == null) {
+          userInfo_ = null;
+        } else {
+          userInfo_ = null;
+          userInfoBuilder_ = null;
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserQuitTeamResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitTeamResult getDefaultInstanceForType() {
+        return msg.GameMsg.UserQuitTeamResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitTeamResult build() {
+        msg.GameMsg.UserQuitTeamResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserQuitTeamResult buildPartial() {
+        msg.GameMsg.UserQuitTeamResult result = new msg.GameMsg.UserQuitTeamResult(this);
+        if (userInfoBuilder_ == null) {
+          result.userInfo_ = userInfo_;
+        } else {
+          result.userInfo_ = userInfoBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserQuitTeamResult) {
+          return mergeFrom((msg.GameMsg.UserQuitTeamResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserQuitTeamResult other) {
+        if (other == msg.GameMsg.UserQuitTeamResult.getDefaultInstance()) return this;
+        if (other.hasUserInfo()) {
+          mergeUserInfo(other.getUserInfo());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserQuitTeamResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserQuitTeamResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private msg.GameMsg.UserInfo userInfo_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          msg.GameMsg.UserInfo, msg.GameMsg.UserInfo.Builder, msg.GameMsg.UserInfoOrBuilder> userInfoBuilder_;
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       * @return Whether the userInfo field is set.
+       */
+      public boolean hasUserInfo() {
+        return userInfoBuilder_ != null || userInfo_ != null;
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       * @return The userInfo.
+       */
+      public msg.GameMsg.UserInfo getUserInfo() {
+        if (userInfoBuilder_ == null) {
+          return userInfo_ == null ? msg.GameMsg.UserInfo.getDefaultInstance() : userInfo_;
+        } else {
+          return userInfoBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder setUserInfo(msg.GameMsg.UserInfo value) {
+        if (userInfoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          userInfo_ = value;
+          onChanged();
+        } else {
+          userInfoBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder setUserInfo(
+          msg.GameMsg.UserInfo.Builder builderForValue) {
+        if (userInfoBuilder_ == null) {
+          userInfo_ = builderForValue.build();
+          onChanged();
+        } else {
+          userInfoBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder mergeUserInfo(msg.GameMsg.UserInfo value) {
+        if (userInfoBuilder_ == null) {
+          if (userInfo_ != null) {
+            userInfo_ =
+              msg.GameMsg.UserInfo.newBuilder(userInfo_).mergeFrom(value).buildPartial();
+          } else {
+            userInfo_ = value;
+          }
+          onChanged();
+        } else {
+          userInfoBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       */
+      public Builder clearUserInfo() {
+        if (userInfoBuilder_ == null) {
+          userInfo_ = null;
+          onChanged();
+        } else {
+          userInfo_ = null;
+          userInfoBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       */
+      public msg.GameMsg.UserInfo.Builder getUserInfoBuilder() {
+        
+        onChanged();
+        return getUserInfoFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       */
+      public msg.GameMsg.UserInfoOrBuilder getUserInfoOrBuilder() {
+        if (userInfoBuilder_ != null) {
+          return userInfoBuilder_.getMessageOrBuilder();
+        } else {
+          return userInfo_ == null ?
+              msg.GameMsg.UserInfo.getDefaultInstance() : userInfo_;
+        }
+      }
+      /**
+       * <code>.msg.UserInfo userInfo = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          msg.GameMsg.UserInfo, msg.GameMsg.UserInfo.Builder, msg.GameMsg.UserInfoOrBuilder> 
+          getUserInfoFieldBuilder() {
+        if (userInfoBuilder_ == null) {
+          userInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              msg.GameMsg.UserInfo, msg.GameMsg.UserInfo.Builder, msg.GameMsg.UserInfoOrBuilder>(
+                  getUserInfo(),
+                  getParentForChildren(),
+                  isClean());
+          userInfo_ = null;
+        }
+        return userInfoBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserQuitTeamResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserQuitTeamResult)
+    private static final msg.GameMsg.UserQuitTeamResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserQuitTeamResult();
+    }
+
+    public static msg.GameMsg.UserQuitTeamResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserQuitTeamResult>
+        PARSER = new com.google.protobuf.AbstractParser<UserQuitTeamResult>() {
+      @java.lang.Override
+      public UserQuitTeamResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserQuitTeamResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserQuitTeamResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserQuitTeamResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserQuitTeamResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserEnterTeamFailResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserEnterTeamFailResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   * 加入队伍失败
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserEnterTeamFailResult}
+   */
+  public  static final class UserEnterTeamFailResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserEnterTeamFailResult)
+      UserEnterTeamFailResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserEnterTeamFailResult.newBuilder() to construct.
+    private UserEnterTeamFailResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserEnterTeamFailResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserEnterTeamFailResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserEnterTeamFailResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserEnterTeamFailResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserEnterTeamFailResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserEnterTeamFailResult.class, msg.GameMsg.UserEnterTeamFailResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserEnterTeamFailResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserEnterTeamFailResult other = (msg.GameMsg.UserEnterTeamFailResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserEnterTeamFailResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserEnterTeamFailResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 加入队伍失败
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserEnterTeamFailResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserEnterTeamFailResult)
+        msg.GameMsg.UserEnterTeamFailResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserEnterTeamFailResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserEnterTeamFailResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserEnterTeamFailResult.class, msg.GameMsg.UserEnterTeamFailResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserEnterTeamFailResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserEnterTeamFailResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserEnterTeamFailResult getDefaultInstanceForType() {
+        return msg.GameMsg.UserEnterTeamFailResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserEnterTeamFailResult build() {
+        msg.GameMsg.UserEnterTeamFailResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserEnterTeamFailResult buildPartial() {
+        msg.GameMsg.UserEnterTeamFailResult result = new msg.GameMsg.UserEnterTeamFailResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserEnterTeamFailResult) {
+          return mergeFrom((msg.GameMsg.UserEnterTeamFailResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserEnterTeamFailResult other) {
+        if (other == msg.GameMsg.UserEnterTeamFailResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserEnterTeamFailResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserEnterTeamFailResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserEnterTeamFailResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserEnterTeamFailResult)
+    private static final msg.GameMsg.UserEnterTeamFailResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserEnterTeamFailResult();
+    }
+
+    public static msg.GameMsg.UserEnterTeamFailResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserEnterTeamFailResult>
+        PARSER = new com.google.protobuf.AbstractParser<UserEnterTeamFailResult>() {
+      @java.lang.Override
+      public UserEnterTeamFailResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserEnterTeamFailResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserEnterTeamFailResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserEnterTeamFailResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserEnterTeamFailResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_WhoElseIsHereCmd_descriptor;
   private static final 
@@ -58530,6 +63262,46 @@ public final class GameMsg {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_UserDieResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserTeamUpCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserTeamUpCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserTeamUpResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserTeamUpResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_AskTeamUpResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_AskTeamUpResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserJoinTeamCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserJoinTeamCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserJoinTeamResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserJoinTeamResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserQuitTeamCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserQuitTeamCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserQuitTeamResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserQuitTeamResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserEnterTeamFailResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserEnterTeamFailResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -58665,7 +63437,17 @@ public final class GameMsg {
       "esult\022\024\n\014attackUserId\030\001 \001(\r\022\024\n\014targetUse" +
       "rId\030\002 \001(\r\"@\n\024UserSubtractHpResult\022\024\n\014tar" +
       "getUserId\030\001 \001(\r\022\022\n\nsubtractHp\030\002 \001(\r\"%\n\rU" +
-      "serDieResult\022\024\n\014targetUserId\030\001 \001(\r*\264\016\n\007M" +
+      "serDieResult\022\024\n\014targetUserId\030\001 \001(\r\"%\n\rUs" +
+      "erTeamUpCmd\022\024\n\014targetUserId\030\001 \001(\r\"\022\n\020Use" +
+      "rTeamUpResult\"E\n\017AskTeamUpResult\022\027\n\017orig" +
+      "inateUserId\030\001 \001(\r\022\031\n\021originateUserName\030\002" +
+      " \001(\t\":\n\017UserJoinTeamCmd\022\016\n\006isJoin\030\001 \001(\010\022" +
+      "\027\n\017originateUserId\030\002 \001(\r\"[\n\022UserJoinTeam" +
+      "Result\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\022" +
+      "\024\n\014teamLeaderId\030\002 \001(\r\022\016\n\006isJoin\030\003 \001(\010\"!\n" +
+      "\017UserQuitTeamCmd\022\016\n\006userId\030\001 \001(\r\"5\n\022User" +
+      "QuitTeamResult\022\037\n\010userInfo\030\001 \001(\0132\r.msg.U" +
+      "serInfo\"\031\n\027UserEnterTeamFailResult*\202\020\n\007M" +
       "sgCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_" +
       "ELSE_IS_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RESUL" +
       "T\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027US" +
@@ -58712,7 +63494,12 @@ public final class GameMsg {
       "\020A\022\027\n\023USER_QUIT_ARENA_CMD\020B\022\032\n\026USER_QUIT" +
       "_ARENA_RESULT\020C\022\023\n\017USER_ATTACK_CMD\020D\022\026\n\022" +
       "USER_ATTACK_RESULT\020E\022\023\n\017USER_DIE_RESULT\020" +
-      "FB\005\n\003msgb\006proto3"
+      "F\022\024\n\020USER_TEAM_UP_CMD\020G\022\027\n\023USER_TEAM_UP_" +
+      "RESULT\020H\022\026\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022USER" +
+      "_JOIN_TEAM_CMD\020J\022\031\n\025USER_JOIN_TEAM_RESUL" +
+      "T\020K\022\026\n\022USER_QUIT_TEAM_CMD\020L\022\031\n\025USER_QUIT" +
+      "_TEAM_RESULT\020M\022\037\n\033USER_ENTER_TEAM_FAIL_R" +
+      "ESULT\020NB\005\n\003msgb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -59204,6 +63991,54 @@ public final class GameMsg {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDieResult_descriptor,
         new java.lang.String[] { "TargetUserId", });
+    internal_static_msg_UserTeamUpCmd_descriptor =
+      getDescriptor().getMessageTypes().get(73);
+    internal_static_msg_UserTeamUpCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserTeamUpCmd_descriptor,
+        new java.lang.String[] { "TargetUserId", });
+    internal_static_msg_UserTeamUpResult_descriptor =
+      getDescriptor().getMessageTypes().get(74);
+    internal_static_msg_UserTeamUpResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserTeamUpResult_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_AskTeamUpResult_descriptor =
+      getDescriptor().getMessageTypes().get(75);
+    internal_static_msg_AskTeamUpResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_AskTeamUpResult_descriptor,
+        new java.lang.String[] { "OriginateUserId", "OriginateUserName", });
+    internal_static_msg_UserJoinTeamCmd_descriptor =
+      getDescriptor().getMessageTypes().get(76);
+    internal_static_msg_UserJoinTeamCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserJoinTeamCmd_descriptor,
+        new java.lang.String[] { "IsJoin", "OriginateUserId", });
+    internal_static_msg_UserJoinTeamResult_descriptor =
+      getDescriptor().getMessageTypes().get(77);
+    internal_static_msg_UserJoinTeamResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserJoinTeamResult_descriptor,
+        new java.lang.String[] { "UserInfo", "TeamLeaderId", "IsJoin", });
+    internal_static_msg_UserQuitTeamCmd_descriptor =
+      getDescriptor().getMessageTypes().get(78);
+    internal_static_msg_UserQuitTeamCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserQuitTeamCmd_descriptor,
+        new java.lang.String[] { "UserId", });
+    internal_static_msg_UserQuitTeamResult_descriptor =
+      getDescriptor().getMessageTypes().get(79);
+    internal_static_msg_UserQuitTeamResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserQuitTeamResult_descriptor,
+        new java.lang.String[] { "UserInfo", });
+    internal_static_msg_UserEnterTeamFailResult_descriptor =
+      getDescriptor().getMessageTypes().get(80);
+    internal_static_msg_UserEnterTeamFailResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserEnterTeamFailResult_descriptor,
+        new java.lang.String[] { });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

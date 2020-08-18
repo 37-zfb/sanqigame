@@ -132,7 +132,7 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
         }
 
         // 限量商品
-        Map<Integer, Integer> goodsAllowNumber = role.getGoodsAllowNumber();
+        Map<Integer, Integer> goodsAllowNumber = role.getGOODS_ALLOW_NUMBER();
         List<GameMsg.UserLoginResult.GoodsLimit> goodLimitsList = userLoginResult.getGoodLimitsList();
         for (GameMsg.UserLoginResult.GoodsLimit goodsLimit : goodLimitsList) {
             goodsAllowNumber.put(goodsLimit.getGoodsId(),goodsLimit.getGoodsNumber());

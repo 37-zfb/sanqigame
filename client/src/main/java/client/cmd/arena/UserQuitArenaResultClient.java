@@ -7,7 +7,6 @@ import client.model.arena.PlayArenaClient;
 import client.thread.CmdThread;
 import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
-import model.profession.Profession;
 import msg.GameMsg;
 import util.MyUtil;
 
@@ -24,7 +23,7 @@ public class UserQuitArenaResultClient implements ICmd<GameMsg.UserQuitArenaResu
         GameMsg.UserInfo userInfo = userQuitArenaResult.getUserInfo();
         String userName = userInfo.getUserName();
         int userId = userInfo.getUserId();
-        PlayArenaClient playArenaClient = role.getPlayArenaClient();
+        PlayArenaClient playArenaClient = role.getARENA_CLIENT();
 
         if (userId == role.getId()){
             // 标识未尽竞技场; 本用户

@@ -1,10 +1,9 @@
 package client.model.arena;
 
-import client.model.Role;
+import client.model.PlayUserClient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,11 +27,11 @@ public class PlayArenaClient {
     /**
      * pk者 对象
      */
-    private volatile ArenaUser challengeUser;
+    private volatile PlayUserClient challengeUser;
 
     /**
      *  客户端使用
      */
-    private final Map<Integer,ArenaUser> arenaUserMap = new ConcurrentHashMap<>();
+    private final Map<Integer, PlayUserClient> arenaUserMap = new ConcurrentHashMap<>();
 
 }

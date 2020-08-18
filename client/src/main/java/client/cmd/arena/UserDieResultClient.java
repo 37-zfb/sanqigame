@@ -20,7 +20,7 @@ public class UserDieResultClient implements ICmd<GameMsg.UserDieResult> {
         int targetUserId = userDieResult.getTargetUserId();
 
         Role role = Role.getInstance();
-        PlayArenaClient playArenaClient = role.getPlayArenaClient();
+        PlayArenaClient playArenaClient = role.getARENA_CLIENT();
 
         if (role.getId()==targetUserId){
             // 死亡, 把挑战者用户设置为 null

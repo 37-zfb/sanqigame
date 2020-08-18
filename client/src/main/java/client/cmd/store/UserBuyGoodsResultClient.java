@@ -39,8 +39,8 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
             Goods goods = goodsMap.get(goodsId);
             Props props1 = GameData.getInstance().getPropsMap().get(goods.getPropsId());
             if (props1.getPropsProperty().isLimit() == PropsType.Limit){
-                Integer allowNumber = role.getGoodsAllowNumber().get(goodsId);
-                role.getGoodsAllowNumber().put(goodsId,(allowNumber-goodsNumber));
+                Integer allowNumber = role.getGOODS_ALLOW_NUMBER().get(goodsId);
+                role.getGOODS_ALLOW_NUMBER().put(goodsId,(allowNumber-goodsNumber));
             }
 
             //封装背包中的物品

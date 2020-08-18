@@ -5,8 +5,7 @@ import client.model.Role;
 import client.thread.ArenaThread;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import client.model.arena.ArenaUser;
-import client.model.arena.PlayArenaClient;
+import client.model.PlayUserClient;
 import msg.GameMsg;
 import util.MyUtil;
 
@@ -23,16 +22,16 @@ public class UserEnterArenaResultClient implements ICmd<GameMsg.UserEnterArenaRe
         MyUtil.checkIsNull(ctx, userEnterArenaResult);
         Role role = Role.getInstance();
 
-        Map<Integer, ArenaUser> arenaUserMap = role.getPlayArenaClient().getArenaUserMap();
+        Map<Integer, PlayUserClient> arenaUserMap = role.getARENA_CLIENT().getArenaUserMap();
 
         List<GameMsg.UserInfo> userInfoList = userEnterArenaResult.getUserInfoList();
         for (GameMsg.UserInfo userInfo : userInfoList) {
-            arenaUserMap.put(userInfo.getUserId(), new ArenaUser(userInfo.getUserId(), userInfo.getUserName()));
+            arenaUserMap.put(userInfo.getUserId(), new PlayUserClient(userInfo.getUserId(), userInfo.getUserName()));
         }
-        if (!role.getPlayArenaClient().isInArena()) {
+        if (!role.getARENA_CLIENT().isInArena()) {
             ArenaThread.getInstance().process(ctx, role);
             // 标识已进入竞技场
-            role.getPlayArenaClient().setInArena(true);
+            role.getARENA_CLIENT().setInArena(true);
         }
     }
 }

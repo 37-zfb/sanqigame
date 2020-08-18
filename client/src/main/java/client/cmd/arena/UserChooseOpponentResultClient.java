@@ -2,7 +2,7 @@ package client.cmd.arena;
 
 import client.cmd.ICmd;
 import client.model.Role;
-import client.model.arena.ArenaUser;
+import client.model.PlayUserClient;
 import client.model.arena.PlayArenaClient;
 import client.thread.ArenaThread;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,12 +23,12 @@ public class UserChooseOpponentResultClient implements ICmd<GameMsg.UserChooseOp
         int originatedUserId = userChooseOpponentResult.getOriginatedUserId();
 
         Role role = Role.getInstance();
-        PlayArenaClient playArenaClient = role.getPlayArenaClient();
+        PlayArenaClient playArenaClient = role.getARENA_CLIENT();
 
         if (acceptChallenge){
             // 接受挑战
-            ArenaUser originateUser = playArenaClient.getArenaUserMap().get(originateUserId);
-            ArenaUser originatedUser = playArenaClient.getArenaUserMap().get(originatedUserId);
+            PlayUserClient originateUser = playArenaClient.getArenaUserMap().get(originateUserId);
+            PlayUserClient originatedUser = playArenaClient.getArenaUserMap().get(originatedUserId);
             if (role.getId() == originateUserId){
                 // 发起者id
                 playArenaClient.setChallengeUser(originatedUser);

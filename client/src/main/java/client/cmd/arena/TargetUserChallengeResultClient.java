@@ -2,7 +2,7 @@ package client.cmd.arena;
 
 import client.cmd.ICmd;
 import client.model.Role;
-import client.model.arena.ArenaUser;
+import client.model.PlayUserClient;
 import client.model.arena.PlayArenaClient;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
@@ -18,10 +18,10 @@ public class TargetUserChallengeResultClient implements ICmd<GameMsg.TargetUserC
         Role role = Role.getInstance();
 
         int originateUserId = targetUserChallengeResult.getOriginateUserId();
-        PlayArenaClient playArenaClient = role.getPlayArenaClient();
+        PlayArenaClient playArenaClient = role.getARENA_CLIENT();
         // 设置挑战者id
         playArenaClient.setOriginateUserId(originateUserId);
-        ArenaUser arenaUser = playArenaClient.getArenaUserMap().get(originateUserId);
+        PlayUserClient arenaUser = playArenaClient.getArenaUserMap().get(originateUserId);
         System.out.println("收到 "+arenaUser.getUserName() +" 的挑战;");
 
 

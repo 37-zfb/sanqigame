@@ -158,6 +158,18 @@ public class User {
     private PlayArena playArena;
 
 
+
+    /**
+     *  队伍系统
+     */
+    private volatile PlayTeam playTeam;
+    /**
+     * 组队监听器
+     */
+    private final Object TEAM_MONITOR = new Object();
+
+
+
     /**
      * 设置恢复mp终止时间
      */
