@@ -105,6 +105,7 @@ public class BossThread {
 //            System.out.println("======>7:卸下装备;");
 //            System.out.println("======>8:修理装备;");
             System.out.println("======>9:退出副本;");
+            System.out.println("======>10:退出并退出队伍;");
 
             Scanner scanner = new Scanner(System.in);
             String command = scanner.nextLine();
@@ -144,6 +145,11 @@ public class BossThread {
                 // 退出副本
                 GameMsg.UserQuitDuplicateCmd quitDuplicateCmd = GameMsg.UserQuitDuplicateCmd.newBuilder().build();
                 ctx.writeAndFlush(quitDuplicateCmd);
+                break;
+            } else if ("10".equals(command)) {
+                // 退出副本并退出队伍
+                GameMsg.UserQuitTeamAndDuplicateCmd userQuitTeamAndDuplicateCmd = GameMsg.UserQuitTeamAndDuplicateCmd.newBuilder().build();
+                ctx.writeAndFlush(userQuitTeamAndDuplicateCmd);
                 break;
             } else {
                 if (role.getCurrHp() == 0){

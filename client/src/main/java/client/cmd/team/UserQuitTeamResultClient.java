@@ -31,9 +31,10 @@ public class UserQuitTeamResultClient implements ICmd<GameMsg.UserQuitTeamResult
             team_client.setTeamMember(new PlayUserClient[4]);
             CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }else {
+            team_client.setTeamLeaderId(userQuitTeamResult.getTeamLeaderId());
             PlayUserClient[] teamMember = team_client.getTeamMember();
             for (int i = 0; i < teamMember.length; i++) {
-                if (teamMember[i].getUserId() == userId){
+                if (teamMember[i]!=null && teamMember[i].getUserId() == userId){
                     teamMember[i] = null;
                     log.info("用户 {} 退出队伍;", userName);
                     break;

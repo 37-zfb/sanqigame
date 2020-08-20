@@ -7,6 +7,7 @@ import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import entity.db.CurrUserStateEntity;
+import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
 import server.service.MailService;
@@ -26,7 +27,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        log.info("消息类型: "+msg.getClass());
+        log.info("消息类型: " + msg.getClass());
 
         if (msg instanceof GeneratedMessageV3) {
             MainThreadProcessor.getInstance().process(ctx, (GeneratedMessageV3) msg);
@@ -68,8 +69,11 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         // 持久化,邮件
         mailService.modifyMailState(user.getMail().getMailEntityMap().values());
 
+        // 队伍管理
+        PublicMethod.getInstance().quitTeam(user);
+
         // 移除管道
-        Broadcast.removeChannel(user.getCurSceneId(),ctx.channel());
+        Broadcast.removeChannel(user.getCurSceneId(), ctx.channel());
 
         // 移除用户
         UserManager.removeUser(userId);

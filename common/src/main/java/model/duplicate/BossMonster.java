@@ -66,7 +66,7 @@ public class BossMonster {
     /**
      * 选择用户监视器
      */
-    private final Object chooseUserMonitor = new Object();
+    private final Object ATTACK_BOSS_MONITOR = new Object();
 
 
     /**
@@ -76,8 +76,9 @@ public class BossMonster {
     /**
      * 减血 监视器
      */
-    private final Object subHpMonitor = new Object();
+    private final Object SUB_MONITOR = new Object();
 
+    private final Object CHOOSE_USER_MONITOR = new Object();
     /**
      * boss技能集合    技能id <==> 技能对象
      */

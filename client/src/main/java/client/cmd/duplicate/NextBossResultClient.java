@@ -23,6 +23,11 @@ public class NextBossResultClient implements ICmd<GameMsg.NextBossResult> {
         Duplicate currDuplicate = role.getCurrDuplicate();
         currDuplicate.setStartTime(nextBossResult.getStartTime());
         currDuplicate.setMinBoss();
-        BossThread.getInstance().process(ctx, role);
+        if (role.getId() == nextBossResult.getUserId()){
+
+            BossThread.getInstance().process(ctx, role);
+        }else {
+            System.out.println("进入下一个BOSS "+currDuplicate.getCurrBossMonster().getBossName());
+        }
     }
 }

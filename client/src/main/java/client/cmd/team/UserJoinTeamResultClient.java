@@ -43,7 +43,7 @@ public class UserJoinTeamResultClient implements ICmd<GameMsg.UserJoinTeamResult
                 }
                 role.setTeam(false);
                 role.setAnswer(false);
-                System.out.println("和 "+userInfoList.get(0).getUserName()+" 组队;");
+                log.info("和 {} 组队;",userInfoList.get(0).getUserName());
             }else if (role.getTEAM_CLIENT().getTeamLeaderId() != null){
                 // 此用户有队伍, 队伍中增加队员
                 PlayUserClient[] teamMember = team_client.getTeamMember();
@@ -59,7 +59,7 @@ public class UserJoinTeamResultClient implements ICmd<GameMsg.UserJoinTeamResult
                     CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
                     role.setAnswer(false);
                 }
-                System.out.println(userInfoList.get(0).getUserName()+" 加入队伍;");
+                log.info("{} 加入队伍;",userInfoList.get(0).getUserName());
             }else if (role.getId() != teamLeaderId && team_client.getTeamLeaderId() == null){
                 // 此用户没有队伍,刚加入队伍
                 team_client.setTeamLeaderId(teamLeaderId);
@@ -70,6 +70,7 @@ public class UserJoinTeamResultClient implements ICmd<GameMsg.UserJoinTeamResult
                     teamMember[i+1] = new PlayUserClient(userInfoList.get(i).getUserId(),userInfoList.get(i).getUserName());
                 }
                 role.setTeam(false);
+                role.setAnswer(false);
                 CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
             }else {
                 role.setTeam(false);
@@ -78,8 +79,6 @@ public class UserJoinTeamResultClient implements ICmd<GameMsg.UserJoinTeamResult
             // 本用户有队伍,对方没有
 
             // 对方没有队伍,
-
-
 
             /*PlayTeamClient team_client = role.getTEAM_CLIENT();
             // 队长id

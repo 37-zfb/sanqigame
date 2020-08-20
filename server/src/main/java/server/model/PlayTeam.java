@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import model.duplicate.Duplicate;
 
 /**
  * @author 张丰博
@@ -14,6 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 public class PlayTeam {
 
+    /**
+     * 当前所在副本
+     */
+    private Duplicate currDuplicate;
 
     /**
      *  加入队伍监视器

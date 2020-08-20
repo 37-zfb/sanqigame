@@ -5,9 +5,12 @@ import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import model.duplicate.Duplicate;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
+import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
 import server.timer.BossAttackTimer;
@@ -24,12 +27,21 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
 
         MyUtil.checkIsNull(ctx, userQuitDuplicateCmd);
 
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        User user = UserManager.getUserById(userId);
+        User user = PublicMethod.getInstance().getUser(ctx);
 
-        // 取消定时器
-        BossAttackTimer.getInstance().cancelTask(user.getCurrDuplicate().getCurrBossMonster().getScheduledFuture());
-        user.setCurrDuplicate(null);
+        Duplicate currDuplicate;
+        PlayTeam playTeam = user.getPlayTeam();
+        if (playTeam == null ){
+            currDuplicate = user.getCurrDuplicate();
+            user.setCurrDuplicate(null);
+        }else {
+            currDuplicate = playTeam.getCurrDuplicate();
+            playTeam.setCurrDuplicate(null);
+        }
+        if (currDuplicate != null){
+            // 取消定时器
+            BossAttackTimer.getInstance().cancelTask(currDuplicate.getCurrBossMonster().getScheduledFuture());
+        }
 
         GameMsg.UserQuitDuplicateResult.Builder newBuilder = GameMsg.UserQuitDuplicateResult.newBuilder();
         if (user.getCurrHp() <= 0){

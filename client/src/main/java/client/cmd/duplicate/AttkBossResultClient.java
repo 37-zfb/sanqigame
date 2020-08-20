@@ -25,6 +25,11 @@ public class AttkBossResultClient implements ICmd<GameMsg.AttkBossResult> {
         currBossMonster.setHp(currBossMonster.getHp()-subHp);
         role.decreaseDurability();
 
-        BossThread.getInstance().process(ctx, role);
+        if (role.getId() == attkBossResult.getUserId()){
+
+            BossThread.getInstance().process(ctx, role);
+        }else {
+            System.out.println(currBossMonster.getBossName()+" 减血 "+subHp);
+        }
     }
 }

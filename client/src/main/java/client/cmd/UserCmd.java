@@ -4,6 +4,7 @@ import client.model.MailClient;
 import client.model.PlayUserClient;
 import client.model.Role;
 import client.model.client.MailEntityClient;
+import client.thread.BossThread;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -94,6 +95,7 @@ public class UserCmd {
                     System.out.println("======>20:加入队伍;");
                     System.out.println("======>21:不加队伍;");
                     System.out.println("======>22:退出队伍;");
+                    System.out.println("======>23:跟随队伍进入副本;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -284,6 +286,7 @@ public class UserCmd {
                             System.out.println(duplicate.getId() + "、" + duplicate.getName());
                         }
                         int id = scanner.nextInt();
+                        scanner.nextLine();
                         return GameMsg.EnterDuplicateCmd.newBuilder().setDuplicateId(id).build();
                     } else if ("14".equals(command)) {
                         Map<Integer, Integer> goodsAllowNumber = role.getGOODS_ALLOW_NUMBER();
@@ -385,8 +388,11 @@ public class UserCmd {
                     } else if ("22".equals(command)) {
                         //  退出队伍
                         return GameMsg.UserQuitTeamCmd.newBuilder()
-                                .setUserId(role.getId())
                                 .build();
+                    }else if ("23".equals(command)){
+                      // 组队状态, 进入副本线程
+                        BossThread.getInstance().process(ctx, role);
+                        return null;
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -455,8 +461,7 @@ public class UserCmd {
         } else if (cmd instanceof GameMsg.UserJoinTeamCmd) {
             ctx.writeAndFlush((GameMsg.UserJoinTeamCmd) cmd);
         } else if (cmd instanceof GameMsg.UserQuitTeamCmd) {
-            ctx.writeAndFlush((GameMsg.UserQuitTeamCmd) cmd)
-            ;
+            ctx.writeAndFlush((GameMsg.UserQuitTeamCmd) cmd);
         }
 
 

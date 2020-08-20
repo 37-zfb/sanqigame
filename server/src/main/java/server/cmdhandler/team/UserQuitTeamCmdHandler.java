@@ -21,30 +21,7 @@ public class UserQuitTeamCmdHandler implements ICmdHandler<GameMsg.UserQuitTeamC
     public void handle(ChannelHandlerContext ctx, GameMsg.UserQuitTeamCmd userQuitTeamCmd) {
         MyUtil.checkIsNull(ctx, userQuitTeamCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
+        PublicMethod.getInstance().quitTeam(user);
 
-        PlayTeam playTeam = user.getPlayTeam();
-        Integer[] team_member = playTeam.getTEAM_MEMBER();
-
-
-        for (int i = 0; i < team_member.length; i++) {
-            if (team_member[i] != null && team_member[i].equals(user.getUserId())) {
-                team_member[i] = null;
-                break;
-            }
-        }
-        user.setPlayTeam(null);
-        GameMsg.UserInfo.Builder userInfo = GameMsg.UserInfo.newBuilder()
-                .setUserId(user.getUserId())
-                .setUserName(user.getUserName());
-        GameMsg.UserQuitTeamResult userQuitTeamResult = GameMsg.UserQuitTeamResult.newBuilder()
-                .setUserInfo(userInfo)
-                .build();
-        ctx.writeAndFlush(userQuitTeamResult);
-        for (Integer id : team_member) {
-            if (id != null){
-                User userById = UserManager.getUserById(id);
-                userById.getCtx().writeAndFlush(userQuitTeamResult);
-            }
-        }
     }
 }

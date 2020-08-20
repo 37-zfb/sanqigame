@@ -59,7 +59,7 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
                     .build();
             ctx.writeAndFlush(userChatInfoCmd);
         }else if (role.isTeam()){
-            //
+            // 组队
             Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
             int userId = scanner.nextInt();

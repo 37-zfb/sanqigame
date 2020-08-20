@@ -136,6 +136,9 @@ enum MsgCode {
   USER_QUIT_TEAM_CMD = 76;
   USER_QUIT_TEAM_RESULT = 77;
   USER_ENTER_TEAM_FAIL_RESULT = 78;
+
+  USER_QUIT_TEAM_AND_DUPLICATE_CMD = 79;
+  USER_QUIT_TEAM_AND_DUPLICATE_RESULT = 80;
 }
 
 // 还有谁在场
@@ -534,6 +537,8 @@ message EnterDuplicateResult {
   uint32 duplicateId = 1;
   uint64 startTime = 2;
   uint32 bossMonsterId = 3;
+  bool isSuccess = 4;
+  uint32 userId = 5;
 }
 // 对boss的普通攻击
 message AttkBossCmd {
@@ -541,11 +546,13 @@ message AttkBossCmd {
 // 对boss的普通攻击结果
 message AttkBossResult {
   uint32 subHp = 1;
+  uint32 userId = 2;
 }
 // 下个一个boss
 message NextBossResult {
   uint32 bossMonsterId = 1;
   uint64 startTime = 2;
+  uint32 userId = 3;
 }
 //副本结束
 message DuplicateFinishResult {
@@ -555,6 +562,8 @@ message DuplicateFinishResult {
   uint32 money = 2;
 
   repeated Props props = 3;
+
+  uint32 userId = 4;
 }
 // 用户退出副本命令
 message UserQuitDuplicateCmd {
@@ -775,12 +784,19 @@ message UserJoinTeamResult{
 }
 // 用户退出队伍 指令
 message UserQuitTeamCmd{
-  uint32 userId = 1;
 }
 // 用户退出队伍 结果
 message UserQuitTeamResult{
   UserInfo userInfo = 1;
+  uint32 teamLeaderId = 2;
 }
 // 加入队伍失败
 message UserEnterTeamFailResult{
+}
+//退出队伍和副本
+message UserQuitTeamAndDuplicateCmd {
+}
+// 退出队伍和副本
+message UserQuitTeamAndDuplicateResult{
+
 }
