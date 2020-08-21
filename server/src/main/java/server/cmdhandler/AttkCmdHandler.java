@@ -71,7 +71,7 @@ public class AttkCmdHandler implements ICmdHandler<GameMsg.AttkCmd> {
 
 
                 // 使用当前被攻击的怪对象，做锁对象
-                synchronized (monster.getSubHpMontor()) {
+                synchronized (monster.getSubHpMonitor()) {
                     // 减血  (0~99) + 500
                     if (monster.isDie()) {
                         log.info("{} 已被其他玩家击杀!", monster.getName());

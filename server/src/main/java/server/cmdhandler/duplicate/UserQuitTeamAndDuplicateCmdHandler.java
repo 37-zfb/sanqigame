@@ -56,6 +56,11 @@ public class UserQuitTeamAndDuplicateCmdHandler implements ICmdHandler<GameMsg.U
             }
         }
 
+
+
+        //取消召唤师定时器
+        PublicMethod.getInstance().cancelSummonTimer(user);
+
         user.setPlayTeam(null);
         user.setCurrHp(ProfessionConst.HP);
         user.setCurrMp(ProfessionConst.MP);

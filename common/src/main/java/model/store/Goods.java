@@ -1,4 +1,4 @@
-package model.duplicate.store;
+package model.store;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

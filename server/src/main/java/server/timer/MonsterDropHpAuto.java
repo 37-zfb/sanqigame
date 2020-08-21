@@ -37,7 +37,7 @@ public class MonsterDropHpAuto {
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
                             // 防止多线程执行时，减血超减
-                            synchronized (monster.getSubHpMontor()) {
+                            synchronized (monster.getSubHpMonitor()) {
                                 // 掉血掉两次
                                 if (monster.getDropHpNumber().get() < 2 && monster.getHp() > 20) {
 

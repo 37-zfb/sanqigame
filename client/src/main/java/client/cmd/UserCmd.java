@@ -9,7 +9,7 @@ import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import model.duplicate.Duplicate;
-import model.duplicate.store.Goods;
+import model.store.Goods;
 import model.profession.Skill;
 import model.props.Equipment;
 import model.props.Potion;

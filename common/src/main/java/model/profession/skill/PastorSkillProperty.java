@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import type.ProfessionType;
 
+import java.util.concurrent.RunnableScheduledFuture;
+
 /**
  * @author ZFB
  * 牧师技能属性
@@ -32,6 +34,8 @@ public class PastorSkillProperty extends AbstractSkillProperty {
      *  准备时间
      */
     private float prepareTime;
+
+
 
     public PastorSkillProperty(){}
 

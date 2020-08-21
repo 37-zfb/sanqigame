@@ -11,7 +11,7 @@ import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.store.Goods;
+import model.store.Goods;
 import model.props.AbstractPropsProperty;
 import model.props.Equipment;
 import model.props.Potion;

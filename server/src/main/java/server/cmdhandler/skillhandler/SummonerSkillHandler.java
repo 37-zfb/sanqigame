@@ -1,11 +1,13 @@
 package server.cmdhandler.skillhandler;
 
+import constant.ProfessionConst;
+import constant.SkillConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
 import model.duplicate.Duplicate;
-import model.duplicate.ForceAttackUser;
 import model.profession.Skill;
+import model.profession.SummonMonster;
+import model.profession.skill.SummonerSkillProperty;
 import model.profession.skill.WarriorSkillProperty;
 import model.scene.Monster;
 import msg.GameMsg;
@@ -13,24 +15,23 @@ import org.springframework.stereotype.Component;
 import scene.GameData;
 import server.PublicMethod;
 import server.model.User;
+import server.timer.SummonMonsterTimer;
+import type.skill.SummonerSkillType;
 import type.skill.WarriorSkillType;
 
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author 张丰博
- * 战士技能处理类
- * 能进入此类中的都能够释放技能
+ * 召唤师技能处理类
  */
 @Component
 @Slf4j
-public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> {
-
+public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty> {
     @Override
-    public void skillHandle(ChannelHandlerContext ctx, WarriorSkillProperty warriorSkillProperty, Integer skillId) {
+    public void skillHandle(ChannelHandlerContext ctx, SummonerSkillProperty summonerSkillProperty,Integer skillId) {
 
         User user = PublicMethod.getInstance().getUser(ctx);
 
@@ -38,10 +39,9 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
         Duplicate currDuplicate  = PublicMethod.getInstance().getPlayTeam(user);
 
         Skill skill = user.getSkillMap().get(skillId);
-        WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
+        SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();
         if (currDuplicate == null) {
             // 此时在场景中；并且有怪
-
             // 在公共地图
             Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
             // 存活着的怪
@@ -63,7 +63,9 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
                                     .build();
                             user.getCtx().channel().writeAndFlush(dieResult);
                         } else {
-                            ridiculeSkillScene(user,monster,skillId);
+
+
+//                            log.info("玩家:{},使:{} 减血 {}!", user.getUserName(), monster.getName(), subHp);
                         }
                     }
                     // 减蓝
@@ -71,18 +73,16 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
                 }
             } else {
                 //当前场景中的怪全死了
-                GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
-                GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder
-                        .setFalseReason("no")
-                        .build();
-                ctx.writeAndFlush(userSkillAttkResult);
+
             }
+
+
         } else {
             // 此时在副本中
-            for (WarriorSkillType skillType : WarriorSkillType.values()) {
+            for (SummonerSkillType skillType : SummonerSkillType.values()) {
                 if (skillType.getId().equals(skillProperty.getId())) {
                     try {
-                        Method declaredMethod = WarriorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Duplicate.class, Integer.class);
+                        Method declaredMethod = SummonerSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Duplicate.class, Integer.class);
                         declaredMethod.invoke(this, user, currDuplicate, skillId);
                         break;
                     } catch (Exception e) {
@@ -95,49 +95,43 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
 
     }
 
-
-    private void ridiculeSkillScene(User user,Monster monster,Integer skillId){
-        Skill skill = user.getSkillMap().get(skillId);
-        WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
-
-        ForceAttackUser forceAttackUser = PublicMethod.getInstance().createForeAttackUser(user.getUserId(),skillProperty.getEffectTime());
-        AtomicReference<ForceAttackUser> attackUserAtomicReference = monster.getAttackUserAtomicReference();
-        boolean isSuccess = attackUserAtomicReference.compareAndSet(null, forceAttackUser);
-
-        // 减蓝
-        user.subMp(skill.getConsumeMp());
-        log.info("用户 {} 在 {} 释放 {} 吸引 {} 火力；", user.getUserName(), GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getName(),skill.getName(),monster.getName());
-        GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
-        GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(isSuccess)
-                .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
-                .setSubtractHp(0)
-                .build();
-        user.getCtx().writeAndFlush(userSkillAttkResult);
-    }
     /**
-     * 嘲讽
+     *  召唤术；
+     * @param user
+     * @param duplicate
+     * @param skillId
      */
-    private void ridiculeSkill(User user, Duplicate duplicate, Integer skillId) {
+    private void summonSkill(User user, Duplicate duplicate, Integer skillId) {
         Skill skill = user.getSkillMap().get(skillId);
-        WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
+        SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();
 
         skill.setLastUseTime(System.currentTimeMillis());
-        // 吸引boss火力
-        // 副本中;  设置自己成为boss强制攻击的玩家
-        BossMonster currBossMonster = duplicate.getCurrBossMonster();
-        ForceAttackUser forceAttackUser = PublicMethod.getInstance().createForeAttackUser(user.getUserId(),skillProperty.getEffectTime());
-        AtomicReference<ForceAttackUser> attackUserAtomicReference = currBossMonster.getAttackUserAtomicReference();
-        boolean isSuccess = attackUserAtomicReference.compareAndSet(null, forceAttackUser);
+
+        SummonMonster summonMonster = new SummonMonster();
+        summonMonster.setSkillId(skillProperty.getSkillId());
+        summonMonster.setStartTime(System.currentTimeMillis());
+        summonMonster.setEndTime(System.currentTimeMillis()+skillProperty.getEffectTime()* SkillConst.CD_UNIt_SWITCH);
+        summonMonster.setHp((int) (ProfessionConst.HP*0.5));
+        summonMonster.setDamage(skillProperty.getPetDamage());
+        summonMonster.setCtx(user.getCtx());
+
+        Map<Integer, SummonMonster> summonMonsterMap = user.getSummonMonsterMap();
+        summonMonsterMap.put(skillProperty.getId(), summonMonster);
 
         // 减蓝
         user.subMp(skill.getConsumeMp());
-
-        log.info("用户 {} 释放 {} 吸引boss火力；", user.getUserName(), skill.getName());
+        SummonMonsterTimer.getInstance().startAttack(user,duplicate,summonMonster);
+        SummonMonsterTimer.getInstance().cancelTimer(user, summonMonster,skillProperty.getEffectTime());
+        //启动定时器，攻击当前副本中的boss
+        log.info("用户 {} ,使用召唤术",user.getUserName());
         GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
-        GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(isSuccess)
+        GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(true)
                 .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
                 .setSubtractHp(0)
                 .build();
         user.getCtx().writeAndFlush(userSkillAttkResult);
+
     }
+
+
 }

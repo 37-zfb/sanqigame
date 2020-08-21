@@ -1,16 +1,20 @@
 package server.cmdhandler.skillhandler;
 
+import constant.SkillConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import model.duplicate.Duplicate;
 import model.profession.Skill;
 import model.profession.skill.AbstractSkillProperty;
+import model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import entity.db.UserEquipmentEntity;
 import scene.GameData;
 import server.GameServer;
+import server.PublicMethod;
 import server.cmdhandler.CmdHandlerFactory;
 import server.cmdhandler.ICmdHandler;
 import server.model.*;
@@ -35,7 +39,6 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
     private UserService userService;
 
 
-
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserSkillAttkCmd cmd) {
 
@@ -43,17 +46,55 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
             return;
         }
 
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        User user = UserManager.getUserById(userId);
-        if (user == null) {
+        User user = PublicMethod.getInstance().getUser(ctx);
+        Skill skill = user.getSkillMap().get(cmd.getSkillId());
+        GameMsg.UserSkillAttkResult.Builder resultBuilder = GameMsg.UserSkillAttkResult.newBuilder();
+        // 计算当前mp
+        // 计算当前mp值
+        user.calCurrMp();
+        user.resumeMpTime();
+
+        Duplicate currDuplicate = null;
+        //先判断是否有副本
+        PlayTeam playTeam = user.getPlayTeam();
+        if (playTeam == null) {
+            currDuplicate = user.getCurrDuplicate();
+        } else {
+            currDuplicate = playTeam.getCurrDuplicate();
+        }
+        //所在场景
+        Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
+        // 判断当前场景中是否有怪
+        if (currDuplicate == null && scene.getMonsterMap().size() == 0) {
+            // 当前场景没有怪
+            log.info("场景: {} 没有怪;", scene.getName());
+            GameMsg.UserSkillAttkResult skillAttkResult = resultBuilder.setIsSuccess(false).build();
+            ctx.channel().writeAndFlush(skillAttkResult);
+            return;
+
+        }
+
+
+
+        if ((System.currentTimeMillis() - skill.getLastUseTime()) < skill.getCdTime() * SkillConst.CD_UNIt_SWITCH) {
+            // 此时技能未冷却好
+            log.info("用户 {} 技能 {} 冷却中;", user.getUserName(), skill.getName());
+            resultBuilder.setIsSuccess(false).setFalseReason("cd");
+            GameMsg.UserSkillAttkResult useSkillFail = resultBuilder.build();
+            ctx.writeAndFlush(useSkillFail);
+            return;
+        } else if (user.getCurrMp() < skill.getConsumeMp()) {
+            //此时MP不够
+            log.info("用户 {} 当前MP {} ,需要 MP {} ,MP不足!", user.getUserName(), user.getCurrMp(), skill.getConsumeMp());
+            resultBuilder.setIsSuccess(false).setFalseReason("mp");
+            GameMsg.UserSkillAttkResult useSkillFail = resultBuilder.build();
+            ctx.writeAndFlush(useSkillFail);
             return;
         }
 
-        Map<Integer, Skill> skillMap = GameData.getInstance().getProfessionMap().get(user.getProfessionId()).getSkillMap();
-        Skill skill = skillMap.get(cmd.getSkillId());
 
         ISkillHandler<? extends AbstractSkillProperty> skillHandlerByClazz = CmdHandlerFactory.getSkillHandlerByClazz(skill.getSkillProperty().getClass());
-        skillHandlerByClazz.skillHandle(ctx, cast(skill.getSkillProperty()));
+        skillHandlerByClazz.skillHandle(ctx, cast(skill.getSkillProperty()),cmd.getSkillId());
 
 
 
@@ -97,13 +138,6 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
                 Monster monster = monsterAliveList.remove((int) (Math.random() * monsterAliveList.size()));
                 // 减血  (0~99) + 500
                 int subHp = user.calMonsterSubHp();
-                //持久化装备耐久度
-                UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
-//                for (int i = 0; i < userEquipmentArr.length; i++) {
-//                    if (userEquipmentArr[i] != null && equipmentMap.get(userEquipmentArr[i].getPropsId()).getName().equals(EquipmentType.Weapon.getType())) {
-//                        userService.modifyEquipmentDurability(userEquipmentArr[i].getId(), userEquipmentArr[i].getDurability());
-//                    }
-//                }
 
 
                 // 后端架构如果采用多线程，怪减血时要加synchronized
@@ -203,21 +237,6 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
     }
 
 
-    /**
-     * 返回还存活的怪集合
-     *
-     * @param monsterList 所有怪的集合
-     * @return 存活怪的集合
-     */
-    private List<Monster> getMonsterAliveList(Collection<Monster> monsterList) {
-        List<Monster> monsterAliveList = new ArrayList<>();
-        //存活的 怪
-        for (Monster monster : monsterList) {
-            if (!monster.isDie()) {
-                monsterAliveList.add(monster);
-            }
-        }
-        return monsterAliveList;
-    }
+
 
 }

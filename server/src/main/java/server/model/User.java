@@ -1,5 +1,6 @@
 package server.model;
 
+import constant.PotionConst;
 import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import model.UserResumeState;
 import model.duplicate.Duplicate;
 import model.profession.Skill;
+import model.profession.SummonMonster;
 import model.props.AbstractPropsProperty;
 import model.props.Equipment;
 import model.props.Potion;
@@ -22,6 +24,8 @@ import type.PropsType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.ScheduledFuture;
 
 /**
@@ -72,6 +76,18 @@ public class User {
      * 拥有的技能集合  技能id <==> 技能
      */
     private final Map<Integer, Skill> skillMap = new HashMap<>();
+    /**
+     *  释放在吟唱状态
+     */
+    private RunnableScheduledFuture<?> isPrepare;
+    /**
+     * 召唤兽集合
+     * 召唤师技能id <==> 召唤兽
+     */
+    private final Map<Integer, SummonMonster> summonMonsterMap = new ConcurrentHashMap<>();
+    private final Map<SummonMonster,RunnableScheduledFuture<?>> summonMonsterRunnableScheduledFutureMap = new ConcurrentHashMap<>();
+
+
 
     /**
      * 基础伤害
@@ -142,31 +158,30 @@ public class User {
 
 
     /**
-     *  限购商品，允许购买个数; 商品id <==> 允许购买个数
+     * 限购商品，允许购买个数; 商品id <==> 允许购买个数
      */
-    private final Map<Integer,Integer> goodsAllowNumber = new HashMap<>();
+    private final Map<Integer, Integer> goodsAllowNumber = new HashMap<>();
 
 
     /**
-     *  邮件系统
+     * 邮件系统
      */
     private final PlayMail mail = new PlayMail();
 
     /**
-     *  竞技场
+     * 竞技场
      */
     private PlayArena playArena;
 
 
     /**
-     *  队伍系统
+     * 队伍系统
      */
     private volatile PlayTeam playTeam;
     /**
      * 组队监听器
      */
     private final Object TEAM_MONITOR = new Object();
-
 
 
     /**
@@ -177,6 +192,20 @@ public class User {
         if (currMp < mpGross) {
             // 记录当前时间
             int value = mpGross - currMp;
+
+            // 下面一段，计算当前是否有缓慢药剂正在恢复中，若有则要计算当前还剩下多少药量；
+            Potion potion = getPotion(PotionType.MP);
+            if (potion == null) {
+                return;
+            }
+            Long endTimeMp = potion.getUsedEndTime();
+            if (endTimeMp != 0 && endTimeMp >= System.currentTimeMillis()) {
+                // 此时药效未使用完
+                int v = (int) ((endTimeMp - System.currentTimeMillis()) / 4000) * 400;
+                value -= v;
+            }
+
+
             // 设置恢复结束时间,
             this.userResumeState.setEndTimeMp(System.currentTimeMillis() + value * 1000);
             // 起始时间
@@ -208,6 +237,16 @@ public class User {
      */
     public Integer calMonsterSubHp() {
 
+        int equDamage = getEquDamage();
+        log.info("玩家: {}, 装备伤害加成: {}", this.getUserName(), 10 * equDamage);
+
+        int subHp = (int) ((Math.random() * this.getBaseDamage()) + 500 + 10 * equDamage);
+
+        log.info("玩家: {},伤害: {}", this.getUserName(), subHp);
+        return subHp;
+    }
+
+    public int getEquDamage(){
         int equDamage = 0;
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
         for (int i = 0; i < this.userEquipmentArr.length; i++) {
@@ -234,17 +273,10 @@ public class User {
                     // 其他装备
                     equDamage += propsProperty.getDamage();
                 }
-
             }
         }
-        log.info("玩家: {}, 装备伤害加成: {}", this.getUserName(), 10 * equDamage);
-
-        int subHp = (int) ((Math.random() * this.getBaseDamage()) + 500 + 10 * equDamage);
-
-        log.info("玩家: {},伤害: {}", this.getUserName(), subHp);
-        return subHp;
+        return equDamage;
     }
-
 
     /**
      * 减蓝并且重新设置恢复终止时间
@@ -267,10 +299,9 @@ public class User {
         synchronized (this.mpMonitor) {
             Potion potion = getPotion(PotionType.MP);
 
-            if (potion == null){
+            if (potion == null) {
                 return;
             }
-
             if (currMp >= ProfessionConst.MP) {
                 potion.setUsedEndTime(0L);
                 potion.setUsedStartTime(0L);
@@ -315,10 +346,10 @@ public class User {
     public void calCurrHp() {
         synchronized (this.hpMonitor) {
             Potion potion = getPotion(PotionType.HP);
-            if (potion == null ){
+            if (potion == null) {
                 return;
             }
-            if ( currHp >= ProfessionConst.HP) {
+            if (currHp >= ProfessionConst.HP) {
                 potion.setUsedEndTime(0L);
                 potion.setUsedStartTime(0L);
                 return;
@@ -346,22 +377,26 @@ public class User {
     }
 
     /**
-     *  计算目标用户减血量
+     * 计算目标用户减血量
+     *
      * @param defense 目标用户防御
      */
-    public int calTargetUserSubHp(Integer defense){
+    public int calTargetUserSubHp(Integer defense) {
         Integer subHp = calMonsterSubHp();
-        return subHp - defense*2;
+        return subHp - defense * 2;
     }
 
 
     /**
+     * 根据 缓慢恢复药剂类型(MP、HP)获得药剂
+     *
      * @return
      */
     private Potion getPotion(PotionType type) {
         for (Props value : backpack.values()) {
             AbstractPropsProperty propsProperty = value.getPropsProperty();
-            if (propsProperty.getType() == PropsType.Potion && ((Potion) propsProperty).getInfo().contains(PotionType.SLOW.getType())
+            if (propsProperty.getType() == PropsType.Potion
+                    && ((Potion) propsProperty).getInfo().contains(PotionType.SLOW.getType())
                     && ((Potion) propsProperty).getInfo().contains(type.getType())) {
                 return (Potion) propsProperty;
             }

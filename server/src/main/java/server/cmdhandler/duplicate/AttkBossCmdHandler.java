@@ -105,7 +105,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                             .setUserId(userId)
                             .setStartTime(System.currentTimeMillis() + DuplicateConst.INIT_TIME)
                             .build();
-                    sendMsg(ctx, nextBossResult, playTeam);
+                    PublicMethod.getInstance().sendMsg(ctx, nextBossResult, playTeam);
 
                 } else {
                     //组队进入，通知队员
@@ -115,7 +115,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
 
                     List<Integer> propsIdList = currDuplicate.getPropsIdList();
                     // 副本得到的奖励进行持久化
-                    addProps(propsIdList, user);
+                    PublicMethod.getInstance().addProps(propsIdList, user);
                     //背包满了，得到的奖励无法放入背包
 
                     GameMsg.DuplicateFinishResult.Builder newBuilder = GameMsg.DuplicateFinishResult.newBuilder();
@@ -167,7 +167,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                     }
                     GameMsg.DuplicateFinishResult duplicateFinishResult = newBuilder.setUserId(userId).build();
 
-                    sendMsg(ctx, duplicateFinishResult, playTeam);
+                    PublicMethod.getInstance().sendMsg(ctx, duplicateFinishResult, playTeam);
                 }
                 return;
             } else {
@@ -192,55 +192,14 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
 
         GameMsg.AttkBossResult attkBossResult = GameMsg.AttkBossResult.newBuilder().setUserId(userId).setSubHp(subHp).build();
 
-        sendMsg(ctx, attkBossResult, playTeam);
+        PublicMethod.getInstance().sendMsg(ctx, attkBossResult, playTeam);
     }
 
 
-    private void sendMsg(ChannelHandlerContext ctx, GeneratedMessageV3 msg,PlayTeam playTeam){
-        if (playTeam == null) {
-            // 此时是个人进入副本
-            ctx.writeAndFlush(msg);
-        } else {
-            // 此时是队伍进入副本
-            Integer[] team_member = playTeam.getTEAM_MEMBER();
-            for (Integer teamMemberId : team_member) {
-                if (teamMemberId != null) {
-                    User userById = UserManager.getUserById(teamMemberId);
-                    userById.getCtx().writeAndFlush(msg);
-                }
-            }
-        }
-    }
 
-    /**
-     * 副本通关，持久化奖励
-     *
-     * @param propsIdList 道具id集合
-     * @param user        用户
-     */
-    private void addProps(List<Integer> propsIdList, User user) {
-        Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
 
-        for (Integer propsId : propsIdList) {
-            Props props = propsMap.get(propsId);
 
-            try {
-                if (props.getPropsProperty().getType() == PropsType.Equipment) {
-                    // 添加装备到数据库;  条件不满足时有异常抛出
-                    PublicMethod.getInstance().addEquipment(user, props);
-                } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-                    PublicMethod.getInstance().addPotion(props, user, 1);
-                }
-                log.info("获得道具的id: {}", propsId);
 
-            } catch (CustomizeException e) {
-                log.info("获得道具失败, 道具id: {}", propsId);
-                //此时给玩家发邮件
-                log.error(e.getMessage(), e);
-            }
-
-        }
-    }
 
 
 }

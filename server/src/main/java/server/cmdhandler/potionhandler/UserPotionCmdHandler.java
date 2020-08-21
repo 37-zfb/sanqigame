@@ -69,48 +69,24 @@ public class UserPotionCmdHandler implements ICmdHandler<GameMsg.UserPotionCmd> 
             // 立即恢复
             if (potion.getInfo().contains(PotionType.MP.getType())) {
                 if (potion.getInfo().contains(PotionType.IMMEDIATELY.getType())) {
-
                     immediatelyResume.immediatelyResumeMp(user, potion);
-
                     newBuilder.setResumeMpEndTime(user.getUserResumeState().getEndTimeMp());
                 } else if (potion.getInfo().contains(PotionType.SLOW.getType())) {
-
                     slowResume.slowResumeMp(user, potion);
-//                    // 缓慢恢复 MP  每秒恢复100
-//                    // 计算当前mp
-//                    user.calCurrMp();
-//                    //设置药效时间
-//                    potion.setUsedEndTime(System.currentTimeMillis() + PotionConst.SLOW_MP_POTION_TIME);
-//                    // 设置药效开始时间
-//                    potion.setUsedStartTime(System.currentTimeMillis());
-//                    //设置自动恢复mp时间
-//                    user.resumeMpPotionTime();
-
                     newBuilder.setResumeMpEndTime(potion.getUsedEndTime())
                             .setResumeMpEndTimeAuto(user.getUserResumeState().getEndTimeMp());
                 }
             } else if (potion.getInfo().contains(PotionType.HP.getType())) {
                 if (potion.getInfo().contains(PotionType.IMMEDIATELY.getType())) {
                     immediatelyResume.immediatelyResumeHp(user, potion);
-                    newBuilder.setResumeHpEndTime(0L);
                 } else if (potion.getInfo().contains(PotionType.SLOW.getType())) {
                     slowResume.slowResumeHp(potion);
-//                    //缓慢恢复 hp
-//                    //设置药效终止时间
-//                    potion.setUsedEndTime(System.currentTimeMillis() + PotionConst.SLOW_HP_POTION_TIME);
-//                    //设置药效开始时间
-//                    potion.setUsedStartTime(System.currentTimeMillis());
-
-
                     newBuilder.setResumeHpEndTime(potion.getUsedEndTime());
                 }
             }
-            newBuilder.setIsSuccess(isSuccess)
-                    .setLocation(location);
-        } else {
-            newBuilder.setIsSuccess(isSuccess)
-                    .setLocation(location);
         }
+        newBuilder.setIsSuccess(isSuccess)
+                .setLocation(location);
         // 设置使用药剂时间
         potion.setLastTimeSkillTime(System.currentTimeMillis());
         potion.setNumber(potion.getNumber() - 1);

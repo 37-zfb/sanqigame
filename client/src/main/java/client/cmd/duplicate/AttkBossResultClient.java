@@ -22,14 +22,17 @@ public class AttkBossResultClient implements ICmd<GameMsg.AttkBossResult> {
         Role role = Role.getInstance();
         Duplicate currDuplicate = role.getCurrDuplicate();
         BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
-        currBossMonster.setHp(currBossMonster.getHp()-subHp);
+        currBossMonster.setHp(currBossMonster.getHp() - subHp);
         role.decreaseDurability();
 
-        if (role.getId() == attkBossResult.getUserId()){
+        if (attkBossResult.getType().equals("召唤兽")) {
+            System.out.println("召唤兽攻击 " + currBossMonster.getBossName() + " 减血 " + subHp);
+        }
 
+        if (role.getId() == attkBossResult.getUserId()) {
             BossThread.getInstance().process(ctx, role);
-        }else {
-            System.out.println(currBossMonster.getBossName()+" 减血 "+subHp);
+        } else {
+            System.out.println(currBossMonster.getBossName() + " 减血 " + subHp);
         }
     }
 }

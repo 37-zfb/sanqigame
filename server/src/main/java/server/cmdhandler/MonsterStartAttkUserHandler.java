@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import model.scene.Monster;
 import model.scene.Scene;
 import scene.GameData;
+import server.PublicMethod;
 import server.model.User;
 import server.model.UserManager;
 import server.timer.MonsterAttakTimer;
@@ -30,11 +31,7 @@ public class MonsterStartAttkUserHandler implements ICmdHandler<GameMsg.MonsterS
         if (ctx == null || cmd == null) {
             return;
         }
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        if (userId == null) {
-            return;
-        }
-        User user = UserManager.getUserById(userId);
+        User user = PublicMethod.getInstance().getUser(ctx);
         Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
 
         GameMsg.NoticeUserAttked.Builder noticeUser = GameMsg.NoticeUserAttked.newBuilder();
@@ -46,9 +43,9 @@ public class MonsterStartAttkUserHandler implements ICmdHandler<GameMsg.MonsterS
                 if (monster.isDie()){
                     continue;
                 }
-                RunnableScheduledFuture runnableScheduledFuture = MonsterAttakTimer.getInstance().monsterNormalAttk(user, monster.getName(),ctx);
+                RunnableScheduledFuture runnableScheduledFuture = MonsterAttakTimer.getInstance().monsterNormalAttk(user, monster,ctx);
                 // 一个怪攻击一个人，添加定时任务到 monster 对象中。
-                monster.getTimerMap().put(userId,runnableScheduledFuture);
+                monster.getTimerMap().put(user.getUserId(),runnableScheduledFuture);
                 noticeUser.addMonsterId(monster.getId());
             }
         }

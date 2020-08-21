@@ -4,6 +4,7 @@ import com.alibaba.druid.support.ibatis.SqlMapClientImplWrapper;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import model.profession.SummonMonster;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author 张丰博
@@ -58,11 +60,19 @@ public class BossMonster {
     /**
      *  记录要攻击的用户的id
      */
-    private Integer userId;
+    private final AtomicReference<ForceAttackUser> attackUserAtomicReference = new AtomicReference<>();
+
     /**
      * 团队成员攻击boss的血量记录  用户id <==> 血量
      */
     private final Map<Integer,Integer> userIdMap = new HashMap<>();
+    /**
+     *  召唤兽攻击boss的血量记录   召唤兽<==>血量
+     */
+    private final Map<SummonMonster,Integer> summonMonsterMap = new HashMap<>();
+
+
+
     /**
      * 选择用户监视器
      */

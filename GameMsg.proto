@@ -139,6 +139,11 @@ enum MsgCode {
 
   USER_QUIT_TEAM_AND_DUPLICATE_CMD = 79;
   USER_QUIT_TEAM_AND_DUPLICATE_RESULT = 80;
+
+  USER_SKILL_ATTK_DUPLICATE_RESULT = 81;
+  PASTOR_SKILL_RESULT = 82;
+
+  SUMMON_MONSTER_SUB_HP_RESULT = 83;
 }
 
 // 还有谁在场
@@ -396,6 +401,9 @@ message NoticeUserAttked {
 message UserSkillAttkCmd {
   // 技能id
   uint32 skillId = 1;
+}
+// 玩家副本中使用技能结果
+message UserSkillAttkDuplicateResult{
 
 }
 // 玩家使用技能  结果
@@ -547,6 +555,8 @@ message AttkBossCmd {
 message AttkBossResult {
   uint32 subHp = 1;
   uint32 userId = 2;
+  // 攻击类型; 召唤兽or用户
+  string type = 3;
 }
 // 下个一个boss
 message NextBossResult {
@@ -798,5 +808,14 @@ message UserQuitTeamAndDuplicateCmd {
 }
 // 退出队伍和副本
 message UserQuitTeamAndDuplicateResult{
-
+}
+// 牧师加血结果
+message PastorSkillResult{
+  uint32 hp = 1;
+  uint32 mp = 2;
+}
+// 召唤兽掉血
+message SummonMonsterSubHpResult{
+  bool isDie = 1;
+  uint32 subHp = 2;
 }

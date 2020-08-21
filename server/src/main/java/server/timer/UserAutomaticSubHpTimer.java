@@ -1,9 +1,9 @@
 package server.timer;
 
-import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.scene.Monster;
+import model.profession.SummonMonster;
 import msg.GameMsg;
+import server.PublicMethod;
 import server.model.User;
 import util.CustomizeThreadFactory;
 
@@ -33,7 +33,6 @@ public class UserAutomaticSubHpTimer {
         if (user == null) {
             return;
         }
-
         RunnableScheduledFuture<?> scheduledFuture =
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
@@ -82,7 +81,53 @@ public class UserAutomaticSubHpTimer {
         user.setSubHpTask(scheduledFuture);
     }
 
+   public void summonMonsterSubHpAuto(User user,SummonMonster summonMonster, Integer subHpNumber) {
+        if (summonMonster == null) {
+            return;
+        }
+        RunnableScheduledFuture<?> scheduledFuture =
+                (RunnableScheduledFuture<?>) scheduledThreadPool
+                        .scheduleAtFixedRate(() -> {
+                            // 防止多线程执行时，减血超减
+                            synchronized (summonMonster.getSubHpMonitor()) {
+                                //
+                                GameMsg.SummonMonsterSubHpResult summonMonsterSubHpResult = null;
+                                if (summonMonster.getSubHpNumber() < subHpNumber && summonMonster.getHp() > 20) {
+                                    log.info("召唤兽:血量 {} -20", summonMonster.getHp());
+                                    summonMonster.setHp(summonMonster.getHp() - 20);
+                                    summonMonster.setSubHpNumber(summonMonster.getSubHpNumber()+1);
+                                    summonMonsterSubHpResult = GameMsg.SummonMonsterSubHpResult.newBuilder()
+                                            .setIsDie(false)
+                                            .setSubHp(20)
+                                            .build();
 
+                                } else if (summonMonster.getSubHpNumber() < subHpNumber && summonMonster.getHp() <= 20) {
+
+                                    log.info("召唤兽自动掉血而死");
+                                    // 怪死了，设置0
+//                                    monster.getDropHpNumber().set(0);
+                                    summonMonster.setHp(0);
+                                    // 取消定时任务
+                                    summonMonster.getSubHpTask().cancel(true);
+                                    summonMonster.setSubHpTask(null);
+                                    summonMonsterSubHpResult = GameMsg.SummonMonsterSubHpResult.newBuilder().setIsDie(true).build();
+
+                                } else {
+                                    log.info("召唤兽停止出血状态;");
+                                    // 掉血次数用完，设置0
+                                    summonMonster.setSubHpNumber(0);
+                                    // 取消定时任务
+                                    summonMonster.getSubHpTask().cancel(true);
+                                    summonMonster.setSubHpTask(null);
+                                }
+                                PublicMethod.getInstance().sendMsg(user.getCtx(),summonMonsterSubHpResult, user.getPlayTeam());
+
+                            }
+
+                        }, 1000, 1000, TimeUnit.MILLISECONDS);
+
+       summonMonster.setSubHpTask(scheduledFuture);
+    }
 
 
 }

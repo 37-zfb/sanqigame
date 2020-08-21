@@ -1,9 +1,12 @@
 package client.cmd;
 
+import client.model.team.PlayTeamClient;
+import client.thread.BossThread;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
+import model.duplicate.Duplicate;
 import model.scene.Monster;
 import model.scene.Scene;
 import msg.GameMsg;
@@ -35,11 +38,21 @@ public class UserSkillAttkResultClient implements ICmd<GameMsg.UserSkillAttkResu
         } else if (mpInsufficient.equals(userSkillAttkResult.getFalseReason())) {
             System.out.println("mp 不足!");
         } else if (userSkillAttkResult.getIsSuccess()) {
-            // 目标减血
-            Monster monster = scene.getMonsterMap().get(userSkillAttkResult.getMonsterId());
-            if (monster != null) {
-                monster.setHp(monster.getHp() - userSkillAttkResult.getSubtractHp());
-                System.out.println(monster.getName() + " hp: -" + userSkillAttkResult.getSubtractHp() + ", 剩余hp: " + monster.getHp());
+            Duplicate currDuplicate = role.getCurrDuplicate();
+            if (currDuplicate!=null){
+                // 副本不为空
+
+
+
+                BossThread.getInstance().process(ctx, role);
+                return;
+            }else {
+                // 目标减血
+                Monster monster = scene.getMonsterMap().get(userSkillAttkResult.getMonsterId());
+                if (monster != null) {
+                    monster.setHp(monster.getHp() - userSkillAttkResult.getSubtractHp());
+                    System.out.println(monster.getName() + " hp: -" + userSkillAttkResult.getSubtractHp() + ", 剩余hp: " + monster.getHp());
+                }
             }
         } else {
             if (scene.getMonsterMap().size() == 0) {

@@ -44,6 +44,8 @@ public class Duplicate {
      */
     private final Map<Integer, BossMonster> bossMonsterMap = new HashMap<>();
 
+
+
     public Duplicate(Integer id, String name) {
         this.id = id;
         this.name = name;
@@ -68,10 +70,14 @@ public class Duplicate {
         List<Integer> list = new ArrayList<>();
         String[] propsId = null;
         for (DuplicateType duplicateType : DuplicateType.values()) {
-            propsId = duplicateType.getPropsId().split(",");
+            if (duplicateType.getName().equals(this.name)){
+                propsId = duplicateType.getPropsId().split(",");
+                break;
+            }
         }
+
         for (int i = 0; i < DuplicateConst.PROPS_NUMBER; i++) {
-            list.add((int)(Math.random()*(propsId.length)));
+            list.add(Integer.valueOf(propsId[(int)(Math.random()*(propsId.length))]));
         }
 
         return list;

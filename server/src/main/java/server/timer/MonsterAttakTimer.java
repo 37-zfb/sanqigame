@@ -2,6 +2,7 @@ package server.timer;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import model.scene.Monster;
 import msg.GameMsg;
 import server.model.User;
 import util.CustomizeThreadFactory;
@@ -29,7 +30,7 @@ public class MonsterAttakTimer {
      * @param ctx
      * @return
      */
-    public RunnableScheduledFuture monsterNormalAttk(User user, String monsterName, ChannelHandlerContext ctx) {
+    public RunnableScheduledFuture monsterNormalAttk(User user, Monster monster, ChannelHandlerContext ctx) {
         if (user == null || ctx == null) {
             return null;
         }
@@ -37,7 +38,6 @@ public class MonsterAttakTimer {
         RunnableScheduledFuture<?> scheduledFuture =
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
-
                             // 防止多线程执行时，减血超减
                             synchronized (MonsterAttakTimer.class){
                                 // 用户减血
@@ -52,7 +52,7 @@ public class MonsterAttakTimer {
                                     user.setCurrHp(user.getCurrHp() - 2);
                                     GameMsg.AttkCmd attkCmd = GameMsg.AttkCmd.newBuilder()
                                             .setTargetUserId(user.getUserId())
-                                            .setMonsterName(monsterName)
+                                            .setMonsterName(monster.getName())
                                             .build();
                                     ctx.channel().writeAndFlush(attkCmd);
                                 }

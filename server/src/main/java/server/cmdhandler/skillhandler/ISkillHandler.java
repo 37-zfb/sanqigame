@@ -8,9 +8,10 @@ import model.profession.skill.AbstractSkillProperty;
  */
 public interface ISkillHandler<SkillCmd extends AbstractSkillProperty> {
     /**
-     *  处理技能请求
+     *  技能处理方法
      * @param ctx
-     * @param skillCmd 具体技能类
+     * @param skillCmd 技能类型
+     * @param skillId  技能id
      */
-     void skillHandle(ChannelHandlerContext ctx,SkillCmd skillCmd);
+     void skillHandle(ChannelHandlerContext ctx,SkillCmd skillCmd ,Integer skillId);
 }

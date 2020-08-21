@@ -16,7 +16,7 @@ import lombok.Setter;
 import model.duplicate.BossMonster;
 import model.duplicate.BossSkill;
 import model.duplicate.Duplicate;
-import model.duplicate.store.Goods;
+import model.store.Goods;
 import model.profession.Profession;
 import model.profession.Skill;
 import model.profession.skill.PastorSkillProperty;

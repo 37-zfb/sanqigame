@@ -6,6 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import model.duplicate.Duplicate;
+import model.profession.SummonMonster;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
@@ -15,6 +16,8 @@ import server.model.User;
 import server.model.UserManager;
 import server.timer.BossAttackTimer;
 import util.MyUtil;
+
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -42,6 +45,11 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
             // 取消定时器
             BossAttackTimer.getInstance().cancelTask(currDuplicate.getCurrBossMonster().getScheduledFuture());
         }
+
+        /**
+         *  取消召唤师定时器
+         */
+        PublicMethod.getInstance().cancelSummonTimerOrPlayTeam(user);
 
         GameMsg.UserQuitDuplicateResult.Builder newBuilder = GameMsg.UserQuitDuplicateResult.newBuilder();
         if (user.getCurrHp() <= 0){

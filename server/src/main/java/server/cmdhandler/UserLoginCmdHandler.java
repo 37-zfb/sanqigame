@@ -1,13 +1,11 @@
 package server.cmdhandler;
 
 import constant.EquipmentConst;
-import constant.GoodsConst;
 import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.GoodsLimitNumber;
-import model.duplicate.store.Goods;
+import model.store.Goods;
 import model.props.AbstractPropsProperty;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;

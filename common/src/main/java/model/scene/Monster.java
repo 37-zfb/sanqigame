@@ -3,12 +3,14 @@ package model.scene;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import model.duplicate.ForceAttackUser;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Handler;
 
 /**
@@ -45,7 +47,14 @@ public class Monster {
     /**
      * 怪减血监听对象
      */
-    private final Object subHpMontor = new Object();
+    private final Object subHpMonitor = new Object();
+
+    /**
+     *  记录要攻击的用户的id
+     */
+    private final AtomicReference<ForceAttackUser> attackUserAtomicReference = new AtomicReference<>();
+
+
 
 
     private final Map<Integer, RunnableScheduledFuture> timerMap = new HashMap<>();
@@ -58,6 +67,9 @@ public class Monster {
      * 记录掉血次数
      */
     private final AtomicInteger dropHpNumber = new AtomicInteger(0);
+
+
+
 
     public Monster(Integer id, Integer sceneId, String name, Integer hp) {
         this.id = id;

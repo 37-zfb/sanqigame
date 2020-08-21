@@ -41,4 +41,6 @@ public class WarriorSkillProperty extends AbstractSkillProperty {
         this.percentDamage = percentDamage;
     }
 
+
+
 }
