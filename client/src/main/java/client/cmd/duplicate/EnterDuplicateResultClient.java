@@ -1,16 +1,17 @@
 package client.cmd.duplicate;
 
 import client.model.SceneData;
+import client.model.server.duplicate.BossMonster;
+import client.model.server.duplicate.BossSkill;
+import client.model.server.duplicate.Duplicate;
+import client.scene.GameData;
 import client.thread.BossThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.thread.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
-import model.duplicate.BossMonster;
-import model.duplicate.BossSkill;
-import model.duplicate.Duplicate;
+
 import msg.GameMsg;
-import scene.GameData;
 import util.MyUtil;
 
 import java.util.Map;

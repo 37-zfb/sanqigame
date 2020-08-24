@@ -5,7 +5,6 @@ import client.model.Role;
 import client.model.SceneData;
 import client.thread.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
-import model.scene.Scene;
 import msg.GameMsg;
 import util.MyUtil;
 

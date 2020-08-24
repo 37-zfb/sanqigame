@@ -1,14 +1,13 @@
 package client.cmd;
 
-import client.model.team.PlayTeamClient;
+import client.model.server.duplicate.Duplicate;
+import client.model.server.scene.Monster;
+import client.model.server.scene.Scene;
 import client.thread.BossThread;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
-import model.duplicate.Duplicate;
-import model.scene.Monster;
-import model.scene.Scene;
 import msg.GameMsg;
 
 /**

@@ -4,20 +4,21 @@ import client.model.MailClient;
 import client.model.PlayUserClient;
 import client.model.Role;
 import client.model.client.MailEntityClient;
+import client.model.server.duplicate.Duplicate;
+import client.model.server.profession.Skill;
+import client.model.server.props.Equipment;
+import client.model.server.props.Potion;
+import client.model.server.props.Props;
+import client.model.server.scene.Npc;
+import client.model.server.scene.Scene;
+import client.model.server.store.Goods;
+import client.scene.GameData;
 import client.thread.BossThread;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.Duplicate;
-import model.store.Goods;
-import model.profession.Skill;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
-import model.scene.Npc;
-import model.scene.Scene;
+
 import msg.GameMsg;
-import scene.GameData;
 import type.ChatType;
 import type.EquipmentType;
 import type.MailType;
@@ -323,15 +324,16 @@ public class UserCmd {
                         System.out.println("1、私聊;");
                         System.out.println("2、群聊;");
                         int cmd = scanner.nextInt();
+                        scanner.nextLine();
                         if (cmd == 1) {
                             // 私聊
                             role.setChat(true);
                             return GameMsg.WhoElseIsHereCmd.newBuilder().build();
                         } else if (cmd == 2) {
                             // 群聊
-
+                            role.setSelf(true);
                             System.out.println("请输入信息:");
-                            String info = scanner.next();
+                            String info = scanner.nextLine();
 
                             return GameMsg.UserChatInfoCmd.newBuilder()
                                     .setType(ChatType.PUBLIC_CHAT.getChatType())
@@ -348,13 +350,22 @@ public class UserCmd {
                             Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
                             System.out.println("0、全部领取;");
                             for (MailEntityClient mailEntityClient : mailMap.values()) {
-                                System.out.println(mailEntityClient.getId() + "、" + mailEntityClient.getTitle() + "。 来自:" + mailEntityClient.getSrcUserName());
+                                System.out.println(mailEntityClient.getId() + "、" + mailEntityClient.getTitle() + "。 来自:" + mailEntityClient.getSrcUserName() + " "+mailEntityClient.getMailType().getState());
                             }
+                            System.out.println("999、清理邮件;");
                             System.out.println("===================");
                             int mailId = scanner.nextInt();
                             GameMsg.UserReceiveMailCmd.Builder newBuilder = GameMsg.UserReceiveMailCmd.newBuilder();
                             if (mailId == 0) {
                                 newBuilder.setMailId(MailType.RECEIVE_ALL.getState());
+                            }else if (mailId == 999){
+                                for (MailEntityClient mailEntityClient : mailMap.values()) {
+                                    if (mailEntityClient.getMailType() == MailType.READ){
+                                        mailMap.remove(mailEntityClient.getId());
+                                    }
+                                }
+                                mail.setHave(mailMap.size() > 0);
+                                return GameMsg.UserCleanMailCmd.newBuilder().build();
                             } else {
                                 newBuilder.setMailId(mailId);
                             }

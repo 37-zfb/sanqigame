@@ -1,13 +1,13 @@
 package client.cmd.mail;
 
+import client.model.server.props.Props;
+import client.scene.GameData;
 import client.thread.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
-import model.props.Props;
 import msg.GameMsg;
-import scene.GameData;
 import type.PropsType;
 
 import java.util.Map;
@@ -48,16 +48,16 @@ public class AllUserResultClient implements ICmd<GameMsg.AllUserResult> {
             System.out.println(props.getId() + "、" + props.getName());
         }
         //  道具id
-        int propsId = scanner.nextInt();
-        Props props = propsMap.get(propsId);
-        newBuilder.setPropsId(propsId)
-                .setNumber(1);
-        if (props.getPropsProperty().getType() != PropsType.Equipment) {
-            System.out.println("数量:");
-            int number = scanner.nextInt();
-            scanner.nextLine();
-            newBuilder.setNumber(number);
-        }
+//        int propsId = scanner.nextInt();
+//        Props props = propsMap.get(propsId);
+//        newBuilder.setPropsId(propsId)
+//                .setNumber(1);
+//        if (props.getPropsProperty().getType() != PropsType.Equipment) {
+//            System.out.println("数量:");
+//            int number = scanner.nextInt();
+//            scanner.nextLine();
+//            newBuilder.setNumber(number);
+//        }
         newBuilder.setSrcUserId(0);
 
 

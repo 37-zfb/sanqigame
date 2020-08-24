@@ -1,20 +1,17 @@
 package server.cmdhandler;
 
-import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
-import model.scene.Monster;
-import model.scene.Scene;
-import scene.GameData;
+import server.model.scene.Monster;
+import server.model.scene.Scene;
+import server.scene.GameData;
 import server.model.User;
 import server.model.UserManager;
-import server.timer.BossAttackTimer;
 import server.timer.MonsterAttakTimer;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.RunnableScheduledFuture;
 
@@ -48,10 +45,10 @@ public class StopCurUserAllTimerHandler implements ICmdHandler<GameMsg.StopCurUs
         // 取消当前用户的所有定时任务
         Map<Integer, Monster> monsterMap = scene.getMonsterMap();
         for (Monster monster : monsterMap.values()) {
-            RunnableScheduledFuture runnableScheduledFuture = monster.getTimerMap().get(user);
-            if (runnableScheduledFuture != null){
-                MonsterAttakTimer.getInstance().removeTask(runnableScheduledFuture);
-            }
+//            RunnableScheduledFuture runnableScheduledFuture = monster.getTimerMap().get(user);
+//            if (runnableScheduledFuture != null){
+//                MonsterAttakTimer.getInstance().removeTask(runnableScheduledFuture);
+//            }
         }
 
     }

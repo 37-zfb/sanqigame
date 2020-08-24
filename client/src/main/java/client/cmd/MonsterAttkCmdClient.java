@@ -16,10 +16,10 @@ public class MonsterAttkCmdClient implements ICmd<GameMsg.AttkCmd> {
         if (ctx == null || attkCmd == null) {
             return;
         }
-        System.out.println("您受到攻击,Hp-2");
+        System.out.println("您受到攻击,Hp-"+ attkCmd.getSubHp());
 
 
-        CmdThread.getInstance().process(ctx, Role.getInstance(), SceneData.getInstance().getSceneMap().get(Role.getInstance().getCurrSceneId()).getNpcMap().values());
+//        CmdThread.getInstance().process(ctx, Role.getInstance(), SceneData.getInstance().getSceneMap().get(Role.getInstance().getCurrSceneId()).getNpcMap().values());
 
     }
 

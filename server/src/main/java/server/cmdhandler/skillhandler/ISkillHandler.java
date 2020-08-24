@@ -1,7 +1,7 @@
 package server.cmdhandler.skillhandler;
 
 import io.netty.channel.ChannelHandlerContext;
-import model.profession.skill.AbstractSkillProperty;
+import server.model.profession.skill.AbstractSkillProperty;
 
 /**
  * @author 张丰博

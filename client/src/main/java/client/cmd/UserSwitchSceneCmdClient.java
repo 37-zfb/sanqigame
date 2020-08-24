@@ -1,12 +1,12 @@
 package client.cmd;
 
+import client.model.server.scene.Monster;
+import client.model.server.scene.Npc;
+import client.model.server.scene.Scene;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
-import model.scene.Monster;
-import model.scene.Npc;
-import model.scene.Scene;
 import msg.GameMsg;
 
 import java.util.List;

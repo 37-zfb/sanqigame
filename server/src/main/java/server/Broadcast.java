@@ -4,9 +4,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import scene.GameData;
+import server.scene.GameData;
 
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

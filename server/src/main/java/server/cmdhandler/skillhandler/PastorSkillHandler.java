@@ -2,13 +2,13 @@ package server.cmdhandler.skillhandler;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.Duplicate;
-import model.profession.Skill;
-import model.profession.skill.PastorSkillProperty;
-import model.scene.Monster;
+import server.model.duplicate.Duplicate;
+import server.model.profession.Skill;
+import server.model.profession.skill.PastorSkillProperty;
+import server.model.scene.Monster;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
-import scene.GameData;
+import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
 import server.timer.PastorSkillTimer;
@@ -27,74 +27,62 @@ import java.util.concurrent.RunnableScheduledFuture;
 @Slf4j
 public class PastorSkillHandler implements ISkillHandler<PastorSkillProperty> {
     @Override
-    public void skillHandle(ChannelHandlerContext ctx, PastorSkillProperty pastorSkillProperty,Integer skillId) {
+    public void skillHandle(ChannelHandlerContext ctx, PastorSkillProperty pastorSkillProperty, Integer skillId) {
 
         User user = PublicMethod.getInstance().getUser(ctx);
 
         //先判断是否有副本
-        Duplicate currDuplicate  = PublicMethod.getInstance().getPlayTeam(user);
+        Duplicate currDuplicate = PublicMethod.getInstance().getPlayTeam(user);
 
         Skill skill = user.getSkillMap().get(skillId);
+        skill.setLastUseTime(System.currentTimeMillis());
         PastorSkillProperty skillProperty = (PastorSkillProperty) skill.getSkillProperty();
-        if (currDuplicate == null) {
-            // 此时在场景中；并且有怪
+        // 此时在场景中；并且有怪
 
-            // 在公共地图
-            Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
-            // 存活着的怪
-            List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
-            if (monsterAliveList.size() != 0) {
-                // 嘲讽当前场景中所有的怪
-                for (Monster monster : monsterAliveList) {
-                    // 后端架构如果采用多线程，怪减血时要加synchronized
-                    synchronized (monster.getSubHpMonitor()) {
-                        if (monster.isDie()) {
-                            // 有可能刚被前一用户杀死，
-                            // 怪死，减蓝、技能设为cd; 重新定义恢复终止时间
-                            user.subMp(skill.getConsumeMp());
-                            log.info("{} 已被其他玩家击杀!", monster.getName());
-                            GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
-                                    .setMonsterId(monster.getId())
-                                    .setIsDieBefore(true)
-                                    .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
-                                    .build();
-                            user.getCtx().channel().writeAndFlush(dieResult);
-                        } else {
+        // 在公共地图
+        Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
+        // 存活着的怪
+        List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
+        for (PastorSkillType skillType : PastorSkillType.values()) {
+            if (!skillType.getId().equals(skillProperty.getId())) {
+                continue;
+            }
+            try {
+                Method declaredMethod;
+                if (currDuplicate == null) {
+                    // 在公共地图中
+                    // 存活着的怪
+                    declaredMethod = PastorSkillHandler.class.getDeclaredMethod(skillType.getName() + "SkillScene", List.class, User.class, Integer.class);
+                    declaredMethod.invoke(this, monsterAliveList, user, skillId);
+                } else {
+                    // 副本中
 
-
-//                            log.info("玩家:{},使:{} 减血 {}!", user.getUserName(), monster.getName(), subHp);
-                        }
-                    }
-                    // 减蓝
-                    user.subMp(skill.getConsumeMp());
+                    declaredMethod = PastorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Duplicate.class, Integer.class);
+                    declaredMethod.invoke(this, user, currDuplicate, skillId);
                 }
-            } else {
-                //当前场景中的怪全死了
-
+                break;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-
-        } else {
-            // 此时在副本中
-            for (PastorSkillType skillType : PastorSkillType.values()) {
-                if (skillType.getId().equals(skillProperty.getId())) {
-                    try {
-                        Method declaredMethod = PastorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Duplicate.class, Integer.class);
-                        declaredMethod.invoke(this, user, currDuplicate, skillId);
-                        break;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
         }
+    }
 
 
+    /**
+     * 治疗术
+     *
+     * @param monsterAliveList 存活怪的集合
+     * @param user             用户对象
+     * @param skillId          技能id
+     */
+    private void therapySkillScene(List<Monster> monsterAliveList, User user, Integer skillId) {
+        therapySkill(user, user.getCurrDuplicate(), skillId);
     }
 
     /**
-     *  治疗
+     * 治疗
+     *
      * @param user
      * @param duplicate
      * @param skillId
@@ -103,7 +91,6 @@ public class PastorSkillHandler implements ISkillHandler<PastorSkillProperty> {
         Skill skill = user.getSkillMap().get(skillId);
         PastorSkillProperty skillProperty = (PastorSkillProperty) skill.getSkillProperty();
 
-        skill.setLastUseTime(System.currentTimeMillis());
         //治疗
         RunnableScheduledFuture<?> runnableScheduledFuture = PastorSkillTimer.getInstance().userChant(user, skillProperty);
         user.setIsPrepare(runnableScheduledFuture);

@@ -1,13 +1,13 @@
 package client.cmd;
 
+import client.model.server.scene.Monster;
+import client.model.server.scene.Npc;
+import client.model.server.scene.Scene;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.scene.Monster;
-import model.scene.Npc;
-import model.scene.Scene;
 import msg.GameMsg;
 import type.ChatType;
 
@@ -45,10 +45,11 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
             Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
             int userId = scanner.nextInt();
+            scanner.nextLine();
+
             // 对话内容
             System.out.println("对话内容:");
-            String info = scanner.next();
-            scanner.nextLine();
+            String info = scanner.nextLine();
 
             role.setChat(false);
 

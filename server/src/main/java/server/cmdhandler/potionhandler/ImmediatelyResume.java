@@ -2,7 +2,7 @@ package server.cmdhandler.potionhandler;
 
 import constant.ProfessionConst;
 import lombok.extern.slf4j.Slf4j;
-import model.props.Potion;
+import server.model.props.Potion;
 import org.springframework.stereotype.Component;
 import server.model.User;
 

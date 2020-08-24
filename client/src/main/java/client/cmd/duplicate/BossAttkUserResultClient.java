@@ -2,9 +2,9 @@ package client.cmd.duplicate;
 
 import client.cmd.ICmd;
 import client.model.Role;
+import client.model.server.duplicate.BossMonster;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
 import msg.GameMsg;
 import util.MyUtil;
 

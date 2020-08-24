@@ -2,14 +2,13 @@ package server.cmdhandler.duplicate;
 
 import constant.DuplicateConst;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
-import model.duplicate.BossSkill;
-import model.duplicate.Duplicate;
+import server.model.duplicate.BossMonster;
+import server.model.duplicate.BossSkill;
+import server.model.duplicate.Duplicate;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
-import scene.GameData;
+import server.scene.GameData;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;

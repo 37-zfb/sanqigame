@@ -9,30 +9,31 @@ import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
-import model.duplicate.Duplicate;
-import model.duplicate.ForceAttackUser;
-import model.profession.SummonMonster;
-import model.props.AbstractPropsProperty;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
-import model.scene.Monster;
+import server.model.duplicate.BossMonster;
+import server.model.duplicate.Duplicate;
+import server.model.duplicate.ForceAttackUser;
+import server.model.profession.SummonMonster;
+import server.model.props.AbstractPropsProperty;
+import server.model.props.Equipment;
+import server.model.props.Potion;
+import server.model.props.Props;
+import server.model.scene.Monster;
 import msg.GameMsg;
-import scene.GameData;
+import server.scene.GameData;
 import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
 import server.service.UserService;
 import server.timer.BossAttackTimer;
+import server.timer.MonsterAttakTimer;
 import type.DuplicateType;
-import type.EquipmentType;
 import type.PropsType;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.RunnableScheduledFuture;
 
 /**
  * @author 张丰博
@@ -42,7 +43,7 @@ public final class PublicMethod {
 
     private static final PublicMethod PUBLIC_METHOD = new PublicMethod();
 
-    private UserService userService = GameServer.APPLICATION_CONTEXT.getBean(UserService.class);
+    private final UserService userService = GameServer.APPLICATION_CONTEXT.getBean(UserService.class);
 
     private PublicMethod() {
     }
@@ -55,9 +56,9 @@ public final class PublicMethod {
     /**
      * 用户普通攻击或者带伤害的技能攻击
      *
-     * @param user
-     * @param currDuplicate
-     * @param subHp
+     * @param user          用户对象
+     * @param currDuplicate 当前所在副本
+     * @param subHp         减血量
      */
     public void normalOrSkillAttackBoss(User user, Duplicate currDuplicate, Integer subHp, SummonMonster summonMonster) {
 
@@ -67,14 +68,11 @@ public final class PublicMethod {
         GameMsg.AttkBossResult.Builder newBuilder1 = GameMsg.AttkBossResult.newBuilder();
 
         synchronized (currBossMonster.getATTACK_BOSS_MONITOR()) {
-            if (currBossMonster.getHp() <= 0) {
-                // boss已死
-            }
+
             if (currBossMonster.getHp() <= subHp) {
                 currBossMonster.setHp(0);
                 // boss已死，取消定时任务
                 BossAttackTimer.getInstance().cancelTask(currBossMonster.getScheduledFuture());
-
                 // 剩余血量 小于 应减少的值 boss已死
                 if (currDuplicate.getBossMonsterMap().size() > 0) {
                     // 组队进入，通知队员
@@ -86,14 +84,13 @@ public final class PublicMethod {
                             .setUserId(user.getUserId())
                             .setStartTime(System.currentTimeMillis() + DuplicateConst.INIT_TIME)
                             .build();
-                    PublicMethod.getInstance().sendMsg(user.getCtx(), nextBossResult, playTeam);
+                    sendMsg(user.getCtx(), nextBossResult);
 
                 } else {
                     //组队进入，通知队员
 
                     // 此时副本已通关，计算奖励，退出副本
                     System.out.println("计算奖励,存入数据库");
-
                     List<Integer> propsIdList = currDuplicate.getPropsIdList();
                     // 副本得到的奖励进行持久化
                     PublicMethod.getInstance().addProps(propsIdList, user);
@@ -103,27 +100,10 @@ public final class PublicMethod {
                     for (Integer id : propsIdList) {
                         newBuilder.addPropsId(id);
                     }
-
                     for (DuplicateType duplicateType : DuplicateType.values()) {
                         if (duplicateType.getName().equals(currDuplicate.getName())) {
                             newBuilder.setMoney(duplicateType.getMoney());
                             user.setMoney(user.getMoney() + duplicateType.getMoney());
-                        }
-                    }
-
-                    // 添加数据库,金币添加进
-                    userService.modifyMoney(user.getUserId(), user.getMoney());
-                    UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
-                    Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-                    for (UserEquipmentEntity equipmentEntity : userEquipmentArr) {
-                        if (equipmentEntity == null) {
-                            continue;
-                        }
-                        Props props = propsMap.get(equipmentEntity.getPropsId());
-                        if (((Equipment) props.getPropsProperty()).getEquipmentType() == EquipmentType.Weapon) {
-                            // 持久化武器耐久度
-                            userService.modifyEquipmentDurability(equipmentEntity.getId(), equipmentEntity.getDurability());
-                            break;
                         }
                     }
 
@@ -147,8 +127,7 @@ public final class PublicMethod {
                         newBuilder.addProps(propsResult);
                     }
                     GameMsg.DuplicateFinishResult duplicateFinishResult = newBuilder.setUserId(user.getUserId()).build();
-
-                    PublicMethod.getInstance().sendMsg(user.getCtx(), duplicateFinishResult, playTeam);
+                    sendMsg(user.getCtx(), duplicateFinishResult);
                 }
                 return;
             } else {
@@ -180,20 +159,112 @@ public final class PublicMethod {
             }
 
         }
-
         if (currBossMonster.getScheduledFuture() == null) {
             // 定时器为null,设置boss定时器， 攻击玩家
             BossAttackTimer.getInstance().bossNormalAttack(currBossMonster);
         }
-
         GameMsg.AttkBossResult attkBossResult = newBuilder1.setUserId(user.getUserId()).setSubHp(subHp).build();
-
-        PublicMethod.getInstance().sendMsg(user.getCtx(), attkBossResult, playTeam);
+        sendMsg(user.getCtx(), attkBossResult);
     }
 
     /**
+     *  随机选一个怪攻击
+     * @param user 用户对象
+     * @param summonMonster 召唤兽
+     */
+    public void userOrSummonerAttackMonster(User user, Monster monster, SummonMonster summonMonster,Integer subHp) {
+        GameMsg.AttkResult.Builder attkResultBuilder = GameMsg.AttkResult.newBuilder();
+        // 普通攻击
+
+//        int subHp;
+//        if (summonMonster == null) {
+//            subHp = user.calMonsterSubHp();
+//        } else {
+//            subHp = summonMonster.calMonsterSubHp();
+//        }
+
+        // 使用当前被攻击的怪对象，做锁对象
+        synchronized (monster.getSubHpMonitor()) {
+            // 减血  (0~99) + 500
+            if (monster.isDie()) {
+                log.info("{} 已被其他玩家击杀!", monster.getName());
+                // 有可能刚被前一用户杀死，
+                GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
+                        .setMonsterId(monster.getId())
+                        .setIsDieBefore(true)
+                        .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
+                        .build();
+                user.getCtx().channel().writeAndFlush(dieResult);
+                return;
+            } else if (monster.getHp() <= subHp) {
+                log.info("玩家:{},击杀:{}!", user.getUserName(), monster.getName());
+                monster.setHp(0);
+                monster.getRunnableScheduledFuture().cancel(true);
+
+                // 添加奖励
+                String propsIdString = monster.getPropsId();
+                String[] split = propsIdString.split(",");
+                int propsId = Integer.parseInt(split[(int) Math.random() * split.length]);
+                user.addMonsterReward(propsId);
+
+                GameMsg.DieResult.Builder dieBuilder = GameMsg.DieResult.newBuilder();
+                GameMsg.DieResult dieResult = dieBuilder.setMonsterId(monster.getId())
+                        .setIsDieBefore(false)
+                        .setPropsId(propsId)
+                        .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
+                        .build();
+
+                Broadcast.broadcast(user.getCurSceneId(), dieResult);
+                return;
+            } else {
+                // 减血
+                monster.setHp(monster.getHp() - subHp);
+
+                synchronized (monster.getCHOOSE_USER_MONITOR()) {
+                    if (summonMonster == null) {
+                        Map<Integer, Integer> userIdMap = monster.getUserIdMap();
+                        if (!userIdMap.containsKey(user.getUserId())) {
+                            userIdMap.put(user.getUserId(), subHp);
+                        } else {
+                            Integer oldSubHp = userIdMap.get(user.getUserId());
+                            userIdMap.put(user.getUserId(), oldSubHp + subHp);
+                        }
+                        log.info("玩家:{},使:{} 减血 {}!", user.getUserName(), monster.getName(), subHp);
+                    } else {
+                        // 召唤兽
+                        Map<SummonMonster, Integer> summonMonsterMap = monster.getSummonMonsterMap();
+                        if (!summonMonsterMap.containsKey(summonMonster)) {
+                            summonMonsterMap.put(summonMonster, subHp);
+                        } else {
+                            Integer oldSubHp = summonMonsterMap.get(summonMonster);
+                            summonMonsterMap.put(summonMonster, oldSubHp + subHp);
+                        }
+                        log.info("召唤兽,使:{} 减血 {}!", monster.getName(), subHp);
+                    }
+                }
+
+                if (monster.getRunnableScheduledFuture() == null) {
+                    // 定时器为null,设置boss定时器， 攻击玩家
+                    MonsterAttakTimer.getInstance().monsterNormalAttk(monster);
+                }
+            }
+        }
+
+        // 通知客户端 xx怪 减血；
+        attkResultBuilder.setMonsterId(monster.getId())
+                .setSubHp(subHp);
+        // 怪减血，广播通知当前场景所有用户
+        GameMsg.AttkResult attkResult = attkResultBuilder.build();
+        Broadcast.broadcast(user.getCurSceneId(), attkResult);
+    }
+
+    public void subMonsterHp(){
+
+    }
+
+
+    /**
      * 副本通关，持久化奖励
-     *
      * @param propsIdList 道具id集合
      * @param user        用户
      */
@@ -226,13 +297,14 @@ public final class PublicMethod {
     }
 
     /**
-     * 发送数据
+     * 发送数据,当组队状态时，放给队伍成员
      *
      * @param ctx
      * @param msg
-     * @param playTeam
      */
-    public void sendMsg(ChannelHandlerContext ctx, GeneratedMessageV3 msg, PlayTeam playTeam) {
+    public void sendMsg(ChannelHandlerContext ctx, GeneratedMessageV3 msg) {
+        User user = getUser(ctx);
+        PlayTeam playTeam = user.getPlayTeam();
         if (playTeam == null) {
             // 此时是个人进入副本
             ctx.writeAndFlush(msg);
@@ -388,53 +460,57 @@ public final class PublicMethod {
      */
     public void quitTeam(User user) {
         PlayTeam playTeam = user.getPlayTeam();
+
         if (playTeam == null) {
             return;
         }
-        Integer[] team_member = playTeam.getTEAM_MEMBER();
-        for (int i = 0; i < team_member.length; i++) {
-            if (team_member[i] != null && team_member[i].equals(user.getUserId())) {
-                team_member[i] = null;
-                break;
-            }
-        }
-
-        if (playTeam.getTeamLeaderId().equals(user.getUserId())) {
-            // 如果 队长退出队伍,选择新队员成为队长
-            team_member = playTeam.getTEAM_MEMBER();
+        synchronized (playTeam.getTEAM_MONITOR()){
+            Integer[] team_member = playTeam.getTEAM_MEMBER();
             for (int i = 0; i < team_member.length; i++) {
-                if (team_member[i] != null) {
-                    playTeam.setTeamLeaderId(team_member[i]);
+                if (team_member[i] != null && team_member[i].equals(user.getUserId())) {
+                    team_member[i] = null;
                     break;
+                }
+            }
+
+            if (playTeam.getTeamLeaderId().equals(user.getUserId())) {
+                // 如果 队长退出队伍,选择新队员成为队长
+                team_member = playTeam.getTEAM_MEMBER();
+                for (int i = 0; i < team_member.length; i++) {
+                    if (team_member[i] != null) {
+                        playTeam.setTeamLeaderId(team_member[i]);
+                        break;
+                    }
+                }
+            }
+
+            Duplicate currDuplicate = playTeam.getCurrDuplicate();
+            if (currDuplicate != null) {
+                // 若当前副本不为空
+                BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
+                synchronized (currBossMonster.getCHOOSE_USER_MONITOR()) {
+                    Map<Integer, Integer> userIdMap = currBossMonster.getUserIdMap();
+                    userIdMap.remove(user.getUserId());
+                }
+            }
+
+            user.setPlayTeam(null);
+            GameMsg.UserInfo.Builder userInfo = GameMsg.UserInfo.newBuilder()
+                    .setUserId(user.getUserId())
+                    .setUserName(user.getUserName());
+            GameMsg.UserQuitTeamResult userQuitTeamResult = GameMsg.UserQuitTeamResult.newBuilder()
+                    .setUserInfo(userInfo)
+                    .setTeamLeaderId(playTeam.getTeamLeaderId())
+                    .build();
+            user.getCtx().writeAndFlush(userQuitTeamResult);
+            for (Integer id : team_member) {
+                if (id != null) {
+                    User userById = UserManager.getUserById(id);
+                    userById.getCtx().writeAndFlush(userQuitTeamResult);
                 }
             }
         }
 
-        Duplicate currDuplicate = playTeam.getCurrDuplicate();
-        if (currDuplicate != null) {
-            // 若当前副本不为空
-            BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
-            synchronized (currBossMonster.getCHOOSE_USER_MONITOR()) {
-                Map<Integer, Integer> userIdMap = currBossMonster.getUserIdMap();
-                userIdMap.remove(user.getUserId());
-            }
-        }
-
-        user.setPlayTeam(null);
-        GameMsg.UserInfo.Builder userInfo = GameMsg.UserInfo.newBuilder()
-                .setUserId(user.getUserId())
-                .setUserName(user.getUserName());
-        GameMsg.UserQuitTeamResult userQuitTeamResult = GameMsg.UserQuitTeamResult.newBuilder()
-                .setUserInfo(userInfo)
-                .setTeamLeaderId(playTeam.getTeamLeaderId())
-                .build();
-        user.getCtx().writeAndFlush(userQuitTeamResult);
-        for (Integer id : team_member) {
-            if (id != null) {
-                User userById = UserManager.getUserById(id);
-                userById.getCtx().writeAndFlush(userQuitTeamResult);
-            }
-        }
     }
 
 
@@ -490,20 +566,26 @@ public final class PublicMethod {
             }
         }
     }
+
+    /**
+     * 取消指定用户，召唤兽的所有定时器
+     *
+     * @param user
+     */
     public void cancelSummonTimer(User user) {
         Map<Integer, SummonMonster> summonMonsterMap = user.getSummonMonsterMap();
         for (SummonMonster value : summonMonsterMap.values()) {
-            if (value != null){
+            if (value != null) {
                 value.setHp((int) (ProfessionConst.HP * 0.5));
                 value.setWeakenDefense(0);
-                user.getSummonMonsterRunnableScheduledFutureMap().get(value).cancel(true);
+                while (!user.getSummonMonsterRunnableScheduledFutureMap().get(value).cancel(true)) {
+                }
             }
         }
     }
 
 
     /**
-     *
      * @param userId
      * @param effectTime
      * @return
@@ -515,4 +597,29 @@ public final class PublicMethod {
         forceAttackUser.setUserId(userId);
         return forceAttackUser;
     }
+
+    /**
+     * 取消怪对当前用户的攻击
+     *
+     * @param user 当前用户
+     */
+    public void cancelMonsterAttack(User user) {
+        // 取消当前场景所有 怪 对当前用户的攻击
+        // 当前场景所有的怪
+        Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
+        if (monsterMap.size() != 0) {
+            for (Monster monster : monsterMap.values()) {
+                monster.getUserIdMap().remove(user.getUserId());
+            }
+        }
+        // 取消召唤兽定时器
+        Map<SummonMonster, RunnableScheduledFuture<?>> scheduledFutureMap = user.getSummonMonsterRunnableScheduledFutureMap();
+        cancelSummonTimer(user);
+        for (SummonMonster value : scheduledFutureMap.keySet()) {
+            scheduledFutureMap.remove(value);
+        }
+
+    }
+
+
 }

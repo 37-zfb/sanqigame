@@ -1,31 +1,24 @@
 package server.cmdhandler.duplicate;
 
-import com.google.protobuf.GeneratedMessageV3;
 import constant.DuplicateConst;
-import entity.db.UserEquipmentEntity;
-import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
-import model.duplicate.Duplicate;
-import model.props.AbstractPropsProperty;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
+import server.model.duplicate.BossMonster;
+import server.model.duplicate.Duplicate;
+import server.model.props.AbstractPropsProperty;
+import server.model.props.Equipment;
+import server.model.props.Potion;
+import server.model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import scene.GameData;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.PlayTeam;
 import server.model.User;
-import server.model.UserManager;
 import server.service.UserService;
 import server.timer.BossAttackTimer;
 import type.DuplicateType;
-import type.EquipmentType;
 import type.PropsType;
 import util.MyUtil;
 
@@ -45,10 +38,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.AttkBossCmd attkBossCmd) {
         MyUtil.checkIsNull(ctx, attkBossCmd);
-
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        User user = UserManager.getUserById(userId);
-
+        User user = PublicMethod.getInstance().getUser(ctx);
         // 当前副本
         Duplicate currDuplicate;
 
@@ -75,21 +65,12 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
             ctx.writeAndFlush(userQuitDuplicateResult);
             return;
         }
-        // 此时用户的血量
-        user.calCurrHp();
-        if (user.getCurrHp() <= 0) {
-            // 用户阵亡，被boss打死
-            // 当两个玩家同时对一个boss发起攻击，并且此boss只能承受一击时。
 
-            return;
-        }
         synchronized (currBossMonster.getATTACK_BOSS_MONITOR()) {
             if (currBossMonster.getHp() <= 0) {
                 // boss已死
-
             }
             if (currBossMonster.getHp() <= subHp) {
-
                 currBossMonster.setHp(0);
                 // boss已死，取消定时任务
                 BossAttackTimer.getInstance().cancelTask(currBossMonster.getScheduledFuture());
@@ -97,15 +78,14 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                 // 剩余血量 小于 应减少的值 boss已死
                 if (currDuplicate.getBossMonsterMap().size() > 0) {
                     // 组队进入，通知队员
-
                     // 此时副本中还存在boss
                     currDuplicate.setMinBoss();
                     GameMsg.NextBossResult nextBossResult = GameMsg.NextBossResult.newBuilder()
                             .setBossMonsterId(currDuplicate.getCurrBossMonster().getId())
-                            .setUserId(userId)
+                            .setUserId(user.getUserId())
                             .setStartTime(System.currentTimeMillis() + DuplicateConst.INIT_TIME)
                             .build();
-                    PublicMethod.getInstance().sendMsg(ctx, nextBossResult, playTeam);
+                    PublicMethod.getInstance().sendMsg(ctx, nextBossResult);
 
                 } else {
                     //组队进入，通知队员
@@ -131,20 +111,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                     }
 
                     // 添加数据库,金币添加进
-                    userService.modifyMoney(userId, user.getMoney());
-                    UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
-                    Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-                    for (UserEquipmentEntity equipmentEntity : userEquipmentArr) {
-                        if (equipmentEntity == null) {
-                            continue;
-                        }
-                        Props props = propsMap.get(equipmentEntity.getPropsId());
-                        if (((Equipment) props.getPropsProperty()).getEquipmentType() == EquipmentType.Weapon) {
-                            // 持久化武器耐久度
-                            userService.modifyEquipmentDurability(equipmentEntity.getId(), equipmentEntity.getDurability());
-                            break;
-                        }
-                    }
+                    userService.modifyMoney(user.getUserId(), user.getMoney());
 
                     //  背包中的道具(装备、药剂等)  , 客户端更新背包中的数据
                     Map<Integer, Props> backpack = user.getBackpack();
@@ -165,24 +132,16 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                         }
                         newBuilder.addProps(propsResult);
                     }
-                    GameMsg.DuplicateFinishResult duplicateFinishResult = newBuilder.setUserId(userId).build();
 
-                    PublicMethod.getInstance().sendMsg(ctx, duplicateFinishResult, playTeam);
+                    GameMsg.DuplicateFinishResult duplicateFinishResult = newBuilder.setUserId(user.getUserId()).build();
+                    PublicMethod.getInstance().sendMsg(ctx, duplicateFinishResult);
                 }
                 return;
             } else {
                 // 剩余血量 大于 应减少的值
                 currBossMonster.setHp(currBossMonster.getHp() - subHp);
                 log.info("boss {} 受到伤害 {}, 剩余HP: {}", currBossMonster.getBossName(), subHp, currBossMonster.getHp());
-                synchronized (currBossMonster.getCHOOSE_USER_MONITOR()) {
-                    Map<Integer, Integer> userIdMap = currBossMonster.getUserIdMap();
-                    if (!userIdMap.containsKey(userId)) {
-                        userIdMap.put(userId, subHp);
-                    } else {
-                        Integer oldSubHp = userIdMap.get(userId);
-                        userIdMap.put(userId, oldSubHp + subHp);
-                    }
-                }
+                currBossMonster.putUserIdMap(user.getUserId(),subHp);
             }
         }
         if (currBossMonster.getScheduledFuture() == null) {
@@ -190,9 +149,8 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
             BossAttackTimer.getInstance().bossNormalAttack(currBossMonster);
         }
 
-        GameMsg.AttkBossResult attkBossResult = GameMsg.AttkBossResult.newBuilder().setUserId(userId).setSubHp(subHp).build();
-
-        PublicMethod.getInstance().sendMsg(ctx, attkBossResult, playTeam);
+        GameMsg.AttkBossResult attkBossResult = GameMsg.AttkBossResult.newBuilder().setUserId(user.getUserId()).setSubHp(subHp).build();
+        PublicMethod.getInstance().sendMsg(ctx, attkBossResult);
     }
 
 

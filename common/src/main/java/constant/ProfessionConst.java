@@ -1,5 +1,12 @@
 package constant;
 
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author 张丰博
+ * 职业常量
+ */
 public interface ProfessionConst {
 
     /**
@@ -17,13 +24,16 @@ public interface ProfessionConst {
 
 
     /**
-     *  自动恢复蓝量
+     * 自动恢复蓝量
      */
     int AUTO_RESUME_MP_VALUE = 1;
 
     /**
-     *  注册用户时的金币数
+     * 注册用户时的金币数
      */
     int INIT_MONEY = 0;
+
+
+
 
 }

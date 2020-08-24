@@ -1,10 +1,10 @@
 package client.timer;
 
 import client.model.Role;
+import client.model.server.props.Potion;
 import constant.PotionConst;
 import constant.ProfessionConst;
 import lombok.extern.slf4j.Slf4j;
-import model.props.Potion;
 import util.CustomizeThreadFactory;
 
 import java.util.concurrent.ScheduledFuture;
@@ -65,7 +65,7 @@ public class ResumeStateTimer {
      *  药剂恢复mp
      * @param role 玩家对象
      */
-    public void resumeStatePotionMp(Role role,Potion potion) {
+    public void resumeStatePotionMp(Role role, Potion potion) {
         ScheduledFuture<?> scheduledFuture = scheduledThreadPool.scheduleAtFixedRate(() -> {
             synchronized (role.getMpMonitor()) {
                 if (potion.getRecordResumeNumber() < 4){

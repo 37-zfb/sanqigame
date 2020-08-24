@@ -2,7 +2,7 @@ package server.timer;
 
 import constant.ProfessionConst;
 import lombok.extern.slf4j.Slf4j;
-import model.profession.skill.PastorSkillProperty;
+import server.model.profession.skill.PastorSkillProperty;
 import msg.GameMsg;
 import server.model.PlayTeam;
 import server.model.User;

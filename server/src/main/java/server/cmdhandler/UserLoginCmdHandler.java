@@ -1,30 +1,34 @@
 package server.cmdhandler;
 
 import constant.EquipmentConst;
+import constant.MailConst;
 import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.store.Goods;
-import model.props.AbstractPropsProperty;
+import server.model.PlayMail;
+import server.model.User;
+import server.model.UserManager;
+import server.model.store.Goods;
+import server.model.props.AbstractPropsProperty;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
-import server.model.*;
-import model.profession.Skill;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
-import model.scene.Monster;
-import model.scene.Npc;
-import model.scene.Scene;
-import scene.GameData;
+import server.model.profession.Skill;
+import server.model.props.Equipment;
+import server.model.props.Potion;
+import server.model.props.Props;
+import server.model.scene.Monster;
+import server.model.scene.Npc;
+import server.model.scene.Scene;
+import server.scene.GameData;
 import server.service.MailService;
 import server.service.UserService;
 import server.Broadcast;
 import type.GoodsLimitBuyType;
+import type.MailType;
 import type.PropsType;
 
 import java.text.SimpleDateFormat;
@@ -139,7 +143,6 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                 resultBuilder.addProps(propsResult);
             }
 
-
             UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
             for (UserEquipmentEntity userEquipmentEntity : userEquipmentArr) {
                 if (userEquipmentEntity != null) {
@@ -152,7 +155,6 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                 }
             }
 
-
             Map<Integer, Integer> goodsAllowNumber = user.getGoodsAllowNumber();
             for (Map.Entry<Integer, Integer> integerEntry : goodsAllowNumber.entrySet()) {
                 GameMsg.UserLoginResult.GoodsLimit goodsLimit = GameMsg.UserLoginResult.GoodsLimit.newBuilder()
@@ -164,7 +166,10 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
 
             Map<Integer, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
             for (DbSendMailEntity mailEntity : mailEntityMap.values()) {
-                //
+                if (resultBuilder.getMailInfoCount() == MailConst.MAX_SHOW_NUMBER){
+                    // 最多一次性发送两百封邮件
+                    break;
+                }
                 GameMsg.MailInfo mailInfo = GameMsg.MailInfo.newBuilder()
                         .setSrcUserName(mailEntity.getSrcUserName())
                         .setTitle(mailEntity.getTitle())
@@ -173,7 +178,6 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                 resultBuilder.addMailInfo(mailInfo);
             }
 
-
             loginResult = resultBuilder.build();
         } catch (CustomizeException e) {
             loginResult = resultBuilder.setUserId(e.getCode()).build();
@@ -181,7 +185,6 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         } finally {
             ctx.channel().writeAndFlush(loginResult);
         }
-
 
     }
 
@@ -204,7 +207,6 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         user.setBaseDefense(userState.getBaseDefense());
         user.setMoney(userState.getMoney());
 
-
         // 封装技能
         Map<Integer, Skill> skillMap = GameData.getInstance().getProfessionMap().get(user.getProfessionId()).getSkillMap();
         Map<Integer, Skill> currSkillMap = user.getSkillMap();
@@ -213,18 +215,44 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                     new Skill(skill.getId(), skill.getProfessionId(), skill.getName(), skill.getCdTime(), skill.getIntroduce(), skill.getConsumeMp(), skill.getSkillProperty()));
         }
 
-
         loadBackpack(user);
         loadWearEqu(user);
         loadLimitNumber(user);
         loadMail(user);
+        // 群发邮件
+//        sendMailAll(user);
+
         // 启动定时器
 //        user.startTimer();
         // 设置mp恢复结束时间
         user.resumeMpTime();
 
-
         return user;
+    }
+
+    /**
+     *  群发邮件
+     * @param user
+     */
+    private void sendMailAll(User user) {
+        DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
+        dbSendMailEntity.setTargetUserId(user.getUserId());
+        dbSendMailEntity.setSrcUserId(0);
+        dbSendMailEntity.setMoney(0);
+        dbSendMailEntity.setState(MailType.UNREAD.getState());
+        dbSendMailEntity.setDate(new Date());
+        dbSendMailEntity.setTitle("周年奖励;");
+        dbSendMailEntity.setSrcUserName("管理员");
+
+//        dbSendMailEntity.setPropsInfo();
+
+        DbSendMailEntity mailEntity = mailService.findMailInfoByUserIdAndTitle(user.getUserId(),dbSendMailEntity.getTitle());
+        if (mailEntity == null){
+            PlayMail mail = user.getMail();
+            Map<Integer, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
+            mailEntityMap.put(dbSendMailEntity.getId(),dbSendMailEntity);
+            mailService.addMailInfo(dbSendMailEntity);
+        }
     }
 
     /**

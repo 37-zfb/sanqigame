@@ -1,7 +1,11 @@
 package constant;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author 张丰博
+ * 药剂常量
  */
 public interface PotionConst {
 
@@ -21,4 +25,7 @@ public interface PotionConst {
      *  药剂上限数量
      */
     int POTION_MAX_NUMBER = 99;
+
+
+
 }

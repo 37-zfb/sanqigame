@@ -1,19 +1,19 @@
 package client.model;
 
+import client.model.arena.PlayArenaClient;
+import client.model.server.duplicate.Duplicate;
+import client.model.server.profession.Skill;
+import client.model.server.props.Equipment;
+import client.model.server.props.Potion;
+import client.model.server.props.Props;
 import client.model.team.PlayTeamClient;
+import client.scene.GameData;
 import client.timer.ResumeStateTimer;
 import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import model.UserResumeState;
-import client.model.arena.PlayArenaClient;
-import model.duplicate.Duplicate;
-import model.profession.Skill;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
-import scene.GameData;
+
 import type.EquipmentType;
 import type.PotionType;
 
@@ -130,6 +130,7 @@ public class Role {
     private final PlayTeamClient TEAM_CLIENT = new PlayTeamClient();
 
     private boolean isChat = false;
+    private boolean isSelf = false;
 
     private boolean isTeam = false;
 

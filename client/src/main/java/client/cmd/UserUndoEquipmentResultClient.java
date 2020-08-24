@@ -1,16 +1,16 @@
 package client.cmd;
 
+import client.model.server.props.Equipment;
+import client.model.server.props.Props;
+import client.scene.GameData;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import constant.BackPackConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.props.Equipment;
-import model.props.Props;
 import msg.GameMsg;
 import entity.db.UserEquipmentEntity;
-import scene.GameData;
 
 import java.util.Map;
 

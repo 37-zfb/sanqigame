@@ -6,6 +6,7 @@ import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
+import type.ChatType;
 import util.MyUtil;
 
 /**
@@ -22,7 +23,10 @@ public class UserChatInfoResultClient implements ICmd<GameMsg.UserChatInfoResult
         String type = userChatInfoResult.getType();
 
         System.out.println("====>"+type+" 用户:"+userName+" "+info);
-
-        CmdThread.getInstance().process(ctx, Role.getInstance(), SceneData.getInstance().getSceneMap().get(Role.getInstance().getCurrSceneId()).getNpcMap().values());
+        Role role = Role.getInstance();
+        if (ChatType.PUBLIC_CHAT.getChatType().equals(type) && role.isSelf()){
+            role.setSelf(false);
+            CmdThread.getInstance().process(ctx, role,SceneData.getInstance().getSceneMap().get(role.getId()).getNpcMap().values());
+        }
     }
 }

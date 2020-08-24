@@ -1,5 +1,13 @@
 package client.cmd;
 
+import client.model.server.profession.Skill;
+import client.model.server.props.Equipment;
+import client.model.server.props.Potion;
+import client.model.server.props.Props;
+import client.model.server.scene.Monster;
+import client.model.server.scene.Npc;
+import client.model.server.scene.Scene;
+import client.scene.GameData;
 import client.thread.CmdThread;
 import client.GameClient;
 import client.model.MailClient;
@@ -10,15 +18,8 @@ import client.model.client.MailEntityClient;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.profession.Skill;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
-import model.scene.Monster;
-import model.scene.Npc;
-import model.scene.Scene;
+
 import msg.GameMsg;
-import scene.GameData;
 import type.PropsType;
 
 import java.util.List;

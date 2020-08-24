@@ -9,6 +9,7 @@ import client.model.client.MailEntityClient;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import type.MailType;
 import util.MyUtil;
 
 import java.util.List;
@@ -29,11 +30,11 @@ public class UserReceiveMailResultClient implements ICmd<GameMsg.UserReceiveMail
         MailClient mail = role.getMail();
         Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
         for (Integer mailId : mailIdList) {
-            mailMap.remove(mailId);
+            mailMap.get(mailId).setMailType(MailType.READ);
         }
-        if (mailMap.size() <= 0) {
-            mail.setHave(false);
-        }
+//        if (mailMap.size() <= 0) {
+//            mail.setHave(false);
+//        }
 
         CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
     }

@@ -1,16 +1,17 @@
 package server.timer;
 
-import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.scene.Monster;
-import msg.GameMsg;
+import server.model.profession.SummonMonster;
+import server.model.scene.Monster;
 import server.model.User;
+import type.ProfessionType;
 import util.CustomizeThreadFactory;
 
 import java.util.concurrent.*;
 
 /**
  * @author 张丰博
+ *  怪 攻击用户 定时器
  */
 @Slf4j
 public class MonsterAttakTimer {
@@ -26,42 +27,53 @@ public class MonsterAttakTimer {
     }
 
     /**
-     * @param user 当前用户
-     * @param ctx
      * @return
      */
-    public RunnableScheduledFuture monsterNormalAttk(User user, Monster monster, ChannelHandlerContext ctx) {
-        if (user == null || ctx == null) {
-            return null;
-        }
+    public void monsterNormalAttk(Monster monster) {
 
         RunnableScheduledFuture<?> scheduledFuture =
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
-                            // 防止多线程执行时，减血超减
-                            synchronized (MonsterAttakTimer.class){
-                                // 用户减血
-                                if (user.getCurrHp() <= 0 || (user.getCurrHp() - 2) <= 0) {
-                                    user.setCurrHp(Math.abs(user.getCurrHp() - 2) + user.getCurrHp() - 2);
-                                    // 发送死亡消息
-                                    GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
-                                            .setTargetUserId(user.getUserId())
-                                            .build();
-                                    ctx.channel().writeAndFlush(dieResult);
-                                } else {
-                                    user.setCurrHp(user.getCurrHp() - 2);
-                                    GameMsg.AttkCmd attkCmd = GameMsg.AttkCmd.newBuilder()
-                                            .setTargetUserId(user.getUserId())
-                                            .setMonsterName(monster.getName())
-                                            .build();
-                                    ctx.channel().writeAndFlush(attkCmd);
+
+                            SummonMonster summonMonster = monster.chooseSummonMonster();
+                            User user = monster.chooseUser();
+
+                            // 挑选伤害最高者
+                            Integer summonMonsterSub = monster.getSummonMonsterMap().get(summonMonster);
+                            if ((summonMonster ==null ? 0 : summonMonsterSub) < monster.getUserIdMap().get(user.getUserId())) {
+                                summonMonster = null;
+                            } else {
+                                user = null;
+                            }
+
+                            // 都为空，取消定时器
+                            if (user == null && summonMonster == null){
+                                monster.getRunnableScheduledFuture().cancel(true);
+                                return;
+                            }
+
+                            // 如果是牧师，并且在吟唱状态，此时受到攻击，定时器加血加蓝取消
+                            if (user != null && user.getProfessionId() == ProfessionType.Pastor.getId()) {
+                                if (user.getIsPrepare() != null) {
+                                    user.getIsPrepare().cancel(true);
+                                    user.setIsPrepare(null);
                                 }
                             }
 
+                            int subHp = monster.calUserSubHp();
+                            // 怪的普通攻击
+                            if (user != null) {
+                                user.monsterAttackSubHp(monster.getName(),subHp);
+                                log.info("用户 {} 受到 {} 攻击,减血 {},剩余血量 {}",user.getUserName(),monster.getName(),subHp,user.getCurrHp());
+                            } else {
+                                // 召唤兽
+                                summonMonster.monsterAttackSubHp(subHp);
+                                log.info("召唤兽 受到 {} 攻击,减血 {},剩余血量 {}",summonMonster.getName(),subHp,summonMonster.getHp());
+                            }
 
                         }, 3000, 3000, TimeUnit.MILLISECONDS);
 
-        return scheduledFuture;
+        monster.setRunnableScheduledFuture(scheduledFuture);
     }
 
 

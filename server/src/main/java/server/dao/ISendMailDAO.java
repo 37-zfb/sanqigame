@@ -20,17 +20,26 @@ public interface ISendMailDAO {
      */
     void insertMail(DbSendMailEntity mailEntity);
 
+
     /**
-     *  查询十天内未读的邮件
-     * @param userId 用户id
-     * @param date 十天前的时间
+     *  查询未读的邮件
+     * @param userId
      * @return
      */
-    List<DbSendMailEntity> selectMailWithinTenDay(@Param("targetUserId") int userId, @Param("date") Date date);
+    List<DbSendMailEntity> selectMailUnread(@Param("targetUserId") int userId);
+
 
     /**
      *  批量修改 状态值
      * @param mailCollection
      */
     void updateMailBatch(@Param("mailCollection") Collection<DbSendMailEntity> mailCollection);
+
+    /**
+     * 查询是否存在此条信息
+     * @param userId
+     * @param title
+     * @return
+     */
+    DbSendMailEntity selectMailByUserIdAndTitle(@Param("targetUserId") int userId,@Param("title") String title);
 }

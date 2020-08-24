@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import type.MailType;
 
 import java.util.Objects;
 
@@ -29,6 +30,11 @@ public class MailEntityClient {
      * 邮件标题
      */
     private String title;
+
+    /**
+     *  此邮件是否已读
+     */
+    private MailType mailType = MailType.UNREAD;
 
     public MailEntityClient(Integer id, String srcUserName, String title) {
         this.id = id;

@@ -13,9 +13,9 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 import msg.GameMsgRecognizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import scene.ExcelReaderUtil;
+import server.scene.ExcelReaderUtil;
 import server.cmdhandler.CmdHandlerFactory;
-import scene.GameData;
+import server.scene.GameData;
 
 /**
  * @author 张丰博

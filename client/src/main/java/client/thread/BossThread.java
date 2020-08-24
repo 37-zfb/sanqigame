@@ -1,13 +1,13 @@
 package client.thread;
 
 import client.model.Role;
+import client.model.server.duplicate.BossMonster;
+import client.model.server.duplicate.Duplicate;
+import client.model.server.profession.Skill;
+import client.scene.GameData;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
-import model.duplicate.Duplicate;
-import model.profession.Skill;
 import msg.GameMsg;
-import scene.GameData;
 
 import java.util.Map;
 import java.util.Scanner;

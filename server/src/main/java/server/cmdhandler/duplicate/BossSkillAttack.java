@@ -1,9 +1,9 @@
 package server.cmdhandler.duplicate;
 
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
-import model.duplicate.BossSkill;
-import model.profession.SummonMonster;
+import server.model.duplicate.BossMonster;
+import server.model.duplicate.BossSkill;
+import server.model.profession.SummonMonster;
 import server.model.User;
 import server.timer.UserAutomaticSubHpTimer;
 import type.BossMonsterType;

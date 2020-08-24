@@ -2,30 +2,21 @@ package server.cmdhandler.skillhandler;
 
 import constant.SkillConst;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.Duplicate;
-import model.profession.Skill;
-import model.profession.skill.AbstractSkillProperty;
-import model.props.Props;
+import server.model.PlayTeam;
+import server.model.User;
+import server.model.duplicate.Duplicate;
+import server.model.profession.Skill;
+import server.model.profession.skill.AbstractSkillProperty;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import entity.db.UserEquipmentEntity;
-import scene.GameData;
-import server.GameServer;
+import server.scene.GameData;
 import server.PublicMethod;
 import server.cmdhandler.CmdHandlerFactory;
 import server.cmdhandler.ICmdHandler;
-import server.model.*;
-import model.props.Equipment;
-import model.scene.Monster;
-import model.scene.Scene;
+import server.model.scene.Scene;
 import server.service.UserService;
-import type.EquipmentType;
-import server.Broadcast;
-
-import java.util.*;
 
 /**
  * 技能攻击怪
@@ -100,14 +91,14 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
 
 
         /*// 用户当前场景
-        Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
+        Scene server.scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
 
         // 当前场景所有怪
-        Map<Integer, Monster> monsterMap = scene.getMonsterMap();
+        Map<Integer, Monster> monsterMap = server.scene.getMonsterMap();
         GameMsg.UserSkillAttkResult.Builder resultBuilder = GameMsg.UserSkillAttkResult.newBuilder();
         if (monsterMap.size() == 0) {
             // 当前场景没有怪
-            log.info("场景: {} 没有怪;", scene.getName());
+            log.info("场景: {} 没有怪;", server.scene.getName());
             GameMsg.UserSkillAttkResult skillAttkResult = resultBuilder.setIsSuccess(false).build();
             ctx.channel().writeAndFlush(skillAttkResult);
             return;
@@ -210,7 +201,7 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
                 return;
 
             } else if (monsterMap.size() != 0) {
-                log.info("{} 怪全死了!", scene.getName());
+                log.info("{} 怪全死了!", server.scene.getName());
                 // 减mp
                 user.subMp(skill.getConsumeMp());
                 // 怪全死

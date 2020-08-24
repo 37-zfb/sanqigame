@@ -1,5 +1,7 @@
 package server.cmdhandler.mail;
 
+import com.alibaba.fastjson.JSON;
+import constant.MailConst;
 import entity.db.DbSendMailEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -8,13 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.MailProps;
 import server.model.User;
 import server.model.UserManager;
 import server.service.MailService;
 import type.MailType;
 import util.MyUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -34,10 +39,13 @@ public class SendMailCmdHandler implements ICmdHandler<GameMsg.SendMailCmd> {
         User user = PublicMethod.getInstance().getUser(ctx);
         int targetUserId = sendMailCmd.getTargetUserId();
 
+        List<GameMsg.MailProps> propsList = sendMailCmd.getPropsList();
+        if (propsList.size() > MailConst.MAX_PROPS_NUMBER){
+            return;
+        }
+
         DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
         dbSendMailEntity.setTargetUserId(targetUserId);
-        dbSendMailEntity.setPropsId(sendMailCmd.getPropsId());
-        dbSendMailEntity.setPropsNumber(sendMailCmd.getNumber());
         dbSendMailEntity.setSrcUserId(sendMailCmd.getSrcUserId());
         dbSendMailEntity.setMoney(sendMailCmd.getMoney());
         dbSendMailEntity.setState(MailType.UNREAD.getState());
@@ -45,14 +53,21 @@ public class SendMailCmdHandler implements ICmdHandler<GameMsg.SendMailCmd> {
         dbSendMailEntity.setTitle(sendMailCmd.getTitle());
         dbSendMailEntity.setSrcUserName("管理员");
 
+        List<MailProps> list = new ArrayList<>();
+        for (GameMsg.MailProps mailProps : propsList) {
+            list.add(new MailProps(mailProps.getPropsId(),mailProps.getNumber()));
+        }
+        String propsInfo = JSON.toJSONString(list);
+        dbSendMailEntity.setPropsInfo(propsInfo);
+
         GameMsg.SendMailResult.Builder newBuilder = GameMsg.SendMailResult.newBuilder();
         try {
             mailService.addMailInfo(dbSendMailEntity);
 
             User targetUser = UserManager.getUserById(targetUserId);
 
-            log.info("{} 发送给 {} 邮件;" + user.getUserName(), targetUser.getUserName());
             if (targetUser != null) {
+                log.info("{} 发送给 {} 邮件;" + user.getUserName(), targetUser.getUserName());
                 // 加入缓存中
                 targetUser.getMail().getMailEntityMap().put(dbSendMailEntity.getId(),dbSendMailEntity);
 

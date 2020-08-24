@@ -7,20 +7,24 @@
         <result property="targetUserId" column="target_user_id"/>
         <result property="srcUserId" column="src_user_id"/>
         <result property="srcUserName" column="src_user_name"/>
-        <result property="propsId" column="props_id"/>
-        <result property="propsNumber" column="props_number"/>
+        <result property="propsInfo" column="props_info"/>
         <result property="money" column="money"/>
         <result property="date" column="date"/>
         <result property="state" column="state"/>
     </resultMap>
 
     <insert id="insertMail" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.UserEntity">
-        INSERT INTO `send_mail` ( `title`,`target_user_id`, `src_user_id`,`props_id`,`props_number`,`money`,`date`,`state`,`src_user_name` )
-        VALUES ( #{title},#{targetUserId}, #{srcUserId},#{propsId} ,#{propsNumber},#{money},#{date},#{state},#{srcUserName});
+        INSERT INTO `send_mail` ( `title`,`target_user_id`, `src_user_id`,`props_info`,`money`,`date`,`state`,`src_user_name` )
+        VALUES ( #{title},#{targetUserId}, #{srcUserId},#{propsInfo} ,#{money},#{date},#{state},#{srcUserName});
     </insert>
 
-    <select id="selectMailWithinTenDay" resultMap="mailEntity" resultType="list">
-        SELECT * FROM `send_mail` WHERE target_user_id=#{targetUserId} AND `date` > #{date} AND state = 0;
+
+    <select id="selectMailUnread" resultMap="mailEntity" resultType="list">
+        SELECT * FROM `send_mail` WHERE target_user_id=#{targetUserId} AND state = 0;
+    </select>
+
+    <select id="selectMailByUserIdAndTitle" resultMap="mailEntity" resultType="entity.db.DbSendMailEntity">
+        SELECT * FROM `send_mail` WHERE target_user_id=#{targetUserId} AND title = #{title};
     </select>
 
     <update id="updateMailBatch" parameterType="collection">

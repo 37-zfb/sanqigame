@@ -5,13 +5,8 @@ import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
-import entity.db.UserEquipmentEntity;
 import server.model.User;
 import server.model.UserManager;
-import model.props.Potion;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author 张丰博

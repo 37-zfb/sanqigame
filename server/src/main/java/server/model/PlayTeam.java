@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.Duplicate;
+import server.model.duplicate.Duplicate;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author 张丰博
@@ -23,7 +26,7 @@ public class PlayTeam {
     /**
      *  加入队伍监视器
      */
-    private final Object ENTER_TEAM_MONITOR = new Object();
+    private final Object TEAM_MONITOR = new Object();
 
     /**
      * 队长id
@@ -33,6 +36,12 @@ public class PlayTeam {
     /**
      * 队伍成员id
      */
-    private final Integer[] TEAM_MEMBER = new Integer[4];
+    private final  Integer[] TEAM_MEMBER = new Integer[4];
+
+    /**
+     *  队伍成员数
+     */
+    private int teamNumber = 0;
+
 
 }

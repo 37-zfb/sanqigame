@@ -14,11 +14,11 @@ import java.util.Date;
 public class DbSendMailEntity {
 
     /**
-     *  本表id
+     * 本表id
      */
     private Integer id;
     /**
-     *  邮件标题
+     * 邮件标题
      */
     private String title;
     /**
@@ -26,32 +26,29 @@ public class DbSendMailEntity {
      */
     private Integer targetUserId;
     /**
-     *  发送者id
+     * 发送者id
      */
     private Integer srcUserId;
     /**
-     *  发送者名字
+     * 发送者名字
      */
     private String srcUserName;
     /**
-     *  道具id
+     * 道具id
      */
-    private Integer propsId;
+    private String propsInfo;
+
     /**
-     *  道具数量
-     */
-    private Integer propsNumber;
-    /**
-     *  金币数
+     * 金币数
      */
     private Integer money;
     /**
-     *  日期
+     * 日期
      */
     private Date date;
 
     /**
-     *  该邮件状态
+     * 该邮件状态
      */
     private Integer state;
 }

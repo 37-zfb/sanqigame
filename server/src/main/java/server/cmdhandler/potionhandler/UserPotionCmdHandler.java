@@ -1,10 +1,9 @@
 package server.cmdhandler.potionhandler;
 
-import constant.PotionConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.props.Props;
+import server.model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,7 @@ import entity.db.UserPotionEntity;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
-import model.props.Potion;
+import server.model.props.Potion;
 import server.service.UserService;
 import type.PotionType;
 

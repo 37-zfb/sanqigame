@@ -7,7 +7,6 @@ import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import entity.db.CurrUserStateEntity;
-import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
 import server.service.MailService;

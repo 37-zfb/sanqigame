@@ -11,10 +11,7 @@ import server.dao.ISendMailDAO;
 import type.MailType;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author 张丰博
@@ -38,8 +35,7 @@ public class MailService {
     }
 
     /**
-     * 查询该用户十天内未读的邮件
-     *
+     * 查询该用户所有未读邮件，再把过期邮件持久化到数据库设置为过期
      * @param userId 用户id
      * @return
      */
@@ -48,16 +44,34 @@ public class MailService {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
         }
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE)-10);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 10);
         Date date = calendar.getTime();
 
-        return sendMailDAO.selectMailWithinTenDay(userId, date);
+        List<DbSendMailEntity> dbSendMailEntityList = sendMailDAO.selectMailUnread(userId);
+        List<DbSendMailEntity> unreadMail = new ArrayList<>();
+        List<DbSendMailEntity> overdueMail = new ArrayList<>();
+        for (DbSendMailEntity dbSendMailEntity : dbSendMailEntityList) {
+            if (dbSendMailEntity.getDate().getTime() < date.getTime()) {
+                // 此时已过期
+                dbSendMailEntity.setState(MailType.EXPIRED.getState());
+                overdueMail.add(dbSendMailEntity);
+            } else {
+                // 此时未过期
+                unreadMail.add(dbSendMailEntity);
+            }
+        }
+        // 把已过期的持久化到数据库
+        if (overdueMail.size() >0){
+            sendMailDAO.updateMailBatch(overdueMail);
+        }
+
+        return unreadMail;
 
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void modifyMailState(Collection<DbSendMailEntity> mailCollection) {
-        if (mailCollection == null || mailCollection.size() == 0 ){
+        if (mailCollection == null || mailCollection.size() == 0) {
             return;
         }
 //        for (DbSendMailEntity mailEntity : mailCollection) {
@@ -67,5 +81,12 @@ public class MailService {
 //            }
 //        }
         sendMailDAO.updateMailBatch(mailCollection);
+    }
+
+    public DbSendMailEntity findMailInfoByUserIdAndTitle(int userId, String title) {
+        if (userId <=0 || title == null){
+            return null;
+        }
+        return sendMailDAO.selectMailByUserIdAndTitle(userId,title);
     }
 }

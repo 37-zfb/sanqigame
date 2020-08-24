@@ -1,7 +1,7 @@
 package server.cmdhandler.potionhandler;
 
 import constant.PotionConst;
-import model.props.Potion;
+import server.model.props.Potion;
 import org.springframework.stereotype.Component;
 import server.model.User;
 

@@ -6,9 +6,7 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.model.PlayTeam;
 import server.model.User;
-import server.model.UserManager;
 import util.MyUtil;
 
 /**

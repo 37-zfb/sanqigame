@@ -2,7 +2,7 @@ package server.cmdhandler;
 
 import com.google.protobuf.GeneratedMessageV3;
 import lombok.extern.slf4j.Slf4j;
-import model.profession.skill.AbstractSkillProperty;
+import server.model.profession.skill.AbstractSkillProperty;
 import server.GameServer;
 import server.cmdhandler.skillhandler.ISkillHandler;
 import util.PackageUtil;

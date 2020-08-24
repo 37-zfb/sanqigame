@@ -1,5 +1,8 @@
 package constant;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author 张丰博
  *
@@ -20,12 +23,12 @@ public interface DuplicateConst {
     /**
      *  每个boss击杀时间
      */
-    long BOSS_TIME = 60*1000;
+    long BOSS_TIME = 60000;
 
     /**
      *  用户副本通关,正常退出
      */
-    String USER_NORMAL_QUIT_DUPLICATE = "副本通关,正常退出";
+    String USER_NORMAL_QUIT_DUPLICATE = "副本通关,正常退出;";
 
     /**
      *  用户副本未通过,时间超时
@@ -36,4 +39,7 @@ public interface DuplicateConst {
      *  用户阵亡
      */
     String USER_KILLED = "用户阵亡;";
+
+
+
 }

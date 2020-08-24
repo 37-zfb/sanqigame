@@ -3,7 +3,6 @@ package server.cmdhandler.arena;
 import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.profession.Profession;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.ArenaManager;

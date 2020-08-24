@@ -144,6 +144,13 @@ enum MsgCode {
   PASTOR_SKILL_RESULT = 82;
 
   SUMMON_MONSTER_SUB_HP_RESULT = 83;
+
+  USER_JOIN_TEAM_PERFORM_CMD = 84;
+  USER_JOIN_TEAM_PERFORM_RESULT = 85;
+
+  USER_CLEAN_MAIL_CMD = 86;
+  USER_CLEAN_MAIL_RESULT = 87;
+
 }
 
 // 还有谁在场
@@ -188,6 +195,8 @@ message AttkCmd {
   repeated string attkedMonsterName = 2;
   // 怪 名
   string monsterName = 3;
+  // 减血量
+  uint32 subHp = 4;
 }
 
 // 结果
@@ -203,7 +212,6 @@ message AttkMonsterCmd {
   string monsterName = 1;
 
 }
-
 
 // 死亡结果
 message DieResult {
@@ -403,7 +411,7 @@ message UserSkillAttkCmd {
   uint32 skillId = 1;
 }
 // 玩家副本中使用技能结果
-message UserSkillAttkDuplicateResult{
+message UserSkillAttkDuplicateResult {
 
 }
 // 玩家使用技能  结果
@@ -643,18 +651,19 @@ message UserChatInfoResult {
 // 发送邮件
 // 指令
 message SendMailCmd {
-  // 要发送的道具id
-  uint32 propsId = 1;
-  // 该道具的数量
-  uint32 number = 2;
+  repeated MailProps props = 1;
   // 发件人名称
-  uint32 srcUserId = 3;
+  uint32 srcUserId = 2;
   // 收件人id
-  uint32 targetUserId = 4;
+  uint32 targetUserId = 3;
   // 钱
-  uint32 money = 5;
+  uint32 money = 4;
   // 标题
-  string title = 6;
+  string title = 5;
+}
+message MailProps{
+  uint32 propsId = 1;
+  uint32 number = 2;
 }
 // 发送邮件结果
 message SendMailResult {
@@ -723,30 +732,30 @@ message UserChooseOpponentResult {
   uint32 originatedUserId = 3;
 }
 // 询问目标用户是否接受挑战
-message TargetUserChallengeResult{
+message TargetUserChallengeResult {
   // 发起者id
   uint32 originateUserId = 1;
 }
 // 目标用户响应
-message TargetUserResponseCmd{
+message TargetUserResponseCmd {
   // 是否同意
   bool isAgree = 1;
   // 发起者id
   uint32 originateUserId = 2;
 }
 // 用户退出竞技场，指令
-message UserQuitArenaCmd{
+message UserQuitArenaCmd {
 }
 // 用户退出竞技场，结果
-message UserQuitArenaResult{
+message UserQuitArenaResult {
   UserInfo userInfo = 1;
 }
 // 用户在竞技场中，普通攻击指令
-message UserAttackCmd{
+message UserAttackCmd {
   uint32 targetUserId = 1;
 }
 // 用户在竞技场中，普通攻击结果
-message UserAttackResult{
+message UserAttackResult {
   // 发动攻击的用户 Id
   uint32 attackUserId = 1;
   // 目标用户 Id
@@ -760,62 +769,78 @@ message UserSubtractHpResult {
   uint32 subtractHp = 2;
 }
 // 用户死亡结果
-message UserDieResult{
+message UserDieResult {
   uint32 targetUserId = 1;
 }
 
-
-
 // 用户组队申请，指令
-message UserTeamUpCmd{
+message UserTeamUpCmd {
   uint32 targetUserId = 1;
 }
 // 用户组队申请，结果
-message UserTeamUpResult{
+message UserTeamUpResult {
 
 }
 // 询问用户是否同意组队
-message AskTeamUpResult{
+message AskTeamUpResult {
   //发起者id
-  uint32  originateUserId = 1;
+  uint32 originateUserId = 1;
   // 发起者姓名
   string originateUserName = 2;
 }
 // 用户加入队伍 指令
-message UserJoinTeamCmd{
+message UserJoinTeamCmd {
   bool isJoin = 1;
   uint32 originateUserId = 2;
 }
 // 用户加入队伍 结果
-message UserJoinTeamResult{
+message UserJoinTeamResult {
+  //  repeated UserInfo userInfo = 1;
+  //  uint32 teamLeaderId = 2;
+  bool isJoin = 1;
+  uint32 targetId = 2;
+}
+// 处理加入队伍的用户
+message UserJoinTeamPerformCmd {
+  uint32 targetId = 1;
+}
+//
+message UserJoinTeamPerformResult {
   repeated UserInfo userInfo = 1;
   uint32 teamLeaderId = 2;
   bool isJoin = 3;
 }
 // 用户退出队伍 指令
-message UserQuitTeamCmd{
+message UserQuitTeamCmd {
 }
 // 用户退出队伍 结果
-message UserQuitTeamResult{
+message UserQuitTeamResult {
   UserInfo userInfo = 1;
   uint32 teamLeaderId = 2;
 }
 // 加入队伍失败
-message UserEnterTeamFailResult{
+message UserEnterTeamFailResult {
 }
 //退出队伍和副本
 message UserQuitTeamAndDuplicateCmd {
 }
 // 退出队伍和副本
-message UserQuitTeamAndDuplicateResult{
+message UserQuitTeamAndDuplicateResult {
 }
 // 牧师加血结果
-message PastorSkillResult{
+message PastorSkillResult {
   uint32 hp = 1;
   uint32 mp = 2;
 }
 // 召唤兽掉血
-message SummonMonsterSubHpResult{
+message SummonMonsterSubHpResult {
   bool isDie = 1;
   uint32 subHp = 2;
+}
+// 用户清理邮件 命令
+message UserCleanMailCmd{
+}
+// 用户清理邮件 结果
+message UserCleanMailResult{
+  repeated MailInfo mailInfo = 1;
 }

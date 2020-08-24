@@ -1,12 +1,10 @@
 package client.model;
 
-import client.GameClient;
+import client.model.server.props.Props;
+import client.model.server.scene.Scene;
+import client.scene.GameData;
 import lombok.Data;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
-import model.scene.Scene;
-import scene.GameData;
+
 
 import java.util.HashMap;
 import java.util.Map;

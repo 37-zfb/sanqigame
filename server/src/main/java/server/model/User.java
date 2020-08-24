@@ -1,6 +1,6 @@
 package server.model;
 
-import constant.PotionConst;
+import constant.BossMonsterConst;
 import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,22 +8,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import model.UserResumeState;
-import model.duplicate.Duplicate;
-import model.profession.Skill;
-import model.profession.SummonMonster;
-import model.props.AbstractPropsProperty;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
 import msg.GameMsg;
-import scene.GameData;
+import server.PublicMethod;
+import server.cmdhandler.duplicate.BossSkillAttack;
+import server.model.duplicate.BossMonster;
+import server.model.duplicate.Duplicate;
+import server.model.profession.Skill;
+import server.model.profession.SummonMonster;
+import server.model.props.AbstractPropsProperty;
+import server.model.props.Equipment;
+import server.model.props.Potion;
+import server.model.props.Props;
+import server.scene.GameData;
 import type.EquipmentType;
 import type.PotionType;
 import type.PropsType;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.ScheduledFuture;
@@ -77,7 +81,7 @@ public class User {
      */
     private final Map<Integer, Skill> skillMap = new HashMap<>();
     /**
-     *  释放在吟唱状态
+     * 释放在吟唱状态
      */
     private RunnableScheduledFuture<?> isPrepare;
     /**
@@ -85,8 +89,7 @@ public class User {
      * 召唤师技能id <==> 召唤兽
      */
     private final Map<Integer, SummonMonster> summonMonsterMap = new ConcurrentHashMap<>();
-    private final Map<SummonMonster,RunnableScheduledFuture<?>> summonMonsterRunnableScheduledFutureMap = new ConcurrentHashMap<>();
-
+    private final Map<SummonMonster, RunnableScheduledFuture<?>> summonMonsterRunnableScheduledFutureMap = new ConcurrentHashMap<>();
 
 
     /**
@@ -179,6 +182,10 @@ public class User {
      */
     private volatile PlayTeam playTeam;
     /**
+     *  邀请人id
+     */
+    private final Set<Integer> invitationUserId = new HashSet<>();
+    /**
      * 组队监听器
      */
     private final Object TEAM_MONITOR = new Object();
@@ -246,7 +253,7 @@ public class User {
         return subHp;
     }
 
-    public int getEquDamage(){
+    public int getEquDamage() {
         int equDamage = 0;
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
         for (int i = 0; i < this.userEquipmentArr.length; i++) {
@@ -403,6 +410,91 @@ public class User {
         }
         return null;
     }
+
+    /**
+     * boss攻击用户，用户减血
+     *
+     * @param bossMonster
+     * @param subHp
+     */
+    public void bossAttackSubHp(BossMonster bossMonster, Integer subHp) {
+        synchronized (this.getHpMonitor()) {
+            if (bossMonster.getOrdinaryAttack() > BossMonsterConst.ORDINARY_ATTACK) {
+                //十秒后，防御属性回归正常
+                this.setWeakenDefense(0);
+                bossMonster.setOrdinaryAttack(0);
+                // 每五次普通攻击，一次技能攻击
+                BossSkillAttack.getInstance().bossSkillAttack(this, bossMonster, null);
+            }
+
+            // 用户减血
+            if (this.getCurrHp() <= 0 || (this.getCurrHp() - subHp) <= 0) {
+                log.info("用户: {} 已死亡;", this.getUserName());
+                this.setCurrHp(0);
+                // boss打死了玩家;
+
+                PublicMethod.getInstance().cancelSummonTimer(this);
+
+                GameMsg.BossKillUserResult bossKillUserResult = GameMsg.BossKillUserResult.newBuilder()
+                        .setTargetUserId(this.getUserId())
+                        .build();
+                this.getCtx().writeAndFlush(bossKillUserResult);
+            } else {
+                log.info("用户: {} , 当前血量: {} , 受到伤害减血: {}", this.getUserName(), this.getCurrHp(), subHp);
+                // 普通攻击数 加一;
+                bossMonster.setOrdinaryAttack(bossMonster.getOrdinaryAttack() + 1);
+                // 用户减血
+                this.setCurrHp(this.getCurrHp() - subHp);
+                GameMsg.BossAttkUserResult attkCmd = GameMsg.BossAttkUserResult.newBuilder()
+                        .setSubUserHp(subHp)
+                        .build();
+                this.getCtx().writeAndFlush(attkCmd);
+            }
+        }
+    }
+
+    /**
+     *  怪攻击，减血
+     * @param monsterName 怪对象
+     * @param subHp 减血量
+     */
+    public void monsterAttackSubHp(String monsterName,Integer subHp) {
+        synchronized (this.getHpMonitor()) {
+            // 用户减血
+            if (this.getCurrHp() <= 0 || (this.getCurrHp() - subHp) <= 0) {
+                this.setCurrHp(0);
+                PublicMethod.getInstance().cancelMonsterAttack(this);
+                // 发送死亡消息
+                GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
+                        .setTargetUserId(this.getUserId())
+                        .build();
+                ctx.channel().writeAndFlush(dieResult);
+            } else {
+                this.setCurrHp(this.getCurrHp() - subHp);
+                GameMsg.AttkCmd attkCmd = GameMsg.AttkCmd.newBuilder()
+                        .setTargetUserId(this.getUserId())
+                        .setMonsterName(monsterName)
+                        .setSubHp(subHp)
+                        .build();
+                ctx.channel().writeAndFlush(attkCmd);
+            }
+        }
+    }
+
+    /**
+     *  添加 怪 爆出的奖励
+     * @param propsId 奖励的道具id
+     */
+    public void addMonsterReward(Integer propsId){
+        Props props = GameData.getInstance().getPropsMap().get(propsId);
+        if (props.getPropsProperty().getType() == PropsType.Equipment){
+            PublicMethod.getInstance().addEquipment(this,props);
+        }else if (props.getPropsProperty().getType() == PropsType.Potion){
+            PublicMethod.getInstance().addPotion(props,this,1);
+
+        }
+    }
+
 
 
 }

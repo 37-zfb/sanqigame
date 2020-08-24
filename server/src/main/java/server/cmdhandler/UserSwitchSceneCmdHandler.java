@@ -3,19 +3,16 @@ package server.cmdhandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.scene.Monster;
-import model.scene.Npc;
-import model.scene.Scene;
+import server.model.scene.Monster;
+import server.model.scene.Npc;
+import server.model.scene.Scene;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
-import scene.GameData;
+import server.scene.GameData;
 import server.Broadcast;
+import server.PublicMethod;
 import server.model.User;
 import server.model.UserManager;
-import server.timer.MonsterAttakTimer;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author 张丰博
@@ -40,7 +37,7 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
         Scene toScene = GameData.getInstance().getSceneMap().get(cmd.getToSceneId());
         log.info("用户当前场景: {}", toScene.getName());
 
-        cancelMonsterAttk(user);
+        PublicMethod.getInstance().cancelMonsterAttack(user);
 
         // 封装目标场景的npc
         if (toScene.getNpcMap().size() != 0) {
@@ -78,31 +75,7 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
         ctx.channel().writeAndFlush(userSwitchSceneResult);
     }
 
-    /**
-     *  取消怪对当前用户的攻击
-     * @param user 当前用户
-     */
-    private void cancelMonsterAttk(User user){
-        // 取消当前场景所有 怪 对当前用户的攻击
-        // 当前场景所有的怪
-//        List<Monster> monsterList = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterList();
-//        if (monsterList.size() != 0) {
-//            for (Monster monster : monsterList) {
-//                // 任务 ==> user
-//                Set<User> userSet = monster.getTimerMap().keySet();
-//                if ( userSet.size() != 0) {
-//                    for (User userTimer : userSet) {
-//                        // 当前怪的 定时任务，是否针对当前用户
-//                        if (user == userTimer) {
-//                            MonsterAttakTimer.getInstance().removeTask(monster.getTimerMap().get(user));
-//                        }
-//                    }
-//                }
-//            }
-//        }
 
-
-    }
 
 
 }

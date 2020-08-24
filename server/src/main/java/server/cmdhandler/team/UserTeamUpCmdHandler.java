@@ -12,6 +12,7 @@ import util.MyUtil;
 
 /**
  * @author 张丰博
+ * 用户发起组队邀请
  */
 @Slf4j
 @Component
@@ -23,6 +24,9 @@ public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> 
 
         int targetUserId = userTeamUpCmd.getTargetUserId();
         User targetUser = UserManager.getUserById(targetUserId);
+
+        user.getInvitationUserId().add(targetUserId);
+
 
         log.info("用户: {} 发起组队, 询问: {}", user.getUserName(), targetUser.getUserName());
         GameMsg.AskTeamUpResult build = GameMsg.AskTeamUpResult.newBuilder()

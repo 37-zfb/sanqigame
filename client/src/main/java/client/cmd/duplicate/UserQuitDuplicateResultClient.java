@@ -1,12 +1,12 @@
 package client.cmd.duplicate;
 
+import client.model.server.scene.Scene;
 import client.thread.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
 import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
-import model.scene.Scene;
 import msg.GameMsg;
 import util.MyUtil;
 

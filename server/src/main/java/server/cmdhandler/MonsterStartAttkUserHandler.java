@@ -1,19 +1,16 @@
 package server.cmdhandler;
 
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
-import model.scene.Monster;
-import model.scene.Scene;
-import scene.GameData;
+import server.model.scene.Monster;
+import server.model.scene.Scene;
+import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
-import server.model.UserManager;
 import server.timer.MonsterAttakTimer;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.RunnableScheduledFuture;
 
@@ -43,9 +40,9 @@ public class MonsterStartAttkUserHandler implements ICmdHandler<GameMsg.MonsterS
                 if (monster.isDie()){
                     continue;
                 }
-                RunnableScheduledFuture runnableScheduledFuture = MonsterAttakTimer.getInstance().monsterNormalAttk(user, monster,ctx);
+//                RunnableScheduledFuture runnableScheduledFuture = MonsterAttakTimer.getInstance().monsterNormalAttk(user, monster,ctx);
                 // 一个怪攻击一个人，添加定时任务到 monster 对象中。
-                monster.getTimerMap().put(user.getUserId(),runnableScheduledFuture);
+//                monster.getTimerMap().put(user.getUserId(),runnableScheduledFuture);
                 noticeUser.addMonsterId(monster.getId());
             }
         }

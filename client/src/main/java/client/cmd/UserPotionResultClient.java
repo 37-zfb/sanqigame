@@ -1,13 +1,13 @@
 package client.cmd;
 
+import client.model.server.props.Potion;
+import client.model.server.props.Props;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
-import model.props.Props;
 import msg.GameMsg;
-import model.props.Potion;
 import type.PotionType;
 
 import java.util.Map;

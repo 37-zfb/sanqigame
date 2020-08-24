@@ -1,11 +1,10 @@
 package server.cmdhandler.duplicate;
 
-import constant.DuplicateConst;
 import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
-import model.duplicate.Duplicate;
+import server.model.duplicate.BossMonster;
+import server.model.duplicate.Duplicate;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
@@ -13,7 +12,6 @@ import server.cmdhandler.ICmdHandler;
 import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
-import server.timer.BossAttackTimer;
 import util.MyUtil;
 
 import java.util.Map;

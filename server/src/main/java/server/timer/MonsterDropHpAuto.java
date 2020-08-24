@@ -3,7 +3,7 @@ package server.timer;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
-import model.scene.Monster;
+import server.model.scene.Monster;
 import util.CustomizeThreadFactory;
 
 import java.util.concurrent.RunnableScheduledFuture;

@@ -2,15 +2,13 @@ package client.cmd.duplicate;
 
 import client.cmd.ICmd;
 import client.model.Role;
-import constant.EquipmentConst;
-import entity.db.UserEquipmentEntity;
+import client.model.server.props.Equipment;
+import client.model.server.props.Potion;
+import client.model.server.props.Props;
+import client.scene.GameData;
 import io.netty.channel.ChannelHandlerContext;
-import model.props.AbstractPropsProperty;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
+
 import msg.GameMsg;
-import scene.GameData;
 import type.PropsType;
 import util.MyUtil;
 

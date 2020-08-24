@@ -3,19 +3,18 @@ package server.cmdhandler.equipmenthandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import model.props.Props;
+import server.model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import entity.db.UserEquipmentEntity;
-import scene.GameData;
+import server.scene.GameData;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
-import model.props.Equipment;
+import server.model.props.Equipment;
 import server.service.UserService;
 
-import java.util.List;
 import java.util.Map;
 
 /**

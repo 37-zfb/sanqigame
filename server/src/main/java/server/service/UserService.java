@@ -1,17 +1,16 @@
 package server.service;
 
 import constant.EquipmentConst;
-import constant.GoodsConst;
 import constant.ProfessionConst;
 import entity.db.*;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import lombok.extern.slf4j.Slf4j;
-import model.profession.Profession;
+import server.model.profession.Profession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import scene.GameData;
+import server.scene.GameData;
 import server.dao.*;
 
 import java.util.List;

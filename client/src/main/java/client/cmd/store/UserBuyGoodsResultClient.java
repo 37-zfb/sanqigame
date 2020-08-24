@@ -1,17 +1,18 @@
 package client.cmd.store;
 
+import client.model.server.props.Equipment;
+import client.model.server.props.Potion;
+import client.model.server.props.Props;
+import client.model.server.scene.Scene;
+import client.model.server.store.Goods;
+import client.scene.GameData;
 import client.thread.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
-import model.store.Goods;
-import model.props.Equipment;
-import model.props.Potion;
-import model.props.Props;
-import model.scene.Scene;
+
 import msg.GameMsg;
-import scene.GameData;
 import type.PropsType;
 import util.MyUtil;
 

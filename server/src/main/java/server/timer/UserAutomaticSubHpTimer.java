@@ -1,7 +1,7 @@
 package server.timer;
 
 import lombok.extern.slf4j.Slf4j;
-import model.profession.SummonMonster;
+import server.model.profession.SummonMonster;
 import msg.GameMsg;
 import server.PublicMethod;
 import server.model.User;
@@ -120,7 +120,7 @@ public class UserAutomaticSubHpTimer {
                                     summonMonster.getSubHpTask().cancel(true);
                                     summonMonster.setSubHpTask(null);
                                 }
-                                PublicMethod.getInstance().sendMsg(user.getCtx(),summonMonsterSubHpResult, user.getPlayTeam());
+                                PublicMethod.getInstance().sendMsg(user.getCtx(),summonMonsterSubHpResult);
 
                             }
 

@@ -1,14 +1,14 @@
 package client.cmd;
 
+import client.model.server.props.Equipment;
+import client.model.server.props.Props;
+import client.scene.GameData;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
-import model.props.Props;
 import msg.GameMsg;
 import entity.db.UserEquipmentEntity;
-import model.props.Equipment;
-import scene.GameData;
 
 import java.util.Map;
 

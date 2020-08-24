@@ -1,13 +1,17 @@
 package server.timer;
 
 import lombok.extern.slf4j.Slf4j;
-import model.duplicate.BossMonster;
-import model.duplicate.Duplicate;
-import model.profession.SummonMonster;
+import server.model.duplicate.BossMonster;
+import server.model.duplicate.Duplicate;
+import server.model.profession.SummonMonster;
+import server.model.scene.Monster;
+import server.model.scene.Scene;
+import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
 import util.CustomizeThreadFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -35,24 +39,39 @@ public class SummonMonsterTimer {
      * 吟唱
      * @param user
      */
-    public void startAttack(User user, Duplicate duplicate, SummonMonster summonMonster) {
+    public void startAttack(User user, SummonMonster summonMonster) {
         RunnableScheduledFuture<?> scheduledFuture =
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
+                            Duplicate duplicate = user.getCurrDuplicate();
                             Map<Integer, SummonMonster> summonMonsterMap = user.getSummonMonsterMap();
-                            BossMonster currBossMonster = duplicate.getCurrBossMonster();
+
                             if (summonMonster.getHp() <= 0) {
                                 summonMonsterMap.remove(summonMonster.getSkillId());
                                 log.info("召唤兽已死,当前血量 {}", summonMonster.getHp());
                                 // 取消定时器
                                 user.getSummonMonsterRunnableScheduledFutureMap().get(summonMonster).cancel(true);
                             } else {
-//                                int subHp = (int) ((Math.random() * summonMonster.getDamage()) + 300);
-                                int subHp = 5000;
-                                synchronized (currBossMonster.getATTACK_BOSS_MONITOR()) {
-                                    PublicMethod.getInstance().normalOrSkillAttackBoss(user, duplicate, subHp, summonMonster);
+                                int subHp = summonMonster.calMonsterSubHp();
+                                if (duplicate != null){
+                                    //int subHp = 5000;
+                                    // 副本
+                                    BossMonster currBossMonster = duplicate.getCurrBossMonster();
+                                    synchronized (currBossMonster.getATTACK_BOSS_MONITOR()) {
+                                        PublicMethod.getInstance().normalOrSkillAttackBoss(user, duplicate, subHp, summonMonster);
+                                    }
+                                    log.info("召唤兽攻击 {} ,伤害 {} 剩余血量 {}", currBossMonster.getBossName(), subHp, currBossMonster.getHp());
+                                }else if (user.getPlayArena() != null){
+                                    // 竞技场
+
+                                }else {
+                                    // 公共地图
+                                    Scene scene = GameData.getInstance().getSceneMap().get(user.getUserId());
+                                    List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(scene.getMonsterMap().values());
+                                    Monster monster = monsterAliveList.remove((int) (Math.random() * monsterAliveList.size()));
+                                    PublicMethod.getInstance().userOrSummonerAttackMonster(user,monster,summonMonster,summonMonster.calMonsterSubHp());
                                 }
-                                log.info("召唤兽攻击 {} ,伤害 {} 剩余血量 {}", currBossMonster.getBossName(), subHp, currBossMonster.getHp());
+
                             }
                         }, 3000, 3000, TimeUnit.MILLISECONDS);
 

@@ -2,9 +2,9 @@ package client.thread;
 
 import client.cmd.UserCmd;
 import client.model.Role;
+import client.model.server.scene.Npc;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import model.scene.Npc;
 
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;

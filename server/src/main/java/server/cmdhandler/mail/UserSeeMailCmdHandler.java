@@ -1,6 +1,5 @@
 package server.cmdhandler.mail;
 
-import entity.db.DbSendMailEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -11,8 +10,6 @@ import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.service.MailService;
 import util.MyUtil;
-
-import java.util.List;
 
 /**
  * @author 张丰博
