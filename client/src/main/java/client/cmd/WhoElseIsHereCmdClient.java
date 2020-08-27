@@ -36,11 +36,11 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
         System.out.println("============当前场景的用户个数:  " + userInfoList.size());
         for (GameMsg.UserInfo userInfo : userInfoList) {
             // 获得用户信息
-            System.out.println("============用户id:"+userInfo.getUserId()+"、 名字: " + userInfo.getUserName());
+            System.out.println("============用户id:" + userInfo.getUserId() + "、 名字: " + userInfo.getUserName());
         }
 
         // 不是聊天
-        if (role.isChat()){
+        if (role.isChat()) {
             // 聊天
             Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
@@ -59,16 +59,31 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
                     .setType(ChatType.PRIVATE_CHAT.getChatType())
                     .build();
             ctx.writeAndFlush(userChatInfoCmd);
-        }else if (role.isTeam()){
+        } else if (role.isTeam()) {
             // 组队
             Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
             int userId = scanner.nextInt();
+
+            role.setTeam(false);
+
             GameMsg.UserTeamUpCmd userTeamUpCmd = GameMsg.UserTeamUpCmd.newBuilder()
                     .setTargetUserId(userId)
                     .build();
             ctx.writeAndFlush(userTeamUpCmd);
-        }else{
+        } else if (role.isDeal()) {
+            // 交易
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("选择用户: ");
+            int userId = scanner.nextInt();
+
+            role.setDeal(false);
+
+            GameMsg.UserDealRequestCmd userDealRequestCmd = GameMsg.UserDealRequestCmd.newBuilder()
+                    .setUserId(userId)
+                    .build();
+            ctx.writeAndFlush(userDealRequestCmd);
+        } else {
             // 2、npc信息
             Map<Integer, Npc> npcMap = scene.getNpcMap();
             System.out.println("============当前场景的Npc个数:  " + npcMap.size());
@@ -83,8 +98,6 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
                 System.out.println("============怪:  " + monster.getName() + " ," + " 状态: " + (monster.isDie() ? "已被击杀" : "存活") + " , 血量: " + monster.getHp());
             }
         }
-
-
 
 
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());

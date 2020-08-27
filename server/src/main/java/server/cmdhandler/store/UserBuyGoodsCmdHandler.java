@@ -127,15 +127,14 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
                 newBuilder.addProps(propsResult);
             }
             newBuilder.setGoodsId(goodsId).setGoodsNumber(goodsNumber);
-        }catch (CustomizeException e){
+        } catch (CustomizeException e) {
             newBuilder.setIsSuccess(false)
                     .setCode(e.getCode())
                     .setReason(e.getMessage());
-        }finally {
+        } finally {
             GameMsg.UserBuyGoodsResult build = newBuilder.build();
             ctx.writeAndFlush(build);
         }
-
 
 
     }
@@ -193,7 +192,6 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
     }
 
 
-
     private void addEquipment(User user, Props props) {
 
         Map<Integer, Props> backpack = user.getBackpack();
@@ -234,6 +232,7 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
 
     /**
      * 添加药剂
+     *
      * @param props
      * @param user
      * @param number
@@ -257,7 +256,7 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
                 // 背包中已有该药剂
                 Potion po = (Potion) pro.getPropsProperty();
 
-                if ((po.getNumber()+number) > PotionConst.POTION_MAX_NUMBER){
+                if ((po.getNumber() + number) > PotionConst.POTION_MAX_NUMBER) {
                     throw new CustomizeException(CustomizeErrorCode.PROPS_REACH_LIMIT);
                 }
 
@@ -293,8 +292,10 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
                 }
             }
         }
-        userService.addPotion(userPotionEntity);
-        userPotionEntity.setId(userPotionEntity.getId());
+        Integer potionId = userService.addPotion(userPotionEntity);
+        if (potionId != null) {
+            userPotionEntity.setId(potionId);
+        }
     }
 
 

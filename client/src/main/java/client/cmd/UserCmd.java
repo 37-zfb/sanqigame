@@ -14,6 +14,7 @@ import client.model.server.scene.Scene;
 import client.model.server.store.Goods;
 import client.scene.GameData;
 import client.thread.BossThread;
+import client.thread.DealThread;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -97,6 +98,10 @@ public class UserCmd {
                     System.out.println("======>21:不加队伍;");
                     System.out.println("======>22:退出队伍;");
                     System.out.println("======>23:跟随队伍进入副本;");
+                    System.out.println("======>24:交易;");
+                    System.out.println("======>25:同意交易;");
+                    System.out.println("======>26:拒绝交易;");
+                    System.out.println("======>27:进入交易界面;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -177,6 +182,7 @@ public class UserCmd {
                         Map<Integer, Props> backpackClient = role.getBackpackClient();
                         System.out.println("背包空间: " + backpackClient.size() + "/100");
                         System.out.println("道具如下:");
+                        System.out.println("金币: "+role.getMoney());
                         for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
                             if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Equipment) {
                                 System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
@@ -350,7 +356,7 @@ public class UserCmd {
                             Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
                             System.out.println("0、全部领取;");
                             for (MailEntityClient mailEntityClient : mailMap.values()) {
-                                System.out.println(mailEntityClient.getId() + "、" + mailEntityClient.getTitle() + "。 来自:" + mailEntityClient.getSrcUserName() + " "+mailEntityClient.getMailType().getState());
+                                System.out.println(mailEntityClient.getId() + "、" + mailEntityClient.getTitle() + "。 来自:" + mailEntityClient.getSrcUserName() + " " + mailEntityClient.getMailType().getState());
                             }
                             System.out.println("999、清理邮件;");
                             System.out.println("===================");
@@ -358,9 +364,9 @@ public class UserCmd {
                             GameMsg.UserReceiveMailCmd.Builder newBuilder = GameMsg.UserReceiveMailCmd.newBuilder();
                             if (mailId == 0) {
                                 newBuilder.setMailId(MailType.RECEIVE_ALL.getState());
-                            }else if (mailId == 999){
+                            } else if (mailId == 999) {
                                 for (MailEntityClient mailEntityClient : mailMap.values()) {
-                                    if (mailEntityClient.getMailType() == MailType.READ){
+                                    if (mailEntityClient.getMailType() == MailType.READ) {
                                         mailMap.remove(mailEntityClient.getId());
                                     }
                                 }
@@ -400,9 +406,29 @@ public class UserCmd {
                         //  退出队伍
                         return GameMsg.UserQuitTeamCmd.newBuilder()
                                 .build();
-                    }else if ("23".equals(command)){
-                      // 组队状态, 进入副本线程
+                    } else if ("23".equals(command)) {
+                        // 组队状态, 进入副本线程
                         BossThread.getInstance().process(ctx, role);
+                        return null;
+                    } else if ("24".equals(command)) {
+                        // 交易
+                        role.setDeal(true);
+                        return GameMsg.WhoElseIsHereCmd.newBuilder().build();
+                    } else if ("25".equals(command)) {
+                        // 同意交易
+                        return GameMsg.DealTargetUserResponseCmd.newBuilder()
+                                .setIsAgree(true)
+                                .setOriginateId(role.getDEAL_CLIENT().getOriginateId())
+                                .build();
+                    } else if ("26".equals(command)) {
+                        // 拒绝交易
+                        role.getDEAL_CLIENT().setOriginateId(null);
+                        return GameMsg.DealTargetUserResponseCmd.newBuilder()
+                                .setIsAgree(false)
+                                .build();
+                    } else if ("27".equals(command)) {
+                        // 建立交易通道
+                        DealThread.getInstance().process(ctx, role);
                         return null;
                     } else {
                         log.error("操作选择错误,请重新输入!");
@@ -473,6 +499,10 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.UserJoinTeamCmd) cmd);
         } else if (cmd instanceof GameMsg.UserQuitTeamCmd) {
             ctx.writeAndFlush((GameMsg.UserQuitTeamCmd) cmd);
+        } else if (cmd instanceof GameMsg.DealTargetUserResponseCmd) {
+            ctx.writeAndFlush((GameMsg.DealTargetUserResponseCmd) cmd);
+        }else if (cmd instanceof GameMsg.DealChannelCmd){
+            ctx.writeAndFlush((GameMsg.DealChannelCmd)cmd);
         }
 
 

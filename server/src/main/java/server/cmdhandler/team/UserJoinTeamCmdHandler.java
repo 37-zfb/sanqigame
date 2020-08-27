@@ -31,6 +31,8 @@ public class UserJoinTeamCmdHandler implements ICmdHandler<GameMsg.UserJoinTeamC
 
         if (!isJoin) {
             // 此时不加入队伍，
+            originateUser.getInvitationUserId().remove(user.getUserId());
+
             GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder.setIsJoin(false).build();
             originateUser.getCtx().writeAndFlush(userJoinTeamResult);
             log.info("{} 拒绝了 {} 的组队邀请;", user.getUserName(), originateUser.getUserName());

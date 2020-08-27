@@ -25,7 +25,11 @@ public enum GameExcelEnum {
     /**
      *  商店
      */
-    Store("store.xls")
+    Store("store.xls"),
+    /**
+     * 公会角色、角色权限
+     */
+    Guild("guild.xls"),
 
     ;
 

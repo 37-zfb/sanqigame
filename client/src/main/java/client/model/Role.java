@@ -1,6 +1,7 @@
 package client.model;
 
 import client.model.arena.PlayArenaClient;
+import client.model.deal.PlayDealClient;
 import client.model.server.duplicate.Duplicate;
 import client.model.server.profession.Skill;
 import client.model.server.props.Equipment;
@@ -90,7 +91,7 @@ public class Role {
     private final Map<Integer, Props> backpackClient = new HashMap<>();
 
     /**
-     *  邮件
+     * 邮件
      */
     private final MailClient mail = new MailClient();
 
@@ -115,12 +116,12 @@ public class Role {
 
 
     /**
-     *  限购商品，允许购买的个数
+     * 限购商品，允许购买的个数
      */
-    private final Map<Integer,Integer> GOODS_ALLOW_NUMBER = new HashMap<>();
+    private final Map<Integer, Integer> GOODS_ALLOW_NUMBER = new HashMap<>();
 
     /**
-     *  竞技场
+     * 竞技场
      */
     private final PlayArenaClient ARENA_CLIENT = new PlayArenaClient();
 
@@ -129,12 +130,20 @@ public class Role {
      */
     private final PlayTeamClient TEAM_CLIENT = new PlayTeamClient();
 
+    /**
+     *  交易系统
+     */
+    private final PlayDealClient DEAL_CLIENT = new PlayDealClient();
+
     private boolean isChat = false;
+
     private boolean isSelf = false;
 
     private boolean isTeam = false;
 
     private boolean isAnswer = false;
+
+    private boolean isDeal = false;
 
     private static final Role role = new Role();
 

@@ -151,6 +151,33 @@ enum MsgCode {
   USER_CLEAN_MAIL_CMD = 86;
   USER_CLEAN_MAIL_RESULT = 87;
 
+
+
+  USER_DEAL_REQUEST_CMD = 88;
+  USER_DEAL_REQUEST_RESULT = 89;
+
+  ASK_TARGET_USER_RESULT = 90;
+
+  DEAL_TARGET_USER_RESPONSE_CMD = 91;
+
+  DEAL_CHANNEL_CMD = 92;
+  DEAL_CHANNEL_RESULT = 93;
+
+  USER_DEAL_ITEM_CMD = 94;
+  USER_DEAL_ITEM_RESULT = 95;
+
+  USER_ADD_COMPLETE_CMD = 97;
+  USER_ADD_COMPLETE_RESULT = 98;
+  USER_CANCEL_DEAL_CMD = 99;
+  USER_CANCEL_DEAL_RESULT = 100;
+  USER_CONFIRM_DEAL_CMD = 101;
+  USER_CONFIRM_DEAL_RESULT = 102;
+  USER_CANCEL_DEAL_CONFIRM_CMD = 103;
+  USER_CANCEL_DEAL_CONFIRM_RESULT = 104;
+  SORT_OUT_DEAL_CMD = 105;
+  SORT_OUT_DEAL_RESULT = 106;
+
+  ERROR_RESULT = 96;
 }
 
 // 还有谁在场
@@ -843,4 +870,85 @@ message UserCleanMailCmd{
 // 用户清理邮件 结果
 message UserCleanMailResult{
   repeated MailInfo mailInfo = 1;
+}
+// 用户交易请求 命令
+message UserDealRequestCmd{
+  uint32 userId = 1;
+}
+// 用户交易请求 结果
+message UserDealRequestResult{
+  bool isAgree = 1;
+  bool isSuccess = 2;
+  uint32 targetUserId = 3;
+  string targetUserName = 4;
+}
+// 询问目标用户结果
+message AskTargetUserResult{
+  uint32 originateId = 1;
+  string originateName = 2;
+}
+// 目标用户 结果
+message DealTargetUserResponseCmd{
+  uint32 originateId = 1;
+  bool isAgree = 2;
+}
+// 交易通道；
+message DealChannelCmd{
+}
+message DealChannelResult{
+}
+// 添加交易物品
+message UserDealItemCmd{
+  uint32 money = 1;
+  Props props = 2;
+  string type = 3;
+}
+// 添加交易物品，结果
+message UserDealItemResult{
+  uint32 money = 1;
+  Props props = 2;
+  string type = 3;
+}
+// 交易错误 结果
+message ErrorResult{
+  string msg = 1;
+  uint32 code = 2;
+}
+// 用户添加装备完毕 结果
+message UserAddCompleteCmd{
+}
+// 用户添加装备完毕 结果
+message UserAddCompleteResult{
+  UserInfo userInfo = 1;
+}
+// 用户取消交易 命令
+message UserCancelDealCmd {
+  bool isNeedNotice = 1;
+}
+//  用户取消交易 结果
+message UserCancelDealResult{
+  bool isSuccess = 1;
+  uint32 userId = 2;
+}
+//用户确认交易
+message UserConfirmDealCmd{
+
+}
+// 确认交易结果
+message UserConfirmDealResult{
+  bool isSuccess = 1;
+}
+// 用户取消确认交易
+message UserCancelDealConfirmCmd{
+  bool isNeedNotice = 1;
+}
+// 用户取消确认交易 结果
+message UserCancelDealConfirmResult{
+}
+// 整理交易的 道具
+message SortOutDealCmd{
+}
+message SortOutDealResult{
+  repeated Props props = 1;
+  uint32 money = 2;
 }

@@ -149,24 +149,28 @@ public class UserService {
     /**
      * @param userPotionEntity
      */
-    public void addPotion(UserPotionEntity userPotionEntity) {
+    public Integer addPotion(UserPotionEntity userPotionEntity) {
         if (userPotionEntity == null) {
             log.error("userPotionEntity对象为空!");
-            return;
+            return null;
         }
         UserPotionEntity entity = userPotionDAO.selectPotionByUserIdAndPotionId(userPotionEntity.getUserId(), userPotionEntity.getPropsId());
         if (entity == null) {
             // 没有该药剂
             userPotionDAO.insertPotion(userPotionEntity);
+            log.info("新添加道具的id {}", userPotionEntity.getId());
+            return null;
         } else if (userPotionEntity.getNumber() < 99) {
             // 已有药剂，且未达到上限
             entity.setNumber(userPotionEntity.getNumber());
             userPotionDAO.updatePotionNumber(entity);
+            return null;
         } else if (entity.getNumber() >= 99) {
             // 已有药剂，且达到上限,此时不在添加
             throw new CustomizeException(CustomizeErrorCode.PROPS_REACH_LIMIT);
         }
 
+        return null;
     }
 
     /**
@@ -210,7 +214,8 @@ public class UserService {
     }
 
     /**
-     *  查询已穿戴的装备
+     * 查询已穿戴的装备
+     *
      * @param userId
      * @param state
      * @return
@@ -224,7 +229,8 @@ public class UserService {
     }
 
     /**
-     *  修改装备的耐久度
+     * 修改装备的耐久度
+     *
      * @param id
      * @param durability
      */
@@ -237,25 +243,27 @@ public class UserService {
     }
 
     /**
-     *  修改 钱
+     * 修改 钱
+     *
      * @param userId
      * @param money
      */
-    public void modifyMoney(Integer userId,Integer money) {
+    public void modifyMoney(Integer userId, Integer money) {
         if (userId == null || money == null) {
             return;
         }
-        userState.updateUserMoney(userId,money);
+        userState.updateUserMoney(userId, money);
     }
 
     /**
-     *  查询用户当天限制商品购买数
+     * 查询用户当天限制商品购买数
+     *
      * @param userId
      * @param date
      * @return
      */
-    public List<UserBuyGoodsLimitEntity> listUserBuyGoodsLimitEntity( Integer userId, String date){
-        if (userId == null || date == null){
+    public List<UserBuyGoodsLimitEntity> listUserBuyGoodsLimitEntity(Integer userId, String date) {
+        if (userId == null || date == null) {
             return null;
         }
         return userGoodsLimitDAO.selectEntitiesByUserIdAndDate(userId, date);
@@ -263,29 +271,32 @@ public class UserService {
 
 
     /**
-     *  添加购买数量
+     * 添加购买数量
+     *
      * @param goodsLimitEntity
      */
     public void addLimitNumber(UserBuyGoodsLimitEntity goodsLimitEntity) {
-        if (goodsLimitEntity == null ){
+        if (goodsLimitEntity == null) {
             return;
         }
         userGoodsLimitDAO.insertEntity(goodsLimitEntity);
     }
 
     /**
-     *  修改购买数量
+     * 修改购买数量
+     *
      * @param userBuyGoodsLimitEntity
      */
-    public void modifyLimitNumber(UserBuyGoodsLimitEntity userBuyGoodsLimitEntity ) {
-        if (userBuyGoodsLimitEntity == null){
+    public void modifyLimitNumber(UserBuyGoodsLimitEntity userBuyGoodsLimitEntity) {
+        if (userBuyGoodsLimitEntity == null) {
             return;
         }
-        userGoodsLimitDAO.updateLimitNumber( userBuyGoodsLimitEntity);
+        userGoodsLimitDAO.updateLimitNumber(userBuyGoodsLimitEntity);
     }
 
     /**
-     *  查询所有用户
+     * 查询所有用户
+     *
      * @return
      */
     public List<UserEntity> listUser() {

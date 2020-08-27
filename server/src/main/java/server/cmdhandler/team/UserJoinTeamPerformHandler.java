@@ -52,6 +52,8 @@ public class UserJoinTeamPerformHandler implements ICmdHandler<GameMsg.UserJoinT
             // 发起者没有队伍，应答者有队伍
             enterTeamFail(ctx);
         }
+        // 移除被邀请者
+        user.getInvitationUserId().remove(targetId);
     }
 
 

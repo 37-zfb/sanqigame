@@ -18,6 +18,7 @@ import lombok.Setter;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.BossSkill;
 import server.model.duplicate.Duplicate;
+import server.model.guild.GuildRole;
 import server.model.profession.Profession;
 import server.model.profession.Skill;
 import server.model.profession.skill.PastorSkillProperty;
@@ -69,6 +70,11 @@ public class GameData {
      *  id  商品
      */
     private final Map<Integer, Goods> goodsMap = new HashMap<>();
+
+    /**
+     *  id  公会角色
+     */
+    private final Map<Integer, GuildRole> guildRoleMap = new HashMap<>();
 
     private static final GameData GAME_DATA = new GameData();
 

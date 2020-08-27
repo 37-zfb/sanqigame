@@ -168,11 +168,12 @@ public final class PublicMethod {
     }
 
     /**
-     *  随机选一个怪攻击
-     * @param user 用户对象
+     * 随机选一个怪攻击
+     *
+     * @param user          用户对象
      * @param summonMonster 召唤兽
      */
-    public void userOrSummonerAttackMonster(User user, Monster monster, SummonMonster summonMonster,Integer subHp) {
+    public void userOrSummonerAttackMonster(User user, Monster monster, SummonMonster summonMonster, Integer subHp) {
         GameMsg.AttkResult.Builder attkResultBuilder = GameMsg.AttkResult.newBuilder();
         // 普通攻击
 
@@ -258,13 +259,14 @@ public final class PublicMethod {
         Broadcast.broadcast(user.getCurSceneId(), attkResult);
     }
 
-    public void subMonsterHp(){
+    public void subMonsterHp() {
 
     }
 
 
     /**
      * 副本通关，持久化奖励
+     *
      * @param propsIdList 道具id集合
      * @param user        用户
      */
@@ -392,7 +394,6 @@ public final class PublicMethod {
                 // 判断该药剂的数量是否达到上限
                 // 背包中已有该药剂
                 Potion po = (Potion) pro.getPropsProperty();
-
                 if ((po.getNumber() + number) > PotionConst.POTION_MAX_NUMBER) {
                     throw new CustomizeException(CustomizeErrorCode.PROPS_REACH_LIMIT);
                 }
@@ -405,6 +406,7 @@ public final class PublicMethod {
             }
         }
         // 背包中还没有该药剂
+        Potion po = null;
         if (!isExist) {
             if (backpack.size() >= BackPackConst.MAX_CAPACITY) {
                 // 此时背包已满，
@@ -413,7 +415,6 @@ public final class PublicMethod {
 
             userPotionEntity.setNumber(number);
 
-            Potion po = null;
             for (int i = 1; i < BackPackConst.MAX_CAPACITY; i++) {
                 if (!backpack.keySet().contains(i)) {
                     Props pro = new Props();
@@ -430,7 +431,13 @@ public final class PublicMethod {
             }
         }
         userService.addPotion(userPotionEntity);
+//        if (potionId != null) {
+//            userPotionEntity.setId(potionId);
         userPotionEntity.setId(userPotionEntity.getId());
+//        }
+        if (po != null) {
+            po.setId(userPotionEntity.getId());
+        }
     }
 
 
@@ -464,7 +471,7 @@ public final class PublicMethod {
         if (playTeam == null) {
             return;
         }
-        synchronized (playTeam.getTEAM_MONITOR()){
+        synchronized (playTeam.getTEAM_MONITOR()) {
             Integer[] team_member = playTeam.getTEAM_MEMBER();
             for (int i = 0; i < team_member.length; i++) {
                 if (team_member[i] != null && team_member[i].equals(user.getUserId())) {

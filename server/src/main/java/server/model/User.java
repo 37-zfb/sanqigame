@@ -192,6 +192,11 @@ public class User {
 
 
     /**
+     *  交易系统
+     */
+    private final PlayDeal PLAY_DEAL = new PlayDeal();
+
+    /**
      * 设置恢复mp终止时间
      */
     public void resumeMpTime() {

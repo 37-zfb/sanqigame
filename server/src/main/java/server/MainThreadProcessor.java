@@ -1,9 +1,14 @@
 package server;
 
 import com.google.protobuf.GeneratedMessageV3;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Message;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import msg.GameMsg;
+import msg.GameMsgRecognizer;
 import server.cmdhandler.CmdHandlerFactory;
 import server.cmdhandler.ICmdHandler;
 
@@ -64,7 +69,7 @@ public class MainThreadProcessor {
             Random random = new Random();
             int randomInt = random.nextInt(8);
             ex = this.ex[randomInt];
-        }else {
+        } else {
             ex = this.ex[userId % this.ex.length];
         }
 
@@ -81,9 +86,20 @@ public class MainThreadProcessor {
 
             try {
                 cmdHandler.handle(ctx, cast(msg));
+            } catch (CustomizeException e) {
+                log.error(e.getMessage(), e);
+                GameMsg.ErrorResult errorResult = GameMsg.ErrorResult.newBuilder()
+                        .setCode(e.getCode())
+                        .setMsg(e.getMessage())
+                        .build();
+                ctx.writeAndFlush(errorResult);
             } catch (Exception e) {
                 // 防止发生异常导致线程终止
                 log.error(e.getMessage(), e);
+                GameMsg.ErrorResult errorResult = GameMsg.ErrorResult.newBuilder()
+                        .setMsg(e.getMessage())
+                        .build();
+                ctx.writeAndFlush(errorResult);
             }
 
         });

@@ -1,11 +1,13 @@
 package server.cmdhandler;
 
+import com.alibaba.fastjson.JSON;
 import constant.EquipmentConst;
 import constant.MailConst;
 import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import server.model.MailProps;
 import server.model.PlayMail;
 import server.model.User;
 import server.model.UserManager;
@@ -32,6 +34,7 @@ import type.MailType;
 import type.PropsType;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +70,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         GameMsg.UserLoginResult loginResult = null;
         try {
             UserEntity userEntity = userService.getUserByName(userName);
-            if (!password.equals(userEntity.getPassword())) {
+            if (userEntity == null ||
+                    !password.equals(userEntity.getPassword())) {
                 throw new CustomizeException(CustomizeErrorCode.USER_NOT_FOUND);
             }
 
@@ -166,7 +170,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
 
             Map<Integer, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
             for (DbSendMailEntity mailEntity : mailEntityMap.values()) {
-                if (resultBuilder.getMailInfoCount() == MailConst.MAX_SHOW_NUMBER){
+                if (resultBuilder.getMailInfoCount() == MailConst.MAX_SHOW_NUMBER) {
                     // 最多一次性发送两百封邮件
                     break;
                 }
@@ -181,6 +185,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             loginResult = resultBuilder.build();
         } catch (CustomizeException e) {
             loginResult = resultBuilder.setUserId(e.getCode()).build();
+            log.error(e.getMessage(), e);
+        } catch (NullPointerException e) {
             log.error(e.getMessage(), e);
         } finally {
             ctx.channel().writeAndFlush(loginResult);
@@ -220,7 +226,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         loadLimitNumber(user);
         loadMail(user);
         // 群发邮件
-//        sendMailAll(user);
+        //sendMailAll(user);
 
         // 启动定时器
 //        user.startTimer();
@@ -231,32 +237,37 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     }
 
     /**
-     *  群发邮件
+     * 群发邮件
+     *
      * @param user
      */
     private void sendMailAll(User user) {
         DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
         dbSendMailEntity.setTargetUserId(user.getUserId());
         dbSendMailEntity.setSrcUserId(0);
-        dbSendMailEntity.setMoney(0);
+        dbSendMailEntity.setMoney(10000);
         dbSendMailEntity.setState(MailType.UNREAD.getState());
         dbSendMailEntity.setDate(new Date());
         dbSendMailEntity.setTitle("周年奖励;");
         dbSendMailEntity.setSrcUserName("管理员");
 
-//        dbSendMailEntity.setPropsInfo();
+        List<MailProps> mailPropsList = new ArrayList<>();
+        mailPropsList.add(new MailProps());
+        String jsonString = JSON.toJSONString(mailPropsList);
+        dbSendMailEntity.setPropsInfo(jsonString);
 
-        DbSendMailEntity mailEntity = mailService.findMailInfoByUserIdAndTitle(user.getUserId(),dbSendMailEntity.getTitle());
-        if (mailEntity == null){
+        DbSendMailEntity mailEntity = mailService.findMailInfoByUserIdAndTitle(user.getUserId(), dbSendMailEntity.getTitle());
+        if (mailEntity == null) {
             PlayMail mail = user.getMail();
             Map<Integer, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
-            mailEntityMap.put(dbSendMailEntity.getId(),dbSendMailEntity);
+            mailEntityMap.put(dbSendMailEntity.getId(), dbSendMailEntity);
             mailService.addMailInfo(dbSendMailEntity);
         }
     }
 
     /**
-     *  加载未读的邮件
+     * 加载未读的邮件
+     *
      * @param user
      */
     private void loadMail(User user) {
@@ -264,7 +275,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         PlayMail mail = user.getMail();
         Map<Integer, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
         for (DbSendMailEntity dbSendMailEntity : mailEntityList) {
-            mailEntityMap.put(dbSendMailEntity.getId(),dbSendMailEntity);
+            mailEntityMap.put(dbSendMailEntity.getId(), dbSendMailEntity);
         }
     }
 

@@ -1,5 +1,8 @@
 package exception;
 
+/**
+ * @author 张丰博
+ */
 public class CustomizeException extends RuntimeException {
 
     private String message;
