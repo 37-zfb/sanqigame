@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author 张丰博
@@ -12,7 +13,7 @@ import java.util.Map;
 @Slf4j
 public class UserManager {
 
-    private static final Map<Integer, User> USER_MAP = new HashMap<>();
+    private static final Map<Integer, User> USER_MAP = new ConcurrentHashMap<>();
 
     private UserManager() {
     }

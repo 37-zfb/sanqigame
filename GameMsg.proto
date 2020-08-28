@@ -177,6 +177,24 @@ enum MsgCode {
   SORT_OUT_DEAL_CMD = 105;
   SORT_OUT_DEAL_RESULT = 106;
 
+
+  USER_CREATE_GUILD_CMD = 107;
+  USER_CREATE_GUILD_RESULT = 108;
+  USER_DISSOLVE_GUILD_CMD = 109;
+  USER_DISSOLVE_GUILD_RESULT = 110;
+  SHOW_GUILD_CMD = 111;
+  SHOW_GUILD_RESULT = 112;
+  USER_ENTER_GUILD_CMD = 113;
+  USER_ENTER_GUILD_RESULT = 114;
+  SHOW_GUILD_MEMBER_CMD = 115;
+  SHOW_GUILD_MEMBER_RESULT = 116;
+  LOOK_GUiLD_MEMBER_INFO_CMD = 117;
+  LOOK_GUiLD_MEMBER_INFO_RESULT = 118;
+  QUIT_GUILD_CMD = 119;
+  QUIT_GUILD_RESULT = 120;
+
+
+
   ERROR_RESULT = 96;
 }
 
@@ -197,7 +215,8 @@ message UserInfo {
   uint32 userId = 1;
   // 用户名称
   string userName = 2;
-
+  //是否在线
+  bool isOnline = 3;
 }
 //
 // 用户退场
@@ -345,6 +364,10 @@ message UserLoginResult {
   }
   // 未读邮件信息
   repeated MailInfo mailInfo = 15;
+
+  //公会
+  string guildName = 16;
+  uint32 guildPosition = 17;
 }
 message Props {
   uint32 location = 1;
@@ -951,4 +974,57 @@ message SortOutDealCmd{
 message SortOutDealResult{
   repeated Props props = 1;
   uint32 money = 2;
+}
+
+
+// 用户创建公会，指令
+message UserCreateGuildCmd{
+  string guildName = 1;
+}
+// 用户创建公会，结果
+message UserCreateGuildResult{
+  string guildName = 1;
+}
+// 用户解散
+message UserDissolveGuildCmd{
+}
+// 解散 结果
+message UserDissolveGuildResult{
+  uint32 userId = 1;
+}
+// 展示公会列表
+message ShowGuildCmd{
+}
+message  ShowGuildResult{
+  repeated Guild guild = 1;
+}
+message Guild{
+  uint32 guildId = 1;
+  string guildName = 2;
+}
+// 用户加入公会
+message UserEnterGuildCmd{
+  uint32 guildId = 1;
+}
+message UserEnterGuildResult{
+  Guild guild = 1;
+}
+// 展示公会成员
+message ShowGuildMemberCmd{
+}
+message ShowGuildMemberResult{
+  repeated UserInfo userInfo = 1;
+}
+//查询公会成员信息
+message LookGuildMemberInfoCmd{
+  uint32 userId = 1;
+}
+message LookGuildMemberInfoResult{
+  repeated uint32 equId = 1;
+}
+// 退出公会
+message QuitGuildCmd{
+}
+message  QuitGuildResult{
+  string userName = 1;
 }

@@ -7,10 +7,8 @@ import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import server.model.MailProps;
-import server.model.PlayMail;
-import server.model.User;
-import server.model.UserManager;
+import server.GuildManager;
+import server.model.*;
 import server.model.store.Goods;
 import server.model.props.AbstractPropsProperty;
 import msg.GameMsg;
@@ -30,6 +28,7 @@ import server.service.MailService;
 import server.service.UserService;
 import server.Broadcast;
 import type.GoodsLimitBuyType;
+import type.GuildMemberType;
 import type.MailType;
 import type.PropsType;
 
@@ -99,88 +98,24 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                     .setProfessionId(user.getProfessionId())
                     .setMoney(user.getMoney());
 
-            GameData gameData = GameData.getInstance();
             //封装 当前用户的技能.
-            for (Skill skill : user.getSkillMap().values()) {
-                GameMsg.UserLoginResult.Skill.Builder skillBuilder = GameMsg.UserLoginResult.Skill.newBuilder()
-                        .setId(skill.getId());
-                resultBuilder.addSkill(skillBuilder);
-            }
+            packageSkill(user, resultBuilder);
 
-            Scene scene = gameData.getSceneMap().get(user.getCurSceneId());
-            // 封装当前场景npc
-            for (Npc npc : scene.getNpcMap().values()) {
-                GameMsg.UserLoginResult.Npc.Builder npcBuilder = GameMsg.UserLoginResult.Npc.newBuilder()
-                        .setName(npc.getName())
-                        .setId(npc.getId())
-                        .setInfo(npc.getInfo());
-                resultBuilder.addNpc(npcBuilder);
-            }
-            // 封装当前场景 怪
-            for (Monster monster : scene.getMonsterMap().values()) {
-                GameMsg.UserLoginResult.Monster monsterBuilder = GameMsg.UserLoginResult.Monster.newBuilder()
-                        .setId(monster.getId())
-                        .setName(monster.getName())
-                        .setHp(monster.getHp())
-                        .setIsDie(monster.isDie())
-                        .build();
-                resultBuilder.addMonster(monsterBuilder);
-            }
+            //Npc 、怪
+            packageScene(user, resultBuilder);
 
             //  背包中的道具(装备、药剂等)
-            Map<Integer, Props> backpack = user.getBackpack();
-            for (Map.Entry<Integer, Props> propsEntry : backpack.entrySet()) {
-                GameMsg.Props.Builder propsResult = GameMsg.Props.newBuilder()
-                        .setLocation(propsEntry.getKey())
-                        .setPropsId(propsEntry.getValue().getId());
+            packageBackpack(user, resultBuilder);
 
-                AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
-                if (propsProperty.getType() == PropsType.Equipment) {
-                    Equipment equipment = (Equipment) propsProperty;
-                    // equipment.getId() 是数据库中的user_equipment中的id
-                    propsResult.setDurability(equipment.getDurability()).setUserPropsId(equipment.getId());
-                } else if (propsProperty.getType() == PropsType.Potion) {
-                    Potion potion = (Potion) propsProperty;
-                    //potion.getId() 是数据库中的 user_potion中的id
-                    propsResult.setPropsNumber(potion.getNumber()).setUserPropsId(potion.getId());
-                }
-                resultBuilder.addProps(propsResult);
-            }
+            // 商品限制
+            packageStore(user, resultBuilder);
 
-            UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
-            for (UserEquipmentEntity userEquipmentEntity : userEquipmentArr) {
-                if (userEquipmentEntity != null) {
-                    GameMsg.UserLoginResult.WearEquipment.Builder builder = GameMsg.UserLoginResult.WearEquipment.newBuilder()
-                            //userEquipmentEntity.getId() 数据库中 user_equipment中的id
-                            .setId(userEquipmentEntity.getId())
-                            .setEquipmentId(userEquipmentEntity.getPropsId())
-                            .setDurability(userEquipmentEntity.getDurability());
-                    resultBuilder.addWearEqu(builder);
-                }
-            }
+            //封装邮件
+            packageMail(user, resultBuilder);
 
-            Map<Integer, Integer> goodsAllowNumber = user.getGoodsAllowNumber();
-            for (Map.Entry<Integer, Integer> integerEntry : goodsAllowNumber.entrySet()) {
-                GameMsg.UserLoginResult.GoodsLimit goodsLimit = GameMsg.UserLoginResult.GoodsLimit.newBuilder()
-                        .setGoodsId(integerEntry.getKey())
-                        .setGoodsNumber(integerEntry.getValue())
-                        .build();
-                resultBuilder.addGoodLimits(goodsLimit);
-            }
+            //封装公会
+            packageGuild(user, resultBuilder);
 
-            Map<Integer, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
-            for (DbSendMailEntity mailEntity : mailEntityMap.values()) {
-                if (resultBuilder.getMailInfoCount() == MailConst.MAX_SHOW_NUMBER) {
-                    // 最多一次性发送两百封邮件
-                    break;
-                }
-                GameMsg.MailInfo mailInfo = GameMsg.MailInfo.newBuilder()
-                        .setSrcUserName(mailEntity.getSrcUserName())
-                        .setTitle(mailEntity.getTitle())
-                        .setMailId(mailEntity.getId())
-                        .build();
-                resultBuilder.addMailInfo(mailInfo);
-            }
 
             loginResult = resultBuilder.build();
         } catch (CustomizeException e) {
@@ -192,6 +127,141 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             ctx.channel().writeAndFlush(loginResult);
         }
 
+    }
+
+    /**
+     * 封装公会
+     *
+     * @param user          用户对象
+     * @param resultBuilder 结果构建者
+     */
+    private void packageGuild(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        if (user.getPlayGuild() == null) {
+            return;
+        }
+        PlayGuild playGuild = user.getPlayGuild();
+        resultBuilder.setGuildName(playGuild.getGuildEntity().getGuildName())
+                .setGuildPosition(playGuild.getGuildMemberMap().get(user.getUserId()).getGuildPosition());
+    }
+
+    /**
+     * 封装邮件
+     *
+     * @param user          用户对象
+     * @param resultBuilder 结果构建者
+     */
+    private void packageSkill(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        for (Skill skill : user.getSkillMap().values()) {
+            GameMsg.UserLoginResult.Skill.Builder skillBuilder = GameMsg.UserLoginResult.Skill.newBuilder()
+                    .setId(skill.getId());
+            resultBuilder.addSkill(skillBuilder);
+        }
+    }
+
+    /**
+     * 封装邮件
+     *
+     * @param user          用户对象
+     * @param resultBuilder 结果构建者
+     */
+    private void packageMail(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        Map<Integer, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
+        for (DbSendMailEntity mailEntity : mailEntityMap.values()) {
+            if (resultBuilder.getMailInfoCount() == MailConst.MAX_SHOW_NUMBER) {
+                // 最多一次性发送两百封邮件
+                break;
+            }
+            GameMsg.MailInfo mailInfo = GameMsg.MailInfo.newBuilder()
+                    .setSrcUserName(mailEntity.getSrcUserName())
+                    .setTitle(mailEntity.getTitle())
+                    .setMailId(mailEntity.getId())
+                    .build();
+            resultBuilder.addMailInfo(mailInfo);
+        }
+    }
+
+    /**
+     * 封装商品限制
+     *
+     * @param user          用户对象
+     * @param resultBuilder 结果构建者
+     */
+    private void packageStore(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        Map<Integer, Integer> goodsAllowNumber = user.getGoodsAllowNumber();
+        for (Map.Entry<Integer, Integer> integerEntry : goodsAllowNumber.entrySet()) {
+            GameMsg.UserLoginResult.GoodsLimit goodsLimit = GameMsg.UserLoginResult.GoodsLimit.newBuilder()
+                    .setGoodsId(integerEntry.getKey())
+                    .setGoodsNumber(integerEntry.getValue())
+                    .build();
+            resultBuilder.addGoodLimits(goodsLimit);
+        }
+    }
+
+    /**
+     * 封装背包和装备栏
+     *
+     * @param user          用户对象
+     * @param resultBuilder 结果构建者
+     */
+    private void packageBackpack(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        Map<Integer, Props> backpack = user.getBackpack();
+        for (Map.Entry<Integer, Props> propsEntry : backpack.entrySet()) {
+            GameMsg.Props.Builder propsResult = GameMsg.Props.newBuilder()
+                    .setLocation(propsEntry.getKey())
+                    .setPropsId(propsEntry.getValue().getId());
+
+            AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
+            if (propsProperty.getType() == PropsType.Equipment) {
+                Equipment equipment = (Equipment) propsProperty;
+                // equipment.getId() 是数据库中的user_equipment中的id
+                propsResult.setDurability(equipment.getDurability()).setUserPropsId(equipment.getId());
+            } else if (propsProperty.getType() == PropsType.Potion) {
+                Potion potion = (Potion) propsProperty;
+                //potion.getId() 是数据库中的 user_potion中的id
+                propsResult.setPropsNumber(potion.getNumber()).setUserPropsId(potion.getId());
+            }
+            resultBuilder.addProps(propsResult);
+        }
+
+        UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
+        for (UserEquipmentEntity userEquipmentEntity : userEquipmentArr) {
+            if (userEquipmentEntity != null) {
+                GameMsg.UserLoginResult.WearEquipment.Builder builder = GameMsg.UserLoginResult.WearEquipment.newBuilder()
+                        //userEquipmentEntity.getId() 数据库中 user_equipment中的id
+                        .setId(userEquipmentEntity.getId())
+                        .setEquipmentId(userEquipmentEntity.getPropsId())
+                        .setDurability(userEquipmentEntity.getDurability());
+                resultBuilder.addWearEqu(builder);
+            }
+        }
+    }
+
+    /**
+     * 封装场景
+     *
+     * @param user          用户对象
+     * @param resultBuilder 结果构建者
+     */
+    private void packageScene(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
+        // 封装当前场景npc
+        for (Npc npc : scene.getNpcMap().values()) {
+            GameMsg.UserLoginResult.Npc.Builder npcBuilder = GameMsg.UserLoginResult.Npc.newBuilder()
+                    .setName(npc.getName())
+                    .setId(npc.getId())
+                    .setInfo(npc.getInfo());
+            resultBuilder.addNpc(npcBuilder);
+        }
+        // 封装当前场景 怪
+        for (Monster monster : scene.getMonsterMap().values()) {
+            GameMsg.UserLoginResult.Monster monsterBuilder = GameMsg.UserLoginResult.Monster.newBuilder()
+                    .setId(monster.getId())
+                    .setName(monster.getName())
+                    .setHp(monster.getHp())
+                    .setIsDie(monster.isDie())
+                    .build();
+            resultBuilder.addMonster(monsterBuilder);
+        }
     }
 
     /**
@@ -212,6 +282,12 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         user.setBaseDamage(userState.getBaseDamage());
         user.setBaseDefense(userState.getBaseDefense());
         user.setMoney(userState.getMoney());
+
+        if (!userState.getGuildId().equals(GuildMemberType.Public.getRoleId())) {
+            PlayGuild playGuild = GuildManager.getGuild(userState.getGuildId());
+            playGuild.getGuildMemberMap().get(user.getUserId()).setOnline(true);
+            user.setPlayGuild(playGuild);
+        }
 
         // 封装技能
         Map<Integer, Skill> skillMap = GameData.getInstance().getProfessionMap().get(user.getProfessionId()).getSkillMap();
@@ -236,10 +312,11 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         return user;
     }
 
+
     /**
      * 群发邮件
      *
-     * @param user
+     * @param user 用户对象
      */
     private void sendMailAll(User user) {
         DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
@@ -268,7 +345,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     /**
      * 加载未读的邮件
      *
-     * @param user
+     * @param user 用户对象
      */
     private void loadMail(User user) {
         List<DbSendMailEntity> mailEntityList = mailService.listMailWithinTenDay(user.getUserId());
@@ -282,7 +359,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     /**
      * 加载背包中的道具
      *
-     * @param user
+     * @param user 用户对象
      */
     private void loadBackpack(User user) {
         // 装备
@@ -316,8 +393,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
 
     /**
      * 加载穿戴的装备
-     *
-     * @param user
+     * @param user 用户对象
      */
     private void loadWearEqu(User user) {
         UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
@@ -330,7 +406,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     /**
      * 加载限制数量
      *
-     * @param user
+     * @param user 用户对象
      */
     private void loadLimitNumber(User user) {
 
@@ -343,21 +419,14 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         String currDate = dateFormat.format(new Date());
 
         List<UserBuyGoodsLimitEntity> userBuyGoodsLimitEntities = userService.listUserBuyGoodsLimitEntity(user.getUserId(), currDate);
-//        if (userBuyGoodsLimitEntities == null){
         // 今天，用户还没有购买限购商品;
         for (GoodsLimitBuyType goodsLimitBuyType : GoodsLimitBuyType.values()) {
             goodsAllowNumber.put(goodsLimitBuyType.getGoodsId(), goodsLimitBuyType.getLimitNumber());
         }
-//        }else {
         for (UserBuyGoodsLimitEntity goodsLimitEntity : userBuyGoodsLimitEntities) {
             Goods goods = goodsMap.get(goodsLimitEntity.getGoodsId());
             goodsAllowNumber.put(goodsLimitEntity.getGoodsId(), goods.getNumberLimit() - goodsLimitEntity.getNumber());
         }
-//            for (GoodsLimitBuyType goodsLimitBuyType : GoodsLimitBuyType.values()) {
-//                goodsAllowNumber.putIfAbsent(goodsLimitBuyType.getGoodsId(),goodsLimitBuyType.getLimitNumber());
-//            }
-
-//        }
 
     }
 

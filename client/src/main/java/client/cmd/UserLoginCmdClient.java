@@ -1,5 +1,6 @@
 package client.cmd;
 
+import client.model.guild.PlayGuildClient;
 import client.model.server.profession.Skill;
 import client.model.server.props.Equipment;
 import client.model.server.props.Potion;
@@ -20,6 +21,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 import msg.GameMsg;
+import type.GuildMemberType;
 import type.PropsType;
 
 import java.util.List;
@@ -67,7 +69,7 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
             // 通过技能id
             Skill skill1 = professionSkillMap.get(skill.getId());
             skillMap.put(skill.getId(),
-                    new Skill(skill1.getId(),skill1.getProfessionId(),skill1.getName(),skill1.getCdTime(),skill1.getIntroduce(),skill1.getConsumeMp(),0,skill1.getSkillProperty()));
+                    new Skill(skill1.getId(), skill1.getProfessionId(), skill1.getName(), skill1.getCdTime(), skill1.getIntroduce(), skill1.getConsumeMp(), 0, skill1.getSkillProperty()));
         }
 
 
@@ -92,7 +94,7 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
         Map<Integer, Props> backpackClient = role.getBackpackClient();
         for (GameMsg.Props props : propsList) {
             Props pro = propsMap.get(props.getPropsId());
-            if (pro.getPropsProperty().getType() == PropsType.Equipment){
+            if (pro.getPropsProperty().getType() == PropsType.Equipment) {
                 Equipment equipment = (Equipment) pro.getPropsProperty();
 
                 Equipment propsProperty =
@@ -104,7 +106,7 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
                                 equipment.getEquipmentType());
 
                 backpackClient.put(props.getLocation(), new Props(props.getPropsId(), pro.getName(), propsProperty));
-            }else if (pro.getPropsProperty().getType() == PropsType.Potion){
+            } else if (pro.getPropsProperty().getType() == PropsType.Potion) {
                 Potion potion = (Potion) pro.getPropsProperty();
 
                 Potion propsProperty =
@@ -117,10 +119,9 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
                                 potion.getPercent(),
                                 props.getPropsNumber());
 
-                backpackClient.put(props.getLocation(),new Props(props.getPropsId(),pro.getName(), propsProperty));
+                backpackClient.put(props.getLocation(), new Props(props.getPropsId(), pro.getName(), propsProperty));
             }
         }
-
 
 
         // 穿戴装备
@@ -136,26 +137,37 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
         Map<Integer, Integer> goodsAllowNumber = role.getGOODS_ALLOW_NUMBER();
         List<GameMsg.UserLoginResult.GoodsLimit> goodLimitsList = userLoginResult.getGoodLimitsList();
         for (GameMsg.UserLoginResult.GoodsLimit goodsLimit : goodLimitsList) {
-            goodsAllowNumber.put(goodsLimit.getGoodsId(),goodsLimit.getGoodsNumber());
+            goodsAllowNumber.put(goodsLimit.getGoodsId(), goodsLimit.getGoodsNumber());
         }
 
         // 初始化邮件系统
-        initMail(role,userLoginResult);
+        initMail(role, userLoginResult);
+
+        //公会
+        String guildName = userLoginResult.getGuildName();
+        int guildPosition = userLoginResult.getGuildPosition();
+        if (!(guildName.equals("") || guildPosition == 0)) {
+            PlayGuildClient playGuildClient = new PlayGuildClient();
+            playGuildClient.setType(GuildMemberType.getRoleNameByRoleId(guildPosition));
+            playGuildClient.setGuildName(guildName);
+            role.setPlayGuildClient(playGuildClient);
+        }
+
 
         // 下一步 操作
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }
 
 
-    private void initMail(Role  role,GameMsg.UserLoginResult userLoginResult){
+    private void initMail(Role role, GameMsg.UserLoginResult userLoginResult) {
         // 初始化邮件系统
         MailClient mail = role.getMail();
         Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
         List<GameMsg.MailInfo> mailInfoList = userLoginResult.getMailInfoList();
         for (GameMsg.MailInfo mailInfo : mailInfoList) {
-            mailMap.put(mailInfo.getMailId(),new MailEntityClient(mailInfo.getMailId(),mailInfo.getSrcUserName(),mailInfo.getTitle()));
+            mailMap.put(mailInfo.getMailId(), new MailEntityClient(mailInfo.getMailId(), mailInfo.getSrcUserName(), mailInfo.getTitle()));
         }
-        if (mailMap.size() > 0){
+        if (mailMap.size() > 0) {
             mail.setHave(true);
         }
     }

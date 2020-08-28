@@ -14,6 +14,7 @@ import server.scene.GameData;
 import server.dao.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author 张丰博
@@ -303,5 +304,11 @@ public class UserService {
         return userDAO.selectAllUser();
     }
 
-
+    /**
+     * 更新用户 公会 状态
+     * @param guildStateSet
+     */
+    public void modifyUserGuildState(Set<Integer> guildStateSet,Integer state) {
+        userState.updateGuildState(guildStateSet,state);
+    }
 }

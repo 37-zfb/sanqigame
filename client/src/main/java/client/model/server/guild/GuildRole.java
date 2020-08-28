@@ -1,4 +1,4 @@
-package server.model.guild;
+package client.model.server.guild;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,29 +8,30 @@ import lombok.ToString;
 /**
  * @author 张丰博
  */
-@Getter
 @Setter
+@Getter
 @ToString
 @NoArgsConstructor
-public class GuildRoleAuth {
+public class GuildRole {
     /**
-     *  id
+     * id
      */
     private Integer id;
+
     /**
-     *  角色id
+     * 角色
      */
-    private Integer roleId;
+    private String roleName;
 
     /**
      *  权限
      */
-    private String auth;
+    private GuildRoleAuth guildRoleAuth;
 
-    public GuildRoleAuth(Integer id,Integer roleId,String auth){
+    public GuildRole(Integer id,String roleName){
         this.id = id;
-        this.roleId = roleId;
-        this.auth = auth;
+        this.roleName = roleName;
     }
+
 
 }

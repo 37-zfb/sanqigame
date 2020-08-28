@@ -1,8 +1,11 @@
 package entity.conf.guild;
 
+import lombok.Data;
+
 /**
  * @author 张丰博
  */
+@Data
 public class GuildRoleAuthEntity {
 
     /**

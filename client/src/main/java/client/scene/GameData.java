@@ -4,6 +4,8 @@ package client.scene;
 import client.model.server.duplicate.BossMonster;
 import client.model.server.duplicate.BossSkill;
 import client.model.server.duplicate.Duplicate;
+import client.model.server.guild.GuildRole;
+import client.model.server.guild.GuildRoleAuth;
 import client.model.server.profession.Profession;
 import client.model.server.profession.Skill;
 import client.model.server.profession.skill.PastorSkillProperty;
@@ -20,6 +22,8 @@ import client.model.server.store.Goods;
 import entity.conf.duplicate.BossEntity;
 import entity.conf.duplicate.BossSkillEntity;
 import entity.conf.duplicate.DuplicateEntity;
+import entity.conf.guild.GuildRoleAuthEntity;
+import entity.conf.guild.GuildRoleEntity;
 import entity.conf.profession.*;
 import entity.conf.props.EquipmentEntity;
 import entity.conf.props.PotionEntity;
@@ -29,7 +33,6 @@ import entity.conf.scene.NpcEntity;
 import entity.conf.scene.SceneEntity;
 import entity.conf.store.GoodsEntity;
 import lombok.Setter;
-
 import type.EquipmentType;
 import type.ProfessionType;
 
@@ -69,6 +72,11 @@ public class GameData {
      */
     private final Map<Integer, Goods> goodsMap = new HashMap<>();
 
+    /**
+     * id  公会角色
+     */
+    private final Map<Integer, GuildRole> guildRoleMap = new HashMap<>();
+
     private static final GameData GAME_DATA = new GameData();
 
     private GameData() {
@@ -107,6 +115,9 @@ public class GameData {
     private List<BossEntity> bossEntityList;
     private List<BossSkillEntity> bossSkillEntityList;
 
+    private List<GuildRoleEntity> guildRoleEntityList;
+    private List<GuildRoleAuthEntity> guildRoleAuthEntityList;
+
     /**
      *  商品
      */
@@ -121,7 +132,28 @@ public class GameData {
         initProfession();
         initDuplicate();
         initStore();
+        initGuild();
     }
+
+
+    private void initGuild() {
+        for (GuildRoleEntity roleEntity : guildRoleEntityList) {
+            GuildRole guildRole = new GuildRole(roleEntity.getId(), roleEntity.getRole());
+            guildRoleMap.put(roleEntity.getId(), guildRole);
+
+            for (GuildRoleAuthEntity authEntity : guildRoleAuthEntityList) {
+                if (authEntity.getRoleId().equals(guildRole.getId())) {
+                    guildRole.setGuildRoleAuth(new GuildRoleAuth(authEntity.getId(), authEntity.getRoleId(), authEntity.getAuth()));
+                    break;
+                }
+            }
+
+        }
+
+        guildRoleEntityList = null;
+        guildRoleAuthEntityList = null;
+    }
+
 
     private void initStore(){
         for (GoodsEntity goodsEntity : goodsEntityList) {

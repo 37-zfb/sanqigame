@@ -4,6 +4,9 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import entity.db.CurrUserStateEntity;
 
+import javax.annotation.PostConstruct;
+import java.util.Set;
+
 /**
  * @author 张丰博
  */
@@ -37,4 +40,11 @@ public interface IUserStateDAO {
      * @param money
      */
     void updateUserMoney(@Param("userId") Integer userId,@Param("money") Integer money);
+
+    /**
+     * 改变用户公会状态
+     * @param guildStateSet
+     * @param state
+     */
+    void updateGuildState(@Param("guildStateSet") Set<Integer> guildStateSet,@Param("state") Integer state);
 }

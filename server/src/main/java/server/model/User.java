@@ -197,6 +197,12 @@ public class User {
     private final PlayDeal PLAY_DEAL = new PlayDeal();
 
     /**
+     *  公会系统
+     */
+    private PlayGuild playGuild = null;
+
+
+    /**
      * 设置恢复mp终止时间
      */
     public void resumeMpTime() {

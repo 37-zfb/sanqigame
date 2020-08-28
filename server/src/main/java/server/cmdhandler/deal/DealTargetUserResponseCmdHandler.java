@@ -1,5 +1,7 @@
 package server.cmdhandler.deal;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -26,6 +28,13 @@ public class DealTargetUserResponseCmdHandler implements ICmdHandler<GameMsg.Dea
         boolean isAgree = dealTargetUserResponseCmd.getIsAgree();
         int originateId = dealTargetUserResponseCmd.getOriginateId();
         User originateUser = UserManager.getUserById(originateId);
+
+        if (originateUser == null){
+            throw new CustomizeException(CustomizeErrorCode.ORIGINATE_USER_NOT_FOUNT);
+        }
+        if (!originateUser.getPLAY_DEAL().getUserIdSet().contains(dealTargetUser.getUserId())){
+            throw new CustomizeException(CustomizeErrorCode.ORIGINATE_USER_NOT_REQUEST);
+        }
 
         GameMsg.UserDealRequestResult.Builder newBuilder = GameMsg.UserDealRequestResult.newBuilder();
         //移除发起用户集合中的id

@@ -42,9 +42,25 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
      */
     USER_NOT_MANAGER(-416,"用户没有被管理;"),
 
-
+    /**
+     * 交易
+     */
     DEAL_REQUEST_ERROR(-417,"不能和自己交易;"),
     USER_NOT_DEAL_STATUS(-418,"不是交易状态;"),
+    ORIGINATE_USER_NOT_FOUNT(-418,"发起者不存在"),
+    ORIGINATE_USER_NOT_REQUEST(-419,"发起者没有发起;"),
+
+    /**
+     * 公会
+     */
+    USER_MONEY_NOT_ENOUGH(-420,"金币不足;"),
+    USER_HAVE_GUILD(-421,"已有公会;"),
+    GUILD_ALREADY_EXIST(-422,"公会名已存在;"),
+    USER_NO_HAVE_GUILD_OR_NOT_PRESIDENT(-423,"用户没有公会或不是会长;"),
+    GUILD_NOT_EXIST(-424,"公会不存在;"),
+    GUILD_REACH_LIMIT(-425,"公会人数已到达上限;"),
+    NOT_JOIN_GUILD(-426,"未加入公会;"),
+    NO_HAVE_MEMBER(-427,"没有该成员;"),
 
     ;
 
@@ -52,7 +68,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
 
     private Integer code;
 
-    private CustomizeErrorCode( Integer code,String message) {
+    CustomizeErrorCode( Integer code,String message) {
         this.message = message;
         this.code = code;
     }

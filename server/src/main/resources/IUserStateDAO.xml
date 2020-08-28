@@ -10,6 +10,7 @@
         <result property="baseDamage" column="base_damage"/>
         <result property="baseDefense" column="base_defense"/>
         <result property="money" column="money"/>
+        <result property="guildId" column="guild_id"/>
     </resultMap>
 
 
@@ -23,10 +24,37 @@
     </select>
 
     <update id="updateUserState" parameterType="entity.db.CurrUserStateEntity">
-        update curr_user_state SET curr_hp = #{currHp},curr_mp=#{currMp},curr_scene_id=#{currSceneId},base_damage=#{baseDamage},base_defense=#{baseDefense},money=#{money} WHERE user_id=#{userId}
+        update curr_user_state
+        SET curr_hp = #{currHp},curr_mp=#{currMp},curr_scene_id=#{currSceneId},base_damage=#{baseDamage},
+            base_defense=#{baseDefense},money=#{money} ,guild_id=#{guildId}
+        WHERE user_id=#{userId}
     </update>
 
     <update id="updateUserMoney" parameterType="int">
         update curr_user_state SET money=#{money} WHERE user_id = #{userId};
     </update>
+
+    <update id="updateGuildState" parameterType="collection">
+        <foreach collection="guildStateSet" item="userId" index="index" open="" close="" separator="">
+            update `curr_user_state`
+            <set>
+                guild_id = #{state}
+
+            </set>
+            where id = #{userId};
+        </foreach>
+    </update>
+
+    <!--    <update id="updateMailBatch" parameterType="collection">-->
+    <!--        <foreach collection="mailCollection" item="mail" index="index" open="" close="" separator="">-->
+    <!--            update `send_mail`-->
+    <!--            <set>-->
+    <!--                <if test="mail.state != 0">-->
+    <!--                    state = #{mail.state}-->
+    <!--                </if>-->
+
+    <!--            </set>-->
+    <!--            where id = #{mail.id};-->
+    <!--        </foreach>-->
+    <!--    </update>-->
 </mapper>

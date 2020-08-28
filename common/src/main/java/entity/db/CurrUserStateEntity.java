@@ -28,4 +28,5 @@ public class CurrUserStateEntity {
 
     private Integer money;
 
+    private Integer guildId;
 }

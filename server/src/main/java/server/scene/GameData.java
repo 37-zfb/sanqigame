@@ -4,6 +4,8 @@ package server.scene;
 import entity.conf.duplicate.BossEntity;
 import entity.conf.duplicate.BossSkillEntity;
 import entity.conf.duplicate.DuplicateEntity;
+import entity.conf.guild.GuildRoleAuthEntity;
+import entity.conf.guild.GuildRoleEntity;
 import entity.conf.profession.*;
 import entity.conf.props.EquipmentEntity;
 import entity.conf.props.PotionEntity;
@@ -19,6 +21,7 @@ import server.model.duplicate.BossMonster;
 import server.model.duplicate.BossSkill;
 import server.model.duplicate.Duplicate;
 import server.model.guild.GuildRole;
+import server.model.guild.GuildRoleAuth;
 import server.model.profession.Profession;
 import server.model.profession.Skill;
 import server.model.profession.skill.PastorSkillProperty;
@@ -67,12 +70,12 @@ public class GameData {
     private final Map<Integer, Duplicate> duplicateMap = new HashMap<>();
 
     /**
-     *  id  商品
+     * id  商品
      */
     private final Map<Integer, Goods> goodsMap = new HashMap<>();
 
     /**
-     *  id  公会角色
+     * id  公会角色
      */
     private final Map<Integer, GuildRole> guildRoleMap = new HashMap<>();
 
@@ -114,10 +117,12 @@ public class GameData {
     private List<BossEntity> bossEntityList;
     private List<BossSkillEntity> bossSkillEntityList;
 
+    private List<GuildRoleEntity> guildRoleEntityList;
+    private List<GuildRoleAuthEntity> guildRoleAuthEntityList;
     /**
-     *  商品
+     * 商品
      */
-    private List<GoodsEntity>  goodsEntityList;
+    private List<GoodsEntity> goodsEntityList;
 
     /**
      * 初始化游戏数据
@@ -128,26 +133,45 @@ public class GameData {
         initProfession();
         initDuplicate();
         initStore();
+        initGuild();
     }
 
-    private void initStore(){
+    private void initGuild() {
+        for (GuildRoleEntity roleEntity : guildRoleEntityList) {
+            GuildRole guildRole = new GuildRole(roleEntity.getId(), roleEntity.getRole());
+            guildRoleMap.put(roleEntity.getId(), guildRole);
+
+            for (GuildRoleAuthEntity authEntity : guildRoleAuthEntityList) {
+                if (authEntity.getRoleId().equals(guildRole.getId())) {
+                    guildRole.setGuildRoleAuth(new GuildRoleAuth(authEntity.getId(), authEntity.getRoleId(), authEntity.getAuth()));
+                    break;
+                }
+            }
+
+        }
+
+        guildRoleEntityList = null;
+        guildRoleAuthEntityList = null;
+    }
+
+    private void initStore() {
         for (GoodsEntity goodsEntity : goodsEntityList) {
-            goodsMap.putIfAbsent(goodsEntity.getId(), new Goods(goodsEntity.getId(),goodsEntity.getPropsId(),goodsEntity.getNumberLimit(),goodsEntity.getInfo(),goodsEntity.getPrice()));
+            goodsMap.putIfAbsent(goodsEntity.getId(), new Goods(goodsEntity.getId(), goodsEntity.getPropsId(), goodsEntity.getNumberLimit(), goodsEntity.getInfo(), goodsEntity.getPrice()));
         }
 
         goodsEntityList = null;
     }
 
-    private void initDuplicate(){
+    private void initDuplicate() {
         for (DuplicateEntity duplicateEntity : duplicateEntityList) {
-            duplicateMap.put(duplicateEntity.getId(),new Duplicate(duplicateEntity.getId(),duplicateEntity.getName()));
+            duplicateMap.put(duplicateEntity.getId(), new Duplicate(duplicateEntity.getId(), duplicateEntity.getName()));
         }
         for (BossEntity bossEntity : bossEntityList) {
             Map<Integer, BossMonster> bossMonsterMap = duplicateMap.get(bossEntity.getDuplicateId()).getBossMonsterMap();
-            BossMonster bossMonster = new BossMonster(bossEntity.getId(), bossEntity.getDuplicateId(), bossEntity.getBossName(), bossEntity.getHp(),bossEntity.getBaseDamage());
+            BossMonster bossMonster = new BossMonster(bossEntity.getId(), bossEntity.getDuplicateId(), bossEntity.getBossName(), bossEntity.getHp(), bossEntity.getBaseDamage());
             bossMonsterMap.put(bossEntity.getId(), bossMonster);
             for (BossSkillEntity bossSkillEntity : bossSkillEntityList) {
-                if (bossSkillEntity.getBossId().equals(bossMonster.getId())){
+                if (bossSkillEntity.getBossId().equals(bossMonster.getId())) {
                     bossMonster.getBossSkillMap()
                             .put(bossSkillEntity.getId(),
                                     new BossSkill(bossSkillEntity.getId(), bossSkillEntity.getBossId(), bossSkillEntity.getName(), bossSkillEntity.getSkillDamage(), bossSkillEntity.getInfo()));
@@ -162,7 +186,7 @@ public class GameData {
     }
 
 
-    private void initProfession(){
+    private void initProfession() {
         // 封装角色，技能
         for (ProfessionEntity professionEntity : professionEntityList) {
             ProfessionType professionType = ProfessionType.valueOf(professionEntity.getProfession());
@@ -234,7 +258,7 @@ public class GameData {
         summonerSkillPropertyEntityList = null;
     }
 
-    private void initProps(){
+    private void initProps() {
         // 封装道具
         for (PropsEntity propsEntity : propsEntityList) {
             propsMap.put(propsEntity.getId(), new Props(propsEntity.getId(), propsEntity.getName()));
@@ -264,7 +288,7 @@ public class GameData {
     }
 
 
-    private void initScene(){
+    private void initScene() {
         // 封装场景
         for (SceneEntity sceneEntity : sceneEntityList) {
             sceneMap.put(sceneEntity.getId(), new Scene(sceneEntity.getId(), sceneEntity.getName()));

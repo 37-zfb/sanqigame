@@ -52,19 +52,12 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
 
         User user = UserManager.getUserById(userId);
         user.setCurrDuplicate(null);
-        CurrUserStateEntity userStateEntity = new CurrUserStateEntity();
-        user.calCurrHp();
-        userStateEntity.setCurrHp(user.getCurrHp());
-        // 计算当前mp
-        user.calCurrMp();
-        userStateEntity.setCurrMp(user.getCurrMp());
-        userStateEntity.setCurrSceneId(user.getCurSceneId());
-        userStateEntity.setBaseDamage(user.getBaseDamage());
-        userStateEntity.setBaseDefense(user.getBaseDefense());
-        userStateEntity.setUserId(userId);
-        userStateEntity.setMoney(user.getMoney());
+
+        CurrUserStateEntity userStateEntity = PublicMethod.getInstance().createUserState(user);
+
         // 保存用户所在地
         userService.modifyUserState(userStateEntity);
+
         // 持久化,邮件
         mailService.modifyMailState(user.getMail().getMailEntityMap().values());
 

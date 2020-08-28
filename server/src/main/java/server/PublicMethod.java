@@ -2,6 +2,7 @@ package server;
 
 import com.google.protobuf.GeneratedMessageV3;
 import constant.*;
+import entity.db.CurrUserStateEntity;
 import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
 import exception.CustomizeErrorCode;
@@ -50,6 +51,33 @@ public final class PublicMethod {
 
     public static PublicMethod getInstance() {
         return PUBLIC_METHOD;
+    }
+
+    /**
+     * 创建 用户状态对象
+     * @param user
+     * @return
+     */
+    public CurrUserStateEntity createUserState(User user) {
+        CurrUserStateEntity userStateEntity = new CurrUserStateEntity();
+        user.calCurrHp();
+        userStateEntity.setCurrHp(user.getCurrHp());
+        // 计算当前mp
+        user.calCurrMp();
+        userStateEntity.setCurrMp(user.getCurrMp());
+        userStateEntity.setCurrSceneId(user.getCurSceneId());
+        userStateEntity.setBaseDamage(user.getBaseDamage());
+        userStateEntity.setBaseDefense(user.getBaseDefense());
+        userStateEntity.setUserId(user.getUserId());
+        userStateEntity.setMoney(user.getMoney());
+
+        if (user.getPlayGuild()!=null){
+            user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).setOnline(false);
+            userStateEntity.setGuildId(user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).getGuildId());
+        }else {
+            userStateEntity.setGuildId(0);
+        }
+        return userStateEntity;
     }
 
 

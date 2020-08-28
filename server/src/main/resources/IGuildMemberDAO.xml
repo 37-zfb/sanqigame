@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IGuildMemberDAO">
+    <resultMap id="guildMemberEntity" type="entity.db.GuildMemberEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="guildId" column="guild_id"/>
+        <result property="guildPosition" column="guild_position"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+
+    <insert id="insertGuildMemberBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
+        <foreach collection="addGuildMemberEntityCollection" item="guildMember" index="index" open="" close="" separator="">
+            insert into `guild_member` (`user_id`,`guild_id`,`guild_position`,`user_name`)
+            values (#{guildMember.userId},#{guildMember.guildId},#{guildMember.guildPosition},#{guildMember.userName})
+        </foreach>
+    </insert>
+
+    <select id="selectGuildMember" resultType="list" resultMap="guildMemberEntity">
+        select * from `guild_member`
+    </select>
+
+    <delete id="deleteGuildMemberBatch" parameterType="collection">
+        <foreach collection="guildMemberEntityCollection" item="guildMember" index="index" open="" close="" separator="">
+            delete from `guild_member` where user_id=#{guildMember.userId}
+        </foreach>
+    </delete>
+<!--    <update id="updateMailBatch" parameterType="collection">-->
+<!--        <foreach collection="mailCollection" item="mail" index="index" open="" close="" separator="">-->
+<!--            update `send_mail`-->
+<!--            <set>-->
+<!--                <if test="mail.state != 0">-->
+<!--                    state = #{mail.state}-->
+<!--                </if>-->
+
+<!--            </set>-->
+<!--            where id = #{mail.id};-->
+<!--        </foreach>-->
+<!--    </update>-->
+
+</mapper>

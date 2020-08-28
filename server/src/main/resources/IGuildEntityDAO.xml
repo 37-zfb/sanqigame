@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IGuildEntityDAO">
+    <resultMap id="guildEntity" type="entity.db.GuildEntity">
+        <id property="id" column="id"/>
+        <result property="guildName" column="guild_name"/>
+        <result property="presidentId" column="president_id"/>
+    </resultMap>
+
+    <insert id="insertGuildBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
+        <foreach collection="addGuildEntityCollection" item="guild" index="index" open="" close="" separator="">
+            insert into `guild` (`id`,`guild_name`,`president_id`) values (#{guild.id},#{guild.guildName},#{guild.presidentId})
+        </foreach>
+    </insert>
+
+    <select id="selectGuildEntity" resultMap="guildEntity" resultType="list">
+        select * from `guild`
+    </select>
+
+    <delete id="deleteGuildEntityBatch" parameterType="collection">
+        <foreach collection="guildEntityCollection" item="guild" index="index" open="" close="" separator="">
+            delete from `guild` where id = #{guild.id}
+        </foreach>
+    </delete>
+
+<!--    <update id="updateMailBatch" parameterType="collection">-->
+<!--        <foreach collection="mailCollection" item="mail" index="index" open="" close="" separator="">-->
+<!--            update `send_mail`-->
+<!--            <set>-->
+<!--                <if test="mail.state != 0">-->
+<!--                    state = #{mail.state}-->
+<!--                </if>-->
+
+<!--            </set>-->
+<!--            where id = #{mail.id};-->
+<!--        </foreach>-->
+<!--    </update>-->
+
+</mapper>

@@ -1,6 +1,7 @@
 package client.scene;
 
 
+import entity.conf.guild.GuildRoleAuthEntity;
 import entity.conf.profession.WarriorSkillPropertyEntity;
 
 /**
@@ -73,7 +74,13 @@ public enum GameExcelSheetEnum {
     /**
      *  商店
      */
-    GoodsEntity("GoodsEntity", entity.conf.store.GoodsEntity.class)
+    GoodsEntity("GoodsEntity", entity.conf.store.GoodsEntity.class),
+
+    /**
+     * 公会
+     */
+    GuildRoleEntity("GuildRoleEntity", entity.conf.guild.GuildRoleEntity.class),
+    GuildRoleAuthEntity("GuildRoleAuthEntity", entity.conf.guild.GuildRoleAuthEntity.class),
     ;
 
 

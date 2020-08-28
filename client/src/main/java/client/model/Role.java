@@ -2,6 +2,7 @@ package client.model;
 
 import client.model.arena.PlayArenaClient;
 import client.model.deal.PlayDealClient;
+import client.model.guild.PlayGuildClient;
 import client.model.server.duplicate.Duplicate;
 import client.model.server.profession.Skill;
 import client.model.server.props.Equipment;
@@ -144,6 +145,11 @@ public class Role {
     private boolean isAnswer = false;
 
     private boolean isDeal = false;
+
+    /**
+     *  公会系统
+     */
+    private PlayGuildClient playGuildClient;
 
     private static final Role role = new Role();
 

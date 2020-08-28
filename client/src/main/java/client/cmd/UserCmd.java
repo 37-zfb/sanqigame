@@ -20,10 +20,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 import msg.GameMsg;
-import type.ChatType;
-import type.EquipmentType;
-import type.MailType;
-import type.PropsType;
+import type.*;
 
 import java.util.Collection;
 import java.util.Map;
@@ -102,6 +99,7 @@ public class UserCmd {
                     System.out.println("======>25:同意交易;");
                     System.out.println("======>26:拒绝交易;");
                     System.out.println("======>27:进入交易界面;");
+                    System.out.println("======>28:公会;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -182,7 +180,7 @@ public class UserCmd {
                         Map<Integer, Props> backpackClient = role.getBackpackClient();
                         System.out.println("背包空间: " + backpackClient.size() + "/100");
                         System.out.println("道具如下:");
-                        System.out.println("金币: "+role.getMoney());
+                        System.out.println("金币: " + role.getMoney());
                         for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
                             if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Equipment) {
                                 System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
@@ -430,6 +428,54 @@ public class UserCmd {
                         // 建立交易通道
                         DealThread.getInstance().process(ctx, role);
                         return null;
+                    } else if ("28".equals(command)) {
+                        //公会操作
+                        System.out.println("===>1:创建公会,需要200000金币;");
+                        System.out.println("===>2:解散公会;");
+                        System.out.println("===>3:任命;");
+                        System.out.println("===>4:发送公会邮件;");
+                        System.out.println("===>5:退出公会;");
+                        System.out.println("===>6:踢出公会;");
+                        System.out.println("===>7:查看公会仓库;");
+                        System.out.println("===>8:查看公会成员;");
+                        System.out.println("===>9:申请加入公会,公会列表;");
+                        if (role.getPlayGuildClient() != null) {
+                            System.out.println("公会名称: " + role.getPlayGuildClient().getGuildName());
+                            System.out.println("公会职位: " + role.getPlayGuildClient().getType());
+                        }
+                        int nextInt = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (nextInt == 1) {
+                            System.out.println("请输入公会名称:");
+                            String name = scanner.nextLine();
+
+                            return GameMsg.UserCreateGuildCmd.newBuilder()
+                                    .setGuildName(name)
+                                    .build();
+                        } else if (nextInt == 2) {
+                            if (!role.getPlayGuildClient().getType().equals(GuildMemberType.President.getRoleName())) {
+                                System.out.println("你不是会长;");
+                                continue;
+                            }
+                            return GameMsg.UserDissolveGuildCmd.newBuilder().build();
+                        } else if (nextInt == 3) {
+
+                        } else if (nextInt == 4) {
+
+                        } else if (nextInt == 5) {
+                            return GameMsg.QuitGuildCmd.newBuilder().build();
+                        } else if (nextInt == 6) {
+
+                        } else if (nextInt == 7) {
+
+                        } else if (nextInt == 8) {
+                            return GameMsg.ShowGuildMemberCmd.newBuilder().build();
+                        } else if (nextInt == 9) {
+                            return GameMsg.ShowGuildCmd.newBuilder().build();
+                        }
+
+                        return null;
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -501,8 +547,18 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.UserQuitTeamCmd) cmd);
         } else if (cmd instanceof GameMsg.DealTargetUserResponseCmd) {
             ctx.writeAndFlush((GameMsg.DealTargetUserResponseCmd) cmd);
-        }else if (cmd instanceof GameMsg.DealChannelCmd){
-            ctx.writeAndFlush((GameMsg.DealChannelCmd)cmd);
+        } else if (cmd instanceof GameMsg.DealChannelCmd) {
+            ctx.writeAndFlush((GameMsg.DealChannelCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserCreateGuildCmd) {
+            ctx.writeAndFlush((GameMsg.UserCreateGuildCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserDissolveGuildCmd) {
+            ctx.writeAndFlush((GameMsg.UserDissolveGuildCmd) cmd);
+        } else if (cmd instanceof GameMsg.ShowGuildCmd) {
+            ctx.writeAndFlush((GameMsg.ShowGuildCmd) cmd);
+        } else if (cmd instanceof GameMsg.ShowGuildMemberCmd) {
+            ctx.writeAndFlush((GameMsg.ShowGuildMemberCmd) cmd);
+        } else if (cmd instanceof GameMsg.QuitGuildCmd) {
+            ctx.writeAndFlush((GameMsg.QuitGuildCmd) cmd);
         }
 
 

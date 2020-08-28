@@ -1,4 +1,4 @@
-package server.model.guild;
+package client.model.server.guild;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
