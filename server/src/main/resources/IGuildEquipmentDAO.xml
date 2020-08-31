@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IGuildEquipmentDAO">
+    <resultMap id="guildEquipment" type="entity.db.DbGuildEquipment">
+        <id property="id" column="id"/>
+        <result property="guildId" column="guild_id"/>
+        <result property="propsId" column="props_id"/>
+        <result property="durability" column="durability"/>
+        <result property="location" column="location"/>
+    </resultMap>
+
+
+    <select id="selectGuildEquipment" resultMap="guildEquipment" resultType="list">
+        SELECT * FROM `guild_equipment` WHERE guild_id = #{guildId} ;
+    </select>
+
+    <insert id="insertEquipmentBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="collection">
+        <foreach collection="addGuildEquipmentList" item="equipment" index="index" open="" close="" separator="">
+            INSERT INTO `guild_equipment` ( guild_id, `props_id`,`durability`,`location` ) VALUES (
+            #{equipment.guildId},#{equipment.propsId} ,#{equipment.durability},#{equipment.location});
+        </foreach>
+    </insert>
+
+    <delete id="deleteEquipmentBatch" parameterType="collection">
+        <foreach collection="deleteGuildEquipmentList" item="equipment" index="index" open="" close="" separator="">
+            DELETE FROM `guild_equipment` WHERE guild_id=#{equipment.guildId} AND location = #{equipment.location};
+        </foreach>
+    </delete>
+
+    <!--<update id="updateEquipmentState" parameterType="int">
+        UPDATE `user_equipment` SET  is_wear = #{state},location=#{location} WHERE id = #{id}
+    </update>-->
+
+    <!--<update id="updateEquipmentDurability" parameterType="int">
+         UPDATE `user_equipment` SET  durability = #{durability} WHERE id = #{id}
+    </update>-->
+    <!--<update id="modifyEquipmentBatch" parameterType="collection">
+        <foreach collection="userEquipmentCollection" item="equipment" index="index" open="" close="" separator="">
+            UPDATE `user_equipment`
+            SET is_wear = #{equipment.state},location=#{equipment.location},durability = #{equipment.durability}
+            WHERE id = #{equipment.id};
+        </foreach>
+    </update>-->
+
+</mapper>
+
+

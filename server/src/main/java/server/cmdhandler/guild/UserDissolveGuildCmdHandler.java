@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import server.GuildManager;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.PlayGuild;
@@ -16,6 +17,7 @@ import server.model.User;
 import server.model.UserManager;
 import server.timer.guild.DbGuildTimer;
 import server.timer.state.DbUserStateTimer;
+import type.GuildMemberType;
 import util.MyUtil;
 
 /**
@@ -49,14 +51,20 @@ public class UserDissolveGuildCmdHandler implements ICmdHandler<GameMsg.UserDiss
         guildTimer.deleteGuildEntity(playGuild.getGuildEntity());
         guildTimer.deleteGuildMemberEntity(playGuild.getGuildMemberMap());
 
+        GuildManager.removeGuild(playGuild);
         log.info("用户: {} 解散 公会: {}", user.getUserName(),playGuild.getGuildEntity().getGuildName());
 
         //改变所有公会用户的公会状态,并通知在线用户
         for (GuildMemberEntity guildMemberEntity : playGuild.getGuildMemberMap().values()) {
-            userStateTimer.addModifyGuildStateSet(guildMemberEntity.getUserId());
+            CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(UserManager.getUserById(guildMemberEntity.getUserId()));
+            userState.setGuildId(GuildMemberType.Public.getRoleId());
+            userStateTimer.modifyUserState(userState);
             if (guildMemberEntity.isOnline()) {
                 User guildMember = UserManager.getUserById(guildMemberEntity.getUserId());
-                GameMsg.UserDissolveGuildResult build = newBuilder.setUserId(guildMember.getUserId()).build();
+
+                GameMsg.UserDissolveGuildResult build = newBuilder
+                        .setUserId(user.getUserId())
+                        .build();
                 guildMember.setPlayGuild(null);
                 guildMember.getCtx().writeAndFlush(build);
             }

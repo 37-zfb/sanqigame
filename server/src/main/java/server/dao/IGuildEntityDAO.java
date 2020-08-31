@@ -29,4 +29,12 @@ public interface IGuildEntityDAO {
      * @param guildEntityCollection
      */
     void deleteGuildEntityBatch(@Param("guildEntityCollection") Collection<GuildEntity> guildEntityCollection);
+
+    /**
+     *
+     * 批量修改公会信息
+     * @param guildEntityCollection
+     * @return
+     */
+    int updateGuildBatch(@Param("guildEntityCollection") Collection<GuildEntity> guildEntityCollection);
 }

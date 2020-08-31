@@ -53,6 +53,9 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         User user = UserManager.getUserById(userId);
         user.setCurrDuplicate(null);
 
+        if (user.getPlayGuild() != null) {
+            user.getPlayGuild().getGuildMemberMap().get(userId).setOnline(false);
+        }
         CurrUserStateEntity userStateEntity = PublicMethod.getInstance().createUserState(user);
 
         // 保存用户所在地

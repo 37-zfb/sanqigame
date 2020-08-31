@@ -24,6 +24,7 @@ import server.model.scene.Monster;
 import server.model.scene.Npc;
 import server.model.scene.Scene;
 import server.scene.GameData;
+import server.service.GuildService;
 import server.service.MailService;
 import server.service.UserService;
 import server.Broadcast;
@@ -51,6 +52,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     private UserService userService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private GuildService guildService;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserLoginCmd cmd) {
@@ -284,9 +287,15 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         user.setMoney(userState.getMoney());
 
         if (!userState.getGuildId().equals(GuildMemberType.Public.getRoleId())) {
-            PlayGuild playGuild = GuildManager.getGuild(userState.getGuildId());
-            playGuild.getGuildMemberMap().get(user.getUserId()).setOnline(true);
-            user.setPlayGuild(playGuild);
+            GuildMemberEntity memberEntity = guildService.findGuildMemberById(user.getUserId());
+            if (memberEntity != null){
+                PlayGuild playGuild = GuildManager.getGuild(userState.getGuildId());
+                playGuild.getGuildMemberMap().get(user.getUserId()).setOnline(true);
+                user.setPlayGuild(playGuild);
+            }else {
+                userState.setGuildId(GuildMemberType.Public.getRoleId());
+                userService.modifyUserState(userState);
+            }
         }
 
         // 封装技能

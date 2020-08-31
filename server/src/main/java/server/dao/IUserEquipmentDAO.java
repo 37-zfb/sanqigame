@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import entity.db.UserEquipmentEntity;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,4 +42,22 @@ public interface IUserEquipmentDAO {
      * @param durability
      */
     void updateEquipmentDurability(@Param("id") Integer id,@Param("durability") Integer durability);
+
+    /**
+     * 批量添加装备信息
+     * @param equipmentCollection
+     */
+    void insertEquipmentBatch(@Param("equipmentCollection") Collection<UserEquipmentEntity> equipmentCollection);
+
+    /**
+     * 删除装备
+     * @param equipmentCollection
+     */
+    void deleteEquipmentBatch(@Param("equipmentCollection") Collection<UserEquipmentEntity> equipmentCollection);
+
+    /**
+     * 批量修改装备
+     * @param userEquipmentCollection
+     */
+    void modifyEquipmentBatch(@Param("userEquipmentCollection") Collection<UserEquipmentEntity> userEquipmentCollection);
 }

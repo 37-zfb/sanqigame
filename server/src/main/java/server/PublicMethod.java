@@ -27,6 +27,7 @@ import server.model.UserManager;
 import server.service.UserService;
 import server.timer.BossAttackTimer;
 import server.timer.MonsterAttakTimer;
+import server.timer.state.DbUserStateTimer;
 import type.DuplicateType;
 import type.PropsType;
 
@@ -44,7 +45,7 @@ public final class PublicMethod {
 
     private static final PublicMethod PUBLIC_METHOD = new PublicMethod();
 
-    private final UserService userService = GameServer.APPLICATION_CONTEXT.getBean(UserService.class);
+    private final DbUserStateTimer userStateTimer = GameServer.APPLICATION_CONTEXT.getBean(DbUserStateTimer.class);
 
     private PublicMethod() {
     }
@@ -72,7 +73,6 @@ public final class PublicMethod {
         userStateEntity.setMoney(user.getMoney());
 
         if (user.getPlayGuild()!=null){
-            user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).setOnline(false);
             userStateEntity.setGuildId(user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).getGuildId());
         }else {
             userStateEntity.setGuildId(0);
@@ -391,7 +391,9 @@ public final class PublicMethod {
                 break;
             }
         }
-        userService.addEquipment(userEquipmentEntity);
+
+        userStateTimer.addUserEquipment(userEquipmentEntity);
+//        userService.addEquipment(userEquipmentEntity);
         equ.setId(userEquipmentEntity.getId());
 
     }
@@ -416,12 +418,12 @@ public final class PublicMethod {
         userPotionEntity.setPropsId(potion.getPropsId());
 
         boolean isExist = false;
-        for (Props pro : backpack.values()) {
+        for (Map.Entry<Integer, Props> pro : backpack.entrySet()) {
             // 查询背包中是否有该药剂
-            if (potion.getPropsId().equals(pro.getId())) {
+            if (potion.getPropsId().equals(pro.getValue().getId())) {
                 // 判断该药剂的数量是否达到上限
                 // 背包中已有该药剂
-                Potion po = (Potion) pro.getPropsProperty();
+                Potion po = (Potion) pro.getValue().getPropsProperty();
                 if ((po.getNumber() + number) > PotionConst.POTION_MAX_NUMBER) {
                     throw new CustomizeException(CustomizeErrorCode.PROPS_REACH_LIMIT);
                 }
@@ -430,6 +432,8 @@ public final class PublicMethod {
                 isExist = true;
 
                 userPotionEntity.setNumber(po.getNumber());
+                userPotionEntity.setLocation(pro.getKey());
+                userStateTimer.modifyUserPotion(userPotionEntity);
                 break;
             }
         }
@@ -454,17 +458,10 @@ public final class PublicMethod {
                     userPotionEntity.setLocation(i);
                     // 药剂添加进背包
                     backpack.put(i, pro);
+                    userStateTimer.addUserPotion(userPotionEntity);
                     break;
                 }
             }
-        }
-        userService.addPotion(userPotionEntity);
-//        if (potionId != null) {
-//            userPotionEntity.setId(potionId);
-        userPotionEntity.setId(userPotionEntity.getId());
-//        }
-        if (po != null) {
-            po.setId(userPotionEntity.getId());
         }
     }
 

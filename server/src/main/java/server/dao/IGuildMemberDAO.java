@@ -30,4 +30,17 @@ public interface IGuildMemberDAO {
      * @param guildMemberEntityCollection
      */
     void deleteGuildMemberBatch(@Param("guildMemberEntityCollection") Collection<GuildMemberEntity> guildMemberEntityCollection);
+
+    /**
+     * 通过id 获取信息
+     * @param userId
+     * @return
+     */
+    GuildMemberEntity selectGuildMemberByUserId(@Param("userId") int userId);
+
+    /**
+     * 批量修改公会成员信息
+     * @param guildMemberCollection
+     */
+    void updateGuildMemberBatch(Collection<GuildMemberEntity> guildMemberCollection);
 }

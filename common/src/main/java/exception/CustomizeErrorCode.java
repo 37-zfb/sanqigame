@@ -61,6 +61,14 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     GUILD_REACH_LIMIT(-425,"公会人数已到达上限;"),
     NOT_JOIN_GUILD(-426,"未加入公会;"),
     NO_HAVE_MEMBER(-427,"没有该成员;"),
+    WAREHOUSE_NO_PROPS(-428,"没有此道具;"),
+    WAREHOUSE_NO_MONEY(-429,"没有怎么多钱;"),
+    USER_NOT_PROPS(-430,"用户没有此道具;"),
+    WAREHOUSE_SPACE_INSUFFICIENT(-431,"仓库空间不足;"),
+    POTION_INSUFFICIENT(-432,"药剂数量不够;"),
+    PROPS_NOT_EXIST(-433,"道具不存在;"),
+    AUTH_NOT_ENOUGH(-434,"权限不够;"),
+    WAREHOUSE_POTION_NUMBER_NOT_ENOUGH(-435,"药剂数量不足;"),
 
     ;
 

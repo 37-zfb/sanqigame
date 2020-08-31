@@ -1,5 +1,6 @@
 package server.cmdhandler.guild;
 
+import entity.db.CurrUserStateEntity;
 import entity.db.GuildMemberEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
@@ -48,7 +49,8 @@ public class QuitGuildCmdHandler implements ICmdHandler<GameMsg.QuitGuildCmd> {
         user.setPlayGuild(null);
 
         guildTimer.deleteGuildMemberEntity(guildMemberEntity);
-        userStateTimer.addModifyGuildStateSet(user.getUserId());
+        CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
+        userStateTimer.modifyUserState(userState);
         log.info("用户 {} 退出 {} 公会;", user.getUserName(),playGuild.getGuildEntity().getGuildName());
 
         GameMsg.QuitGuildResult quitGuildResult = GameMsg.QuitGuildResult.newBuilder()

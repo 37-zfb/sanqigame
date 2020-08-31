@@ -15,6 +15,7 @@ import client.model.server.store.Goods;
 import client.scene.GameData;
 import client.thread.BossThread;
 import client.thread.DealThread;
+import com.sun.org.apache.regexp.internal.RE;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -433,7 +434,7 @@ public class UserCmd {
                         System.out.println("===>1:创建公会,需要200000金币;");
                         System.out.println("===>2:解散公会;");
                         System.out.println("===>3:任命;");
-                        System.out.println("===>4:发送公会邮件;");
+//                        System.out.println("===>4:发送公会邮件;");
                         System.out.println("===>5:退出公会;");
                         System.out.println("===>6:踢出公会;");
                         System.out.println("===>7:查看公会仓库;");
@@ -460,15 +461,23 @@ public class UserCmd {
                             }
                             return GameMsg.UserDissolveGuildCmd.newBuilder().build();
                         } else if (nextInt == 3) {
-
+                            if (role.getPlayGuildClient().getType().equals(GuildMemberType.President.getRoleName())
+                                    || role.getPlayGuildClient().getType().equals(GuildMemberType.VicePresident.getRoleName())) {
+                                role.setAppoint(true);
+                                return GameMsg.ShowGuildMemberCmd.newBuilder().build();
+                            }
                         } else if (nextInt == 4) {
 
                         } else if (nextInt == 5) {
                             return GameMsg.QuitGuildCmd.newBuilder().build();
                         } else if (nextInt == 6) {
-
+                            if (role.getPlayGuildClient().getType().equals(GuildMemberType.President.getRoleName())
+                                    || role.getPlayGuildClient().getType().equals(GuildMemberType.VicePresident.getRoleName())) {
+                                role.setEliminate(true);
+                                return GameMsg.ShowGuildMemberCmd.newBuilder().build();
+                            }
                         } else if (nextInt == 7) {
-
+                            return GameMsg.LookGuildWarehouseCmd.newBuilder().build();
                         } else if (nextInt == 8) {
                             return GameMsg.ShowGuildMemberCmd.newBuilder().build();
                         } else if (nextInt == 9) {
@@ -559,6 +568,8 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.ShowGuildMemberCmd) cmd);
         } else if (cmd instanceof GameMsg.QuitGuildCmd) {
             ctx.writeAndFlush((GameMsg.QuitGuildCmd) cmd);
+        }else if (cmd instanceof  GameMsg.LookGuildWarehouseCmd){
+            ctx.writeAndFlush(( GameMsg.LookGuildWarehouseCmd)cmd);
         }
 
 

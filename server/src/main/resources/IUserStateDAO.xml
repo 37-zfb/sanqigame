@@ -14,7 +14,8 @@
     </resultMap>
 
 
-    <insert id="insertUserSate" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.CurrUserStateEntity">
+    <insert id="insertUserSate" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="entity.db.CurrUserStateEntity">
         INSERT INTO `curr_user_state` ( user_id, curr_hp,curr_mp,curr_scene_id,base_damage, base_defense,money)
         VALUES ( #{userId}, #{currHp},#{currMp},#{currSceneId},#{baseDamage},#{baseDefense},#{money} );
     </insert>
@@ -28,6 +29,22 @@
         SET curr_hp = #{currHp},curr_mp=#{currMp},curr_scene_id=#{currSceneId},base_damage=#{baseDamage},
             base_defense=#{baseDefense},money=#{money} ,guild_id=#{guildId}
         WHERE user_id=#{userId}
+    </update>
+
+    <update id="updateUserStateBatch" parameterType="entity.db.CurrUserStateEntity">
+        <foreach collection="currUserStateCollection" item="userState" index="index" open="" close="" separator="">
+            update `curr_user_state`
+            <set>
+                curr_hp = #{userState.currHp},
+                curr_mp=#{userState.currMp},
+                curr_scene_id=#{userState.currSceneId},
+                base_damage=#{userState.baseDamage},
+                base_defense=#{userState.baseDefense},
+                money=#{userState.money},
+                guild_id = #{userState.guildId}
+            </set>
+            where user_id = #{userState.userId};
+        </foreach>
     </update>
 
     <update id="updateUserMoney" parameterType="int">

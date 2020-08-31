@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import entity.db.CurrUserStateEntity;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -32,6 +33,11 @@ public interface IUserStateDAO {
      * @param currUserState 用户状态
      */
     void updateUserState(CurrUserStateEntity currUserState);
+    /**
+     *  修改当前用户状态
+     * @param currUserStateCollection 用户状态
+     */
+    void updateUserStateBatch(@Param("currUserStateCollection") Collection<CurrUserStateEntity> currUserStateCollection);
 
 
     /**

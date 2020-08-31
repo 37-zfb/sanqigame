@@ -15,4 +15,14 @@ public interface GuildConst {
      * 公会上限人数
      */
     int GUILD_MAX_NUMBER = 99;
+
+    /**
+     * 仓库最大容量
+     */
+    int WAREHOUSE_MAX = 100;
+
+    /**
+     * 公会仓库初始金币数
+     */
+    int INIT_WAREHOUSE_MONEY = 0;
 }

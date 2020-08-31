@@ -11,21 +11,42 @@
     </resultMap>
 
 
-
     <select id="selectEquipmentByUserIdAndState" resultMap="userEquipmentEntity" resultType="list">
         SELECT * FROM `user_equipment` WHERE user_id = #{userId} AND is_wear=#{state};
     </select>
 
-    <insert id="insertEquipment" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.UserEquipmentEntity">
+    <insert id="insertEquipment" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="entity.db.UserEquipmentEntity">
         INSERT INTO `user_equipment` ( user_id, `props_id`,`is_wear`,`durability`,`location` ) VALUES ( #{userId}, #{propsId} ,#{isWear},#{durability},#{location});
     </insert>
+    <insert id="insertEquipmentBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="collection">
+        <foreach collection="equipmentCollection" item="equipment" index="index" open="" close="" separator="">
+            INSERT INTO `user_equipment` ( user_id, `props_id`,`is_wear`,`durability`,`location` ) VALUES (
+            #{equipment.userId},
+            #{equipment.propsId} ,#{equipment.isWear},#{equipment.durability},#{equipment.location});
+        </foreach>
+    </insert>
 
-    <update id="updateEquipmentState" parameterType="int" >
+    <delete id="deleteEquipmentBatch" parameterType="collection">
+        <foreach collection="equipmentCollection" item="equipment" index="index" open="" close="" separator="">
+            DELETE FROM `user_equipment` WHERE user_id=#{equipment.userId} AND location = #{equipment.location};
+        </foreach>
+    </delete>
+
+    <update id="updateEquipmentState" parameterType="int">
         UPDATE `user_equipment` SET  is_wear = #{state},location=#{location} WHERE id = #{id}
     </update>
 
     <update id="updateEquipmentDurability" parameterType="int">
          UPDATE `user_equipment` SET  durability = #{durability} WHERE id = #{id}
+    </update>
+    <update id="modifyEquipmentBatch" parameterType="collection">
+        <foreach collection="userEquipmentCollection" item="equipment" index="index" open="" close="" separator="">
+            UPDATE `user_equipment`
+            SET is_wear = #{equipment.state},location=#{equipment.location},durability = #{equipment.durability}
+            WHERE id = #{equipment.id};
+        </foreach>
     </update>
 
 </mapper>

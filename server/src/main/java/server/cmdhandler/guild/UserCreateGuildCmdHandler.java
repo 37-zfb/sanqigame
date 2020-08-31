@@ -1,6 +1,7 @@
 package server.cmdhandler.guild;
 
 import constant.GuildConst;
+import entity.db.CurrUserStateEntity;
 import entity.db.GuildEntity;
 import entity.db.GuildMemberEntity;
 import exception.CustomizeErrorCode;
@@ -16,6 +17,7 @@ import server.cmdhandler.ICmdHandler;
 import server.model.PlayGuild;
 import server.model.User;
 import server.timer.guild.DbGuildTimer;
+import server.timer.state.DbUserStateTimer;
 import type.GuildMemberType;
 import util.MyUtil;
 
@@ -29,6 +31,8 @@ public class UserCreateGuildCmdHandler implements ICmdHandler<GameMsg.UserCreate
 
     @Autowired
     private DbGuildTimer guildTimer;
+    @Autowired
+    private DbUserStateTimer userStateTimer;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserCreateGuildCmd userCreateGuildCmd) {
@@ -59,6 +63,7 @@ public class UserCreateGuildCmdHandler implements ICmdHandler<GameMsg.UserCreate
         guildEntity.setGuildName(guildName);
         guildEntity.setPresidentId(user.getUserId());
         guildEntity.setId(guildId);
+        guildEntity.setMoney(GuildConst.INIT_WAREHOUSE_MONEY);
 
         GuildMemberEntity guildMemberEntity = new GuildMemberEntity();
         guildMemberEntity.setGuildId(guildId);
@@ -74,6 +79,9 @@ public class UserCreateGuildCmdHandler implements ICmdHandler<GameMsg.UserCreate
         user.setMoney(user.getMoney()-GuildConst.CREATE_GUILD_MONEY);
         guildTimer.addGuildEntity(guildEntity);
         guildTimer.addGuildMemberEntity(guildMemberEntity);
+
+        CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
+        userStateTimer.modifyUserState(userState);
 
         log.info("用户 {} 创建了公会;", user.getUserName());
         GameMsg.UserCreateGuildResult userCreateGuildResult = GameMsg.UserCreateGuildResult.newBuilder()

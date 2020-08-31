@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import server.scene.GameData;
 import server.dao.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -134,6 +135,15 @@ public class UserService {
         userEquipmentDAO.insertEquipment(equipmentEntity);
         return equipmentEntity.getId();
     }
+
+    public void addEquipmentBatch(Collection<UserEquipmentEntity> equipmentCollection) {
+        if (equipmentCollection == null) {
+            log.error("equipmentCollection对象为空!");
+            return;
+        }
+        userEquipmentDAO.insertEquipmentBatch(equipmentCollection);
+    }
+
 
     /**
      * @param userId 用户id
@@ -306,9 +316,66 @@ public class UserService {
 
     /**
      * 更新用户 公会 状态
-     * @param guildStateSet
+     *
+     * @param stateSCollection
      */
-    public void modifyUserGuildState(Set<Integer> guildStateSet,Integer state) {
-        userState.updateGuildState(guildStateSet,state);
+    public void modifyUserGuildState(Collection<CurrUserStateEntity> stateSCollection) {
+        userState.updateUserStateBatch(stateSCollection);
+    }
+
+    /**
+     * 批量删除装备
+     *
+     * @param equipmentCollection
+     */
+    public void deleteEquipmentBatch(Collection<UserEquipmentEntity> equipmentCollection) {
+        if (equipmentCollection != null) {
+            userEquipmentDAO.deleteEquipmentBatch(equipmentCollection);
+        }
+    }
+
+    /**
+     * 批量修改装备
+     *
+     * @param userEquipmentCollection
+     */
+    public void modifyEquipmentBatch(Collection<UserEquipmentEntity> userEquipmentCollection) {
+        if (userEquipmentCollection != null) {
+            userEquipmentDAO.modifyEquipmentBatch(userEquipmentCollection);
+        }
+    }
+
+    /**
+     * 批量添加药剂
+     *
+     * @param potionEntityCollection
+     */
+    public void addPotionBatch(Collection<UserPotionEntity> potionEntityCollection) {
+        if (potionEntityCollection != null) {
+            userPotionDAO.insertPotionBatch(potionEntityCollection);
+        }
+    }
+
+    /**
+     * 批量修改药剂
+     *
+     * @param userPotionCollection
+     */
+    public void modifyPotionBatch(Collection<UserPotionEntity> userPotionCollection) {
+        if (userPotionCollection != null) {
+            int i = userPotionDAO.updatePotionBatch(userPotionCollection);
+//            System.out.println("更新结果 "+i);
+        }
+    }
+
+    /**
+     * 批量删除药剂
+     *
+     * @param userPotionCollection
+     */
+    public void deletePotionBatch(Collection<UserPotionEntity> userPotionCollection) {
+        if (userPotionCollection != null) {
+            userPotionDAO.deletePotionBatch(userPotionCollection);
+        }
     }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IGuildPotionDAO">
+    <resultMap id="guildPotion" type="entity.db.DbGuildPotion">
+        <id property="id" column="id"/>
+        <result property="guildId" column="guild_id"/>
+        <result property="propsId" column="props_id"/>
+        <result property="number" column="number"/>
+        <result property="location" column="location"/>
+    </resultMap>
+
+    <select id="selectGuildPotion" resultMap="guildPotion" resultType="list" parameterType="int">
+        SELECT * FROM `guild_potion` WHERE guild_id = #{guildId};
+    </select>
+
+
+    <!--<insert id="insertPotion" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="entity.db.UserPotionEntity">
+        INSERT INTO `user_potion` ( user_id, `props_id`,`number`,`location` ) VALUES ( #{userId}, #{propsId},#{number},#{location} );
+    </insert>-->
+    <insert id="insertPotionBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
+        <foreach collection="addGuildPotionList" item="potion" index="index" open="" close="" separator="">
+            INSERT INTO `guild_potion` ( guild_id, `props_id`,`number`,`location` ) VALUES ( #{potion.guildId},
+            #{potion.propsId},#{potion.number},#{potion.location} );
+        </foreach>
+    </insert>
+
+    <!--<update id="updatePotionNumber" parameterType="entity.db.UserPotionEntity">
+        UPDATE  `user_potion` SET `number` = #{number} where user_id = #{userId} and props_id = #{propsId};
+    </update>-->
+    <update id="updatePotionBatch" parameterType="collection">
+        <foreach collection="modifyGuildPotionList" item="potion" index="index" open="" close="" separator="">
+            UPDATE `guild_potion` SET `number` = #{potion.number} where guild_id = #{potion.guildId} and location =
+            #{potion.location};
+        </foreach>
+    </update>
+
+    <delete id="deletePotionBatch" parameterType="collection">
+        <foreach collection="deleteGuildPotionList" item="potion" index="index" open="" close="" separator="">
+            delete from `guild_potion` where guild_id = #{potion.guildId} and location=#{potion.location};
+        </foreach>
+    </delete>
+
+</mapper>
+
+

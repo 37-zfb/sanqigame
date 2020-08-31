@@ -52,6 +52,7 @@ public class UserConfirmDealCmdHandler implements ICmdHandler<GameMsg.UserConfir
         /**
          *  若不加锁： 当a用户给ab都+1后在if前一句线程切换(时间片到期等)此时b又给ab都+1，
          */
+
         synchronized (statusMonitor) {
             play_deal.setAgreeNumber(play_deal.getAgreeNumber()+1);
             targetUser.getPLAY_DEAL().setAgreeNumber(targetUser.getPLAY_DEAL().getAgreeNumber()+1);

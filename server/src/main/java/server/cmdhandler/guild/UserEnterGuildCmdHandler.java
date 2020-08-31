@@ -1,6 +1,7 @@
 package server.cmdhandler.guild;
 
 import constant.GuildConst;
+import entity.db.CurrUserStateEntity;
 import entity.db.GuildMemberEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
@@ -15,6 +16,7 @@ import server.cmdhandler.ICmdHandler;
 import server.model.PlayGuild;
 import server.model.User;
 import server.timer.guild.DbGuildTimer;
+import server.timer.state.DbUserStateTimer;
 import type.GuildMemberType;
 import util.MyUtil;
 
@@ -28,6 +30,8 @@ public class UserEnterGuildCmdHandler implements ICmdHandler<GameMsg.UserEnterGu
 
     @Autowired
     private DbGuildTimer guildTimer;
+    @Autowired
+    private DbUserStateTimer userStateTimer;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserEnterGuildCmd userEnterGuildCmd) {
@@ -64,6 +68,9 @@ public class UserEnterGuildCmdHandler implements ICmdHandler<GameMsg.UserEnterGu
 
         guildTimer.addGuildMemberEntity(guildMemberEntity);
         log.info("用户 {} 加入 {} 公会", user.getUserName(), guild.getGuildEntity().getGuildName());
+
+        CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
+        userStateTimer.modifyUserState(userState);
 
         GameMsg.Guild.Builder guildInfo = GameMsg.Guild.newBuilder()
                 .setGuildId(guildId)

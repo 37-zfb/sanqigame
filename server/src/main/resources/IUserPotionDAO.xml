@@ -21,10 +21,29 @@
             parameterType="entity.db.UserPotionEntity">
         INSERT INTO `user_potion` ( user_id, `props_id`,`number`,`location` ) VALUES ( #{userId}, #{propsId},#{number},#{location} );
     </insert>
+    <insert id="insertPotionBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
+        <foreach collection="potionEntityCollection" item="potion" index="index" open="" close="" separator="">
+            INSERT INTO `user_potion` ( user_id, `props_id`,`number`,`location` ) VALUES ( #{potion.userId},
+            #{potion.propsId},#{potion.number},#{potion.location} );
+        </foreach>
+    </insert>
 
     <update id="updatePotionNumber" parameterType="entity.db.UserPotionEntity">
         UPDATE  `user_potion` SET `number` = #{number} where user_id = #{userId} and props_id = #{propsId};
     </update>
+    <update id="updatePotionBatch" parameterType="collection">
+        <foreach collection="updateUserPotionCollection" item="potion" index="index" open="" close="" separator="">
+            UPDATE `user_potion` SET `number` = #{potion.number} where user_id = #{potion.userId} and location =
+            #{potion.location};
+        </foreach>
+    </update>
+
+    <delete id="deletePotionBatch" parameterType="collection">
+        <foreach collection="deleteUserPotionCollection" item="potion" index="index" open="" close="" separator="">
+            delete from `user_potion` where use_id = #{potion.userId} and  and location = #{potion.location};
+        </foreach>
+    </delete>
+
 </mapper>
 
 

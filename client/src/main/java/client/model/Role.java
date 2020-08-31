@@ -146,6 +146,10 @@ public class Role {
 
     private boolean isDeal = false;
 
+    private boolean isAppoint = false;
+
+    private boolean isEliminate = false;
+
     /**
      *  公会系统
      */

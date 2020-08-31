@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import entity.db.UserPotionEntity;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,4 +42,22 @@ public interface IUserPotionDAO {
      */
     List<UserPotionEntity> selectPotionByUserId(int userId);
 
+    /**
+     * 批量添加药剂
+     * @param potionEntityCollection
+     */
+    void insertPotionBatch(@Param("potionEntityCollection") Collection<UserPotionEntity> potionEntityCollection);
+
+    /**
+     * 批量修改药剂
+     * @param userPotionCollection
+     * @return
+     */
+    int updatePotionBatch(@Param("updateUserPotionCollection") Collection<UserPotionEntity> userPotionCollection);
+
+    /**
+     * 批量删除药剂
+     * @param userPotionCollection
+     */
+    void deletePotionBatch(@Param("deleteUserPotionCollection") Collection<UserPotionEntity> userPotionCollection);
 }

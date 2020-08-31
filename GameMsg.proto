@@ -192,6 +192,22 @@ enum MsgCode {
   LOOK_GUiLD_MEMBER_INFO_RESULT = 118;
   QUIT_GUILD_CMD = 119;
   QUIT_GUILD_RESULT = 120;
+  APPOINT_MEMBER_CMD = 121;
+  APPOINT_MEMBER_RESULT = 122;
+  ELIMINATE_GUILD_CMD = 123;
+  ELIMINATE_GUILD_RESULT = 124;
+  MODIFY_GUILD_POSITION_CMD = 125;
+  MODIFY_GUILD_STATE_CMD = 126;
+  LOOK_GUILD_WAREHOUSE_CMD = 127;
+  LOOK_GUILD_WAREHOUSE_RESULT = 128;
+  TAKE_OUT_PROPS_CMD = 129;
+  TAKE_OUT_PROPS_RESULT = 130;
+  PUT_IN_PROPS_CMD = 131;
+  PUT_IN_PROPS_RESULT = 132;
+  TAKE_OUT_MONEY_CMD = 133;
+  TAKE_OUT_MONEY_RESULT = 134;
+  PUT_IN_MONEY_CMD = 135;
+  PUT_IN_MONEY_RESULT = 136;
 
 
 
@@ -1027,4 +1043,55 @@ message QuitGuildCmd{
 }
 message  QuitGuildResult{
   string userName = 1;
+}
+// 任命公会成员
+message AppointMemberCmd{
+  uint32 userId = 1;
+  uint32 positionId = 2;
+}
+message AppointMemberResult{
+  uint32 positionId = 1;
+}
+// 踢出
+message EliminateGuildCmd{
+  uint32 userId = 1;
+}
+message EliminateGuildResult{
+}
+message ModifyGuildPositionCmd{
+  uint32 positionId = 1;
+}
+message ModifyGuildStateCmd{
+}
+// 查看公会仓库
+message LookGuildWarehouseCmd{
+}
+message LookGuildWarehouseResult{
+  uint32 money = 1;
+  repeated Props props = 2;
+}
+// 取出道具
+message TakeOutPropsCmd{
+  Props props = 1;
+  uint32 number= 2;
+}
+message TakeOutPropsResult{
+}
+// 放入道具
+message PutInPropsCmd{
+  Props props = 1;
+}
+message PutInPropsResult{
+}
+// 取出金币
+message TakeOutMoneyCmd{
+  uint32 money = 1;
+}
+message TakeOutMoneyResult{
+}
+// 放入金币
+message PutInMoneyCmd{
+  uint32 money = 1;
+}
+message PutInMoneyResult{
 }

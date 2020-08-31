@@ -25,4 +25,8 @@ public class GuildEntity {
      */
     private Integer presidentId;
 
+    /**
+     *  公会金币
+     */
+    private Integer money;
 }

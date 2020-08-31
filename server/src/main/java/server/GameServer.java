@@ -16,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import server.scene.ExcelReaderUtil;
 import server.cmdhandler.CmdHandlerFactory;
 import server.scene.GameData;
+import server.timer.guild.DbGuildTimer;
 
 /**
  * @author 张丰博
@@ -32,7 +33,7 @@ public class GameServer {
         ExcelReaderUtil.ReadData();
         GameData.getInstance().initGameData();
         Broadcast.init();
-
+        APPLICATION_CONTEXT.getBean(DbGuildTimer.class).initGuildManager();
 
         // Configure SSL.
         final SslContext sslCtx;

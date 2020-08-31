@@ -63,4 +63,8 @@ public final class GuildManager {
         return false;
     }
 
+    public static void removeGuild(PlayGuild playGuild){
+        GUILD_MAP.remove(playGuild.getId());
+    }
+
 }

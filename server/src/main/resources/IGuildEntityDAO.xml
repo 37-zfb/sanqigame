@@ -5,11 +5,12 @@
         <id property="id" column="id"/>
         <result property="guildName" column="guild_name"/>
         <result property="presidentId" column="president_id"/>
+        <result property="money" column="money"/>
     </resultMap>
 
     <insert id="insertGuildBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
         <foreach collection="addGuildEntityCollection" item="guild" index="index" open="" close="" separator="">
-            insert into `guild` (`id`,`guild_name`,`president_id`) values (#{guild.id},#{guild.guildName},#{guild.presidentId})
+            insert into `guild` (`id`,`guild_name`,`president_id`,`money`) values (#{guild.id},#{guild.guildName},#{guild.presidentId},#{guild.money})
         </foreach>
     </insert>
 
@@ -23,17 +24,22 @@
         </foreach>
     </delete>
 
-<!--    <update id="updateMailBatch" parameterType="collection">-->
-<!--        <foreach collection="mailCollection" item="mail" index="index" open="" close="" separator="">-->
-<!--            update `send_mail`-->
-<!--            <set>-->
-<!--                <if test="mail.state != 0">-->
-<!--                    state = #{mail.state}-->
-<!--                </if>-->
-
-<!--            </set>-->
-<!--            where id = #{mail.id};-->
-<!--        </foreach>-->
-<!--    </update>-->
+    <update id="updateGuildBatch" parameterType="collection">
+        <foreach collection="guildEntityCollection" item="guild" index="index" open="" close="" separator="">
+            update `guild`
+            <set>
+                <if test="guild.guildName != null">
+                    guild_name = #{guild.guildName},
+                </if>
+                <if test="guild.presidentId != null">
+                    president_id = #{guild.presidentId},
+                </if>
+                <if test="guild.money != null">
+                    money = #{guild.money}
+                </if>
+            </set>
+            where id = #{guild.id};
+        </foreach>
+    </update>
 
 </mapper>
