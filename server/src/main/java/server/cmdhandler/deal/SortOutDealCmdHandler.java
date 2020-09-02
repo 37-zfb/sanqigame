@@ -97,7 +97,8 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
             } else if (propsProperty.getType() == PropsType.Potion) {
                 Potion potion = (Potion) propsProperty;
                 //potion.getId() 是数据库中的 user_potion中的id ,, 缺少id 出异常
-                propsResult.setPropsNumber(potion.getNumber()).setUserPropsId(potion.getId());
+                propsResult.setPropsNumber(potion.getNumber());
+//                        .setUserPropsId(potion.getId());
             }
             newBuilder.addProps(propsResult);
         }

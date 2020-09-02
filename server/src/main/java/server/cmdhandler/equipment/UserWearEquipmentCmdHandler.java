@@ -1,4 +1,4 @@
-package server.cmdhandler.equipmenthandler;
+package server.cmdhandler.equipment;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
@@ -41,7 +41,7 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
 
         int location = userWearEquipmentCmd.getLocation();
         // 当前装备在 user_equipment 表中的id
-        int userEquipmentId = userWearEquipmentCmd.getUserEquipmentId();
+        long userEquipmentId = userWearEquipmentCmd.getUserEquipmentId();
 
         // 背包
         Map<Integer, Props> backpack = user.getBackpack();

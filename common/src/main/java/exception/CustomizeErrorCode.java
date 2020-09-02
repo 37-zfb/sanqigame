@@ -70,6 +70,11 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     AUTH_NOT_ENOUGH(-434,"权限不够;"),
     WAREHOUSE_POTION_NUMBER_NOT_ENOUGH(-435,"药剂数量不足;"),
 
+    /**
+     * 拍卖行
+     */
+    ADD_ITEM_ERROR(-436,"添加拍卖品失败;"),
+    ITEM_NOT_FOUNT(-437,"拍卖品不存在;"),
     ;
 
     private String message;

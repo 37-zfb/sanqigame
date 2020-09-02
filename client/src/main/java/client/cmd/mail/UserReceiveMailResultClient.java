@@ -1,5 +1,9 @@
 package client.cmd.mail;
 
+import client.model.server.props.Equipment;
+import client.model.server.props.Potion;
+import client.model.server.props.Props;
+import client.scene.GameData;
 import client.thread.CmdThread;
 import client.cmd.ICmd;
 import client.model.MailClient;
@@ -10,6 +14,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import type.MailType;
+import type.PropsType;
 import util.MyUtil;
 
 import java.util.List;
@@ -25,17 +30,60 @@ public class UserReceiveMailResultClient implements ICmd<GameMsg.UserReceiveMail
 
         MyUtil.checkIsNull(ctx, userReceiveMailResult);
 
-        List<Integer> mailIdList = userReceiveMailResult.getMailIdList();
+        List<Long> mailIdList = userReceiveMailResult.getMailIdList();
         Role role = Role.getInstance();
         MailClient mail = role.getMail();
-        Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
-        for (Integer mailId : mailIdList) {
-            mailMap.get(mailId).setMailType(MailType.READ);
+        Map<Long, MailEntityClient> mailMap = mail.getMailMap();
+        for (Long mailId : mailIdList) {
+            MailEntityClient mailEntityClient = mailMap.get(mailId);
+            System.out.println(mailEntityClient);
+            mailEntityClient.setMailType(MailType.READ);
+
         }
+        role.setMoney(userReceiveMailResult.getMoney());
+        backpack(role,userReceiveMailResult.getPropsList());
 //        if (mailMap.size() <= 0) {
 //            mail.setHave(false);
 //        }
 
         CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+    }
+    private void backpack(Role role,List<GameMsg.Props> propsList){
+        Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
+        Map<Integer, Props> backpackClient = role.getBackpackClient();
+        for (GameMsg.Props props : propsList) {
+            Props pro = propsMap.get(props.getPropsId());
+            if (pro.getPropsProperty().getType() == PropsType.Equipment){
+                Equipment equipment = (Equipment) pro.getPropsProperty();
+
+                Equipment propsProperty =
+                        //props.getUserPropsId() 是 表 user_equipment 中的id
+                        new Equipment(props.getUserPropsId(),
+                                equipment.getPropsId(),
+                                props.getDurability(),
+                                equipment.getDamage(),
+                                equipment.getEquipmentType());
+
+                backpackClient.put(props.getLocation(), new Props(props.getPropsId(), pro.getName(), propsProperty));
+            }else if (pro.getPropsProperty().getType() == PropsType.Potion){
+
+
+                Potion potion = (Potion) pro.getPropsProperty();
+
+                Potion propsProperty =
+                        //props.getUserPropsId() 是 表 user_potion 中的id
+                        new Potion(props.getUserPropsId(),
+                                potion.getPropsId(),
+                                potion.getCdTime(),
+                                potion.getInfo(),
+                                potion.getResumeFigure(),
+                                potion.getPercent(),
+                                props.getPropsNumber());
+
+                backpackClient.put(props.getLocation(),new Props(props.getPropsId(),pro.getName(), propsProperty));
+            }
+
+
+        }
     }
 }

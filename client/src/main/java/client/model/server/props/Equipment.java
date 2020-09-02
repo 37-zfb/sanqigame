@@ -34,7 +34,7 @@ public class Equipment extends AbstractPropsProperty {
      */
     private EquipmentType equipmentType;
 
-    public Equipment(Integer id, Integer propsId, Integer durability, Integer damage, EquipmentType equipmentType) {
+    public Equipment(Long id, Integer propsId, Integer durability, Integer damage, EquipmentType equipmentType) {
         super(id, propsId);
         this.durability = durability;
         this.damage = damage;

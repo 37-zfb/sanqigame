@@ -1,4 +1,4 @@
-package server.cmdhandler.equipmenthandler;
+package server.cmdhandler.equipment;
 
 import constant.EquipmentConst;
 import io.netty.channel.ChannelHandlerContext;

@@ -16,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import server.scene.ExcelReaderUtil;
 import server.cmdhandler.CmdHandlerFactory;
 import server.scene.GameData;
+import server.timer.auction.DbAuctionTimer;
 import server.timer.guild.DbGuildTimer;
 
 /**
@@ -34,6 +35,7 @@ public class GameServer {
         GameData.getInstance().initGameData();
         Broadcast.init();
         APPLICATION_CONTEXT.getBean(DbGuildTimer.class).initGuildManager();
+        APPLICATION_CONTEXT.getBean(DbAuctionTimer.class).init();
 
         // Configure SSL.
         final SslContext sslCtx;

@@ -15,7 +15,7 @@ public class PotionEntity {
     /**
      * id
      */
-    private Integer id;
+    private int id;
 
 
     /**

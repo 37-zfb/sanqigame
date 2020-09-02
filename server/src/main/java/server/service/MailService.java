@@ -64,29 +64,42 @@ public class MailService {
         if (overdueMail.size() >0){
             sendMailDAO.updateMailBatch(overdueMail);
         }
-
         return unreadMail;
-
     }
 
+    /**
+     * 改变邮件状态
+     * @param mailCollection
+     */
     @Transactional(rollbackFor = Exception.class)
     public void modifyMailState(Collection<DbSendMailEntity> mailCollection) {
         if (mailCollection == null || mailCollection.size() == 0) {
             return;
         }
-//        for (DbSendMailEntity mailEntity : mailCollection) {
-//            if (mailEntity.getState().equals(MailType.UNREAD.getState())){
-//                // 如果还是未读,则不进行处理
-//                continue;
-//            }
-//        }
         sendMailDAO.updateMailBatch(mailCollection);
     }
 
+    /**
+     * 通过邮件用户id和邮件标题获取邮件信息
+     * @param userId
+     * @param title
+     * @return
+     */
     public DbSendMailEntity findMailInfoByUserIdAndTitle(int userId, String title) {
         if (userId <=0 || title == null){
             return null;
         }
         return sendMailDAO.selectMailByUserIdAndTitle(userId,title);
+    }
+
+    /**
+     * 添加邮件信息
+     * @param addMailList
+     */
+    public void addMailInfoBatch(List<DbSendMailEntity> addMailList) {
+        if (addMailList == null || addMailList.size()==0){
+            return;
+        }
+        sendMailDAO.insertMailBatch(addMailList);
     }
 }

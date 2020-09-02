@@ -13,9 +13,18 @@
         <result property="state" column="state"/>
     </resultMap>
 
-    <insert id="insertMail" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.UserEntity">
-        INSERT INTO `send_mail` ( `title`,`target_user_id`, `src_user_id`,`props_info`,`money`,`date`,`state`,`src_user_name` )
-        VALUES ( #{title},#{targetUserId}, #{srcUserId},#{propsInfo} ,#{money},#{date},#{state},#{srcUserName});
+    <insert id="insertMail" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+            parameterType="entity.db.UserEntity">
+        INSERT INTO `send_mail` (`id`, `title`,`target_user_id`, `src_user_id`,`props_info`,`money`,`date`,`state`,`src_user_name` )
+        VALUES (#{id}, #{title},#{targetUserId}, #{srcUserId},#{propsInfo} ,#{money},#{date},#{state},#{srcUserName});
+    </insert>
+    <insert id="insertMailBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
+        <foreach collection="addMailList" item="mail" index="index" open="" close="" separator="">
+            INSERT INTO `send_mail` (`id`, `title`,`target_user_id`,
+            `src_user_id`,`props_info`,`money`,`date`,`state`,`src_user_name` )
+            VALUES (#{mail.id}, #{mail.title},#{mail.targetUserId},
+            #{mail.srcUserId},#{mail.propsInfo},#{mail.money},#{mail.date},#{mail.state},#{mail.srcUserName});
+        </foreach>
     </insert>
 
 
@@ -31,10 +40,7 @@
         <foreach collection="mailCollection" item="mail" index="index" open="" close="" separator="">
             update `send_mail`
             <set>
-                <if test="mail.state != 0">
-                    state = #{mail.state}
-                </if>
-
+                state = #{mail.state}
             </set>
             where id = #{mail.id};
         </foreach>

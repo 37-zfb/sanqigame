@@ -14,6 +14,7 @@ import server.model.MailProps;
 import server.model.User;
 import server.model.UserManager;
 import server.service.MailService;
+import server.timer.mail.DbSendMailTimer;
 import type.MailType;
 import util.MyUtil;
 
@@ -24,13 +25,16 @@ import java.util.List;
 
 /**
  * @author 张丰博
+ * 发送邮件
  */
 @Slf4j
 @Component
 public class SendMailCmdHandler implements ICmdHandler<GameMsg.SendMailCmd> {
 
+
+
     @Autowired
-    private MailService mailService;
+    private DbSendMailTimer sendMailTimer;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.SendMailCmd sendMailCmd) {
@@ -62,14 +66,14 @@ public class SendMailCmdHandler implements ICmdHandler<GameMsg.SendMailCmd> {
 
         GameMsg.SendMailResult.Builder newBuilder = GameMsg.SendMailResult.newBuilder();
         try {
-            mailService.addMailInfo(dbSendMailEntity);
+            sendMailTimer.addMailList(dbSendMailEntity);
 
             User targetUser = UserManager.getUserById(targetUserId);
 
             if (targetUser != null) {
                 log.info("{} 发送给 {} 邮件;" + user.getUserName(), targetUser.getUserName());
                 // 加入缓存中
-                targetUser.getMail().getMailEntityMap().put(dbSendMailEntity.getId(),dbSendMailEntity);
+                targetUser.getMail().addMail(dbSendMailEntity);
 
                 GameMsg.MailInfo.Builder mailInfoBuilder = GameMsg.MailInfo.newBuilder()
                         .setTitle(dbSendMailEntity.getTitle())

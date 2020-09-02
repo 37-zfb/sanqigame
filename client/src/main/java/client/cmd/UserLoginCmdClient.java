@@ -162,7 +162,7 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
     private void initMail(Role role, GameMsg.UserLoginResult userLoginResult) {
         // 初始化邮件系统
         MailClient mail = role.getMail();
-        Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
+        Map<Long, MailEntityClient> mailMap = mail.getMailMap();
         List<GameMsg.MailInfo> mailInfoList = userLoginResult.getMailInfoList();
         for (GameMsg.MailInfo mailInfo : mailInfoList) {
             mailMap.put(mailInfo.getMailId(), new MailEntityClient(mailInfo.getMailId(), mailInfo.getSrcUserName(), mailInfo.getTitle()));

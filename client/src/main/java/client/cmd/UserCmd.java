@@ -24,6 +24,7 @@ import msg.GameMsg;
 import type.*;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -101,6 +102,7 @@ public class UserCmd {
                     System.out.println("======>26:拒绝交易;");
                     System.out.println("======>27:进入交易界面;");
                     System.out.println("======>28:公会;");
+                    System.out.println("======>29:拍卖行;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -352,23 +354,22 @@ public class UserCmd {
                         // 查看邮箱
                         MailClient mail = role.getMail();
                         if (mail.isHave()) {
-                            Map<Integer, MailEntityClient> mailMap = mail.getMailMap();
+                            Map<Long, MailEntityClient> mailMap = mail.getMailMap();
                             System.out.println("0、全部领取;");
                             for (MailEntityClient mailEntityClient : mailMap.values()) {
                                 System.out.println(mailEntityClient.getId() + "、" + mailEntityClient.getTitle() + "。 来自:" + mailEntityClient.getSrcUserName() + " " + mailEntityClient.getMailType().getState());
                             }
                             System.out.println("999、清理邮件;");
                             System.out.println("===================");
-                            int mailId = scanner.nextInt();
+                            long mailId = scanner.nextLong();
+                            scanner.nextLine();
                             GameMsg.UserReceiveMailCmd.Builder newBuilder = GameMsg.UserReceiveMailCmd.newBuilder();
                             if (mailId == 0) {
                                 newBuilder.setMailId(MailType.RECEIVE_ALL.getState());
                             } else if (mailId == 999) {
-                                for (MailEntityClient mailEntityClient : mailMap.values()) {
-                                    if (mailEntityClient.getMailType() == MailType.READ) {
-                                        mailMap.remove(mailEntityClient.getId());
-                                    }
-                                }
+
+                                mailMap.entrySet().removeIf(next -> next.getValue().getMailType() == MailType.READ);
+
                                 mail.setHave(mailMap.size() > 0);
                                 return GameMsg.UserCleanMailCmd.newBuilder().build();
                             } else {
@@ -485,6 +486,74 @@ public class UserCmd {
                         }
 
                         return null;
+                    } else if ("29".equals(command)) {
+                        //拍卖行
+                        System.out.println("0、退出;");
+                        System.out.println("1、上架物品;");
+                        System.out.println("2、查看物品;");
+                        System.out.println("3、查看上架物品;");
+                        int nextInt = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (0 == nextInt) {
+
+                        } else if (1 == nextInt) {
+                            //上架商品
+                            //背包中的商品
+                            Map<Integer, Props> backpackClient = role.getBackpackClient();
+                            System.out.println("背包空间: " + backpackClient.size() + "/100");
+                            System.out.println("道具如下:");
+                            System.out.println("金币: " + role.getMoney());
+                            for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
+                                if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Equipment) {
+                                    System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
+                                } else if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Potion) {
+                                    Potion potion = (Potion) propsEntry.getValue().getPropsProperty();
+                                    System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType() + " \t\t数量: " + potion.getNumber());
+                                }
+                            }
+
+                            //
+                            int location = scanner.nextInt();
+                            scanner.nextLine();
+                            int number = 1;
+                            Props props = backpackClient.get(location);
+                            if (props.getPropsProperty().getType() == PropsType.Potion) {
+                                System.out.println("输入数量:");
+                                number = scanner.nextInt();
+                                scanner.nextLine();
+                            }
+
+                            System.out.println("输入竞拍价:");
+                            int auction = scanner.nextInt();
+                            scanner.nextLine();
+                            System.out.println("输入一口价:");
+                            int price = scanner.nextInt();
+                            scanner.nextLine();
+
+                            ctx.writeAndFlush(GameMsg.ShelveGoodsCmd.newBuilder()
+                                    .setLocation(location)
+                                    .setNumber(number)
+                                    .setAuction(auction)
+                                    .setPrice(price)
+                                    .build());
+                            if (props.getPropsProperty().getType() == PropsType.Potion){
+                                Potion potion = (Potion)props.getPropsProperty();
+                                if (potion.getNumber() > number){
+                                    potion.setNumber(potion.getNumber() - number);
+                                }else {
+                                    backpackClient.remove(location);
+                                }
+                            }else {
+                                backpackClient.remove(location);
+                            }
+                        } else if (2 == nextInt) {
+                            //查看商品
+                            return GameMsg.LookAuctionItemCmd.newBuilder().build();
+                        } else if (3 == nextInt) {
+                            return GameMsg.LookOneselfAuctionItemCmd.newBuilder().build();
+                        }
+
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -568,8 +637,14 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.ShowGuildMemberCmd) cmd);
         } else if (cmd instanceof GameMsg.QuitGuildCmd) {
             ctx.writeAndFlush((GameMsg.QuitGuildCmd) cmd);
-        }else if (cmd instanceof  GameMsg.LookGuildWarehouseCmd){
-            ctx.writeAndFlush(( GameMsg.LookGuildWarehouseCmd)cmd);
+        } else if (cmd instanceof GameMsg.LookGuildWarehouseCmd) {
+            ctx.writeAndFlush((GameMsg.LookGuildWarehouseCmd) cmd);
+        } else if (cmd instanceof GameMsg.LookAuctionItemCmd) {
+            ctx.writeAndFlush((GameMsg.LookAuctionItemCmd) cmd);
+        } else if (cmd instanceof GameMsg.UserCleanMailCmd) {
+            ctx.writeAndFlush((GameMsg.UserCleanMailCmd) cmd);
+        } else if (cmd instanceof GameMsg.LookOneselfAuctionItemCmd) {
+            ctx.writeAndFlush((GameMsg.LookOneselfAuctionItemCmd) cmd);
         }
 
 

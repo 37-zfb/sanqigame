@@ -14,7 +14,7 @@ public abstract class AbstractPropsProperty {
     /**
      *  数据库中 userequipment_id
      */
-    private Integer id;
+    private Long id;
 
     /**
      *  道具id
@@ -23,7 +23,7 @@ public abstract class AbstractPropsProperty {
 
     public AbstractPropsProperty(){}
 
-    public AbstractPropsProperty(Integer id,Integer propsId){
+    public AbstractPropsProperty(Long id,Integer propsId){
         this.id = id;
         this.propsId = propsId;
     }

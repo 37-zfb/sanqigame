@@ -42,4 +42,10 @@ public interface ISendMailDAO {
      * @return
      */
     DbSendMailEntity selectMailByUserIdAndTitle(@Param("targetUserId") int userId,@Param("title") String title);
+
+    /**
+     * 批量添加邮件信息
+     * @param addMailList
+     */
+    void insertMailBatch(@Param("addMailList") List<DbSendMailEntity> addMailList);
 }

@@ -26,7 +26,7 @@ public interface IUserEquipmentDAO {
      * @param id
      * @param state
      */
-    void updateEquipmentState(@Param("id") int id,@Param("state") int state,@Param("location") int location);
+    void updateEquipmentState(@Param("id") long id,@Param("state") int state,@Param("location") int location);
 
     /**
      *  查询

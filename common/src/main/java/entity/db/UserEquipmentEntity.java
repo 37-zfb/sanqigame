@@ -14,7 +14,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class UserEquipmentEntity {
 
-    private Integer id;
+    private Long id;
 
     private Integer userId;
 
@@ -32,7 +32,7 @@ public class UserEquipmentEntity {
      */
     private Integer location;
 
-    public UserEquipmentEntity(Integer id, Integer userId, Integer equipmentId, Integer isWear, Integer durability) {
+    public UserEquipmentEntity(Long id, Integer userId, Integer equipmentId, Integer isWear, Integer durability) {
         this.id = id;
         this.userId = userId;
         this.propsId = equipmentId;

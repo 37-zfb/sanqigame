@@ -3,12 +3,16 @@ package server.model;
 import constant.BossMonsterConst;
 import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
+import entity.db.UserPotionEntity;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import server.GameServer;
 import server.PublicMethod;
 import server.cmdhandler.duplicate.BossSkillAttack;
 import server.model.duplicate.BossMonster;
@@ -20,6 +24,7 @@ import server.model.props.Equipment;
 import server.model.props.Potion;
 import server.model.props.Props;
 import server.scene.GameData;
+import server.timer.state.DbUserStateTimer;
 import type.EquipmentType;
 import type.PotionType;
 import type.PropsType;
@@ -182,7 +187,7 @@ public class User {
      */
     private volatile PlayTeam playTeam;
     /**
-     *  邀请人id
+     * 邀请人id
      */
     private final Set<Integer> invitationUserId = new HashSet<>();
     /**
@@ -192,12 +197,12 @@ public class User {
 
 
     /**
-     *  交易系统
+     * 交易系统
      */
     private final PlayDeal PLAY_DEAL = new PlayDeal();
 
     /**
-     *  公会系统
+     * 公会系统
      */
     private PlayGuild playGuild = null;
 
@@ -465,11 +470,12 @@ public class User {
     }
 
     /**
-     *  怪攻击，减血
+     * 怪攻击，减血
+     *
      * @param monsterName 怪对象
-     * @param subHp 减血量
+     * @param subHp       减血量
      */
-    public void monsterAttackSubHp(String monsterName,Integer subHp) {
+    public void monsterAttackSubHp(String monsterName, Integer subHp) {
         synchronized (this.getHpMonitor()) {
             // 用户减血
             if (this.getCurrHp() <= 0 || (this.getCurrHp() - subHp) <= 0) {
@@ -493,19 +499,76 @@ public class User {
     }
 
     /**
-     *  添加 怪 爆出的奖励
+     * 添加 怪 爆出的奖励
+     *
      * @param propsId 奖励的道具id
      */
-    public void addMonsterReward(Integer propsId){
+    public void addMonsterReward(Integer propsId) {
         Props props = GameData.getInstance().getPropsMap().get(propsId);
-        if (props.getPropsProperty().getType() == PropsType.Equipment){
-            PublicMethod.getInstance().addEquipment(this,props);
-        }else if (props.getPropsProperty().getType() == PropsType.Potion){
-            PublicMethod.getInstance().addPotion(props,this,1);
+        if (props.getPropsProperty().getType() == PropsType.Equipment) {
+            PublicMethod.getInstance().addEquipment(this, props);
+        } else if (props.getPropsProperty().getType() == PropsType.Potion) {
+            PublicMethod.getInstance().addPotion(props, this, 1);
 
         }
     }
 
+
+    private final DbUserStateTimer USER_STATE_TIMER = GameServer.APPLICATION_CONTEXT.getBean(DbUserStateTimer.class);
+
+    /**
+     * 移除道具
+     *
+     * @param location
+     * @param number
+     */
+    public void removeProps(int location, int number) {
+        Props props = backpack.get(location);
+        if (props.getPropsProperty().getType() == PropsType.Equipment) {
+
+            UserEquipmentEntity userEquipmentEntity = new UserEquipmentEntity();
+            userEquipmentEntity.setUserId(userId);
+            userEquipmentEntity.setLocation(location);
+            USER_STATE_TIMER.deleteUserEquipment(userEquipmentEntity);
+            backpack.remove(location);
+        } else if (props.getPropsProperty().getType() == PropsType.Potion) {
+            Potion potion = (Potion) props.getPropsProperty();
+
+            if (potion.getNumber() < number) {
+                throw new CustomizeException(CustomizeErrorCode.POTION_INSUFFICIENT);
+            }
+
+            UserPotionEntity userPotionEntity = new UserPotionEntity();
+            userPotionEntity.setLocation(location);
+            userPotionEntity.setUserId(userId);
+            if (potion.getNumber() > number) {
+                //修改数量
+                userPotionEntity.setNumber(potion.getNumber() - number);
+                potion.setNumber(potion.getNumber() - number);
+                USER_STATE_TIMER.modifyUserPotion(userPotionEntity);
+            } else {
+                //删除
+                USER_STATE_TIMER.deleteUserPotion(userPotionEntity);
+            }
+            log.info("用户 {} 减少 {} {}", userName, number, props.getName());
+
+        }
+    }
+
+    /**
+     * 添加道具
+     *
+     * @param props
+     * @param number
+     */
+    public void addProps(Props props, int number) {
+        PublicMethod publicMethod = PublicMethod.getInstance();
+        if (props.getPropsProperty().getType() == PropsType.Equipment) {
+            publicMethod.addEquipment(this, props);
+        } else if (props.getPropsProperty().getType() == PropsType.Potion) {
+            publicMethod.addPotion(props, this, number);
+        }
+    }
 
 
 }

@@ -49,6 +49,9 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
         }else if (code == CustomizeErrorCode.GUILD_REACH_LIMIT.getCode()){
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
             CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+        }else if (code == -99999){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }
 
 

@@ -21,6 +21,6 @@ public class MailClient {
     /**
      *  所有的邮件
      */
-    private final Map<Integer,MailEntityClient> mailMap = new HashMap<>();
+    private final Map<Long,MailEntityClient> mailMap = new HashMap<>();
 
 }

@@ -568,6 +568,54 @@ public final class GameMsg {
      */
     PUT_IN_MONEY_RESULT(136),
     /**
+     * <code>LOOK_AUCTION_ITEM_CMD = 137;</code>
+     */
+    LOOK_AUCTION_ITEM_CMD(137),
+    /**
+     * <code>LOOK_AUCTION_ITEM_RESULT = 138;</code>
+     */
+    LOOK_AUCTION_ITEM_RESULT(138),
+    /**
+     * <code>SHELVE_GOODS_CMD = 139;</code>
+     */
+    SHELVE_GOODS_CMD(139),
+    /**
+     * <code>SHELVE_GOODS_RESULT = 140;</code>
+     */
+    SHELVE_GOODS_RESULT(140),
+    /**
+     * <code>BIDDING_GOODS_CMD = 141;</code>
+     */
+    BIDDING_GOODS_CMD(141),
+    /**
+     * <code>BIDDING_GOODS_RESULT = 142;</code>
+     */
+    BIDDING_GOODS_RESULT(142),
+    /**
+     * <code>ONE_PRICE_CMD = 143;</code>
+     */
+    ONE_PRICE_CMD(143),
+    /**
+     * <code>ONE_PRICE_RESULT = 144;</code>
+     */
+    ONE_PRICE_RESULT(144),
+    /**
+     * <code>LOOK_ONESELF_AUCTION_ITEM_CMD = 145;</code>
+     */
+    LOOK_ONESELF_AUCTION_ITEM_CMD(145),
+    /**
+     * <code>LOOK_ONESELF_AUCTION_ITEM_RESULT = 146;</code>
+     */
+    LOOK_ONESELF_AUCTION_ITEM_RESULT(146),
+    /**
+     * <code>CANCEL_AUCTION_ITEM_CMD = 147;</code>
+     */
+    CANCEL_AUCTION_ITEM_CMD(147),
+    /**
+     * <code>CANCEL_AUCTION_ITEM_RESULT = 148;</code>
+     */
+    CANCEL_AUCTION_ITEM_RESULT(148),
+    /**
      * <code>ERROR_RESULT = 96;</code>
      */
     ERROR_RESULT(96),
@@ -1119,6 +1167,54 @@ public final class GameMsg {
      */
     public static final int PUT_IN_MONEY_RESULT_VALUE = 136;
     /**
+     * <code>LOOK_AUCTION_ITEM_CMD = 137;</code>
+     */
+    public static final int LOOK_AUCTION_ITEM_CMD_VALUE = 137;
+    /**
+     * <code>LOOK_AUCTION_ITEM_RESULT = 138;</code>
+     */
+    public static final int LOOK_AUCTION_ITEM_RESULT_VALUE = 138;
+    /**
+     * <code>SHELVE_GOODS_CMD = 139;</code>
+     */
+    public static final int SHELVE_GOODS_CMD_VALUE = 139;
+    /**
+     * <code>SHELVE_GOODS_RESULT = 140;</code>
+     */
+    public static final int SHELVE_GOODS_RESULT_VALUE = 140;
+    /**
+     * <code>BIDDING_GOODS_CMD = 141;</code>
+     */
+    public static final int BIDDING_GOODS_CMD_VALUE = 141;
+    /**
+     * <code>BIDDING_GOODS_RESULT = 142;</code>
+     */
+    public static final int BIDDING_GOODS_RESULT_VALUE = 142;
+    /**
+     * <code>ONE_PRICE_CMD = 143;</code>
+     */
+    public static final int ONE_PRICE_CMD_VALUE = 143;
+    /**
+     * <code>ONE_PRICE_RESULT = 144;</code>
+     */
+    public static final int ONE_PRICE_RESULT_VALUE = 144;
+    /**
+     * <code>LOOK_ONESELF_AUCTION_ITEM_CMD = 145;</code>
+     */
+    public static final int LOOK_ONESELF_AUCTION_ITEM_CMD_VALUE = 145;
+    /**
+     * <code>LOOK_ONESELF_AUCTION_ITEM_RESULT = 146;</code>
+     */
+    public static final int LOOK_ONESELF_AUCTION_ITEM_RESULT_VALUE = 146;
+    /**
+     * <code>CANCEL_AUCTION_ITEM_CMD = 147;</code>
+     */
+    public static final int CANCEL_AUCTION_ITEM_CMD_VALUE = 147;
+    /**
+     * <code>CANCEL_AUCTION_ITEM_RESULT = 148;</code>
+     */
+    public static final int CANCEL_AUCTION_ITEM_RESULT_VALUE = 148;
+    /**
      * <code>ERROR_RESULT = 96;</code>
      */
     public static final int ERROR_RESULT_VALUE = 96;
@@ -1284,6 +1380,18 @@ public final class GameMsg {
         case 134: return TAKE_OUT_MONEY_RESULT;
         case 135: return PUT_IN_MONEY_CMD;
         case 136: return PUT_IN_MONEY_RESULT;
+        case 137: return LOOK_AUCTION_ITEM_CMD;
+        case 138: return LOOK_AUCTION_ITEM_RESULT;
+        case 139: return SHELVE_GOODS_CMD;
+        case 140: return SHELVE_GOODS_RESULT;
+        case 141: return BIDDING_GOODS_CMD;
+        case 142: return BIDDING_GOODS_RESULT;
+        case 143: return ONE_PRICE_CMD;
+        case 144: return ONE_PRICE_RESULT;
+        case 145: return LOOK_ONESELF_AUCTION_ITEM_CMD;
+        case 146: return LOOK_ONESELF_AUCTION_ITEM_RESULT;
+        case 147: return CANCEL_AUCTION_ITEM_CMD;
+        case 148: return CANCEL_AUCTION_ITEM_RESULT;
         case 96: return ERROR_RESULT;
         default: return null;
       }
@@ -10906,10 +11014,10 @@ public final class GameMsg {
         com.google.protobuf.MessageOrBuilder {
 
       /**
-       * <code>uint32 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        * @return The id.
        */
-      int getId();
+      long getId();
 
       /**
        * <code>uint32 equipmentId = 2;</code>
@@ -10974,7 +11082,7 @@ public final class GameMsg {
                 break;
               case 8: {
 
-                id_ = input.readUInt32();
+                id_ = input.readUInt64();
                 break;
               }
               case 16: {
@@ -11020,12 +11128,12 @@ public final class GameMsg {
       }
 
       public static final int ID_FIELD_NUMBER = 1;
-      private int id_;
+      private long id_;
       /**
-       * <code>uint32 id = 1;</code>
+       * <code>uint64 id = 1;</code>
        * @return The id.
        */
-      public int getId() {
+      public long getId() {
         return id_;
       }
 
@@ -11067,8 +11175,8 @@ public final class GameMsg {
       @java.lang.Override
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
-        if (id_ != 0) {
-          output.writeUInt32(1, id_);
+        if (id_ != 0L) {
+          output.writeUInt64(1, id_);
         }
         if (equipmentId_ != 0) {
           output.writeUInt32(2, equipmentId_);
@@ -11085,9 +11193,9 @@ public final class GameMsg {
         if (size != -1) return size;
 
         size = 0;
-        if (id_ != 0) {
+        if (id_ != 0L) {
           size += com.google.protobuf.CodedOutputStream
-            .computeUInt32Size(1, id_);
+            .computeUInt64Size(1, id_);
         }
         if (equipmentId_ != 0) {
           size += com.google.protobuf.CodedOutputStream
@@ -11130,7 +11238,8 @@ public final class GameMsg {
         int hash = 41;
         hash = (19 * hash) + getDescriptor().hashCode();
         hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + getId();
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getId());
         hash = (37 * hash) + EQUIPMENTID_FIELD_NUMBER;
         hash = (53 * hash) + getEquipmentId();
         hash = (37 * hash) + DURABILITY_FIELD_NUMBER;
@@ -11268,7 +11377,7 @@ public final class GameMsg {
         @java.lang.Override
         public Builder clear() {
           super.clear();
-          id_ = 0;
+          id_ = 0L;
 
           equipmentId_ = 0;
 
@@ -11351,7 +11460,7 @@ public final class GameMsg {
 
         public Builder mergeFrom(msg.GameMsg.UserLoginResult.WearEquipment other) {
           if (other == msg.GameMsg.UserLoginResult.WearEquipment.getDefaultInstance()) return this;
-          if (other.getId() != 0) {
+          if (other.getId() != 0L) {
             setId(other.getId());
           }
           if (other.getEquipmentId() != 0) {
@@ -11389,32 +11498,32 @@ public final class GameMsg {
           return this;
         }
 
-        private int id_ ;
+        private long id_ ;
         /**
-         * <code>uint32 id = 1;</code>
+         * <code>uint64 id = 1;</code>
          * @return The id.
          */
-        public int getId() {
+        public long getId() {
           return id_;
         }
         /**
-         * <code>uint32 id = 1;</code>
+         * <code>uint64 id = 1;</code>
          * @param value The id to set.
          * @return This builder for chaining.
          */
-        public Builder setId(int value) {
+        public Builder setId(long value) {
           
           id_ = value;
           onChanged();
           return this;
         }
         /**
-         * <code>uint32 id = 1;</code>
+         * <code>uint64 id = 1;</code>
          * @return This builder for chaining.
          */
         public Builder clearId() {
           
-          id_ = 0;
+          id_ = 0L;
           onChanged();
           return this;
         }
@@ -16126,10 +16235,10 @@ public final class GameMsg {
     int getPropsNumber();
 
     /**
-     * <code>uint32 userPropsId = 5;</code>
+     * <code>uint64 userPropsId = 5;</code>
      * @return The userPropsId.
      */
-    int getUserPropsId();
+    long getUserPropsId();
   }
   /**
    * Protobuf type {@code msg.Props}
@@ -16198,7 +16307,7 @@ public final class GameMsg {
             }
             case 40: {
 
-              userPropsId_ = input.readUInt32();
+              userPropsId_ = input.readUInt64();
               break;
             }
             default: {
@@ -16274,12 +16383,12 @@ public final class GameMsg {
     }
 
     public static final int USERPROPSID_FIELD_NUMBER = 5;
-    private int userPropsId_;
+    private long userPropsId_;
     /**
-     * <code>uint32 userPropsId = 5;</code>
+     * <code>uint64 userPropsId = 5;</code>
      * @return The userPropsId.
      */
-    public int getUserPropsId() {
+    public long getUserPropsId() {
       return userPropsId_;
     }
 
@@ -16309,8 +16418,8 @@ public final class GameMsg {
       if (propsNumber_ != 0) {
         output.writeUInt32(4, propsNumber_);
       }
-      if (userPropsId_ != 0) {
-        output.writeUInt32(5, userPropsId_);
+      if (userPropsId_ != 0L) {
+        output.writeUInt64(5, userPropsId_);
       }
       unknownFields.writeTo(output);
     }
@@ -16337,9 +16446,9 @@ public final class GameMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(4, propsNumber_);
       }
-      if (userPropsId_ != 0) {
+      if (userPropsId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(5, userPropsId_);
+          .computeUInt64Size(5, userPropsId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -16386,7 +16495,8 @@ public final class GameMsg {
       hash = (37 * hash) + PROPSNUMBER_FIELD_NUMBER;
       hash = (53 * hash) + getPropsNumber();
       hash = (37 * hash) + USERPROPSID_FIELD_NUMBER;
-      hash = (53 * hash) + getUserPropsId();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUserPropsId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -16528,7 +16638,7 @@ public final class GameMsg {
 
         propsNumber_ = 0;
 
-        userPropsId_ = 0;
+        userPropsId_ = 0L;
 
         return this;
       }
@@ -16621,7 +16731,7 @@ public final class GameMsg {
         if (other.getPropsNumber() != 0) {
           setPropsNumber(other.getPropsNumber());
         }
-        if (other.getUserPropsId() != 0) {
+        if (other.getUserPropsId() != 0L) {
           setUserPropsId(other.getUserPropsId());
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -16773,32 +16883,32 @@ public final class GameMsg {
         return this;
       }
 
-      private int userPropsId_ ;
+      private long userPropsId_ ;
       /**
-       * <code>uint32 userPropsId = 5;</code>
+       * <code>uint64 userPropsId = 5;</code>
        * @return The userPropsId.
        */
-      public int getUserPropsId() {
+      public long getUserPropsId() {
         return userPropsId_;
       }
       /**
-       * <code>uint32 userPropsId = 5;</code>
+       * <code>uint64 userPropsId = 5;</code>
        * @param value The userPropsId to set.
        * @return This builder for chaining.
        */
-      public Builder setUserPropsId(int value) {
+      public Builder setUserPropsId(long value) {
         
         userPropsId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>uint32 userPropsId = 5;</code>
+       * <code>uint64 userPropsId = 5;</code>
        * @return This builder for chaining.
        */
       public Builder clearUserPropsId() {
         
-        userPropsId_ = 0;
+        userPropsId_ = 0L;
         onChanged();
         return this;
       }
@@ -31233,10 +31343,10 @@ public final class GameMsg {
      * 用户装备id
      * </pre>
      *
-     * <code>uint32 userEquipmentId = 2;</code>
+     * <code>uint64 userEquipmentId = 2;</code>
      * @return The userEquipmentId.
      */
-    int getUserEquipmentId();
+    long getUserEquipmentId();
   }
   /**
    * <pre>
@@ -31294,7 +31404,7 @@ public final class GameMsg {
             }
             case 16: {
 
-              userEquipmentId_ = input.readUInt32();
+              userEquipmentId_ = input.readUInt64();
               break;
             }
             default: {
@@ -31344,16 +31454,16 @@ public final class GameMsg {
     }
 
     public static final int USEREQUIPMENTID_FIELD_NUMBER = 2;
-    private int userEquipmentId_;
+    private long userEquipmentId_;
     /**
      * <pre>
      * 用户装备id
      * </pre>
      *
-     * <code>uint32 userEquipmentId = 2;</code>
+     * <code>uint64 userEquipmentId = 2;</code>
      * @return The userEquipmentId.
      */
-    public int getUserEquipmentId() {
+    public long getUserEquipmentId() {
       return userEquipmentId_;
     }
 
@@ -31374,8 +31484,8 @@ public final class GameMsg {
       if (location_ != 0) {
         output.writeUInt32(1, location_);
       }
-      if (userEquipmentId_ != 0) {
-        output.writeUInt32(2, userEquipmentId_);
+      if (userEquipmentId_ != 0L) {
+        output.writeUInt64(2, userEquipmentId_);
       }
       unknownFields.writeTo(output);
     }
@@ -31390,9 +31500,9 @@ public final class GameMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(1, location_);
       }
-      if (userEquipmentId_ != 0) {
+      if (userEquipmentId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, userEquipmentId_);
+          .computeUInt64Size(2, userEquipmentId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -31427,7 +31537,8 @@ public final class GameMsg {
       hash = (37 * hash) + LOCATION_FIELD_NUMBER;
       hash = (53 * hash) + getLocation();
       hash = (37 * hash) + USEREQUIPMENTID_FIELD_NUMBER;
-      hash = (53 * hash) + getUserEquipmentId();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUserEquipmentId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -31567,7 +31678,7 @@ public final class GameMsg {
         super.clear();
         location_ = 0;
 
-        userEquipmentId_ = 0;
+        userEquipmentId_ = 0L;
 
         return this;
       }
@@ -31648,7 +31759,7 @@ public final class GameMsg {
         if (other.getLocation() != 0) {
           setLocation(other.getLocation());
         }
-        if (other.getUserEquipmentId() != 0) {
+        if (other.getUserEquipmentId() != 0L) {
           setUserEquipmentId(other.getUserEquipmentId());
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -31722,16 +31833,16 @@ public final class GameMsg {
         return this;
       }
 
-      private int userEquipmentId_ ;
+      private long userEquipmentId_ ;
       /**
        * <pre>
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @return The userEquipmentId.
        */
-      public int getUserEquipmentId() {
+      public long getUserEquipmentId() {
         return userEquipmentId_;
       }
       /**
@@ -31739,11 +31850,11 @@ public final class GameMsg {
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @param value The userEquipmentId to set.
        * @return This builder for chaining.
        */
-      public Builder setUserEquipmentId(int value) {
+      public Builder setUserEquipmentId(long value) {
         
         userEquipmentId_ = value;
         onChanged();
@@ -31754,12 +31865,12 @@ public final class GameMsg {
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearUserEquipmentId() {
         
-        userEquipmentId_ = 0;
+        userEquipmentId_ = 0L;
         onChanged();
         return this;
       }
@@ -31835,10 +31946,10 @@ public final class GameMsg {
      * 用户装备id
      * </pre>
      *
-     * <code>uint32 userEquipmentId = 2;</code>
+     * <code>uint64 userEquipmentId = 2;</code>
      * @return The userEquipmentId.
      */
-    int getUserEquipmentId();
+    long getUserEquipmentId();
 
     /**
      * <pre>
@@ -31906,7 +32017,7 @@ public final class GameMsg {
             }
             case 16: {
 
-              userEquipmentId_ = input.readUInt32();
+              userEquipmentId_ = input.readUInt64();
               break;
             }
             case 24: {
@@ -31961,16 +32072,16 @@ public final class GameMsg {
     }
 
     public static final int USEREQUIPMENTID_FIELD_NUMBER = 2;
-    private int userEquipmentId_;
+    private long userEquipmentId_;
     /**
      * <pre>
      * 用户装备id
      * </pre>
      *
-     * <code>uint32 userEquipmentId = 2;</code>
+     * <code>uint64 userEquipmentId = 2;</code>
      * @return The userEquipmentId.
      */
-    public int getUserEquipmentId() {
+    public long getUserEquipmentId() {
       return userEquipmentId_;
     }
 
@@ -32005,8 +32116,8 @@ public final class GameMsg {
       if (propsId_ != 0) {
         output.writeUInt32(1, propsId_);
       }
-      if (userEquipmentId_ != 0) {
-        output.writeUInt32(2, userEquipmentId_);
+      if (userEquipmentId_ != 0L) {
+        output.writeUInt64(2, userEquipmentId_);
       }
       if (location_ != 0) {
         output.writeUInt32(3, location_);
@@ -32024,9 +32135,9 @@ public final class GameMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(1, propsId_);
       }
-      if (userEquipmentId_ != 0) {
+      if (userEquipmentId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, userEquipmentId_);
+          .computeUInt64Size(2, userEquipmentId_);
       }
       if (location_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -32067,7 +32178,8 @@ public final class GameMsg {
       hash = (37 * hash) + PROPSID_FIELD_NUMBER;
       hash = (53 * hash) + getPropsId();
       hash = (37 * hash) + USEREQUIPMENTID_FIELD_NUMBER;
-      hash = (53 * hash) + getUserEquipmentId();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUserEquipmentId());
       hash = (37 * hash) + LOCATION_FIELD_NUMBER;
       hash = (53 * hash) + getLocation();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -32209,7 +32321,7 @@ public final class GameMsg {
         super.clear();
         propsId_ = 0;
 
-        userEquipmentId_ = 0;
+        userEquipmentId_ = 0L;
 
         location_ = 0;
 
@@ -32293,7 +32405,7 @@ public final class GameMsg {
         if (other.getPropsId() != 0) {
           setPropsId(other.getPropsId());
         }
-        if (other.getUserEquipmentId() != 0) {
+        if (other.getUserEquipmentId() != 0L) {
           setUserEquipmentId(other.getUserEquipmentId());
         }
         if (other.getLocation() != 0) {
@@ -32370,16 +32482,16 @@ public final class GameMsg {
         return this;
       }
 
-      private int userEquipmentId_ ;
+      private long userEquipmentId_ ;
       /**
        * <pre>
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @return The userEquipmentId.
        */
-      public int getUserEquipmentId() {
+      public long getUserEquipmentId() {
         return userEquipmentId_;
       }
       /**
@@ -32387,11 +32499,11 @@ public final class GameMsg {
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @param value The userEquipmentId to set.
        * @return This builder for chaining.
        */
-      public Builder setUserEquipmentId(int value) {
+      public Builder setUserEquipmentId(long value) {
         
         userEquipmentId_ = value;
         onChanged();
@@ -32402,12 +32514,12 @@ public final class GameMsg {
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearUserEquipmentId() {
         
-        userEquipmentId_ = 0;
+        userEquipmentId_ = 0L;
         onChanged();
         return this;
       }
@@ -33729,10 +33841,10 @@ public final class GameMsg {
      * 用户装备id
      * </pre>
      *
-     * <code>uint32 userEquipmentId = 2;</code>
+     * <code>uint64 userEquipmentId = 2;</code>
      * @return The userEquipmentId.
      */
-    int getUserEquipmentId();
+    long getUserEquipmentId();
   }
   /**
    * <pre>
@@ -33790,7 +33902,7 @@ public final class GameMsg {
             }
             case 16: {
 
-              userEquipmentId_ = input.readUInt32();
+              userEquipmentId_ = input.readUInt64();
               break;
             }
             default: {
@@ -33840,16 +33952,16 @@ public final class GameMsg {
     }
 
     public static final int USEREQUIPMENTID_FIELD_NUMBER = 2;
-    private int userEquipmentId_;
+    private long userEquipmentId_;
     /**
      * <pre>
      * 用户装备id
      * </pre>
      *
-     * <code>uint32 userEquipmentId = 2;</code>
+     * <code>uint64 userEquipmentId = 2;</code>
      * @return The userEquipmentId.
      */
-    public int getUserEquipmentId() {
+    public long getUserEquipmentId() {
       return userEquipmentId_;
     }
 
@@ -33870,8 +33982,8 @@ public final class GameMsg {
       if (propsId_ != 0) {
         output.writeUInt32(1, propsId_);
       }
-      if (userEquipmentId_ != 0) {
-        output.writeUInt32(2, userEquipmentId_);
+      if (userEquipmentId_ != 0L) {
+        output.writeUInt64(2, userEquipmentId_);
       }
       unknownFields.writeTo(output);
     }
@@ -33886,9 +33998,9 @@ public final class GameMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(1, propsId_);
       }
-      if (userEquipmentId_ != 0) {
+      if (userEquipmentId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, userEquipmentId_);
+          .computeUInt64Size(2, userEquipmentId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -33923,7 +34035,8 @@ public final class GameMsg {
       hash = (37 * hash) + PROPSID_FIELD_NUMBER;
       hash = (53 * hash) + getPropsId();
       hash = (37 * hash) + USEREQUIPMENTID_FIELD_NUMBER;
-      hash = (53 * hash) + getUserEquipmentId();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getUserEquipmentId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -34063,7 +34176,7 @@ public final class GameMsg {
         super.clear();
         propsId_ = 0;
 
-        userEquipmentId_ = 0;
+        userEquipmentId_ = 0L;
 
         return this;
       }
@@ -34144,7 +34257,7 @@ public final class GameMsg {
         if (other.getPropsId() != 0) {
           setPropsId(other.getPropsId());
         }
-        if (other.getUserEquipmentId() != 0) {
+        if (other.getUserEquipmentId() != 0L) {
           setUserEquipmentId(other.getUserEquipmentId());
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -34218,16 +34331,16 @@ public final class GameMsg {
         return this;
       }
 
-      private int userEquipmentId_ ;
+      private long userEquipmentId_ ;
       /**
        * <pre>
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @return The userEquipmentId.
        */
-      public int getUserEquipmentId() {
+      public long getUserEquipmentId() {
         return userEquipmentId_;
       }
       /**
@@ -34235,11 +34348,11 @@ public final class GameMsg {
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @param value The userEquipmentId to set.
        * @return This builder for chaining.
        */
-      public Builder setUserEquipmentId(int value) {
+      public Builder setUserEquipmentId(long value) {
         
         userEquipmentId_ = value;
         onChanged();
@@ -34250,12 +34363,12 @@ public final class GameMsg {
        * 用户装备id
        * </pre>
        *
-       * <code>uint32 userEquipmentId = 2;</code>
+       * <code>uint64 userEquipmentId = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearUserEquipmentId() {
         
-        userEquipmentId_ = 0;
+        userEquipmentId_ = 0L;
         onChanged();
         return this;
       }
@@ -52023,10 +52136,10 @@ public final class GameMsg {
      * 邮件id
      * </pre>
      *
-     * <code>uint32 mailId = 1;</code>
+     * <code>uint64 mailId = 1;</code>
      * @return The mailId.
      */
-    int getMailId();
+    long getMailId();
 
     /**
      * <pre>
@@ -52121,7 +52234,7 @@ public final class GameMsg {
               break;
             case 8: {
 
-              mailId_ = input.readUInt32();
+              mailId_ = input.readUInt64();
               break;
             }
             case 18: {
@@ -52169,16 +52282,16 @@ public final class GameMsg {
     }
 
     public static final int MAILID_FIELD_NUMBER = 1;
-    private int mailId_;
+    private long mailId_;
     /**
      * <pre>
      * 邮件id
      * </pre>
      *
-     * <code>uint32 mailId = 1;</code>
+     * <code>uint64 mailId = 1;</code>
      * @return The mailId.
      */
-    public int getMailId() {
+    public long getMailId() {
       return mailId_;
     }
 
@@ -52284,8 +52397,8 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (mailId_ != 0) {
-        output.writeUInt32(1, mailId_);
+      if (mailId_ != 0L) {
+        output.writeUInt64(1, mailId_);
       }
       if (!getSrcUserNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, srcUserName_);
@@ -52302,9 +52415,9 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
-      if (mailId_ != 0) {
+      if (mailId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, mailId_);
+          .computeUInt64Size(1, mailId_);
       }
       if (!getSrcUserNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, srcUserName_);
@@ -52345,7 +52458,8 @@ public final class GameMsg {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + MAILID_FIELD_NUMBER;
-      hash = (53 * hash) + getMailId();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMailId());
       hash = (37 * hash) + SRCUSERNAME_FIELD_NUMBER;
       hash = (53 * hash) + getSrcUserName().hashCode();
       hash = (37 * hash) + TITLE_FIELD_NUMBER;
@@ -52487,7 +52601,7 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        mailId_ = 0;
+        mailId_ = 0L;
 
         srcUserName_ = "";
 
@@ -52570,7 +52684,7 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.MailInfo other) {
         if (other == msg.GameMsg.MailInfo.getDefaultInstance()) return this;
-        if (other.getMailId() != 0) {
+        if (other.getMailId() != 0L) {
           setMailId(other.getMailId());
         }
         if (!other.getSrcUserName().isEmpty()) {
@@ -52610,16 +52724,16 @@ public final class GameMsg {
         return this;
       }
 
-      private int mailId_ ;
+      private long mailId_ ;
       /**
        * <pre>
        * 邮件id
        * </pre>
        *
-       * <code>uint32 mailId = 1;</code>
+       * <code>uint64 mailId = 1;</code>
        * @return The mailId.
        */
-      public int getMailId() {
+      public long getMailId() {
         return mailId_;
       }
       /**
@@ -52627,11 +52741,11 @@ public final class GameMsg {
        * 邮件id
        * </pre>
        *
-       * <code>uint32 mailId = 1;</code>
+       * <code>uint64 mailId = 1;</code>
        * @param value The mailId to set.
        * @return This builder for chaining.
        */
-      public Builder setMailId(int value) {
+      public Builder setMailId(long value) {
         
         mailId_ = value;
         onChanged();
@@ -52642,12 +52756,12 @@ public final class GameMsg {
        * 邮件id
        * </pre>
        *
-       * <code>uint32 mailId = 1;</code>
+       * <code>uint64 mailId = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearMailId() {
         
-        mailId_ = 0;
+        mailId_ = 0L;
         onChanged();
         return this;
       }
@@ -52905,10 +53019,10 @@ public final class GameMsg {
      * -1时，表示一键领取全部
      * </pre>
      *
-     * <code>uint32 mailId = 1;</code>
+     * <code>uint64 mailId = 1;</code>
      * @return The mailId.
      */
-    int getMailId();
+    long getMailId();
   }
   /**
    * <pre>
@@ -52961,7 +53075,7 @@ public final class GameMsg {
               break;
             case 8: {
 
-              mailId_ = input.readUInt32();
+              mailId_ = input.readUInt64();
               break;
             }
             default: {
@@ -52997,16 +53111,16 @@ public final class GameMsg {
     }
 
     public static final int MAILID_FIELD_NUMBER = 1;
-    private int mailId_;
+    private long mailId_;
     /**
      * <pre>
      * -1时，表示一键领取全部
      * </pre>
      *
-     * <code>uint32 mailId = 1;</code>
+     * <code>uint64 mailId = 1;</code>
      * @return The mailId.
      */
-    public int getMailId() {
+    public long getMailId() {
       return mailId_;
     }
 
@@ -53024,8 +53138,8 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (mailId_ != 0) {
-        output.writeUInt32(1, mailId_);
+      if (mailId_ != 0L) {
+        output.writeUInt64(1, mailId_);
       }
       unknownFields.writeTo(output);
     }
@@ -53036,9 +53150,9 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
-      if (mailId_ != 0) {
+      if (mailId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, mailId_);
+          .computeUInt64Size(1, mailId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -53069,7 +53183,8 @@ public final class GameMsg {
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + MAILID_FIELD_NUMBER;
-      hash = (53 * hash) + getMailId();
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getMailId());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -53207,7 +53322,7 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        mailId_ = 0;
+        mailId_ = 0L;
 
         return this;
       }
@@ -53284,7 +53399,7 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.UserReceiveMailCmd other) {
         if (other == msg.GameMsg.UserReceiveMailCmd.getDefaultInstance()) return this;
-        if (other.getMailId() != 0) {
+        if (other.getMailId() != 0L) {
           setMailId(other.getMailId());
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -53316,16 +53431,16 @@ public final class GameMsg {
         return this;
       }
 
-      private int mailId_ ;
+      private long mailId_ ;
       /**
        * <pre>
        * -1时，表示一键领取全部
        * </pre>
        *
-       * <code>uint32 mailId = 1;</code>
+       * <code>uint64 mailId = 1;</code>
        * @return The mailId.
        */
-      public int getMailId() {
+      public long getMailId() {
         return mailId_;
       }
       /**
@@ -53333,11 +53448,11 @@ public final class GameMsg {
        * -1时，表示一键领取全部
        * </pre>
        *
-       * <code>uint32 mailId = 1;</code>
+       * <code>uint64 mailId = 1;</code>
        * @param value The mailId to set.
        * @return This builder for chaining.
        */
-      public Builder setMailId(int value) {
+      public Builder setMailId(long value) {
         
         mailId_ = value;
         onChanged();
@@ -53348,12 +53463,12 @@ public final class GameMsg {
        * -1时，表示一键领取全部
        * </pre>
        *
-       * <code>uint32 mailId = 1;</code>
+       * <code>uint64 mailId = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearMailId() {
         
-        mailId_ = 0;
+        mailId_ = 0L;
         onChanged();
         return this;
       }
@@ -53419,16 +53534,16 @@ public final class GameMsg {
      * 领取成功的邮件id
      * </pre>
      *
-     * <code>repeated uint32 mailId = 1;</code>
+     * <code>repeated uint64 mailId = 1;</code>
      * @return A list containing the mailId.
      */
-    java.util.List<java.lang.Integer> getMailIdList();
+    java.util.List<java.lang.Long> getMailIdList();
     /**
      * <pre>
      * 领取成功的邮件id
      * </pre>
      *
-     * <code>repeated uint32 mailId = 1;</code>
+     * <code>repeated uint64 mailId = 1;</code>
      * @return The count of mailId.
      */
     int getMailIdCount();
@@ -53437,11 +53552,41 @@ public final class GameMsg {
      * 领取成功的邮件id
      * </pre>
      *
-     * <code>repeated uint32 mailId = 1;</code>
+     * <code>repeated uint64 mailId = 1;</code>
      * @param index The index of the element to return.
      * @return The mailId at the given index.
      */
-    int getMailId(int index);
+    long getMailId(int index);
+
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    java.util.List<msg.GameMsg.Props> 
+        getPropsList();
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    msg.GameMsg.Props getProps(int index);
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    int getPropsCount();
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList();
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index);
+
+    /**
+     * <code>uint32 money = 3;</code>
+     * @return The money.
+     */
+    int getMoney();
   }
   /**
    * <pre>
@@ -53460,7 +53605,8 @@ public final class GameMsg {
       super(builder);
     }
     private UserReceiveMailResult() {
-      mailId_ = emptyIntList();
+      mailId_ = emptyLongList();
+      props_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -53496,23 +53642,37 @@ public final class GameMsg {
               break;
             case 8: {
               if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                mailId_ = newIntList();
+                mailId_ = newLongList();
                 mutable_bitField0_ |= 0x00000001;
               }
-              mailId_.addInt(input.readUInt32());
+              mailId_.addLong(input.readUInt64());
               break;
             }
             case 10: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
               if (!((mutable_bitField0_ & 0x00000001) != 0) && input.getBytesUntilLimit() > 0) {
-                mailId_ = newIntList();
+                mailId_ = newLongList();
                 mutable_bitField0_ |= 0x00000001;
               }
               while (input.getBytesUntilLimit() > 0) {
-                mailId_.addInt(input.readUInt32());
+                mailId_.addLong(input.readUInt64());
               }
               input.popLimit(limit);
+              break;
+            }
+            case 18: {
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                props_ = new java.util.ArrayList<msg.GameMsg.Props>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              props_.add(
+                  input.readMessage(msg.GameMsg.Props.parser(), extensionRegistry));
+              break;
+            }
+            case 24: {
+
+              money_ = input.readUInt32();
               break;
             }
             default: {
@@ -53533,6 +53693,9 @@ public final class GameMsg {
         if (((mutable_bitField0_ & 0x00000001) != 0)) {
           mailId_.makeImmutable(); // C
         }
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
+          props_ = java.util.Collections.unmodifiableList(props_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -53551,16 +53714,16 @@ public final class GameMsg {
     }
 
     public static final int MAILID_FIELD_NUMBER = 1;
-    private com.google.protobuf.Internal.IntList mailId_;
+    private com.google.protobuf.Internal.LongList mailId_;
     /**
      * <pre>
      * 领取成功的邮件id
      * </pre>
      *
-     * <code>repeated uint32 mailId = 1;</code>
+     * <code>repeated uint64 mailId = 1;</code>
      * @return A list containing the mailId.
      */
-    public java.util.List<java.lang.Integer>
+    public java.util.List<java.lang.Long>
         getMailIdList() {
       return mailId_;
     }
@@ -53569,7 +53732,7 @@ public final class GameMsg {
      * 领取成功的邮件id
      * </pre>
      *
-     * <code>repeated uint32 mailId = 1;</code>
+     * <code>repeated uint64 mailId = 1;</code>
      * @return The count of mailId.
      */
     public int getMailIdCount() {
@@ -53580,14 +53743,59 @@ public final class GameMsg {
      * 领取成功的邮件id
      * </pre>
      *
-     * <code>repeated uint32 mailId = 1;</code>
+     * <code>repeated uint64 mailId = 1;</code>
      * @param index The index of the element to return.
      * @return The mailId at the given index.
      */
-    public int getMailId(int index) {
-      return mailId_.getInt(index);
+    public long getMailId(int index) {
+      return mailId_.getLong(index);
     }
     private int mailIdMemoizedSerializedSize = -1;
+
+    public static final int PROPS_FIELD_NUMBER = 2;
+    private java.util.List<msg.GameMsg.Props> props_;
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public java.util.List<msg.GameMsg.Props> getPropsList() {
+      return props_;
+    }
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList() {
+      return props_;
+    }
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public int getPropsCount() {
+      return props_.size();
+    }
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public msg.GameMsg.Props getProps(int index) {
+      return props_.get(index);
+    }
+    /**
+     * <code>repeated .msg.Props props = 2;</code>
+     */
+    public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index) {
+      return props_.get(index);
+    }
+
+    public static final int MONEY_FIELD_NUMBER = 3;
+    private int money_;
+    /**
+     * <code>uint32 money = 3;</code>
+     * @return The money.
+     */
+    public int getMoney() {
+      return money_;
+    }
 
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
@@ -53609,7 +53817,13 @@ public final class GameMsg {
         output.writeUInt32NoTag(mailIdMemoizedSerializedSize);
       }
       for (int i = 0; i < mailId_.size(); i++) {
-        output.writeUInt32NoTag(mailId_.getInt(i));
+        output.writeUInt64NoTag(mailId_.getLong(i));
+      }
+      for (int i = 0; i < props_.size(); i++) {
+        output.writeMessage(2, props_.get(i));
+      }
+      if (money_ != 0) {
+        output.writeUInt32(3, money_);
       }
       unknownFields.writeTo(output);
     }
@@ -53624,7 +53838,7 @@ public final class GameMsg {
         int dataSize = 0;
         for (int i = 0; i < mailId_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeUInt32SizeNoTag(mailId_.getInt(i));
+            .computeUInt64SizeNoTag(mailId_.getLong(i));
         }
         size += dataSize;
         if (!getMailIdList().isEmpty()) {
@@ -53633,6 +53847,14 @@ public final class GameMsg {
               .computeInt32SizeNoTag(dataSize);
         }
         mailIdMemoizedSerializedSize = dataSize;
+      }
+      for (int i = 0; i < props_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, props_.get(i));
+      }
+      if (money_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, money_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -53651,6 +53873,10 @@ public final class GameMsg {
 
       if (!getMailIdList()
           .equals(other.getMailIdList())) return false;
+      if (!getPropsList()
+          .equals(other.getPropsList())) return false;
+      if (getMoney()
+          != other.getMoney()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -53666,6 +53892,12 @@ public final class GameMsg {
         hash = (37 * hash) + MAILID_FIELD_NUMBER;
         hash = (53 * hash) + getMailIdList().hashCode();
       }
+      if (getPropsCount() > 0) {
+        hash = (37 * hash) + PROPS_FIELD_NUMBER;
+        hash = (53 * hash) + getPropsList().hashCode();
+      }
+      hash = (37 * hash) + MONEY_FIELD_NUMBER;
+      hash = (53 * hash) + getMoney();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -53798,13 +54030,22 @@ public final class GameMsg {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getPropsFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        mailId_ = emptyIntList();
+        mailId_ = emptyLongList();
         bitField0_ = (bitField0_ & ~0x00000001);
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          propsBuilder_.clear();
+        }
+        money_ = 0;
+
         return this;
       }
 
@@ -53837,6 +54078,16 @@ public final class GameMsg {
           bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.mailId_ = mailId_;
+        if (propsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            props_ = java.util.Collections.unmodifiableList(props_);
+            bitField0_ = (bitField0_ & ~0x00000002);
+          }
+          result.props_ = props_;
+        } else {
+          result.props_ = propsBuilder_.build();
+        }
+        result.money_ = money_;
         onBuilt();
         return result;
       }
@@ -53895,6 +54146,35 @@ public final class GameMsg {
           }
           onChanged();
         }
+        if (propsBuilder_ == null) {
+          if (!other.props_.isEmpty()) {
+            if (props_.isEmpty()) {
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+            } else {
+              ensurePropsIsMutable();
+              props_.addAll(other.props_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.props_.isEmpty()) {
+            if (propsBuilder_.isEmpty()) {
+              propsBuilder_.dispose();
+              propsBuilder_ = null;
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              propsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPropsFieldBuilder() : null;
+            } else {
+              propsBuilder_.addAllMessages(other.props_);
+            }
+          }
+        }
+        if (other.getMoney() != 0) {
+          setMoney(other.getMoney());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -53925,7 +54205,7 @@ public final class GameMsg {
       }
       private int bitField0_;
 
-      private com.google.protobuf.Internal.IntList mailId_ = emptyIntList();
+      private com.google.protobuf.Internal.LongList mailId_ = emptyLongList();
       private void ensureMailIdIsMutable() {
         if (!((bitField0_ & 0x00000001) != 0)) {
           mailId_ = mutableCopy(mailId_);
@@ -53937,10 +54217,10 @@ public final class GameMsg {
        * 领取成功的邮件id
        * </pre>
        *
-       * <code>repeated uint32 mailId = 1;</code>
+       * <code>repeated uint64 mailId = 1;</code>
        * @return A list containing the mailId.
        */
-      public java.util.List<java.lang.Integer>
+      public java.util.List<java.lang.Long>
           getMailIdList() {
         return ((bitField0_ & 0x00000001) != 0) ?
                  java.util.Collections.unmodifiableList(mailId_) : mailId_;
@@ -53950,7 +54230,7 @@ public final class GameMsg {
        * 领取成功的邮件id
        * </pre>
        *
-       * <code>repeated uint32 mailId = 1;</code>
+       * <code>repeated uint64 mailId = 1;</code>
        * @return The count of mailId.
        */
       public int getMailIdCount() {
@@ -53961,27 +54241,27 @@ public final class GameMsg {
        * 领取成功的邮件id
        * </pre>
        *
-       * <code>repeated uint32 mailId = 1;</code>
+       * <code>repeated uint64 mailId = 1;</code>
        * @param index The index of the element to return.
        * @return The mailId at the given index.
        */
-      public int getMailId(int index) {
-        return mailId_.getInt(index);
+      public long getMailId(int index) {
+        return mailId_.getLong(index);
       }
       /**
        * <pre>
        * 领取成功的邮件id
        * </pre>
        *
-       * <code>repeated uint32 mailId = 1;</code>
+       * <code>repeated uint64 mailId = 1;</code>
        * @param index The index to set the value at.
        * @param value The mailId to set.
        * @return This builder for chaining.
        */
       public Builder setMailId(
-          int index, int value) {
+          int index, long value) {
         ensureMailIdIsMutable();
-        mailId_.setInt(index, value);
+        mailId_.setLong(index, value);
         onChanged();
         return this;
       }
@@ -53990,13 +54270,13 @@ public final class GameMsg {
        * 领取成功的邮件id
        * </pre>
        *
-       * <code>repeated uint32 mailId = 1;</code>
+       * <code>repeated uint64 mailId = 1;</code>
        * @param value The mailId to add.
        * @return This builder for chaining.
        */
-      public Builder addMailId(int value) {
+      public Builder addMailId(long value) {
         ensureMailIdIsMutable();
-        mailId_.addInt(value);
+        mailId_.addLong(value);
         onChanged();
         return this;
       }
@@ -54005,12 +54285,12 @@ public final class GameMsg {
        * 领取成功的邮件id
        * </pre>
        *
-       * <code>repeated uint32 mailId = 1;</code>
+       * <code>repeated uint64 mailId = 1;</code>
        * @param values The mailId to add.
        * @return This builder for chaining.
        */
       public Builder addAllMailId(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
+          java.lang.Iterable<? extends java.lang.Long> values) {
         ensureMailIdIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
             values, mailId_);
@@ -54022,12 +54302,282 @@ public final class GameMsg {
        * 领取成功的邮件id
        * </pre>
        *
-       * <code>repeated uint32 mailId = 1;</code>
+       * <code>repeated uint64 mailId = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearMailId() {
-        mailId_ = emptyIntList();
+        mailId_ = emptyLongList();
         bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<msg.GameMsg.Props> props_ =
+        java.util.Collections.emptyList();
+      private void ensurePropsIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          props_ = new java.util.ArrayList<msg.GameMsg.Props>(props_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> propsBuilder_;
+
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public java.util.List<msg.GameMsg.Props> getPropsList() {
+        if (propsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(props_);
+        } else {
+          return propsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public int getPropsCount() {
+        if (propsBuilder_ == null) {
+          return props_.size();
+        } else {
+          return propsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props getProps(int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);
+        } else {
+          return propsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.set(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(
+          msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder addAllProps(
+          java.lang.Iterable<? extends msg.GameMsg.Props> values) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, props_);
+          onChanged();
+        } else {
+          propsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder clearProps() {
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
+          onChanged();
+        } else {
+          propsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public Builder removeProps(int index) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.remove(index);
+          onChanged();
+        } else {
+          propsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props.Builder getPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+          int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);  } else {
+          return propsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+           getPropsOrBuilderList() {
+        if (propsBuilder_ != null) {
+          return propsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(props_);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder() {
+        return getPropsFieldBuilder().addBuilder(
+            msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().addBuilder(
+            index, msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.Props props = 2;</code>
+       */
+      public java.util.List<msg.GameMsg.Props.Builder> 
+           getPropsBuilderList() {
+        return getPropsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> 
+          getPropsFieldBuilder() {
+        if (propsBuilder_ == null) {
+          propsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder>(
+                  props_,
+                  ((bitField0_ & 0x00000002) != 0),
+                  getParentForChildren(),
+                  isClean());
+          props_ = null;
+        }
+        return propsBuilder_;
+      }
+
+      private int money_ ;
+      /**
+       * <code>uint32 money = 3;</code>
+       * @return The money.
+       */
+      public int getMoney() {
+        return money_;
+      }
+      /**
+       * <code>uint32 money = 3;</code>
+       * @param value The money to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoney(int value) {
+        
+        money_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 money = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoney() {
+        
+        money_ = 0;
         onChanged();
         return this;
       }
@@ -97137,6 +97687,7409 @@ public final class GameMsg {
 
   }
 
+  public interface LookAuctionItemCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.LookAuctionItemCmd)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   *查看拍卖
+   * </pre>
+   *
+   * Protobuf type {@code msg.LookAuctionItemCmd}
+   */
+  public  static final class LookAuctionItemCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.LookAuctionItemCmd)
+      LookAuctionItemCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use LookAuctionItemCmd.newBuilder() to construct.
+    private LookAuctionItemCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private LookAuctionItemCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new LookAuctionItemCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private LookAuctionItemCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_LookAuctionItemCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_LookAuctionItemCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.LookAuctionItemCmd.class, msg.GameMsg.LookAuctionItemCmd.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.LookAuctionItemCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.LookAuctionItemCmd other = (msg.GameMsg.LookAuctionItemCmd) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookAuctionItemCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.LookAuctionItemCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *查看拍卖
+     * </pre>
+     *
+     * Protobuf type {@code msg.LookAuctionItemCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.LookAuctionItemCmd)
+        msg.GameMsg.LookAuctionItemCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_LookAuctionItemCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_LookAuctionItemCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.LookAuctionItemCmd.class, msg.GameMsg.LookAuctionItemCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.LookAuctionItemCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_LookAuctionItemCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookAuctionItemCmd getDefaultInstanceForType() {
+        return msg.GameMsg.LookAuctionItemCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookAuctionItemCmd build() {
+        msg.GameMsg.LookAuctionItemCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookAuctionItemCmd buildPartial() {
+        msg.GameMsg.LookAuctionItemCmd result = new msg.GameMsg.LookAuctionItemCmd(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.LookAuctionItemCmd) {
+          return mergeFrom((msg.GameMsg.LookAuctionItemCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.LookAuctionItemCmd other) {
+        if (other == msg.GameMsg.LookAuctionItemCmd.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.LookAuctionItemCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.LookAuctionItemCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.LookAuctionItemCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.LookAuctionItemCmd)
+    private static final msg.GameMsg.LookAuctionItemCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.LookAuctionItemCmd();
+    }
+
+    public static msg.GameMsg.LookAuctionItemCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<LookAuctionItemCmd>
+        PARSER = new com.google.protobuf.AbstractParser<LookAuctionItemCmd>() {
+      @java.lang.Override
+      public LookAuctionItemCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LookAuctionItemCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<LookAuctionItemCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LookAuctionItemCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.LookAuctionItemCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface LookAuctionItemResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.LookAuctionItemResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    java.util.List<msg.GameMsg.AuctionItem> 
+        getAuctionItemList();
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    msg.GameMsg.AuctionItem getAuctionItem(int index);
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    int getAuctionItemCount();
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    java.util.List<? extends msg.GameMsg.AuctionItemOrBuilder> 
+        getAuctionItemOrBuilderList();
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    msg.GameMsg.AuctionItemOrBuilder getAuctionItemOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code msg.LookAuctionItemResult}
+   */
+  public  static final class LookAuctionItemResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.LookAuctionItemResult)
+      LookAuctionItemResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use LookAuctionItemResult.newBuilder() to construct.
+    private LookAuctionItemResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private LookAuctionItemResult() {
+      auctionItem_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new LookAuctionItemResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private LookAuctionItemResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                auctionItem_ = new java.util.ArrayList<msg.GameMsg.AuctionItem>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              auctionItem_.add(
+                  input.readMessage(msg.GameMsg.AuctionItem.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          auctionItem_ = java.util.Collections.unmodifiableList(auctionItem_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_LookAuctionItemResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_LookAuctionItemResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.LookAuctionItemResult.class, msg.GameMsg.LookAuctionItemResult.Builder.class);
+    }
+
+    public static final int AUCTIONITEM_FIELD_NUMBER = 1;
+    private java.util.List<msg.GameMsg.AuctionItem> auctionItem_;
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public java.util.List<msg.GameMsg.AuctionItem> getAuctionItemList() {
+      return auctionItem_;
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.AuctionItemOrBuilder> 
+        getAuctionItemOrBuilderList() {
+      return auctionItem_;
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public int getAuctionItemCount() {
+      return auctionItem_.size();
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public msg.GameMsg.AuctionItem getAuctionItem(int index) {
+      return auctionItem_.get(index);
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public msg.GameMsg.AuctionItemOrBuilder getAuctionItemOrBuilder(
+        int index) {
+      return auctionItem_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < auctionItem_.size(); i++) {
+        output.writeMessage(1, auctionItem_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < auctionItem_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, auctionItem_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.LookAuctionItemResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.LookAuctionItemResult other = (msg.GameMsg.LookAuctionItemResult) obj;
+
+      if (!getAuctionItemList()
+          .equals(other.getAuctionItemList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getAuctionItemCount() > 0) {
+        hash = (37 * hash) + AUCTIONITEM_FIELD_NUMBER;
+        hash = (53 * hash) + getAuctionItemList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookAuctionItemResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.LookAuctionItemResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.LookAuctionItemResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.LookAuctionItemResult)
+        msg.GameMsg.LookAuctionItemResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_LookAuctionItemResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_LookAuctionItemResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.LookAuctionItemResult.class, msg.GameMsg.LookAuctionItemResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.LookAuctionItemResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getAuctionItemFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (auctionItemBuilder_ == null) {
+          auctionItem_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          auctionItemBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_LookAuctionItemResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookAuctionItemResult getDefaultInstanceForType() {
+        return msg.GameMsg.LookAuctionItemResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookAuctionItemResult build() {
+        msg.GameMsg.LookAuctionItemResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookAuctionItemResult buildPartial() {
+        msg.GameMsg.LookAuctionItemResult result = new msg.GameMsg.LookAuctionItemResult(this);
+        int from_bitField0_ = bitField0_;
+        if (auctionItemBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            auctionItem_ = java.util.Collections.unmodifiableList(auctionItem_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.auctionItem_ = auctionItem_;
+        } else {
+          result.auctionItem_ = auctionItemBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.LookAuctionItemResult) {
+          return mergeFrom((msg.GameMsg.LookAuctionItemResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.LookAuctionItemResult other) {
+        if (other == msg.GameMsg.LookAuctionItemResult.getDefaultInstance()) return this;
+        if (auctionItemBuilder_ == null) {
+          if (!other.auctionItem_.isEmpty()) {
+            if (auctionItem_.isEmpty()) {
+              auctionItem_ = other.auctionItem_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureAuctionItemIsMutable();
+              auctionItem_.addAll(other.auctionItem_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.auctionItem_.isEmpty()) {
+            if (auctionItemBuilder_.isEmpty()) {
+              auctionItemBuilder_.dispose();
+              auctionItemBuilder_ = null;
+              auctionItem_ = other.auctionItem_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              auctionItemBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getAuctionItemFieldBuilder() : null;
+            } else {
+              auctionItemBuilder_.addAllMessages(other.auctionItem_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.LookAuctionItemResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.LookAuctionItemResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<msg.GameMsg.AuctionItem> auctionItem_ =
+        java.util.Collections.emptyList();
+      private void ensureAuctionItemIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          auctionItem_ = new java.util.ArrayList<msg.GameMsg.AuctionItem>(auctionItem_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.AuctionItem, msg.GameMsg.AuctionItem.Builder, msg.GameMsg.AuctionItemOrBuilder> auctionItemBuilder_;
+
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.AuctionItem> getAuctionItemList() {
+        if (auctionItemBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(auctionItem_);
+        } else {
+          return auctionItemBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public int getAuctionItemCount() {
+        if (auctionItemBuilder_ == null) {
+          return auctionItem_.size();
+        } else {
+          return auctionItemBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem getAuctionItem(int index) {
+        if (auctionItemBuilder_ == null) {
+          return auctionItem_.get(index);
+        } else {
+          return auctionItemBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder setAuctionItem(
+          int index, msg.GameMsg.AuctionItem value) {
+        if (auctionItemBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAuctionItemIsMutable();
+          auctionItem_.set(index, value);
+          onChanged();
+        } else {
+          auctionItemBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder setAuctionItem(
+          int index, msg.GameMsg.AuctionItem.Builder builderForValue) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          auctionItemBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(msg.GameMsg.AuctionItem value) {
+        if (auctionItemBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(value);
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(
+          int index, msg.GameMsg.AuctionItem value) {
+        if (auctionItemBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(index, value);
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(
+          msg.GameMsg.AuctionItem.Builder builderForValue) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(builderForValue.build());
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(
+          int index, msg.GameMsg.AuctionItem.Builder builderForValue) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAllAuctionItem(
+          java.lang.Iterable<? extends msg.GameMsg.AuctionItem> values) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, auctionItem_);
+          onChanged();
+        } else {
+          auctionItemBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder clearAuctionItem() {
+        if (auctionItemBuilder_ == null) {
+          auctionItem_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          auctionItemBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder removeAuctionItem(int index) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.remove(index);
+          onChanged();
+        } else {
+          auctionItemBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem.Builder getAuctionItemBuilder(
+          int index) {
+        return getAuctionItemFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItemOrBuilder getAuctionItemOrBuilder(
+          int index) {
+        if (auctionItemBuilder_ == null) {
+          return auctionItem_.get(index);  } else {
+          return auctionItemBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.AuctionItemOrBuilder> 
+           getAuctionItemOrBuilderList() {
+        if (auctionItemBuilder_ != null) {
+          return auctionItemBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(auctionItem_);
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem.Builder addAuctionItemBuilder() {
+        return getAuctionItemFieldBuilder().addBuilder(
+            msg.GameMsg.AuctionItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem.Builder addAuctionItemBuilder(
+          int index) {
+        return getAuctionItemFieldBuilder().addBuilder(
+            index, msg.GameMsg.AuctionItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.AuctionItem.Builder> 
+           getAuctionItemBuilderList() {
+        return getAuctionItemFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.AuctionItem, msg.GameMsg.AuctionItem.Builder, msg.GameMsg.AuctionItemOrBuilder> 
+          getAuctionItemFieldBuilder() {
+        if (auctionItemBuilder_ == null) {
+          auctionItemBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.AuctionItem, msg.GameMsg.AuctionItem.Builder, msg.GameMsg.AuctionItemOrBuilder>(
+                  auctionItem_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          auctionItem_ = null;
+        }
+        return auctionItemBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.LookAuctionItemResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.LookAuctionItemResult)
+    private static final msg.GameMsg.LookAuctionItemResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.LookAuctionItemResult();
+    }
+
+    public static msg.GameMsg.LookAuctionItemResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<LookAuctionItemResult>
+        PARSER = new com.google.protobuf.AbstractParser<LookAuctionItemResult>() {
+      @java.lang.Override
+      public LookAuctionItemResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LookAuctionItemResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<LookAuctionItemResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LookAuctionItemResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.LookAuctionItemResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AuctionItemOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.AuctionItem)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 id = 1;</code>
+     * @return The id.
+     */
+    int getId();
+
+    /**
+     * <code>string userName = 2;</code>
+     * @return The userName.
+     */
+    java.lang.String getUserName();
+    /**
+     * <code>string userName = 2;</code>
+     * @return The bytes for userName.
+     */
+    com.google.protobuf.ByteString
+        getUserNameBytes();
+
+    /**
+     * <code>uint32 propsId = 3;</code>
+     * @return The propsId.
+     */
+    int getPropsId();
+
+    /**
+     * <pre>
+     *竞拍价
+     * </pre>
+     *
+     * <code>uint32 auction = 4;</code>
+     * @return The auction.
+     */
+    int getAuction();
+
+    /**
+     * <pre>
+     *一口价
+     * </pre>
+     *
+     * <code>uint32 price = 5;</code>
+     * @return The price.
+     */
+    int getPrice();
+
+    /**
+     * <pre>
+     * 数量
+     * </pre>
+     *
+     * <code>uint32 number = 6;</code>
+     * @return The number.
+     */
+    int getNumber();
+
+    /**
+     * <pre>
+     *时间
+     * </pre>
+     *
+     * <code>uint64 date = 7;</code>
+     * @return The date.
+     */
+    long getDate();
+  }
+  /**
+   * Protobuf type {@code msg.AuctionItem}
+   */
+  public  static final class AuctionItem extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.AuctionItem)
+      AuctionItemOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use AuctionItem.newBuilder() to construct.
+    private AuctionItem(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AuctionItem() {
+      userName_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AuctionItem();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AuctionItem(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              id_ = input.readUInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              userName_ = s;
+              break;
+            }
+            case 24: {
+
+              propsId_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+
+              auction_ = input.readUInt32();
+              break;
+            }
+            case 40: {
+
+              price_ = input.readUInt32();
+              break;
+            }
+            case 48: {
+
+              number_ = input.readUInt32();
+              break;
+            }
+            case 56: {
+
+              date_ = input.readUInt64();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_AuctionItem_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_AuctionItem_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.AuctionItem.class, msg.GameMsg.AuctionItem.Builder.class);
+    }
+
+    public static final int ID_FIELD_NUMBER = 1;
+    private int id_;
+    /**
+     * <code>uint32 id = 1;</code>
+     * @return The id.
+     */
+    public int getId() {
+      return id_;
+    }
+
+    public static final int USERNAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object userName_;
+    /**
+     * <code>string userName = 2;</code>
+     * @return The userName.
+     */
+    public java.lang.String getUserName() {
+      java.lang.Object ref = userName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        userName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string userName = 2;</code>
+     * @return The bytes for userName.
+     */
+    public com.google.protobuf.ByteString
+        getUserNameBytes() {
+      java.lang.Object ref = userName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        userName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PROPSID_FIELD_NUMBER = 3;
+    private int propsId_;
+    /**
+     * <code>uint32 propsId = 3;</code>
+     * @return The propsId.
+     */
+    public int getPropsId() {
+      return propsId_;
+    }
+
+    public static final int AUCTION_FIELD_NUMBER = 4;
+    private int auction_;
+    /**
+     * <pre>
+     *竞拍价
+     * </pre>
+     *
+     * <code>uint32 auction = 4;</code>
+     * @return The auction.
+     */
+    public int getAuction() {
+      return auction_;
+    }
+
+    public static final int PRICE_FIELD_NUMBER = 5;
+    private int price_;
+    /**
+     * <pre>
+     *一口价
+     * </pre>
+     *
+     * <code>uint32 price = 5;</code>
+     * @return The price.
+     */
+    public int getPrice() {
+      return price_;
+    }
+
+    public static final int NUMBER_FIELD_NUMBER = 6;
+    private int number_;
+    /**
+     * <pre>
+     * 数量
+     * </pre>
+     *
+     * <code>uint32 number = 6;</code>
+     * @return The number.
+     */
+    public int getNumber() {
+      return number_;
+    }
+
+    public static final int DATE_FIELD_NUMBER = 7;
+    private long date_;
+    /**
+     * <pre>
+     *时间
+     * </pre>
+     *
+     * <code>uint64 date = 7;</code>
+     * @return The date.
+     */
+    public long getDate() {
+      return date_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (id_ != 0) {
+        output.writeUInt32(1, id_);
+      }
+      if (!getUserNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userName_);
+      }
+      if (propsId_ != 0) {
+        output.writeUInt32(3, propsId_);
+      }
+      if (auction_ != 0) {
+        output.writeUInt32(4, auction_);
+      }
+      if (price_ != 0) {
+        output.writeUInt32(5, price_);
+      }
+      if (number_ != 0) {
+        output.writeUInt32(6, number_);
+      }
+      if (date_ != 0L) {
+        output.writeUInt64(7, date_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, id_);
+      }
+      if (!getUserNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userName_);
+      }
+      if (propsId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, propsId_);
+      }
+      if (auction_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, auction_);
+      }
+      if (price_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(5, price_);
+      }
+      if (number_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(6, number_);
+      }
+      if (date_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(7, date_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.AuctionItem)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.AuctionItem other = (msg.GameMsg.AuctionItem) obj;
+
+      if (getId()
+          != other.getId()) return false;
+      if (!getUserName()
+          .equals(other.getUserName())) return false;
+      if (getPropsId()
+          != other.getPropsId()) return false;
+      if (getAuction()
+          != other.getAuction()) return false;
+      if (getPrice()
+          != other.getPrice()) return false;
+      if (getNumber()
+          != other.getNumber()) return false;
+      if (getDate()
+          != other.getDate()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUserName().hashCode();
+      hash = (37 * hash) + PROPSID_FIELD_NUMBER;
+      hash = (53 * hash) + getPropsId();
+      hash = (37 * hash) + AUCTION_FIELD_NUMBER;
+      hash = (53 * hash) + getAuction();
+      hash = (37 * hash) + PRICE_FIELD_NUMBER;
+      hash = (53 * hash) + getPrice();
+      hash = (37 * hash) + NUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getNumber();
+      hash = (37 * hash) + DATE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getDate());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.AuctionItem parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.AuctionItem parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.AuctionItem parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.AuctionItem parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.AuctionItem prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.AuctionItem}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.AuctionItem)
+        msg.GameMsg.AuctionItemOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_AuctionItem_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_AuctionItem_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.AuctionItem.class, msg.GameMsg.AuctionItem.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.AuctionItem.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        id_ = 0;
+
+        userName_ = "";
+
+        propsId_ = 0;
+
+        auction_ = 0;
+
+        price_ = 0;
+
+        number_ = 0;
+
+        date_ = 0L;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_AuctionItem_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.AuctionItem getDefaultInstanceForType() {
+        return msg.GameMsg.AuctionItem.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.AuctionItem build() {
+        msg.GameMsg.AuctionItem result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.AuctionItem buildPartial() {
+        msg.GameMsg.AuctionItem result = new msg.GameMsg.AuctionItem(this);
+        result.id_ = id_;
+        result.userName_ = userName_;
+        result.propsId_ = propsId_;
+        result.auction_ = auction_;
+        result.price_ = price_;
+        result.number_ = number_;
+        result.date_ = date_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.AuctionItem) {
+          return mergeFrom((msg.GameMsg.AuctionItem)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.AuctionItem other) {
+        if (other == msg.GameMsg.AuctionItem.getDefaultInstance()) return this;
+        if (other.getId() != 0) {
+          setId(other.getId());
+        }
+        if (!other.getUserName().isEmpty()) {
+          userName_ = other.userName_;
+          onChanged();
+        }
+        if (other.getPropsId() != 0) {
+          setPropsId(other.getPropsId());
+        }
+        if (other.getAuction() != 0) {
+          setAuction(other.getAuction());
+        }
+        if (other.getPrice() != 0) {
+          setPrice(other.getPrice());
+        }
+        if (other.getNumber() != 0) {
+          setNumber(other.getNumber());
+        }
+        if (other.getDate() != 0L) {
+          setDate(other.getDate());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.AuctionItem parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.AuctionItem) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int id_ ;
+      /**
+       * <code>uint32 id = 1;</code>
+       * @return The id.
+       */
+      public int getId() {
+        return id_;
+      }
+      /**
+       * <code>uint32 id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
+       */
+      public Builder setId(int value) {
+        
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 id = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearId() {
+        
+        id_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object userName_ = "";
+      /**
+       * <code>string userName = 2;</code>
+       * @return The userName.
+       */
+      public java.lang.String getUserName() {
+        java.lang.Object ref = userName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          userName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string userName = 2;</code>
+       * @return The bytes for userName.
+       */
+      public com.google.protobuf.ByteString
+          getUserNameBytes() {
+        java.lang.Object ref = userName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          userName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string userName = 2;</code>
+       * @param value The userName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUserName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        userName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string userName = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUserName() {
+        
+        userName_ = getDefaultInstance().getUserName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string userName = 2;</code>
+       * @param value The bytes for userName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUserNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        userName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int propsId_ ;
+      /**
+       * <code>uint32 propsId = 3;</code>
+       * @return The propsId.
+       */
+      public int getPropsId() {
+        return propsId_;
+      }
+      /**
+       * <code>uint32 propsId = 3;</code>
+       * @param value The propsId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPropsId(int value) {
+        
+        propsId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 propsId = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPropsId() {
+        
+        propsId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int auction_ ;
+      /**
+       * <pre>
+       *竞拍价
+       * </pre>
+       *
+       * <code>uint32 auction = 4;</code>
+       * @return The auction.
+       */
+      public int getAuction() {
+        return auction_;
+      }
+      /**
+       * <pre>
+       *竞拍价
+       * </pre>
+       *
+       * <code>uint32 auction = 4;</code>
+       * @param value The auction to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAuction(int value) {
+        
+        auction_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *竞拍价
+       * </pre>
+       *
+       * <code>uint32 auction = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAuction() {
+        
+        auction_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int price_ ;
+      /**
+       * <pre>
+       *一口价
+       * </pre>
+       *
+       * <code>uint32 price = 5;</code>
+       * @return The price.
+       */
+      public int getPrice() {
+        return price_;
+      }
+      /**
+       * <pre>
+       *一口价
+       * </pre>
+       *
+       * <code>uint32 price = 5;</code>
+       * @param value The price to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPrice(int value) {
+        
+        price_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *一口价
+       * </pre>
+       *
+       * <code>uint32 price = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPrice() {
+        
+        price_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int number_ ;
+      /**
+       * <pre>
+       * 数量
+       * </pre>
+       *
+       * <code>uint32 number = 6;</code>
+       * @return The number.
+       */
+      public int getNumber() {
+        return number_;
+      }
+      /**
+       * <pre>
+       * 数量
+       * </pre>
+       *
+       * <code>uint32 number = 6;</code>
+       * @param value The number to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNumber(int value) {
+        
+        number_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 数量
+       * </pre>
+       *
+       * <code>uint32 number = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearNumber() {
+        
+        number_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long date_ ;
+      /**
+       * <pre>
+       *时间
+       * </pre>
+       *
+       * <code>uint64 date = 7;</code>
+       * @return The date.
+       */
+      public long getDate() {
+        return date_;
+      }
+      /**
+       * <pre>
+       *时间
+       * </pre>
+       *
+       * <code>uint64 date = 7;</code>
+       * @param value The date to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDate(long value) {
+        
+        date_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *时间
+       * </pre>
+       *
+       * <code>uint64 date = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDate() {
+        
+        date_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.AuctionItem)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.AuctionItem)
+    private static final msg.GameMsg.AuctionItem DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.AuctionItem();
+    }
+
+    public static msg.GameMsg.AuctionItem getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AuctionItem>
+        PARSER = new com.google.protobuf.AbstractParser<AuctionItem>() {
+      @java.lang.Override
+      public AuctionItem parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AuctionItem(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AuctionItem> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AuctionItem> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.AuctionItem getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ShelveGoodsCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.ShelveGoodsCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 location = 1;</code>
+     * @return The location.
+     */
+    int getLocation();
+
+    /**
+     * <code>uint32 number = 2;</code>
+     * @return The number.
+     */
+    int getNumber();
+
+    /**
+     * <code>uint32 auction = 3;</code>
+     * @return The auction.
+     */
+    int getAuction();
+
+    /**
+     * <code>uint32 price = 4;</code>
+     * @return The price.
+     */
+    int getPrice();
+  }
+  /**
+   * <pre>
+   *上架商品
+   * </pre>
+   *
+   * Protobuf type {@code msg.ShelveGoodsCmd}
+   */
+  public  static final class ShelveGoodsCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.ShelveGoodsCmd)
+      ShelveGoodsCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ShelveGoodsCmd.newBuilder() to construct.
+    private ShelveGoodsCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ShelveGoodsCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ShelveGoodsCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ShelveGoodsCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              location_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+
+              number_ = input.readUInt32();
+              break;
+            }
+            case 24: {
+
+              auction_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+
+              price_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_ShelveGoodsCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_ShelveGoodsCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.ShelveGoodsCmd.class, msg.GameMsg.ShelveGoodsCmd.Builder.class);
+    }
+
+    public static final int LOCATION_FIELD_NUMBER = 1;
+    private int location_;
+    /**
+     * <code>uint32 location = 1;</code>
+     * @return The location.
+     */
+    public int getLocation() {
+      return location_;
+    }
+
+    public static final int NUMBER_FIELD_NUMBER = 2;
+    private int number_;
+    /**
+     * <code>uint32 number = 2;</code>
+     * @return The number.
+     */
+    public int getNumber() {
+      return number_;
+    }
+
+    public static final int AUCTION_FIELD_NUMBER = 3;
+    private int auction_;
+    /**
+     * <code>uint32 auction = 3;</code>
+     * @return The auction.
+     */
+    public int getAuction() {
+      return auction_;
+    }
+
+    public static final int PRICE_FIELD_NUMBER = 4;
+    private int price_;
+    /**
+     * <code>uint32 price = 4;</code>
+     * @return The price.
+     */
+    public int getPrice() {
+      return price_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (location_ != 0) {
+        output.writeUInt32(1, location_);
+      }
+      if (number_ != 0) {
+        output.writeUInt32(2, number_);
+      }
+      if (auction_ != 0) {
+        output.writeUInt32(3, auction_);
+      }
+      if (price_ != 0) {
+        output.writeUInt32(4, price_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (location_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, location_);
+      }
+      if (number_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, number_);
+      }
+      if (auction_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, auction_);
+      }
+      if (price_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, price_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.ShelveGoodsCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.ShelveGoodsCmd other = (msg.GameMsg.ShelveGoodsCmd) obj;
+
+      if (getLocation()
+          != other.getLocation()) return false;
+      if (getNumber()
+          != other.getNumber()) return false;
+      if (getAuction()
+          != other.getAuction()) return false;
+      if (getPrice()
+          != other.getPrice()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + getLocation();
+      hash = (37 * hash) + NUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getNumber();
+      hash = (37 * hash) + AUCTION_FIELD_NUMBER;
+      hash = (53 * hash) + getAuction();
+      hash = (37 * hash) + PRICE_FIELD_NUMBER;
+      hash = (53 * hash) + getPrice();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.ShelveGoodsCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.ShelveGoodsCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *上架商品
+     * </pre>
+     *
+     * Protobuf type {@code msg.ShelveGoodsCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.ShelveGoodsCmd)
+        msg.GameMsg.ShelveGoodsCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_ShelveGoodsCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_ShelveGoodsCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.ShelveGoodsCmd.class, msg.GameMsg.ShelveGoodsCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.ShelveGoodsCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        location_ = 0;
+
+        number_ = 0;
+
+        auction_ = 0;
+
+        price_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_ShelveGoodsCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.ShelveGoodsCmd getDefaultInstanceForType() {
+        return msg.GameMsg.ShelveGoodsCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.ShelveGoodsCmd build() {
+        msg.GameMsg.ShelveGoodsCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.ShelveGoodsCmd buildPartial() {
+        msg.GameMsg.ShelveGoodsCmd result = new msg.GameMsg.ShelveGoodsCmd(this);
+        result.location_ = location_;
+        result.number_ = number_;
+        result.auction_ = auction_;
+        result.price_ = price_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.ShelveGoodsCmd) {
+          return mergeFrom((msg.GameMsg.ShelveGoodsCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.ShelveGoodsCmd other) {
+        if (other == msg.GameMsg.ShelveGoodsCmd.getDefaultInstance()) return this;
+        if (other.getLocation() != 0) {
+          setLocation(other.getLocation());
+        }
+        if (other.getNumber() != 0) {
+          setNumber(other.getNumber());
+        }
+        if (other.getAuction() != 0) {
+          setAuction(other.getAuction());
+        }
+        if (other.getPrice() != 0) {
+          setPrice(other.getPrice());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.ShelveGoodsCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.ShelveGoodsCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int location_ ;
+      /**
+       * <code>uint32 location = 1;</code>
+       * @return The location.
+       */
+      public int getLocation() {
+        return location_;
+      }
+      /**
+       * <code>uint32 location = 1;</code>
+       * @param value The location to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLocation(int value) {
+        
+        location_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 location = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearLocation() {
+        
+        location_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int number_ ;
+      /**
+       * <code>uint32 number = 2;</code>
+       * @return The number.
+       */
+      public int getNumber() {
+        return number_;
+      }
+      /**
+       * <code>uint32 number = 2;</code>
+       * @param value The number to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNumber(int value) {
+        
+        number_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 number = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearNumber() {
+        
+        number_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int auction_ ;
+      /**
+       * <code>uint32 auction = 3;</code>
+       * @return The auction.
+       */
+      public int getAuction() {
+        return auction_;
+      }
+      /**
+       * <code>uint32 auction = 3;</code>
+       * @param value The auction to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAuction(int value) {
+        
+        auction_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 auction = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAuction() {
+        
+        auction_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int price_ ;
+      /**
+       * <code>uint32 price = 4;</code>
+       * @return The price.
+       */
+      public int getPrice() {
+        return price_;
+      }
+      /**
+       * <code>uint32 price = 4;</code>
+       * @param value The price to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPrice(int value) {
+        
+        price_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 price = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPrice() {
+        
+        price_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.ShelveGoodsCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.ShelveGoodsCmd)
+    private static final msg.GameMsg.ShelveGoodsCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.ShelveGoodsCmd();
+    }
+
+    public static msg.GameMsg.ShelveGoodsCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ShelveGoodsCmd>
+        PARSER = new com.google.protobuf.AbstractParser<ShelveGoodsCmd>() {
+      @java.lang.Override
+      public ShelveGoodsCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ShelveGoodsCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ShelveGoodsCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ShelveGoodsCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.ShelveGoodsCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ShelveGoodsResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.ShelveGoodsResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code msg.ShelveGoodsResult}
+   */
+  public  static final class ShelveGoodsResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.ShelveGoodsResult)
+      ShelveGoodsResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ShelveGoodsResult.newBuilder() to construct.
+    private ShelveGoodsResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ShelveGoodsResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ShelveGoodsResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ShelveGoodsResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_ShelveGoodsResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_ShelveGoodsResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.ShelveGoodsResult.class, msg.GameMsg.ShelveGoodsResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.ShelveGoodsResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.ShelveGoodsResult other = (msg.GameMsg.ShelveGoodsResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.ShelveGoodsResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.ShelveGoodsResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.ShelveGoodsResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.ShelveGoodsResult)
+        msg.GameMsg.ShelveGoodsResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_ShelveGoodsResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_ShelveGoodsResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.ShelveGoodsResult.class, msg.GameMsg.ShelveGoodsResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.ShelveGoodsResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_ShelveGoodsResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.ShelveGoodsResult getDefaultInstanceForType() {
+        return msg.GameMsg.ShelveGoodsResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.ShelveGoodsResult build() {
+        msg.GameMsg.ShelveGoodsResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.ShelveGoodsResult buildPartial() {
+        msg.GameMsg.ShelveGoodsResult result = new msg.GameMsg.ShelveGoodsResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.ShelveGoodsResult) {
+          return mergeFrom((msg.GameMsg.ShelveGoodsResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.ShelveGoodsResult other) {
+        if (other == msg.GameMsg.ShelveGoodsResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.ShelveGoodsResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.ShelveGoodsResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.ShelveGoodsResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.ShelveGoodsResult)
+    private static final msg.GameMsg.ShelveGoodsResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.ShelveGoodsResult();
+    }
+
+    public static msg.GameMsg.ShelveGoodsResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ShelveGoodsResult>
+        PARSER = new com.google.protobuf.AbstractParser<ShelveGoodsResult>() {
+      @java.lang.Override
+      public ShelveGoodsResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ShelveGoodsResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ShelveGoodsResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ShelveGoodsResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.ShelveGoodsResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface BiddingGoodsCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.BiddingGoodsCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 auctionId = 1;</code>
+     * @return The auctionId.
+     */
+    int getAuctionId();
+
+    /**
+     * <code>uint32 money = 2;</code>
+     * @return The money.
+     */
+    int getMoney();
+  }
+  /**
+   * <pre>
+   *竞价
+   * </pre>
+   *
+   * Protobuf type {@code msg.BiddingGoodsCmd}
+   */
+  public  static final class BiddingGoodsCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.BiddingGoodsCmd)
+      BiddingGoodsCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BiddingGoodsCmd.newBuilder() to construct.
+    private BiddingGoodsCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BiddingGoodsCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BiddingGoodsCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private BiddingGoodsCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              auctionId_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+
+              money_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_BiddingGoodsCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_BiddingGoodsCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.BiddingGoodsCmd.class, msg.GameMsg.BiddingGoodsCmd.Builder.class);
+    }
+
+    public static final int AUCTIONID_FIELD_NUMBER = 1;
+    private int auctionId_;
+    /**
+     * <code>uint32 auctionId = 1;</code>
+     * @return The auctionId.
+     */
+    public int getAuctionId() {
+      return auctionId_;
+    }
+
+    public static final int MONEY_FIELD_NUMBER = 2;
+    private int money_;
+    /**
+     * <code>uint32 money = 2;</code>
+     * @return The money.
+     */
+    public int getMoney() {
+      return money_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (auctionId_ != 0) {
+        output.writeUInt32(1, auctionId_);
+      }
+      if (money_ != 0) {
+        output.writeUInt32(2, money_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (auctionId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, auctionId_);
+      }
+      if (money_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, money_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.BiddingGoodsCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.BiddingGoodsCmd other = (msg.GameMsg.BiddingGoodsCmd) obj;
+
+      if (getAuctionId()
+          != other.getAuctionId()) return false;
+      if (getMoney()
+          != other.getMoney()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + AUCTIONID_FIELD_NUMBER;
+      hash = (53 * hash) + getAuctionId();
+      hash = (37 * hash) + MONEY_FIELD_NUMBER;
+      hash = (53 * hash) + getMoney();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BiddingGoodsCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.BiddingGoodsCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *竞价
+     * </pre>
+     *
+     * Protobuf type {@code msg.BiddingGoodsCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.BiddingGoodsCmd)
+        msg.GameMsg.BiddingGoodsCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_BiddingGoodsCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_BiddingGoodsCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.BiddingGoodsCmd.class, msg.GameMsg.BiddingGoodsCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.BiddingGoodsCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        auctionId_ = 0;
+
+        money_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_BiddingGoodsCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BiddingGoodsCmd getDefaultInstanceForType() {
+        return msg.GameMsg.BiddingGoodsCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BiddingGoodsCmd build() {
+        msg.GameMsg.BiddingGoodsCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BiddingGoodsCmd buildPartial() {
+        msg.GameMsg.BiddingGoodsCmd result = new msg.GameMsg.BiddingGoodsCmd(this);
+        result.auctionId_ = auctionId_;
+        result.money_ = money_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.BiddingGoodsCmd) {
+          return mergeFrom((msg.GameMsg.BiddingGoodsCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.BiddingGoodsCmd other) {
+        if (other == msg.GameMsg.BiddingGoodsCmd.getDefaultInstance()) return this;
+        if (other.getAuctionId() != 0) {
+          setAuctionId(other.getAuctionId());
+        }
+        if (other.getMoney() != 0) {
+          setMoney(other.getMoney());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.BiddingGoodsCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.BiddingGoodsCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int auctionId_ ;
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @return The auctionId.
+       */
+      public int getAuctionId() {
+        return auctionId_;
+      }
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @param value The auctionId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAuctionId(int value) {
+        
+        auctionId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAuctionId() {
+        
+        auctionId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int money_ ;
+      /**
+       * <code>uint32 money = 2;</code>
+       * @return The money.
+       */
+      public int getMoney() {
+        return money_;
+      }
+      /**
+       * <code>uint32 money = 2;</code>
+       * @param value The money to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoney(int value) {
+        
+        money_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 money = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoney() {
+        
+        money_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.BiddingGoodsCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.BiddingGoodsCmd)
+    private static final msg.GameMsg.BiddingGoodsCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.BiddingGoodsCmd();
+    }
+
+    public static msg.GameMsg.BiddingGoodsCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BiddingGoodsCmd>
+        PARSER = new com.google.protobuf.AbstractParser<BiddingGoodsCmd>() {
+      @java.lang.Override
+      public BiddingGoodsCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new BiddingGoodsCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<BiddingGoodsCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BiddingGoodsCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.BiddingGoodsCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface BiddingGoodsResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.BiddingGoodsResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code msg.BiddingGoodsResult}
+   */
+  public  static final class BiddingGoodsResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.BiddingGoodsResult)
+      BiddingGoodsResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BiddingGoodsResult.newBuilder() to construct.
+    private BiddingGoodsResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BiddingGoodsResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BiddingGoodsResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private BiddingGoodsResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_BiddingGoodsResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_BiddingGoodsResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.BiddingGoodsResult.class, msg.GameMsg.BiddingGoodsResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.BiddingGoodsResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.BiddingGoodsResult other = (msg.GameMsg.BiddingGoodsResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BiddingGoodsResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.BiddingGoodsResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.BiddingGoodsResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.BiddingGoodsResult)
+        msg.GameMsg.BiddingGoodsResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_BiddingGoodsResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_BiddingGoodsResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.BiddingGoodsResult.class, msg.GameMsg.BiddingGoodsResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.BiddingGoodsResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_BiddingGoodsResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BiddingGoodsResult getDefaultInstanceForType() {
+        return msg.GameMsg.BiddingGoodsResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BiddingGoodsResult build() {
+        msg.GameMsg.BiddingGoodsResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BiddingGoodsResult buildPartial() {
+        msg.GameMsg.BiddingGoodsResult result = new msg.GameMsg.BiddingGoodsResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.BiddingGoodsResult) {
+          return mergeFrom((msg.GameMsg.BiddingGoodsResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.BiddingGoodsResult other) {
+        if (other == msg.GameMsg.BiddingGoodsResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.BiddingGoodsResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.BiddingGoodsResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.BiddingGoodsResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.BiddingGoodsResult)
+    private static final msg.GameMsg.BiddingGoodsResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.BiddingGoodsResult();
+    }
+
+    public static msg.GameMsg.BiddingGoodsResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BiddingGoodsResult>
+        PARSER = new com.google.protobuf.AbstractParser<BiddingGoodsResult>() {
+      @java.lang.Override
+      public BiddingGoodsResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new BiddingGoodsResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<BiddingGoodsResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BiddingGoodsResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.BiddingGoodsResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface OnePriceCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.OnePriceCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 auctionId = 1;</code>
+     * @return The auctionId.
+     */
+    int getAuctionId();
+  }
+  /**
+   * <pre>
+   * 一口价
+   * </pre>
+   *
+   * Protobuf type {@code msg.OnePriceCmd}
+   */
+  public  static final class OnePriceCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.OnePriceCmd)
+      OnePriceCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use OnePriceCmd.newBuilder() to construct.
+    private OnePriceCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private OnePriceCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new OnePriceCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private OnePriceCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              auctionId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_OnePriceCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_OnePriceCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.OnePriceCmd.class, msg.GameMsg.OnePriceCmd.Builder.class);
+    }
+
+    public static final int AUCTIONID_FIELD_NUMBER = 1;
+    private int auctionId_;
+    /**
+     * <code>uint32 auctionId = 1;</code>
+     * @return The auctionId.
+     */
+    public int getAuctionId() {
+      return auctionId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (auctionId_ != 0) {
+        output.writeUInt32(1, auctionId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (auctionId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, auctionId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.OnePriceCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.OnePriceCmd other = (msg.GameMsg.OnePriceCmd) obj;
+
+      if (getAuctionId()
+          != other.getAuctionId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + AUCTIONID_FIELD_NUMBER;
+      hash = (53 * hash) + getAuctionId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.OnePriceCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.OnePriceCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.OnePriceCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * 一口价
+     * </pre>
+     *
+     * Protobuf type {@code msg.OnePriceCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.OnePriceCmd)
+        msg.GameMsg.OnePriceCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_OnePriceCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_OnePriceCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.OnePriceCmd.class, msg.GameMsg.OnePriceCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.OnePriceCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        auctionId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_OnePriceCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.OnePriceCmd getDefaultInstanceForType() {
+        return msg.GameMsg.OnePriceCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.OnePriceCmd build() {
+        msg.GameMsg.OnePriceCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.OnePriceCmd buildPartial() {
+        msg.GameMsg.OnePriceCmd result = new msg.GameMsg.OnePriceCmd(this);
+        result.auctionId_ = auctionId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.OnePriceCmd) {
+          return mergeFrom((msg.GameMsg.OnePriceCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.OnePriceCmd other) {
+        if (other == msg.GameMsg.OnePriceCmd.getDefaultInstance()) return this;
+        if (other.getAuctionId() != 0) {
+          setAuctionId(other.getAuctionId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.OnePriceCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.OnePriceCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int auctionId_ ;
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @return The auctionId.
+       */
+      public int getAuctionId() {
+        return auctionId_;
+      }
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @param value The auctionId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAuctionId(int value) {
+        
+        auctionId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAuctionId() {
+        
+        auctionId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.OnePriceCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.OnePriceCmd)
+    private static final msg.GameMsg.OnePriceCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.OnePriceCmd();
+    }
+
+    public static msg.GameMsg.OnePriceCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OnePriceCmd>
+        PARSER = new com.google.protobuf.AbstractParser<OnePriceCmd>() {
+      @java.lang.Override
+      public OnePriceCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new OnePriceCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<OnePriceCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OnePriceCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.OnePriceCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface OnePriceResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.OnePriceResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code msg.OnePriceResult}
+   */
+  public  static final class OnePriceResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.OnePriceResult)
+      OnePriceResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use OnePriceResult.newBuilder() to construct.
+    private OnePriceResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private OnePriceResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new OnePriceResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private OnePriceResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_OnePriceResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_OnePriceResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.OnePriceResult.class, msg.GameMsg.OnePriceResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.OnePriceResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.OnePriceResult other = (msg.GameMsg.OnePriceResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.OnePriceResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.OnePriceResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.OnePriceResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.OnePriceResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.OnePriceResult)
+        msg.GameMsg.OnePriceResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_OnePriceResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_OnePriceResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.OnePriceResult.class, msg.GameMsg.OnePriceResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.OnePriceResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_OnePriceResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.OnePriceResult getDefaultInstanceForType() {
+        return msg.GameMsg.OnePriceResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.OnePriceResult build() {
+        msg.GameMsg.OnePriceResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.OnePriceResult buildPartial() {
+        msg.GameMsg.OnePriceResult result = new msg.GameMsg.OnePriceResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.OnePriceResult) {
+          return mergeFrom((msg.GameMsg.OnePriceResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.OnePriceResult other) {
+        if (other == msg.GameMsg.OnePriceResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.OnePriceResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.OnePriceResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.OnePriceResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.OnePriceResult)
+    private static final msg.GameMsg.OnePriceResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.OnePriceResult();
+    }
+
+    public static msg.GameMsg.OnePriceResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OnePriceResult>
+        PARSER = new com.google.protobuf.AbstractParser<OnePriceResult>() {
+      @java.lang.Override
+      public OnePriceResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new OnePriceResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<OnePriceResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OnePriceResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.OnePriceResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface LookOneselfAuctionItemCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.LookOneselfAuctionItemCmd)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   *查看自己上架物品
+   * </pre>
+   *
+   * Protobuf type {@code msg.LookOneselfAuctionItemCmd}
+   */
+  public  static final class LookOneselfAuctionItemCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.LookOneselfAuctionItemCmd)
+      LookOneselfAuctionItemCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use LookOneselfAuctionItemCmd.newBuilder() to construct.
+    private LookOneselfAuctionItemCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private LookOneselfAuctionItemCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new LookOneselfAuctionItemCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private LookOneselfAuctionItemCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.LookOneselfAuctionItemCmd.class, msg.GameMsg.LookOneselfAuctionItemCmd.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.LookOneselfAuctionItemCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.LookOneselfAuctionItemCmd other = (msg.GameMsg.LookOneselfAuctionItemCmd) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.LookOneselfAuctionItemCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *查看自己上架物品
+     * </pre>
+     *
+     * Protobuf type {@code msg.LookOneselfAuctionItemCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.LookOneselfAuctionItemCmd)
+        msg.GameMsg.LookOneselfAuctionItemCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.LookOneselfAuctionItemCmd.class, msg.GameMsg.LookOneselfAuctionItemCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.LookOneselfAuctionItemCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookOneselfAuctionItemCmd getDefaultInstanceForType() {
+        return msg.GameMsg.LookOneselfAuctionItemCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookOneselfAuctionItemCmd build() {
+        msg.GameMsg.LookOneselfAuctionItemCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookOneselfAuctionItemCmd buildPartial() {
+        msg.GameMsg.LookOneselfAuctionItemCmd result = new msg.GameMsg.LookOneselfAuctionItemCmd(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.LookOneselfAuctionItemCmd) {
+          return mergeFrom((msg.GameMsg.LookOneselfAuctionItemCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.LookOneselfAuctionItemCmd other) {
+        if (other == msg.GameMsg.LookOneselfAuctionItemCmd.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.LookOneselfAuctionItemCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.LookOneselfAuctionItemCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.LookOneselfAuctionItemCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.LookOneselfAuctionItemCmd)
+    private static final msg.GameMsg.LookOneselfAuctionItemCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.LookOneselfAuctionItemCmd();
+    }
+
+    public static msg.GameMsg.LookOneselfAuctionItemCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<LookOneselfAuctionItemCmd>
+        PARSER = new com.google.protobuf.AbstractParser<LookOneselfAuctionItemCmd>() {
+      @java.lang.Override
+      public LookOneselfAuctionItemCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LookOneselfAuctionItemCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<LookOneselfAuctionItemCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LookOneselfAuctionItemCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.LookOneselfAuctionItemCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface LookOneselfAuctionItemResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.LookOneselfAuctionItemResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    java.util.List<msg.GameMsg.AuctionItem> 
+        getAuctionItemList();
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    msg.GameMsg.AuctionItem getAuctionItem(int index);
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    int getAuctionItemCount();
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    java.util.List<? extends msg.GameMsg.AuctionItemOrBuilder> 
+        getAuctionItemOrBuilderList();
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    msg.GameMsg.AuctionItemOrBuilder getAuctionItemOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code msg.LookOneselfAuctionItemResult}
+   */
+  public  static final class LookOneselfAuctionItemResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.LookOneselfAuctionItemResult)
+      LookOneselfAuctionItemResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use LookOneselfAuctionItemResult.newBuilder() to construct.
+    private LookOneselfAuctionItemResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private LookOneselfAuctionItemResult() {
+      auctionItem_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new LookOneselfAuctionItemResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private LookOneselfAuctionItemResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                auctionItem_ = new java.util.ArrayList<msg.GameMsg.AuctionItem>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              auctionItem_.add(
+                  input.readMessage(msg.GameMsg.AuctionItem.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          auctionItem_ = java.util.Collections.unmodifiableList(auctionItem_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.LookOneselfAuctionItemResult.class, msg.GameMsg.LookOneselfAuctionItemResult.Builder.class);
+    }
+
+    public static final int AUCTIONITEM_FIELD_NUMBER = 1;
+    private java.util.List<msg.GameMsg.AuctionItem> auctionItem_;
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public java.util.List<msg.GameMsg.AuctionItem> getAuctionItemList() {
+      return auctionItem_;
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.AuctionItemOrBuilder> 
+        getAuctionItemOrBuilderList() {
+      return auctionItem_;
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public int getAuctionItemCount() {
+      return auctionItem_.size();
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public msg.GameMsg.AuctionItem getAuctionItem(int index) {
+      return auctionItem_.get(index);
+    }
+    /**
+     * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+     */
+    public msg.GameMsg.AuctionItemOrBuilder getAuctionItemOrBuilder(
+        int index) {
+      return auctionItem_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < auctionItem_.size(); i++) {
+        output.writeMessage(1, auctionItem_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < auctionItem_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, auctionItem_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.LookOneselfAuctionItemResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.LookOneselfAuctionItemResult other = (msg.GameMsg.LookOneselfAuctionItemResult) obj;
+
+      if (!getAuctionItemList()
+          .equals(other.getAuctionItemList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getAuctionItemCount() > 0) {
+        hash = (37 * hash) + AUCTIONITEM_FIELD_NUMBER;
+        hash = (53 * hash) + getAuctionItemList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.LookOneselfAuctionItemResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.LookOneselfAuctionItemResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.LookOneselfAuctionItemResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.LookOneselfAuctionItemResult)
+        msg.GameMsg.LookOneselfAuctionItemResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.LookOneselfAuctionItemResult.class, msg.GameMsg.LookOneselfAuctionItemResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.LookOneselfAuctionItemResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getAuctionItemFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        if (auctionItemBuilder_ == null) {
+          auctionItem_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          auctionItemBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_LookOneselfAuctionItemResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookOneselfAuctionItemResult getDefaultInstanceForType() {
+        return msg.GameMsg.LookOneselfAuctionItemResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookOneselfAuctionItemResult build() {
+        msg.GameMsg.LookOneselfAuctionItemResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.LookOneselfAuctionItemResult buildPartial() {
+        msg.GameMsg.LookOneselfAuctionItemResult result = new msg.GameMsg.LookOneselfAuctionItemResult(this);
+        int from_bitField0_ = bitField0_;
+        if (auctionItemBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            auctionItem_ = java.util.Collections.unmodifiableList(auctionItem_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.auctionItem_ = auctionItem_;
+        } else {
+          result.auctionItem_ = auctionItemBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.LookOneselfAuctionItemResult) {
+          return mergeFrom((msg.GameMsg.LookOneselfAuctionItemResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.LookOneselfAuctionItemResult other) {
+        if (other == msg.GameMsg.LookOneselfAuctionItemResult.getDefaultInstance()) return this;
+        if (auctionItemBuilder_ == null) {
+          if (!other.auctionItem_.isEmpty()) {
+            if (auctionItem_.isEmpty()) {
+              auctionItem_ = other.auctionItem_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureAuctionItemIsMutable();
+              auctionItem_.addAll(other.auctionItem_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.auctionItem_.isEmpty()) {
+            if (auctionItemBuilder_.isEmpty()) {
+              auctionItemBuilder_.dispose();
+              auctionItemBuilder_ = null;
+              auctionItem_ = other.auctionItem_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              auctionItemBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getAuctionItemFieldBuilder() : null;
+            } else {
+              auctionItemBuilder_.addAllMessages(other.auctionItem_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.LookOneselfAuctionItemResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.LookOneselfAuctionItemResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<msg.GameMsg.AuctionItem> auctionItem_ =
+        java.util.Collections.emptyList();
+      private void ensureAuctionItemIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          auctionItem_ = new java.util.ArrayList<msg.GameMsg.AuctionItem>(auctionItem_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.AuctionItem, msg.GameMsg.AuctionItem.Builder, msg.GameMsg.AuctionItemOrBuilder> auctionItemBuilder_;
+
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.AuctionItem> getAuctionItemList() {
+        if (auctionItemBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(auctionItem_);
+        } else {
+          return auctionItemBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public int getAuctionItemCount() {
+        if (auctionItemBuilder_ == null) {
+          return auctionItem_.size();
+        } else {
+          return auctionItemBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem getAuctionItem(int index) {
+        if (auctionItemBuilder_ == null) {
+          return auctionItem_.get(index);
+        } else {
+          return auctionItemBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder setAuctionItem(
+          int index, msg.GameMsg.AuctionItem value) {
+        if (auctionItemBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAuctionItemIsMutable();
+          auctionItem_.set(index, value);
+          onChanged();
+        } else {
+          auctionItemBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder setAuctionItem(
+          int index, msg.GameMsg.AuctionItem.Builder builderForValue) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          auctionItemBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(msg.GameMsg.AuctionItem value) {
+        if (auctionItemBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(value);
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(
+          int index, msg.GameMsg.AuctionItem value) {
+        if (auctionItemBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(index, value);
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(
+          msg.GameMsg.AuctionItem.Builder builderForValue) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(builderForValue.build());
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAuctionItem(
+          int index, msg.GameMsg.AuctionItem.Builder builderForValue) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          auctionItemBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder addAllAuctionItem(
+          java.lang.Iterable<? extends msg.GameMsg.AuctionItem> values) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, auctionItem_);
+          onChanged();
+        } else {
+          auctionItemBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder clearAuctionItem() {
+        if (auctionItemBuilder_ == null) {
+          auctionItem_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          auctionItemBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public Builder removeAuctionItem(int index) {
+        if (auctionItemBuilder_ == null) {
+          ensureAuctionItemIsMutable();
+          auctionItem_.remove(index);
+          onChanged();
+        } else {
+          auctionItemBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem.Builder getAuctionItemBuilder(
+          int index) {
+        return getAuctionItemFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItemOrBuilder getAuctionItemOrBuilder(
+          int index) {
+        if (auctionItemBuilder_ == null) {
+          return auctionItem_.get(index);  } else {
+          return auctionItemBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.AuctionItemOrBuilder> 
+           getAuctionItemOrBuilderList() {
+        if (auctionItemBuilder_ != null) {
+          return auctionItemBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(auctionItem_);
+        }
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem.Builder addAuctionItemBuilder() {
+        return getAuctionItemFieldBuilder().addBuilder(
+            msg.GameMsg.AuctionItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public msg.GameMsg.AuctionItem.Builder addAuctionItemBuilder(
+          int index) {
+        return getAuctionItemFieldBuilder().addBuilder(
+            index, msg.GameMsg.AuctionItem.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.AuctionItem auctionItem = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.AuctionItem.Builder> 
+           getAuctionItemBuilderList() {
+        return getAuctionItemFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.AuctionItem, msg.GameMsg.AuctionItem.Builder, msg.GameMsg.AuctionItemOrBuilder> 
+          getAuctionItemFieldBuilder() {
+        if (auctionItemBuilder_ == null) {
+          auctionItemBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.AuctionItem, msg.GameMsg.AuctionItem.Builder, msg.GameMsg.AuctionItemOrBuilder>(
+                  auctionItem_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          auctionItem_ = null;
+        }
+        return auctionItemBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.LookOneselfAuctionItemResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.LookOneselfAuctionItemResult)
+    private static final msg.GameMsg.LookOneselfAuctionItemResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.LookOneselfAuctionItemResult();
+    }
+
+    public static msg.GameMsg.LookOneselfAuctionItemResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<LookOneselfAuctionItemResult>
+        PARSER = new com.google.protobuf.AbstractParser<LookOneselfAuctionItemResult>() {
+      @java.lang.Override
+      public LookOneselfAuctionItemResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LookOneselfAuctionItemResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<LookOneselfAuctionItemResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LookOneselfAuctionItemResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.LookOneselfAuctionItemResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface CancelAuctionItemCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.CancelAuctionItemCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 auctionId = 1;</code>
+     * @return The auctionId.
+     */
+    int getAuctionId();
+  }
+  /**
+   * <pre>
+   *取消上架物品
+   * </pre>
+   *
+   * Protobuf type {@code msg.CancelAuctionItemCmd}
+   */
+  public  static final class CancelAuctionItemCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.CancelAuctionItemCmd)
+      CancelAuctionItemCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CancelAuctionItemCmd.newBuilder() to construct.
+    private CancelAuctionItemCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CancelAuctionItemCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new CancelAuctionItemCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CancelAuctionItemCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              auctionId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_CancelAuctionItemCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_CancelAuctionItemCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.CancelAuctionItemCmd.class, msg.GameMsg.CancelAuctionItemCmd.Builder.class);
+    }
+
+    public static final int AUCTIONID_FIELD_NUMBER = 1;
+    private int auctionId_;
+    /**
+     * <code>uint32 auctionId = 1;</code>
+     * @return The auctionId.
+     */
+    public int getAuctionId() {
+      return auctionId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (auctionId_ != 0) {
+        output.writeUInt32(1, auctionId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (auctionId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, auctionId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.CancelAuctionItemCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.CancelAuctionItemCmd other = (msg.GameMsg.CancelAuctionItemCmd) obj;
+
+      if (getAuctionId()
+          != other.getAuctionId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + AUCTIONID_FIELD_NUMBER;
+      hash = (53 * hash) + getAuctionId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.CancelAuctionItemCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.CancelAuctionItemCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *取消上架物品
+     * </pre>
+     *
+     * Protobuf type {@code msg.CancelAuctionItemCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.CancelAuctionItemCmd)
+        msg.GameMsg.CancelAuctionItemCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_CancelAuctionItemCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_CancelAuctionItemCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.CancelAuctionItemCmd.class, msg.GameMsg.CancelAuctionItemCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.CancelAuctionItemCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        auctionId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_CancelAuctionItemCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.CancelAuctionItemCmd getDefaultInstanceForType() {
+        return msg.GameMsg.CancelAuctionItemCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.CancelAuctionItemCmd build() {
+        msg.GameMsg.CancelAuctionItemCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.CancelAuctionItemCmd buildPartial() {
+        msg.GameMsg.CancelAuctionItemCmd result = new msg.GameMsg.CancelAuctionItemCmd(this);
+        result.auctionId_ = auctionId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.CancelAuctionItemCmd) {
+          return mergeFrom((msg.GameMsg.CancelAuctionItemCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.CancelAuctionItemCmd other) {
+        if (other == msg.GameMsg.CancelAuctionItemCmd.getDefaultInstance()) return this;
+        if (other.getAuctionId() != 0) {
+          setAuctionId(other.getAuctionId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.CancelAuctionItemCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.CancelAuctionItemCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int auctionId_ ;
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @return The auctionId.
+       */
+      public int getAuctionId() {
+        return auctionId_;
+      }
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @param value The auctionId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAuctionId(int value) {
+        
+        auctionId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 auctionId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAuctionId() {
+        
+        auctionId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.CancelAuctionItemCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.CancelAuctionItemCmd)
+    private static final msg.GameMsg.CancelAuctionItemCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.CancelAuctionItemCmd();
+    }
+
+    public static msg.GameMsg.CancelAuctionItemCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<CancelAuctionItemCmd>
+        PARSER = new com.google.protobuf.AbstractParser<CancelAuctionItemCmd>() {
+      @java.lang.Override
+      public CancelAuctionItemCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CancelAuctionItemCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<CancelAuctionItemCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CancelAuctionItemCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.CancelAuctionItemCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface CancelAuctionItemResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.CancelAuctionItemResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code msg.CancelAuctionItemResult}
+   */
+  public  static final class CancelAuctionItemResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.CancelAuctionItemResult)
+      CancelAuctionItemResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CancelAuctionItemResult.newBuilder() to construct.
+    private CancelAuctionItemResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CancelAuctionItemResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new CancelAuctionItemResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CancelAuctionItemResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_CancelAuctionItemResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_CancelAuctionItemResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.CancelAuctionItemResult.class, msg.GameMsg.CancelAuctionItemResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.CancelAuctionItemResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.CancelAuctionItemResult other = (msg.GameMsg.CancelAuctionItemResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.CancelAuctionItemResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.CancelAuctionItemResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.CancelAuctionItemResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.CancelAuctionItemResult)
+        msg.GameMsg.CancelAuctionItemResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_CancelAuctionItemResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_CancelAuctionItemResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.CancelAuctionItemResult.class, msg.GameMsg.CancelAuctionItemResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.CancelAuctionItemResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_CancelAuctionItemResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.CancelAuctionItemResult getDefaultInstanceForType() {
+        return msg.GameMsg.CancelAuctionItemResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.CancelAuctionItemResult build() {
+        msg.GameMsg.CancelAuctionItemResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.CancelAuctionItemResult buildPartial() {
+        msg.GameMsg.CancelAuctionItemResult result = new msg.GameMsg.CancelAuctionItemResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.CancelAuctionItemResult) {
+          return mergeFrom((msg.GameMsg.CancelAuctionItemResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.CancelAuctionItemResult other) {
+        if (other == msg.GameMsg.CancelAuctionItemResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.CancelAuctionItemResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.CancelAuctionItemResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.CancelAuctionItemResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.CancelAuctionItemResult)
+    private static final msg.GameMsg.CancelAuctionItemResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.CancelAuctionItemResult();
+    }
+
+    public static msg.GameMsg.CancelAuctionItemResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<CancelAuctionItemResult>
+        PARSER = new com.google.protobuf.AbstractParser<CancelAuctionItemResult>() {
+      @java.lang.Override
+      public CancelAuctionItemResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CancelAuctionItemResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<CancelAuctionItemResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CancelAuctionItemResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.CancelAuctionItemResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_WhoElseIsHereCmd_descriptor;
   private static final 
@@ -97882,6 +105835,71 @@ public final class GameMsg {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_PutInMoneyResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_LookAuctionItemCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_LookAuctionItemCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_LookAuctionItemResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_LookAuctionItemResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_AuctionItem_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_AuctionItem_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_ShelveGoodsCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_ShelveGoodsCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_ShelveGoodsResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_ShelveGoodsResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_BiddingGoodsCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_BiddingGoodsCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_BiddingGoodsResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_BiddingGoodsResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_OnePriceCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_OnePriceCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_OnePriceResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_OnePriceResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_LookOneselfAuctionItemCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_LookOneselfAuctionItemCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_LookOneselfAuctionItemResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_LookOneselfAuctionItemResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_CancelAuctionItemCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_CancelAuctionItemCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_CancelAuctionItemResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_CancelAuctionItemResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -97921,12 +105939,12 @@ public final class GameMsg {
       "ame\030\001 \001(\t\022\n\n\002id\030\002 \001(\r\022\014\n\004info\030\003 \001(\t\032\023\n\005S" +
       "kill\022\n\n\002id\030\001 \001(\r\032>\n\007Monster\022\n\n\002id\030\001 \001(\r\022" +
       "\014\n\004name\030\002 \001(\t\022\n\n\002hp\030\003 \001(\r\022\r\n\005isDie\030\004 \001(\010" +
-      "\032D\n\rWearEquipment\022\n\n\002id\030\001 \001(\r\022\023\n\013equipme" +
+      "\032D\n\rWearEquipment\022\n\n\002id\030\001 \001(\004\022\023\n\013equipme" +
       "ntId\030\002 \001(\r\022\022\n\ndurability\030\003 \001(\r\0322\n\nGoodsL" +
       "imit\022\017\n\007goodsId\030\001 \001(\r\022\023\n\013goodsNumber\030\002 \001" +
       "(\r\"h\n\005Props\022\020\n\010location\030\001 \001(\r\022\017\n\007propsId" +
       "\030\002 \001(\r\022\022\n\ndurability\030\003 \001(\r\022\023\n\013propsNumbe" +
-      "r\030\004 \001(\r\022\023\n\013userPropsId\030\005 \001(\r\"Q\n\017UserRegi" +
+      "r\030\004 \001(\r\022\023\n\013userPropsId\030\005 \001(\004\"Q\n\017UserRegi" +
       "sterCmd\022\023\n\013newUserName\030\001 \001(\t\022\023\n\013newPassw" +
       "ord\030\002 \001(\t\022\024\n\014professionId\030\003 \001(\r\"\'\n\022UserR" +
       "egisterResult\022\021\n\tisSucceed\030\001 \001(\010\"\025\n\023Stop" +
@@ -97960,14 +105978,14 @@ public final class GameMsg {
       "(\004\"4\n\025UserResumeStateResult\022\014\n\004type\030\001 \001(" +
       "\t\022\r\n\005value\030\002 \001(\r\"A\n\024UserWearEquipmentCmd" +
       "\022\020\n\010location\030\001 \001(\r\022\027\n\017userEquipmentId\030\002 " +
-      "\001(\r\"U\n\027UserWearEquipmentResult\022\017\n\007propsI" +
-      "d\030\001 \001(\r\022\027\n\017userEquipmentId\030\002 \001(\r\022\020\n\010loca" +
+      "\001(\004\"U\n\027UserWearEquipmentResult\022\017\n\007propsI" +
+      "d\030\001 \001(\r\022\027\n\017userEquipmentId\030\002 \001(\004\022\020\n\010loca" +
       "tion\030\003 \001(\r\"@\n\024UserUndoEquipmentCmd\022\017\n\007pr" +
       "opsId\030\001 \001(\r\022\027\n\017userEquipmentId\030\002 \001(\r\"C\n\027" +
       "UserUndoEquipmentResult\022\017\n\007propsId\030\001 \001(\r" +
       "\022\027\n\017userEquipmentId\030\002 \001(\r\"F\n\032DurabilityD" +
       "eficiencyResult\022\017\n\007propsId\030\001 \001(\r\022\027\n\017user" +
-      "EquipmentId\030\002 \001(\r\"-\n\022RepairEquipmentCmd\022" +
+      "EquipmentId\030\002 \001(\004\"-\n\022RepairEquipmentCmd\022" +
       "\027\n\017userEquipmentId\030\001 \001(\r\"0\n\025RepairEquipm" +
       "entResult\022\027\n\017userEquipmentId\030\001 \001(\r\")\n\024Mo" +
       "nsterDropHpAutoDie\022\021\n\tmonsterId\030\001 \001(\r\"(\n" +
@@ -98005,189 +106023,214 @@ public final class GameMsg {
       "Result\022\037\n\010mailInfo\030\001 \001(\0132\r.msg.MailInfo\"" +
       "\020\n\016UserSeeMailCmd\"4\n\021UserSeeMailResult\022\037" +
       "\n\010mailInfo\030\001 \003(\0132\r.msg.MailInfo\">\n\010MailI" +
-      "nfo\022\016\n\006mailId\030\001 \001(\r\022\023\n\013srcUserName\030\002 \001(\t" +
+      "nfo\022\016\n\006mailId\030\001 \001(\004\022\023\n\013srcUserName\030\002 \001(\t" +
       "\022\r\n\005title\030\003 \001(\t\"$\n\022UserReceiveMailCmd\022\016\n" +
-      "\006mailId\030\001 \001(\r\"\'\n\025UserReceiveMailResult\022\016" +
-      "\n\006mailId\030\001 \003(\r\"\023\n\021UserEnterArenaCmd\"7\n\024U" +
-      "serEnterArenaResult\022\037\n\010userInfo\030\001 \003(\0132\r." +
-      "msg.UserInfo\"\'\n\025UserChooseOpponentCmd\022\016\n" +
-      "\006userId\030\001 \001(\r\"f\n\030UserChooseOpponentResul" +
-      "t\022\027\n\017acceptChallenge\030\001 \001(\010\022\027\n\017originateU" +
-      "serId\030\002 \001(\r\022\030\n\020originatedUserId\030\003 \001(\r\"4\n" +
-      "\031TargetUserChallengeResult\022\027\n\017originateU" +
-      "serId\030\001 \001(\r\"A\n\025TargetUserResponseCmd\022\017\n\007" +
-      "isAgree\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\"\022" +
-      "\n\020UserQuitArenaCmd\"6\n\023UserQuitArenaResul" +
-      "t\022\037\n\010userInfo\030\001 \001(\0132\r.msg.UserInfo\"%\n\rUs" +
-      "erAttackCmd\022\024\n\014targetUserId\030\001 \001(\r\">\n\020Use" +
-      "rAttackResult\022\024\n\014attackUserId\030\001 \001(\r\022\024\n\014t" +
-      "argetUserId\030\002 \001(\r\"@\n\024UserSubtractHpResul" +
-      "t\022\024\n\014targetUserId\030\001 \001(\r\022\022\n\nsubtractHp\030\002 " +
-      "\001(\r\"%\n\rUserDieResult\022\024\n\014targetUserId\030\001 \001" +
-      "(\r\"%\n\rUserTeamUpCmd\022\024\n\014targetUserId\030\001 \001(" +
-      "\r\"\022\n\020UserTeamUpResult\"E\n\017AskTeamUpResult" +
-      "\022\027\n\017originateUserId\030\001 \001(\r\022\031\n\021originateUs" +
-      "erName\030\002 \001(\t\":\n\017UserJoinTeamCmd\022\016\n\006isJoi" +
-      "n\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\"6\n\022User" +
-      "JoinTeamResult\022\016\n\006isJoin\030\001 \001(\010\022\020\n\010target" +
-      "Id\030\002 \001(\r\"*\n\026UserJoinTeamPerformCmd\022\020\n\010ta" +
-      "rgetId\030\001 \001(\r\"b\n\031UserJoinTeamPerformResul" +
-      "t\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\022\024\n\014te" +
-      "amLeaderId\030\002 \001(\r\022\016\n\006isJoin\030\003 \001(\010\"\021\n\017User" +
-      "QuitTeamCmd\"K\n\022UserQuitTeamResult\022\037\n\010use" +
-      "rInfo\030\001 \001(\0132\r.msg.UserInfo\022\024\n\014teamLeader" +
-      "Id\030\002 \001(\r\"\031\n\027UserEnterTeamFailResult\"\035\n\033U" +
-      "serQuitTeamAndDuplicateCmd\" \n\036UserQuitTe" +
-      "amAndDuplicateResult\"+\n\021PastorSkillResul" +
-      "t\022\n\n\002hp\030\001 \001(\r\022\n\n\002mp\030\002 \001(\r\"8\n\030SummonMonst" +
-      "erSubHpResult\022\r\n\005isDie\030\001 \001(\010\022\r\n\005subHp\030\002 " +
-      "\001(\r\"\022\n\020UserCleanMailCmd\"6\n\023UserCleanMail" +
-      "Result\022\037\n\010mailInfo\030\001 \003(\0132\r.msg.MailInfo\"" +
-      "$\n\022UserDealRequestCmd\022\016\n\006userId\030\001 \001(\r\"i\n" +
-      "\025UserDealRequestResult\022\017\n\007isAgree\030\001 \001(\010\022" +
-      "\021\n\tisSuccess\030\002 \001(\010\022\024\n\014targetUserId\030\003 \001(\r" +
-      "\022\026\n\016targetUserName\030\004 \001(\t\"A\n\023AskTargetUse" +
-      "rResult\022\023\n\013originateId\030\001 \001(\r\022\025\n\roriginat" +
-      "eName\030\002 \001(\t\"A\n\031DealTargetUserResponseCmd" +
-      "\022\023\n\013originateId\030\001 \001(\r\022\017\n\007isAgree\030\002 \001(\010\"\020" +
-      "\n\016DealChannelCmd\"\023\n\021DealChannelResult\"I\n" +
-      "\017UserDealItemCmd\022\r\n\005money\030\001 \001(\r\022\031\n\005props" +
-      "\030\002 \001(\0132\n.msg.Props\022\014\n\004type\030\003 \001(\t\"L\n\022User" +
-      "DealItemResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002" +
-      " \001(\0132\n.msg.Props\022\014\n\004type\030\003 \001(\t\"(\n\013ErrorR" +
-      "esult\022\013\n\003msg\030\001 \001(\t\022\014\n\004code\030\002 \001(\r\"\024\n\022User" +
-      "AddCompleteCmd\"8\n\025UserAddCompleteResult\022" +
-      "\037\n\010userInfo\030\001 \001(\0132\r.msg.UserInfo\")\n\021User" +
-      "CancelDealCmd\022\024\n\014isNeedNotice\030\001 \001(\010\"9\n\024U" +
-      "serCancelDealResult\022\021\n\tisSuccess\030\001 \001(\010\022\016" +
-      "\n\006userId\030\002 \001(\r\"\024\n\022UserConfirmDealCmd\"*\n\025" +
-      "UserConfirmDealResult\022\021\n\tisSuccess\030\001 \001(\010" +
-      "\"0\n\030UserCancelDealConfirmCmd\022\024\n\014isNeedNo" +
-      "tice\030\001 \001(\010\"\035\n\033UserCancelDealConfirmResul" +
-      "t\"\020\n\016SortOutDealCmd\"=\n\021SortOutDealResult" +
-      "\022\031\n\005props\030\001 \003(\0132\n.msg.Props\022\r\n\005money\030\002 \001" +
-      "(\r\"\'\n\022UserCreateGuildCmd\022\021\n\tguildName\030\001 " +
-      "\001(\t\"*\n\025UserCreateGuildResult\022\021\n\tguildNam" +
-      "e\030\001 \001(\t\"\026\n\024UserDissolveGuildCmd\")\n\027UserD" +
-      "issolveGuildResult\022\016\n\006userId\030\001 \001(\r\"\016\n\014Sh" +
-      "owGuildCmd\",\n\017ShowGuildResult\022\031\n\005guild\030\001" +
-      " \003(\0132\n.msg.Guild\"+\n\005Guild\022\017\n\007guildId\030\001 \001" +
-      "(\r\022\021\n\tguildName\030\002 \001(\t\"$\n\021UserEnterGuildC" +
-      "md\022\017\n\007guildId\030\001 \001(\r\"1\n\024UserEnterGuildRes" +
-      "ult\022\031\n\005guild\030\001 \001(\0132\n.msg.Guild\"\024\n\022ShowGu" +
-      "ildMemberCmd\"8\n\025ShowGuildMemberResult\022\037\n" +
-      "\010userInfo\030\001 \003(\0132\r.msg.UserInfo\"(\n\026LookGu" +
-      "ildMemberInfoCmd\022\016\n\006userId\030\001 \001(\r\"*\n\031Look" +
-      "GuildMemberInfoResult\022\r\n\005equId\030\001 \003(\r\"\016\n\014" +
-      "QuitGuildCmd\"#\n\017QuitGuildResult\022\020\n\010userN" +
-      "ame\030\001 \001(\t\"6\n\020AppointMemberCmd\022\016\n\006userId\030" +
-      "\001 \001(\r\022\022\n\npositionId\030\002 \001(\r\")\n\023AppointMemb" +
-      "erResult\022\022\n\npositionId\030\001 \001(\r\"#\n\021Eliminat" +
-      "eGuildCmd\022\016\n\006userId\030\001 \001(\r\"\026\n\024EliminateGu" +
-      "ildResult\",\n\026ModifyGuildPositionCmd\022\022\n\np" +
-      "ositionId\030\001 \001(\r\"\025\n\023ModifyGuildStateCmd\"\027" +
-      "\n\025LookGuildWarehouseCmd\"D\n\030LookGuildWare" +
-      "houseResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \003(" +
-      "\0132\n.msg.Props\"<\n\017TakeOutPropsCmd\022\031\n\005prop" +
-      "s\030\001 \001(\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"\024\n\022T" +
-      "akeOutPropsResult\"*\n\rPutInPropsCmd\022\031\n\005pr" +
-      "ops\030\001 \001(\0132\n.msg.Props\"\022\n\020PutInPropsResul" +
-      "t\" \n\017TakeOutMoneyCmd\022\r\n\005money\030\001 \001(\r\"\024\n\022T" +
-      "akeOutMoneyResult\"\036\n\rPutInMoneyCmd\022\r\n\005mo" +
-      "ney\030\001 \001(\r\"\022\n\020PutInMoneyResult*\345\034\n\007MsgCod" +
-      "e\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_" +
-      "IS_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014" +
-      "\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027USER_SU" +
-      "BTRACT_HP_RESULT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016US" +
-      "ER_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n" +
-      "\021USER_REGISTER_CMD\020\t\022\030\n\024USER_REGISTER_RE" +
-      "SULT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027STOP_CUR" +
-      "_USER_ALL_TIMER\020\014\022\031\n\025USER_SWITCH_SCENE_C" +
-      "MD\020\r\022\034\n\030USER_SWITCH_SCENE_RESULT\020\016\022\033\n\027MO" +
-      "NSTER_START_ATTK_USER\020\017\022\026\n\022NOTICE_USER_A" +
-      "TTKED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021\022\032\n\026USER" +
-      "_SKILL_ATTK_RESULT\020\022\022\026\n\022SKILL_STATE_SWIT" +
-      "CH\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014BACKPACK_" +
-      "CMD\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024ROB_EQUIPM" +
-      "ENT_RESULT\020\027\022\023\n\017USER_POTION_CMD\020\030\022\026\n\022USE" +
-      "R_POTION_RESULT\020\031\022\034\n\030USER_RESUME_STATE_R" +
-      "ESULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032" +
-      "USER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027USER_UND" +
-      "O_EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_EQUIPMENT" +
-      "_RESULT\020\036\022 \n\034DURABILITY_DEFICIENCY_RESUL" +
-      "T\020\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n\027REPAIR_" +
-      "EQUIPMENT_RESULT\020!\022\034\n\030MONSTER_DROP_HP_AU" +
-      "TO_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020#\022\032\n\026ENT" +
-      "ER_DUPLICATE_RESULT\020$\022\021\n\rATTK_BOSS_CMD\020%" +
-      "\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_BOSS_RESU" +
-      "LT\020\'\022\033\n\027DUPLICATE_FINISH_RESULT\020(\022\033\n\027USE" +
-      "R_QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_QUIT_DUPL" +
-      "ICATE_RESULT\020*\022\031\n\025BOSS_ATTK_USER_RESULT\020" +
-      "+\022\037\n\033BOSS_SKILL_ATTK_USER_RESULT\020,\022\031\n\025BO" +
-      "SS_KILL_USER_RESULT\020-\022\026\n\022USER_BUY_GOODS_" +
-      "CMD\020.\022\031\n\025USER_BUY_GOODS_RESULT\020/\022\026\n\022USER" +
-      "_CHAT_INFO_CMD\0200\022\031\n\025USER_CHAT_INFO_RESUL" +
-      "T\0201\022\021\n\rSEND_MAIL_CMD\0202\022\024\n\020SEND_MAIL_RESU" +
-      "LT\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n\017ALL_USER_RESUL" +
-      "T\0205\022\037\n\033NOTICE_USER_GET_MAIL_RESULT\0206\022\025\n\021" +
-      "USER_SEE_MAIL_CMD\0207\022\030\n\024USER_SEE_MAIL_RES" +
-      "ULT\0208\022\031\n\025USER_RECEIVE_MAIL_CMD\0209\022\034\n\030USER" +
-      "_RECEIVE_MAIL_RESULT\020:\022\030\n\024USER_ENTER_ARE" +
-      "NA_CMD\020;\022\033\n\027USER_ENTER_ARENA_RESULT\020<\022\034\n" +
-      "\030USER_CHOOSE_OPPONENT_CMD\020=\022\037\n\033USER_CHOO" +
-      "SE_OPPONENT_RESULT\020>\022 \n\034TARGET_USER_CHAL" +
-      "LENGE_RESULT\020?\022\034\n\030TARGET_USER_RESPONSE_C" +
-      "MD\020@\022\037\n\033TARGET_USER_RESPONSE_RESULT\020A\022\027\n" +
-      "\023USER_QUIT_ARENA_CMD\020B\022\032\n\026USER_QUIT_AREN" +
-      "A_RESULT\020C\022\023\n\017USER_ATTACK_CMD\020D\022\026\n\022USER_" +
-      "ATTACK_RESULT\020E\022\023\n\017USER_DIE_RESULT\020F\022\024\n\020" +
-      "USER_TEAM_UP_CMD\020G\022\027\n\023USER_TEAM_UP_RESUL" +
-      "T\020H\022\026\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022USER_JOIN" +
-      "_TEAM_CMD\020J\022\031\n\025USER_JOIN_TEAM_RESULT\020K\022\026" +
-      "\n\022USER_QUIT_TEAM_CMD\020L\022\031\n\025USER_QUIT_TEAM" +
-      "_RESULT\020M\022\037\n\033USER_ENTER_TEAM_FAIL_RESULT" +
-      "\020N\022$\n USER_QUIT_TEAM_AND_DUPLICATE_CMD\020O" +
-      "\022\'\n#USER_QUIT_TEAM_AND_DUPLICATE_RESULT\020" +
-      "P\022$\n USER_SKILL_ATTK_DUPLICATE_RESULT\020Q\022" +
-      "\027\n\023PASTOR_SKILL_RESULT\020R\022 \n\034SUMMON_MONST" +
-      "ER_SUB_HP_RESULT\020S\022\036\n\032USER_JOIN_TEAM_PER" +
-      "FORM_CMD\020T\022!\n\035USER_JOIN_TEAM_PERFORM_RES" +
-      "ULT\020U\022\027\n\023USER_CLEAN_MAIL_CMD\020V\022\032\n\026USER_C" +
-      "LEAN_MAIL_RESULT\020W\022\031\n\025USER_DEAL_REQUEST_" +
-      "CMD\020X\022\034\n\030USER_DEAL_REQUEST_RESULT\020Y\022\032\n\026A" +
-      "SK_TARGET_USER_RESULT\020Z\022!\n\035DEAL_TARGET_U" +
-      "SER_RESPONSE_CMD\020[\022\024\n\020DEAL_CHANNEL_CMD\020\\" +
-      "\022\027\n\023DEAL_CHANNEL_RESULT\020]\022\026\n\022USER_DEAL_I" +
-      "TEM_CMD\020^\022\031\n\025USER_DEAL_ITEM_RESULT\020_\022\031\n\025" +
-      "USER_ADD_COMPLETE_CMD\020a\022\034\n\030USER_ADD_COMP" +
-      "LETE_RESULT\020b\022\030\n\024USER_CANCEL_DEAL_CMD\020c\022" +
-      "\033\n\027USER_CANCEL_DEAL_RESULT\020d\022\031\n\025USER_CON" +
-      "FIRM_DEAL_CMD\020e\022\034\n\030USER_CONFIRM_DEAL_RES" +
-      "ULT\020f\022 \n\034USER_CANCEL_DEAL_CONFIRM_CMD\020g\022" +
-      "#\n\037USER_CANCEL_DEAL_CONFIRM_RESULT\020h\022\025\n\021" +
-      "SORT_OUT_DEAL_CMD\020i\022\030\n\024SORT_OUT_DEAL_RES" +
-      "ULT\020j\022\031\n\025USER_CREATE_GUILD_CMD\020k\022\034\n\030USER" +
-      "_CREATE_GUILD_RESULT\020l\022\033\n\027USER_DISSOLVE_" +
-      "GUILD_CMD\020m\022\036\n\032USER_DISSOLVE_GUILD_RESUL" +
-      "T\020n\022\022\n\016SHOW_GUILD_CMD\020o\022\025\n\021SHOW_GUILD_RE" +
-      "SULT\020p\022\030\n\024USER_ENTER_GUILD_CMD\020q\022\033\n\027USER" +
-      "_ENTER_GUILD_RESULT\020r\022\031\n\025SHOW_GUILD_MEMB" +
-      "ER_CMD\020s\022\034\n\030SHOW_GUILD_MEMBER_RESULT\020t\022\036" +
-      "\n\032LOOK_GUiLD_MEMBER_INFO_CMD\020u\022!\n\035LOOK_G" +
-      "UiLD_MEMBER_INFO_RESULT\020v\022\022\n\016QUIT_GUILD_" +
-      "CMD\020w\022\025\n\021QUIT_GUILD_RESULT\020x\022\026\n\022APPOINT_" +
-      "MEMBER_CMD\020y\022\031\n\025APPOINT_MEMBER_RESULT\020z\022" +
-      "\027\n\023ELIMINATE_GUILD_CMD\020{\022\032\n\026ELIMINATE_GU" +
-      "ILD_RESULT\020|\022\035\n\031MODIFY_GUILD_POSITION_CM" +
-      "D\020}\022\032\n\026MODIFY_GUILD_STATE_CMD\020~\022\034\n\030LOOK_" +
-      "GUILD_WAREHOUSE_CMD\020\177\022 \n\033LOOK_GUILD_WARE" +
-      "HOUSE_RESULT\020\200\001\022\027\n\022TAKE_OUT_PROPS_CMD\020\201\001" +
-      "\022\032\n\025TAKE_OUT_PROPS_RESULT\020\202\001\022\025\n\020PUT_IN_P" +
-      "ROPS_CMD\020\203\001\022\030\n\023PUT_IN_PROPS_RESULT\020\204\001\022\027\n" +
-      "\022TAKE_OUT_MONEY_CMD\020\205\001\022\032\n\025TAKE_OUT_MONEY" +
-      "_RESULT\020\206\001\022\025\n\020PUT_IN_MONEY_CMD\020\207\001\022\030\n\023PUT" +
-      "_IN_MONEY_RESULT\020\210\001\022\020\n\014ERROR_RESULT\020`B\005\n" +
-      "\003msgb\006proto3"
+      "\006mailId\030\001 \001(\004\"Q\n\025UserReceiveMailResult\022\016" +
+      "\n\006mailId\030\001 \003(\004\022\031\n\005props\030\002 \003(\0132\n.msg.Prop" +
+      "s\022\r\n\005money\030\003 \001(\r\"\023\n\021UserEnterArenaCmd\"7\n" +
+      "\024UserEnterArenaResult\022\037\n\010userInfo\030\001 \003(\0132" +
+      "\r.msg.UserInfo\"\'\n\025UserChooseOpponentCmd\022" +
+      "\016\n\006userId\030\001 \001(\r\"f\n\030UserChooseOpponentRes" +
+      "ult\022\027\n\017acceptChallenge\030\001 \001(\010\022\027\n\017originat" +
+      "eUserId\030\002 \001(\r\022\030\n\020originatedUserId\030\003 \001(\r\"" +
+      "4\n\031TargetUserChallengeResult\022\027\n\017originat" +
+      "eUserId\030\001 \001(\r\"A\n\025TargetUserResponseCmd\022\017" +
+      "\n\007isAgree\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r" +
+      "\"\022\n\020UserQuitArenaCmd\"6\n\023UserQuitArenaRes" +
+      "ult\022\037\n\010userInfo\030\001 \001(\0132\r.msg.UserInfo\"%\n\r" +
+      "UserAttackCmd\022\024\n\014targetUserId\030\001 \001(\r\">\n\020U" +
+      "serAttackResult\022\024\n\014attackUserId\030\001 \001(\r\022\024\n" +
+      "\014targetUserId\030\002 \001(\r\"@\n\024UserSubtractHpRes" +
+      "ult\022\024\n\014targetUserId\030\001 \001(\r\022\022\n\nsubtractHp\030" +
+      "\002 \001(\r\"%\n\rUserDieResult\022\024\n\014targetUserId\030\001" +
+      " \001(\r\"%\n\rUserTeamUpCmd\022\024\n\014targetUserId\030\001 " +
+      "\001(\r\"\022\n\020UserTeamUpResult\"E\n\017AskTeamUpResu" +
+      "lt\022\027\n\017originateUserId\030\001 \001(\r\022\031\n\021originate" +
+      "UserName\030\002 \001(\t\":\n\017UserJoinTeamCmd\022\016\n\006isJ" +
+      "oin\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\"6\n\022Us" +
+      "erJoinTeamResult\022\016\n\006isJoin\030\001 \001(\010\022\020\n\010targ" +
+      "etId\030\002 \001(\r\"*\n\026UserJoinTeamPerformCmd\022\020\n\010" +
+      "targetId\030\001 \001(\r\"b\n\031UserJoinTeamPerformRes" +
+      "ult\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\022\024\n\014" +
+      "teamLeaderId\030\002 \001(\r\022\016\n\006isJoin\030\003 \001(\010\"\021\n\017Us" +
+      "erQuitTeamCmd\"K\n\022UserQuitTeamResult\022\037\n\010u" +
+      "serInfo\030\001 \001(\0132\r.msg.UserInfo\022\024\n\014teamLead" +
+      "erId\030\002 \001(\r\"\031\n\027UserEnterTeamFailResult\"\035\n" +
+      "\033UserQuitTeamAndDuplicateCmd\" \n\036UserQuit" +
+      "TeamAndDuplicateResult\"+\n\021PastorSkillRes" +
+      "ult\022\n\n\002hp\030\001 \001(\r\022\n\n\002mp\030\002 \001(\r\"8\n\030SummonMon" +
+      "sterSubHpResult\022\r\n\005isDie\030\001 \001(\010\022\r\n\005subHp\030" +
+      "\002 \001(\r\"\022\n\020UserCleanMailCmd\"6\n\023UserCleanMa" +
+      "ilResult\022\037\n\010mailInfo\030\001 \003(\0132\r.msg.MailInf" +
+      "o\"$\n\022UserDealRequestCmd\022\016\n\006userId\030\001 \001(\r\"" +
+      "i\n\025UserDealRequestResult\022\017\n\007isAgree\030\001 \001(" +
+      "\010\022\021\n\tisSuccess\030\002 \001(\010\022\024\n\014targetUserId\030\003 \001" +
+      "(\r\022\026\n\016targetUserName\030\004 \001(\t\"A\n\023AskTargetU" +
+      "serResult\022\023\n\013originateId\030\001 \001(\r\022\025\n\rorigin" +
+      "ateName\030\002 \001(\t\"A\n\031DealTargetUserResponseC" +
+      "md\022\023\n\013originateId\030\001 \001(\r\022\017\n\007isAgree\030\002 \001(\010" +
+      "\"\020\n\016DealChannelCmd\"\023\n\021DealChannelResult\"" +
+      "I\n\017UserDealItemCmd\022\r\n\005money\030\001 \001(\r\022\031\n\005pro" +
+      "ps\030\002 \001(\0132\n.msg.Props\022\014\n\004type\030\003 \001(\t\"L\n\022Us" +
+      "erDealItemResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props" +
+      "\030\002 \001(\0132\n.msg.Props\022\014\n\004type\030\003 \001(\t\"(\n\013Erro" +
+      "rResult\022\013\n\003msg\030\001 \001(\t\022\014\n\004code\030\002 \001(\r\"\024\n\022Us" +
+      "erAddCompleteCmd\"8\n\025UserAddCompleteResul" +
+      "t\022\037\n\010userInfo\030\001 \001(\0132\r.msg.UserInfo\")\n\021Us" +
+      "erCancelDealCmd\022\024\n\014isNeedNotice\030\001 \001(\010\"9\n" +
+      "\024UserCancelDealResult\022\021\n\tisSuccess\030\001 \001(\010" +
+      "\022\016\n\006userId\030\002 \001(\r\"\024\n\022UserConfirmDealCmd\"*" +
+      "\n\025UserConfirmDealResult\022\021\n\tisSuccess\030\001 \001" +
+      "(\010\"0\n\030UserCancelDealConfirmCmd\022\024\n\014isNeed" +
+      "Notice\030\001 \001(\010\"\035\n\033UserCancelDealConfirmRes" +
+      "ult\"\020\n\016SortOutDealCmd\"=\n\021SortOutDealResu" +
+      "lt\022\031\n\005props\030\001 \003(\0132\n.msg.Props\022\r\n\005money\030\002" +
+      " \001(\r\"\'\n\022UserCreateGuildCmd\022\021\n\tguildName\030" +
+      "\001 \001(\t\"*\n\025UserCreateGuildResult\022\021\n\tguildN" +
+      "ame\030\001 \001(\t\"\026\n\024UserDissolveGuildCmd\")\n\027Use" +
+      "rDissolveGuildResult\022\016\n\006userId\030\001 \001(\r\"\016\n\014" +
+      "ShowGuildCmd\",\n\017ShowGuildResult\022\031\n\005guild" +
+      "\030\001 \003(\0132\n.msg.Guild\"+\n\005Guild\022\017\n\007guildId\030\001" +
+      " \001(\r\022\021\n\tguildName\030\002 \001(\t\"$\n\021UserEnterGuil" +
+      "dCmd\022\017\n\007guildId\030\001 \001(\r\"1\n\024UserEnterGuildR" +
+      "esult\022\031\n\005guild\030\001 \001(\0132\n.msg.Guild\"\024\n\022Show" +
+      "GuildMemberCmd\"8\n\025ShowGuildMemberResult\022" +
+      "\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\"(\n\026Look" +
+      "GuildMemberInfoCmd\022\016\n\006userId\030\001 \001(\r\"*\n\031Lo" +
+      "okGuildMemberInfoResult\022\r\n\005equId\030\001 \003(\r\"\016" +
+      "\n\014QuitGuildCmd\"#\n\017QuitGuildResult\022\020\n\010use" +
+      "rName\030\001 \001(\t\"6\n\020AppointMemberCmd\022\016\n\006userI" +
+      "d\030\001 \001(\r\022\022\n\npositionId\030\002 \001(\r\")\n\023AppointMe" +
+      "mberResult\022\022\n\npositionId\030\001 \001(\r\"#\n\021Elimin" +
+      "ateGuildCmd\022\016\n\006userId\030\001 \001(\r\"\026\n\024Eliminate" +
+      "GuildResult\",\n\026ModifyGuildPositionCmd\022\022\n" +
+      "\npositionId\030\001 \001(\r\"\025\n\023ModifyGuildStateCmd" +
+      "\"\027\n\025LookGuildWarehouseCmd\"D\n\030LookGuildWa" +
+      "rehouseResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 " +
+      "\003(\0132\n.msg.Props\"<\n\017TakeOutPropsCmd\022\031\n\005pr" +
+      "ops\030\001 \001(\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"\024\n" +
+      "\022TakeOutPropsResult\"*\n\rPutInPropsCmd\022\031\n\005" +
+      "props\030\001 \001(\0132\n.msg.Props\"\022\n\020PutInPropsRes" +
+      "ult\" \n\017TakeOutMoneyCmd\022\r\n\005money\030\001 \001(\r\"\024\n" +
+      "\022TakeOutMoneyResult\"\036\n\rPutInMoneyCmd\022\r\n\005" +
+      "money\030\001 \001(\r\"\022\n\020PutInMoneyResult\"\024\n\022LookA" +
+      "uctionItemCmd\">\n\025LookAuctionItemResult\022%" +
+      "\n\013auctionItem\030\001 \003(\0132\020.msg.AuctionItem\"z\n" +
+      "\013AuctionItem\022\n\n\002id\030\001 \001(\r\022\020\n\010userName\030\002 \001" +
+      "(\t\022\017\n\007propsId\030\003 \001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005" +
+      "price\030\005 \001(\r\022\016\n\006number\030\006 \001(\r\022\014\n\004date\030\007 \001(" +
+      "\004\"R\n\016ShelveGoodsCmd\022\020\n\010location\030\001 \001(\r\022\016\n" +
+      "\006number\030\002 \001(\r\022\017\n\007auction\030\003 \001(\r\022\r\n\005price\030" +
+      "\004 \001(\r\"\023\n\021ShelveGoodsResult\"3\n\017BiddingGoo" +
+      "dsCmd\022\021\n\tauctionId\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"" +
+      "\024\n\022BiddingGoodsResult\" \n\013OnePriceCmd\022\021\n\t" +
+      "auctionId\030\001 \001(\r\"\020\n\016OnePriceResult\"\033\n\031Loo" +
+      "kOneselfAuctionItemCmd\"E\n\034LookOneselfAuc" +
+      "tionItemResult\022%\n\013auctionItem\030\001 \003(\0132\020.ms" +
+      "g.AuctionItem\")\n\024CancelAuctionItemCmd\022\021\n" +
+      "\tauctionId\030\001 \001(\r\"\031\n\027CancelAuctionItemRes" +
+      "ult*\271\037\n\007MsgCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020" +
+      "\000\022\033\n\027WHO_ELSE_IS_HERE_RESULT\020\001\022\024\n\020USER_Q" +
+      "UIT_RESULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESUL" +
+      "T\020\004\022\033\n\027USER_SUBTRACT_HP_RESULT\020\005\022\016\n\nDIE_" +
+      "RESULT\020\006\022\022\n\016USER_LOGIN_CMD\020\007\022\025\n\021USER_LOG" +
+      "IN_RESULT\020\010\022\025\n\021USER_REGISTER_CMD\020\t\022\030\n\024US" +
+      "ER_REGISTER_RESULT\020\n\022\024\n\020ATTK_MONSTER_CMD" +
+      "\020\013\022\033\n\027STOP_CUR_USER_ALL_TIMER\020\014\022\031\n\025USER_" +
+      "SWITCH_SCENE_CMD\020\r\022\034\n\030USER_SWITCH_SCENE_" +
+      "RESULT\020\016\022\033\n\027MONSTER_START_ATTK_USER\020\017\022\026\n" +
+      "\022NOTICE_USER_ATTKED\020\020\022\027\n\023USER_SKILL_ATTK" +
+      "_CMD\020\021\022\032\n\026USER_SKILL_ATTK_RESULT\020\022\022\026\n\022SK" +
+      "ILL_STATE_SWITCH\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020" +
+      "\024\022\020\n\014BACKPACK_CMD\020\025\022\023\n\017BACKPACK_RESULT\020\026" +
+      "\022\030\n\024ROB_EQUIPMENT_RESULT\020\027\022\023\n\017USER_POTIO" +
+      "N_CMD\020\030\022\026\n\022USER_POTION_RESULT\020\031\022\034\n\030USER_" +
+      "RESUME_STATE_RESULT\020\032\022\033\n\027USER_WEAR_EQUIP" +
+      "MENT_CMD\020\033\022\036\n\032USER_WEAR_EQUIPMENT_RESULT" +
+      "\020\034\022\033\n\027USER_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032USER_" +
+      "UNDO_EQUIPMENT_RESULT\020\036\022 \n\034DURABILITY_DE" +
+      "FICIENCY_RESULT\020\037\022\030\n\024REPAIR_EQUIPMENT_CM" +
+      "D\020 \022\033\n\027REPAIR_EQUIPMENT_RESULT\020!\022\034\n\030MONS" +
+      "TER_DROP_HP_AUTO_DIE\020\"\022\027\n\023ENTER_DUPLICAT" +
+      "E_CMD\020#\022\032\n\026ENTER_DUPLICATE_RESULT\020$\022\021\n\rA" +
+      "TTK_BOSS_CMD\020%\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n\020" +
+      "NEXT_BOSS_RESULT\020\'\022\033\n\027DUPLICATE_FINISH_R" +
+      "ESULT\020(\022\033\n\027USER_QUIT_DUPLICATE_CMD\020)\022\036\n\032" +
+      "USER_QUIT_DUPLICATE_RESULT\020*\022\031\n\025BOSS_ATT" +
+      "K_USER_RESULT\020+\022\037\n\033BOSS_SKILL_ATTK_USER_" +
+      "RESULT\020,\022\031\n\025BOSS_KILL_USER_RESULT\020-\022\026\n\022U" +
+      "SER_BUY_GOODS_CMD\020.\022\031\n\025USER_BUY_GOODS_RE" +
+      "SULT\020/\022\026\n\022USER_CHAT_INFO_CMD\0200\022\031\n\025USER_C" +
+      "HAT_INFO_RESULT\0201\022\021\n\rSEND_MAIL_CMD\0202\022\024\n\020" +
+      "SEND_MAIL_RESULT\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n\017" +
+      "ALL_USER_RESULT\0205\022\037\n\033NOTICE_USER_GET_MAI" +
+      "L_RESULT\0206\022\025\n\021USER_SEE_MAIL_CMD\0207\022\030\n\024USE" +
+      "R_SEE_MAIL_RESULT\0208\022\031\n\025USER_RECEIVE_MAIL" +
+      "_CMD\0209\022\034\n\030USER_RECEIVE_MAIL_RESULT\020:\022\030\n\024" +
+      "USER_ENTER_ARENA_CMD\020;\022\033\n\027USER_ENTER_ARE" +
+      "NA_RESULT\020<\022\034\n\030USER_CHOOSE_OPPONENT_CMD\020" +
+      "=\022\037\n\033USER_CHOOSE_OPPONENT_RESULT\020>\022 \n\034TA" +
+      "RGET_USER_CHALLENGE_RESULT\020?\022\034\n\030TARGET_U" +
+      "SER_RESPONSE_CMD\020@\022\037\n\033TARGET_USER_RESPON" +
+      "SE_RESULT\020A\022\027\n\023USER_QUIT_ARENA_CMD\020B\022\032\n\026" +
+      "USER_QUIT_ARENA_RESULT\020C\022\023\n\017USER_ATTACK_" +
+      "CMD\020D\022\026\n\022USER_ATTACK_RESULT\020E\022\023\n\017USER_DI" +
+      "E_RESULT\020F\022\024\n\020USER_TEAM_UP_CMD\020G\022\027\n\023USER" +
+      "_TEAM_UP_RESULT\020H\022\026\n\022ASK_TEAM_UP_RESULT\020" +
+      "I\022\026\n\022USER_JOIN_TEAM_CMD\020J\022\031\n\025USER_JOIN_T" +
+      "EAM_RESULT\020K\022\026\n\022USER_QUIT_TEAM_CMD\020L\022\031\n\025" +
+      "USER_QUIT_TEAM_RESULT\020M\022\037\n\033USER_ENTER_TE" +
+      "AM_FAIL_RESULT\020N\022$\n USER_QUIT_TEAM_AND_D" +
+      "UPLICATE_CMD\020O\022\'\n#USER_QUIT_TEAM_AND_DUP" +
+      "LICATE_RESULT\020P\022$\n USER_SKILL_ATTK_DUPLI" +
+      "CATE_RESULT\020Q\022\027\n\023PASTOR_SKILL_RESULT\020R\022 " +
+      "\n\034SUMMON_MONSTER_SUB_HP_RESULT\020S\022\036\n\032USER" +
+      "_JOIN_TEAM_PERFORM_CMD\020T\022!\n\035USER_JOIN_TE" +
+      "AM_PERFORM_RESULT\020U\022\027\n\023USER_CLEAN_MAIL_C" +
+      "MD\020V\022\032\n\026USER_CLEAN_MAIL_RESULT\020W\022\031\n\025USER" +
+      "_DEAL_REQUEST_CMD\020X\022\034\n\030USER_DEAL_REQUEST" +
+      "_RESULT\020Y\022\032\n\026ASK_TARGET_USER_RESULT\020Z\022!\n" +
+      "\035DEAL_TARGET_USER_RESPONSE_CMD\020[\022\024\n\020DEAL" +
+      "_CHANNEL_CMD\020\\\022\027\n\023DEAL_CHANNEL_RESULT\020]\022" +
+      "\026\n\022USER_DEAL_ITEM_CMD\020^\022\031\n\025USER_DEAL_ITE" +
+      "M_RESULT\020_\022\031\n\025USER_ADD_COMPLETE_CMD\020a\022\034\n" +
+      "\030USER_ADD_COMPLETE_RESULT\020b\022\030\n\024USER_CANC" +
+      "EL_DEAL_CMD\020c\022\033\n\027USER_CANCEL_DEAL_RESULT" +
+      "\020d\022\031\n\025USER_CONFIRM_DEAL_CMD\020e\022\034\n\030USER_CO" +
+      "NFIRM_DEAL_RESULT\020f\022 \n\034USER_CANCEL_DEAL_" +
+      "CONFIRM_CMD\020g\022#\n\037USER_CANCEL_DEAL_CONFIR" +
+      "M_RESULT\020h\022\025\n\021SORT_OUT_DEAL_CMD\020i\022\030\n\024SOR" +
+      "T_OUT_DEAL_RESULT\020j\022\031\n\025USER_CREATE_GUILD" +
+      "_CMD\020k\022\034\n\030USER_CREATE_GUILD_RESULT\020l\022\033\n\027" +
+      "USER_DISSOLVE_GUILD_CMD\020m\022\036\n\032USER_DISSOL" +
+      "VE_GUILD_RESULT\020n\022\022\n\016SHOW_GUILD_CMD\020o\022\025\n" +
+      "\021SHOW_GUILD_RESULT\020p\022\030\n\024USER_ENTER_GUILD" +
+      "_CMD\020q\022\033\n\027USER_ENTER_GUILD_RESULT\020r\022\031\n\025S" +
+      "HOW_GUILD_MEMBER_CMD\020s\022\034\n\030SHOW_GUILD_MEM" +
+      "BER_RESULT\020t\022\036\n\032LOOK_GUiLD_MEMBER_INFO_C" +
+      "MD\020u\022!\n\035LOOK_GUiLD_MEMBER_INFO_RESULT\020v\022" +
+      "\022\n\016QUIT_GUILD_CMD\020w\022\025\n\021QUIT_GUILD_RESULT" +
+      "\020x\022\026\n\022APPOINT_MEMBER_CMD\020y\022\031\n\025APPOINT_ME" +
+      "MBER_RESULT\020z\022\027\n\023ELIMINATE_GUILD_CMD\020{\022\032" +
+      "\n\026ELIMINATE_GUILD_RESULT\020|\022\035\n\031MODIFY_GUI" +
+      "LD_POSITION_CMD\020}\022\032\n\026MODIFY_GUILD_STATE_" +
+      "CMD\020~\022\034\n\030LOOK_GUILD_WAREHOUSE_CMD\020\177\022 \n\033L" +
+      "OOK_GUILD_WAREHOUSE_RESULT\020\200\001\022\027\n\022TAKE_OU" +
+      "T_PROPS_CMD\020\201\001\022\032\n\025TAKE_OUT_PROPS_RESULT\020" +
+      "\202\001\022\025\n\020PUT_IN_PROPS_CMD\020\203\001\022\030\n\023PUT_IN_PROP" +
+      "S_RESULT\020\204\001\022\027\n\022TAKE_OUT_MONEY_CMD\020\205\001\022\032\n\025" +
+      "TAKE_OUT_MONEY_RESULT\020\206\001\022\025\n\020PUT_IN_MONEY" +
+      "_CMD\020\207\001\022\030\n\023PUT_IN_MONEY_RESULT\020\210\001\022\032\n\025LOO" +
+      "K_AUCTION_ITEM_CMD\020\211\001\022\035\n\030LOOK_AUCTION_IT" +
+      "EM_RESULT\020\212\001\022\025\n\020SHELVE_GOODS_CMD\020\213\001\022\030\n\023S" +
+      "HELVE_GOODS_RESULT\020\214\001\022\026\n\021BIDDING_GOODS_C" +
+      "MD\020\215\001\022\031\n\024BIDDING_GOODS_RESULT\020\216\001\022\022\n\rONE_" +
+      "PRICE_CMD\020\217\001\022\025\n\020ONE_PRICE_RESULT\020\220\001\022\"\n\035L" +
+      "OOK_ONESELF_AUCTION_ITEM_CMD\020\221\001\022%\n LOOK_" +
+      "ONESELF_AUCTION_ITEM_RESULT\020\222\001\022\034\n\027CANCEL" +
+      "_AUCTION_ITEM_CMD\020\223\001\022\037\n\032CANCEL_AUCTION_I" +
+      "TEM_RESULT\020\224\001\022\020\n\014ERROR_RESULT\020`B\005\n\003msgb\006" +
+      "proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -98618,7 +106661,7 @@ public final class GameMsg {
     internal_static_msg_UserReceiveMailResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserReceiveMailResult_descriptor,
-        new java.lang.String[] { "MailId", });
+        new java.lang.String[] { "MailId", "Props", "Money", });
     internal_static_msg_UserEnterArenaCmd_descriptor =
       getDescriptor().getMessageTypes().get(63);
     internal_static_msg_UserEnterArenaCmd_fieldAccessorTable = new
@@ -99086,6 +107129,84 @@ public final class GameMsg {
     internal_static_msg_PutInMoneyResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInMoneyResult_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_LookAuctionItemCmd_descriptor =
+      getDescriptor().getMessageTypes().get(141);
+    internal_static_msg_LookAuctionItemCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_LookAuctionItemCmd_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_LookAuctionItemResult_descriptor =
+      getDescriptor().getMessageTypes().get(142);
+    internal_static_msg_LookAuctionItemResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_LookAuctionItemResult_descriptor,
+        new java.lang.String[] { "AuctionItem", });
+    internal_static_msg_AuctionItem_descriptor =
+      getDescriptor().getMessageTypes().get(143);
+    internal_static_msg_AuctionItem_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_AuctionItem_descriptor,
+        new java.lang.String[] { "Id", "UserName", "PropsId", "Auction", "Price", "Number", "Date", });
+    internal_static_msg_ShelveGoodsCmd_descriptor =
+      getDescriptor().getMessageTypes().get(144);
+    internal_static_msg_ShelveGoodsCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_ShelveGoodsCmd_descriptor,
+        new java.lang.String[] { "Location", "Number", "Auction", "Price", });
+    internal_static_msg_ShelveGoodsResult_descriptor =
+      getDescriptor().getMessageTypes().get(145);
+    internal_static_msg_ShelveGoodsResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_ShelveGoodsResult_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_BiddingGoodsCmd_descriptor =
+      getDescriptor().getMessageTypes().get(146);
+    internal_static_msg_BiddingGoodsCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_BiddingGoodsCmd_descriptor,
+        new java.lang.String[] { "AuctionId", "Money", });
+    internal_static_msg_BiddingGoodsResult_descriptor =
+      getDescriptor().getMessageTypes().get(147);
+    internal_static_msg_BiddingGoodsResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_BiddingGoodsResult_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_OnePriceCmd_descriptor =
+      getDescriptor().getMessageTypes().get(148);
+    internal_static_msg_OnePriceCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_OnePriceCmd_descriptor,
+        new java.lang.String[] { "AuctionId", });
+    internal_static_msg_OnePriceResult_descriptor =
+      getDescriptor().getMessageTypes().get(149);
+    internal_static_msg_OnePriceResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_OnePriceResult_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_LookOneselfAuctionItemCmd_descriptor =
+      getDescriptor().getMessageTypes().get(150);
+    internal_static_msg_LookOneselfAuctionItemCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_LookOneselfAuctionItemCmd_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_LookOneselfAuctionItemResult_descriptor =
+      getDescriptor().getMessageTypes().get(151);
+    internal_static_msg_LookOneselfAuctionItemResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_LookOneselfAuctionItemResult_descriptor,
+        new java.lang.String[] { "AuctionItem", });
+    internal_static_msg_CancelAuctionItemCmd_descriptor =
+      getDescriptor().getMessageTypes().get(152);
+    internal_static_msg_CancelAuctionItemCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_CancelAuctionItemCmd_descriptor,
+        new java.lang.String[] { "AuctionId", });
+    internal_static_msg_CancelAuctionItemResult_descriptor =
+      getDescriptor().getMessageTypes().get(153);
+    internal_static_msg_CancelAuctionItemResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_CancelAuctionItemResult_descriptor,
         new java.lang.String[] { });
   }
 

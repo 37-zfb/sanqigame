@@ -268,7 +268,7 @@ public class GameData {
                 if (equipmentEntity.getPropsId().equals(value.getId())) {
                     EquipmentType equipmentType = EquipmentType.valueOf(equipmentEntity.getType());
                     value.setPropsProperty(
-                            new Equipment(equipmentEntity.getId(), equipmentEntity.getPropsId(),
+                            new Equipment((long) equipmentEntity.getId(), equipmentEntity.getPropsId(),
                                     equipmentEntity.getDurability(), equipmentEntity.getDamage(), equipmentType));
                     break;
                 }
@@ -277,7 +277,7 @@ public class GameData {
         for (PotionEntity potionEntity : potionEntityList) {
             for (Props value : propsMap.values()) {
                 if (potionEntity.getPropsId().equals(value.getId())) {
-                    value.setPropsProperty(new Potion(potionEntity.getId(), potionEntity.getPropsId(), potionEntity.getCdTime(),
+                    value.setPropsProperty(new Potion((long) potionEntity.getId(), potionEntity.getPropsId(), potionEntity.getCdTime(),
                             potionEntity.getInfo(), potionEntity.getResumeFigure(), potionEntity.getPercent()));
                 }
             }

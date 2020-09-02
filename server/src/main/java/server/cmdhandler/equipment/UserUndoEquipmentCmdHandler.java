@@ -1,4 +1,4 @@
-package server.cmdhandler.equipmenthandler;
+package server.cmdhandler.equipment;
 
 import constant.BackPackConst;
 import io.netty.channel.ChannelHandlerContext;
@@ -63,6 +63,11 @@ public class UserUndoEquipmentCmdHandler implements ICmdHandler<GameMsg.UserUndo
                         break;
                     }
                 }
+
+//                UserEquipmentEntity userEquipmentEntity = new UserEquipmentEntity();
+//                userEquipmentEntity.setId(userEquipmentArr[i].getId());
+//                userEquipmentEntity.se
+
                 //更新数据库
                 userService.modifyWearEquipment(userEquipmentArr[i].getId(), 0,j);
                 // 装备栏该位置设值未空

@@ -84,7 +84,7 @@ public class Potion extends AbstractPropsProperty {
     }
 
 
-    public Potion(Integer id, Integer propsId, float cdTime, String info, Integer resumeFigure, float percent) {
+    public Potion(Long id, Integer propsId, float cdTime, String info, Integer resumeFigure, float percent) {
         super(id, propsId);
         this.cdTime = cdTime;
         this.info = info;
@@ -92,7 +92,7 @@ public class Potion extends AbstractPropsProperty {
         this.percent = percent;
     }
 
-    public Potion(Integer id, Integer propsId, float cdTime, String info, Integer resumeFigure, float percent, int number) {
+    public Potion(Long id, Integer propsId, float cdTime, String info, Integer resumeFigure, float percent, int number) {
         super(id, propsId);
         this.cdTime = cdTime;
         this.info = info;

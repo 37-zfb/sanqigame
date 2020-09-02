@@ -168,7 +168,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
      * @param resultBuilder 结果构建者
      */
     private void packageMail(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
-        Map<Integer, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
+        Map<Long, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
         for (DbSendMailEntity mailEntity : mailEntityMap.values()) {
             if (resultBuilder.getMailInfoCount() == MailConst.MAX_SHOW_NUMBER) {
                 // 最多一次性发送两百封邮件
@@ -345,7 +345,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         DbSendMailEntity mailEntity = mailService.findMailInfoByUserIdAndTitle(user.getUserId(), dbSendMailEntity.getTitle());
         if (mailEntity == null) {
             PlayMail mail = user.getMail();
-            Map<Integer, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
+            Map<Long, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
             mailEntityMap.put(dbSendMailEntity.getId(), dbSendMailEntity);
             mailService.addMailInfo(dbSendMailEntity);
         }
@@ -359,7 +359,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     private void loadMail(User user) {
         List<DbSendMailEntity> mailEntityList = mailService.listMailWithinTenDay(user.getUserId());
         PlayMail mail = user.getMail();
-        Map<Integer, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
+        Map<Long, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
         for (DbSendMailEntity dbSendMailEntity : mailEntityList) {
             mailEntityMap.put(dbSendMailEntity.getId(), dbSendMailEntity);
         }

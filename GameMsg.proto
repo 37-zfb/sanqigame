@@ -210,6 +210,19 @@ enum MsgCode {
   PUT_IN_MONEY_RESULT = 136;
 
 
+  LOOK_AUCTION_ITEM_CMD = 137;
+  LOOK_AUCTION_ITEM_RESULT = 138;
+  SHELVE_GOODS_CMD = 139;
+  SHELVE_GOODS_RESULT = 140;
+  BIDDING_GOODS_CMD = 141;
+  BIDDING_GOODS_RESULT = 142;
+  ONE_PRICE_CMD = 143;
+  ONE_PRICE_RESULT = 144;
+  LOOK_ONESELF_AUCTION_ITEM_CMD = 145;
+  LOOK_ONESELF_AUCTION_ITEM_RESULT = 146;
+  CANCEL_AUCTION_ITEM_CMD = 147;
+  CANCEL_AUCTION_ITEM_RESULT = 148;
+
 
   ERROR_RESULT = 96;
 }
@@ -361,7 +374,7 @@ message UserLoginResult {
   // 已穿戴装备
   repeated WearEquipment wearEqu = 11;
   message WearEquipment {
-    uint32 id = 1;
+    uint64 id = 1;
     uint32 equipmentId = 2;
     //耐久度
     uint32 durability = 3;
@@ -390,7 +403,7 @@ message Props {
   uint32 propsId = 2;
   uint32 durability = 3;
   uint32 propsNumber = 4;
-  uint32 userPropsId = 5;
+  uint64 userPropsId = 5;
 }
 
 // 用户注册
@@ -565,14 +578,14 @@ message UserWearEquipmentCmd {
   // 装备id
   uint32 location = 1;
   // 用户装备id
-  uint32 userEquipmentId = 2;
+  uint64 userEquipmentId = 2;
 }
 // 穿戴装备结果
 message UserWearEquipmentResult {
   // 道具id
   uint32 propsId = 1;
   // 用户装备id
-  uint32 userEquipmentId = 2;
+  uint64 userEquipmentId = 2;
   // 位置
   uint32 location = 3;
 }
@@ -595,7 +608,7 @@ message DurabilityDeficiencyResult {
   // 装备id
   uint32 propsId = 1;
   // 用户装备id
-  uint32 userEquipmentId = 2;
+  uint64 userEquipmentId = 2;
 }
 // 修理装备 指令
 message RepairEquipmentCmd {
@@ -760,7 +773,7 @@ message UserSeeMailResult {
 // 邮箱信息
 message MailInfo {
   // 邮件id
-  uint32 mailId = 1;
+  uint64 mailId = 1;
   // 发送者
   string srcUserName = 2;
   // 邮件标题
@@ -769,12 +782,14 @@ message MailInfo {
 // 用户接受邮件指令
 message UserReceiveMailCmd {
   // -1时，表示一键领取全部
-  uint32 mailId = 1;
+  uint64 mailId = 1;
 }
 // 用户接受邮件结果
 message UserReceiveMailResult {
   // 领取成功的邮件id
-  repeated uint32 mailId = 1;
+  repeated uint64 mailId = 1;
+  repeated Props props = 2;
+  uint32 money = 3;
 }
 // 进入竞技场
 message UserEnterArenaCmd {
@@ -1073,7 +1088,7 @@ message LookGuildWarehouseResult{
 // 取出道具
 message TakeOutPropsCmd{
   Props props = 1;
-  uint32 number= 2;
+  uint32 number = 2;
 }
 message TakeOutPropsResult{
 }
@@ -1094,4 +1109,60 @@ message PutInMoneyCmd{
   uint32 money = 1;
 }
 message PutInMoneyResult{
+}
+
+
+//查看拍卖
+message LookAuctionItemCmd{
+}
+message LookAuctionItemResult{
+  repeated AuctionItem auctionItem = 1;
+}
+message AuctionItem{
+  uint32  id = 1;
+  string userName = 2;
+  uint32 propsId = 3;
+  //竞拍价
+  uint32 auction = 4;
+  //一口价
+  uint32 price = 5;
+  // 数量
+  uint32  number = 6;
+  //时间
+  uint64 date = 7;
+}
+//上架商品
+message ShelveGoodsCmd{
+  uint32 location = 1;
+  uint32 number = 2;
+  uint32 auction = 3;
+  uint32 price = 4;
+}
+message ShelveGoodsResult{
+}
+//竞价
+message BiddingGoodsCmd{
+  uint32 auctionId = 1;
+  uint32 money = 2;
+}
+message BiddingGoodsResult{
+}
+// 一口价
+message OnePriceCmd{
+  uint32 auctionId = 1;
+}
+message OnePriceResult{
+}
+//查看自己上架物品
+message LookOneselfAuctionItemCmd{
+}
+message LookOneselfAuctionItemResult{
+  repeated AuctionItem auctionItem = 1;
+}
+//取消上架物品
+message CancelAuctionItemCmd{
+  uint32 auctionId = 1;
+}
+message  CancelAuctionItemResult{
+
 }

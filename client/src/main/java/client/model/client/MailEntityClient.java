@@ -19,7 +19,7 @@ public class MailEntityClient {
     /**
      * 邮件id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 发件人
@@ -36,7 +36,7 @@ public class MailEntityClient {
      */
     private MailType mailType = MailType.UNREAD;
 
-    public MailEntityClient(Integer id, String srcUserName, String title) {
+    public MailEntityClient(Long id, String srcUserName, String title) {
         this.id = id;
         this.srcUserName = srcUserName;
         this.title = title;

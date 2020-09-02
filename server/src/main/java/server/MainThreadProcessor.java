@@ -97,7 +97,8 @@ public class MainThreadProcessor {
                 // 防止发生异常导致线程终止
                 log.error(e.getMessage(), e);
                 GameMsg.ErrorResult errorResult = GameMsg.ErrorResult.newBuilder()
-                        .setMsg(e.getMessage())
+                        .setCode(-99999)
+                        .setMsg("服务端未知异常;")
                         .build();
                 ctx.writeAndFlush(errorResult);
             }

@@ -127,7 +127,7 @@ public class UserService {
      *
      * @param equipmentEntity 装备对象
      */
-    public Integer addEquipment(UserEquipmentEntity equipmentEntity) {
+    public Long addEquipment(UserEquipmentEntity equipmentEntity) {
         if (equipmentEntity == null) {
             log.error("equipmentEntity对象为空!");
             return null;
@@ -216,7 +216,7 @@ public class UserService {
      *
      * @param userEquipmentId
      */
-    public void modifyWearEquipment(Integer userEquipmentId, Integer state, Integer location) {
+    public void modifyWearEquipment(Long userEquipmentId, Integer state, Integer location) {
         if (userEquipmentId == null || state == null || location == null) {
             log.info("userEquipmentId={}, state={}, location={}", userEquipmentId, state, location);
             return;

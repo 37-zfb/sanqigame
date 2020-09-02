@@ -24,7 +24,7 @@ public class UserWearEquipmentResultClient implements ICmd<GameMsg.UserWearEquip
         Role role = Role.getInstance();
         int propsId = userWearEquipmentResult.getPropsId();
         int location = userWearEquipmentResult.getLocation();
-        int userEquipmentId = userWearEquipmentResult.getUserEquipmentId();
+        long userEquipmentId = userWearEquipmentResult.getUserEquipmentId();
 
         UserEquipmentEntity[] userEquipmentEntityList = role.getUserEquipmentEntityArr();
         Map<Integer, Props> backpackClient = role.getBackpackClient();

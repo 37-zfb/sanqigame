@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IBidderDAO">
+    <resultMap id="bidderEntity" type="entity.db.DbBidderEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="auctionId" column="auction_id"/>
+        <result property="money" column="money"/>
+    </resultMap>
+
+
+    <insert id="insertBidderBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
+        <foreach collection="bidderCollection" item="bidder" index="index" open="" close="" separator="">
+            insert into `bidder` (`user_id`,`auction_id`,`money`)
+            values (#{bidder.userId},#{bidder.auctionId},#{bidder.money});
+        </foreach>
+    </insert>
+
+        <select id="selectBidderByAuctionId" resultMap="bidderEntity" resultType="list">
+            select * from `bidder` where auction_id = #{auctionId}
+        </select>
+
+    <delete id="deleteBidderBatch" parameterType="collection">
+        <foreach collection="bidderCollection" item="bidder" index="index" open="" close="" separator="">
+            delete from `bidder` where user_id = #{bidder.userId} AND auction_id =#{bidder.auctionId} ;
+        </foreach>
+    </delete>
+
+   <!-- <update id="updateBidderBatch" parameterType="collection">
+        <foreach collection="bidderCollection" item="bidder" index="index" open="" close="" separator="">
+            update `bidder`
+            <set>
+
+            </set>
+            where id = #{bidder.id};
+        </foreach>
+    </update>-->
+
+</mapper>

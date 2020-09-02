@@ -16,7 +16,7 @@ public class DbSendMailEntity {
     /**
      * 本表id
      */
-    private Integer id;
+    private Long id;
     /**
      * 邮件标题
      */

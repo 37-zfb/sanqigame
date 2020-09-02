@@ -14,7 +14,7 @@ public class EquipmentEntity {
     /**
      *  装备id
      */
-    private Integer id;
+    private int id;
 
     /**
      *  对应的道具id

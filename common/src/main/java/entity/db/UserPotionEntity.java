@@ -12,7 +12,7 @@ import lombok.*;
 @ToString
 public class UserPotionEntity {
 
-    private Integer id;
+    private Long id;
 
     private Integer userId;
 

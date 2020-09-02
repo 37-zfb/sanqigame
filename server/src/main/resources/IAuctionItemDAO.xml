@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.IAuctionItemDAO">
+    <resultMap id="auctionItem" type="entity.db.DbAuctionItemEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="auction" column="auction"/>
+        <result property="price" column="price"/>
+        <result property="propsId" column="props_id"/>
+        <result property="number" column="number"/>
+        <result property="date" column="date"/>
+    </resultMap>
+
+
+    <insert id="insertAuctionItemBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
+        <foreach collection="auctionItemCollection" item="item" index="index" open="" close="" separator="">
+            insert into `auction` (`id`,`user_name`,`auction`,`price`,`props_id`,`number`,`date`,`user_id`)
+            values (#{item.id},#{item.userName},#{item.auction},#{item.price},#{item.propsId},#{item.number},#{item.date},#{item.userId});
+        </foreach>
+    </insert>
+
+    <select id="selectAuctionItem" resultMap="auctionItem" resultType="list">
+        select * from `auction`
+    </select>
+
+    <delete id="deleteAuctionItemBatch" parameterType="collection">
+        <foreach collection="auctionItemCollection" item="item" index="index" open="" close="" separator="">
+            delete from `auction` where id = #{item.id};
+        </foreach>
+    </delete>
+
+    <update id="updateAuctionItemBatch" parameterType="collection">
+        <foreach collection="auctionItemCollection" item="item" index="index" open="" close="" separator="">
+            update `auction`
+            <set>
+                <if test="item.userName != null">
+                    user_name = #{guild.guildName},
+                </if>
+                <if test="item.auction != null">
+                    auction = #{guild.auction},
+                </if>
+                <if test="item.price != null">
+                    price = #{guild.price},
+                </if>
+                <if test="item.propsId != null">
+                    props_id = #{guild.propsId},
+                </if>
+                <if test="item.number != null">
+                    `number` = #{guild.number},
+                </if>
+                <if test="item.date != null">
+                    `date` = #{guild.date},
+                </if>
+                <if test="item.userId != null">
+                    `user_id` = #{guild.userId}
+                </if>
+            </set>
+            where id = #{item.id};
+        </foreach>
+    </update>
+
+</mapper>

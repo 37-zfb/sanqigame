@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
+import type.MailType;
 import util.MyUtil;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -27,16 +29,28 @@ public class UserCleanMailCmdHandler implements ICmdHandler<GameMsg.UserCleanMai
         User user = PublicMethod.getInstance().getUser(ctx);
 
         GameMsg.UserCleanMailResult.Builder newBuilder = GameMsg.UserCleanMailResult.newBuilder();
-        Map<Integer, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
-        for (DbSendMailEntity dbSendMailEntity : mailEntityMap.values()) {
+        Map<Long, DbSendMailEntity> mailEntityMap = user.getMail().getMailEntityMap();
+
+
+        Iterator<Map.Entry<Long, DbSendMailEntity>> iterator = mailEntityMap.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<Long, DbSendMailEntity> next = iterator.next();
+            if (next.getValue().getState().equals(MailType.READ.getState())){
+                iterator.remove();
+                log.info("用户 {} 已读 {} 邮件;", user.getUserName(),next.getValue().getTitle());
+                continue;
+            }
+
             if (newBuilder.getMailInfoCount() == MailConst.MAX_SHOW_NUMBER) {
                 break;
             }
 
-            GameMsg.MailInfo.Builder mailInfo = GameMsg.MailInfo.newBuilder().setMailId(dbSendMailEntity.getId())
-                    .setTitle(dbSendMailEntity.getTitle())
-                    .setSrcUserName(dbSendMailEntity.getSrcUserName());
+            GameMsg.MailInfo.Builder mailInfo = GameMsg.MailInfo.newBuilder().setMailId(next.getValue().getId())
+                    .setTitle(next.getValue().getTitle())
+                    .setSrcUserName(next.getValue().getSrcUserName());
+            log.info("用户 {} 未读 {} 邮件;",user.getUserName(),next.getValue().getTitle());
             newBuilder.addMailInfo(mailInfo);
+
         }
 
 

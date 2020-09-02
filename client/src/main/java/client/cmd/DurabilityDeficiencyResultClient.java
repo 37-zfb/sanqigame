@@ -18,7 +18,7 @@ public class DurabilityDeficiencyResultClient implements ICmd<GameMsg.Durability
         }
 
         Role role = Role.getInstance();
-        int userEquipmentId = durabilityDeficiencyResult.getUserEquipmentId();
+        long userEquipmentId = durabilityDeficiencyResult.getUserEquipmentId();
         int propsId = durabilityDeficiencyResult.getPropsId();
 
         Props props = GameData.getInstance().getPropsMap().get(propsId);

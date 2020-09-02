@@ -28,6 +28,7 @@ import server.service.UserService;
 import server.timer.BossAttackTimer;
 import server.timer.MonsterAttakTimer;
 import server.timer.state.DbUserStateTimer;
+import server.util.IdWorker;
 import type.DuplicateType;
 import type.PropsType;
 
@@ -56,6 +57,7 @@ public final class PublicMethod {
 
     /**
      * 创建 用户状态对象
+     *
      * @param user
      * @return
      */
@@ -72,9 +74,9 @@ public final class PublicMethod {
         userStateEntity.setUserId(user.getUserId());
         userStateEntity.setMoney(user.getMoney());
 
-        if (user.getPlayGuild()!=null){
+        if (user.getPlayGuild() != null) {
             userStateEntity.setGuildId(user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).getGuildId());
-        }else {
+        } else {
             userStateEntity.setGuildId(0);
         }
         return userStateEntity;
@@ -391,10 +393,10 @@ public final class PublicMethod {
                 break;
             }
         }
+        userEquipmentEntity.setId(IdWorker.generateId());
+        equ.setId(userEquipmentEntity.getId());
 
         userStateTimer.addUserEquipment(userEquipmentEntity);
-//        userService.addEquipment(userEquipmentEntity);
-        equ.setId(userEquipmentEntity.getId());
 
     }
 
@@ -438,7 +440,6 @@ public final class PublicMethod {
             }
         }
         // 背包中还没有该药剂
-        Potion po = null;
         if (!isExist) {
             if (backpack.size() >= BackPackConst.MAX_CAPACITY) {
                 // 此时背包已满，
@@ -452,17 +453,21 @@ public final class PublicMethod {
                     Props pro = new Props();
                     pro.setId(potion.getPropsId());
                     pro.setName(props.getName());
-                    po = new Potion(null, potion.getPropsId(), potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), number);
+                    Potion po = new Potion(null, potion.getPropsId(), potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), number);
                     pro.setPropsProperty(po);
 
                     userPotionEntity.setLocation(i);
                     // 药剂添加进背包
                     backpack.put(i, pro);
+                    userPotionEntity.setId(IdWorker.generateId());
+                    po.setId(userPotionEntity.getId());
+
                     userStateTimer.addUserPotion(userPotionEntity);
                     break;
                 }
             }
         }
+
     }
 
 
