@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.dao.ITaskDAO">
+    <resultMap id="taskEntity" type="entity.db.DbTaskEntity">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="currTask" column="curr_task"/>
+        <result property="currTaskCompleted" column="curr_task_completed"/>
+        <result property="completedTask" column="completed_task"/>
+        <result property="killNumber" column="kill_number"/>
+    </resultMap>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.DbTaskEntity">
+            insert into `task` (`id`,`user_id`,`curr_task`,`curr_task_completed`,`completed_task`,`kill_number`)
+            values (#{id},#{userId},#{currTask},#{currTaskCompleted},#{completedTask},#{killNumber});
+    </insert>
+
+    <select id="select" resultMap="taskEntity" resultType="list">
+        select * from `task`
+    </select>
+    <select id="selectByUserId" resultMap="taskEntity" resultType="int">
+        select * from `task` where user_id = #{userId}
+    </select>
+
+    <delete id="delete" parameterType="entity.db.DbTaskEntity">
+            delete from `task` where id = #{id};
+    </delete>
+
+    <update id="update" parameterType="entity.db.DbTaskEntity">
+            update `task`
+            set
+                    curr_task = #{currTask},
+                    curr_task_completed = #{currTaskCompleted},
+                    completed_task = #{completedTask},
+                    kill_number = #{killNumber}
+            where user_id = #{userId};
+    </update>
+
+</mapper>

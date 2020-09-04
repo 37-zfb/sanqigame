@@ -11,6 +11,8 @@
         <result property="baseDefense" column="base_defense"/>
         <result property="money" column="money"/>
         <result property="guildId" column="guild_id"/>
+        <result property="lv" column="lv"/>
+        <result property="experience" column="experience"/>
     </resultMap>
 
 
@@ -27,7 +29,7 @@
     <update id="updateUserState" parameterType="entity.db.CurrUserStateEntity">
         update curr_user_state
         SET curr_hp = #{currHp},curr_mp=#{currMp},curr_scene_id=#{currSceneId},base_damage=#{baseDamage},
-            base_defense=#{baseDefense},money=#{money} ,guild_id=#{guildId}
+            base_defense=#{baseDefense},money=#{money} ,guild_id=#{guildId},lv=#{lv},experience=#{experience}
         WHERE user_id=#{userId}
     </update>
 
@@ -41,7 +43,9 @@
                 base_damage=#{userState.baseDamage},
                 base_defense=#{userState.baseDefense},
                 money=#{userState.money},
-                guild_id = #{userState.guildId}
+                guild_id = #{userState.guildId},
+                lv = #{userState.lv},
+                experience = #{userState.experience}
             </set>
             where user_id = #{userState.userId};
         </foreach>
@@ -56,7 +60,6 @@
             update `curr_user_state`
             <set>
                 guild_id = #{state}
-
             </set>
             where id = #{userId};
         </foreach>

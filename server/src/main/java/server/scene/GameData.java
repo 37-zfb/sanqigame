@@ -14,6 +14,7 @@ import entity.conf.scene.MonsterEntity;
 import entity.conf.scene.NpcEntity;
 import entity.conf.scene.SceneEntity;
 import entity.conf.store.GoodsEntity;
+import entity.conf.task.TaskEntity;
 import lombok.Setter;
 
 ;
@@ -35,8 +36,10 @@ import server.model.scene.Monster;
 import server.model.scene.Npc;
 import server.model.scene.Scene;
 import server.model.store.Goods;
+import server.model.task.Task;
 import type.EquipmentType;
 import type.ProfessionType;
+import type.TaskType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +81,11 @@ public class GameData {
      * id  公会角色
      */
     private final Map<Integer, GuildRole> guildRoleMap = new HashMap<>();
+
+    /**
+     * id 任务
+     */
+    private final Map<Integer, Task> taskMap = new HashMap<>();
 
     private static final GameData GAME_DATA = new GameData();
 
@@ -124,6 +132,12 @@ public class GameData {
      */
     private List<GoodsEntity> goodsEntityList;
 
+
+    /**
+     * 任务
+     */
+    private List<TaskEntity> taskEntityList;
+
     /**
      * 初始化游戏数据
      */
@@ -134,6 +148,34 @@ public class GameData {
         initDuplicate();
         initStore();
         initGuild();
+        initTask();
+    }
+
+    private void initTask() {
+        for (TaskEntity taskEntity : taskEntityList) {
+            Task task = new Task();
+            task.setId(taskEntity.getId());
+            task.setTaskName(taskEntity.getTaskName());
+            task.setDescription(taskEntity.getDescription());
+            task.setExperience(taskEntity.getExperience());
+            task.setRewardProps(taskEntity.getRewardProps());
+            task.setRewardMoney(taskEntity.getRewardMoney());
+            task.setTypeCode(taskEntity.getTypeCode());
+            task.setSceneId(taskEntity.getSceneId());
+            task.setTypeCode(taskEntity.getTypeCode());
+            task.setDuplicateId(taskEntity.getDuplicateId());
+            task.setNpcId(taskEntity.getNpcId());
+
+            if (taskEntity.getTypeCode().equals(TaskType.DialogueType.getTaskCode())) {
+                task.setDialogue(taskEntity.getDialogue());
+            } else if (taskEntity.getTypeCode().equals(TaskType.killType.getTaskCode())) {
+                task.setKillNumber(taskEntity.getNumber());
+            } else if (taskEntity.getTypeCode().equals(TaskType.DuplicateType.getTaskCode())) {
+
+            }
+            taskMap.put(task.getId(), task);
+        }
+        taskEntityList = null;
     }
 
     private void initGuild() {
@@ -326,5 +368,9 @@ public class GameData {
 
     public Map<Integer, Goods> getGoodsMap() {
         return goodsMap;
+    }
+
+    public Map<Integer, Task> getTaskMap() {
+        return taskMap;
     }
 }

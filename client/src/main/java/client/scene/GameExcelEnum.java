@@ -31,6 +31,11 @@ public enum GameExcelEnum {
      * 公会角色、角色权限
      */
     Guild("guild.xls"),
+
+    /**
+     * 任务
+     */
+    Task("task.xls"),
     ;
 
     /**

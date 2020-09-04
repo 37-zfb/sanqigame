@@ -41,5 +41,8 @@ public interface DuplicateConst {
     String USER_KILLED = "用户阵亡;";
 
 
-
+    /**
+     * 副本通关后，奖励的经验
+     */
+    int DUPLICATE_EXPERIENCE = 20000;
 }

@@ -67,6 +67,7 @@ public class DbAuctionItemEntity {
      */
     private final Map<Integer,DbBidderEntity> BIDDER_MAP  = new ConcurrentHashMap<>();
 
+
     /**
      * 添加竞拍者
      * @param bidderEntity

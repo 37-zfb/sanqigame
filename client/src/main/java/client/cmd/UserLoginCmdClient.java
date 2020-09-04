@@ -8,6 +8,7 @@ import client.model.server.props.Props;
 import client.model.server.scene.Monster;
 import client.model.server.scene.Npc;
 import client.model.server.scene.Scene;
+import client.model.task.PlayTaskClient;
 import client.scene.GameData;
 import client.thread.CmdThread;
 import client.GameClient;
@@ -151,6 +152,13 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
             playGuildClient.setType(GuildMemberType.getRoleNameByRoleId(guildPosition));
             playGuildClient.setGuildName(guildName);
             role.setPlayGuildClient(playGuildClient);
+        }
+
+        PlayTaskClient playTaskClient = role.getPlayTaskClient();
+        boolean isHaveTask = userLoginResult.getIsHaveTask();
+        if (isHaveTask){
+            playTaskClient.setCurrTaskId(userLoginResult.getCurrTaskId());
+            playTaskClient.setCompleted(userLoginResult.getCurrTaskCompleted());
         }
 
 

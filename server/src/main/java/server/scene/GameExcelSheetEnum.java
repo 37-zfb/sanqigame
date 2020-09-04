@@ -4,6 +4,7 @@ package server.scene;
 import entity.conf.guild.GuildRoleAuthEntity;
 import entity.conf.guild.GuildRoleEntity;
 import entity.conf.profession.WarriorSkillPropertyEntity;
+import entity.conf.task.TaskEntity;
 
 /**
  * @author 张丰博
@@ -82,6 +83,11 @@ public enum GameExcelSheetEnum {
      */
     GuildRoleEntity("GuildRoleEntity", entity.conf.guild.GuildRoleEntity.class),
     GuildRoleAuthEntity("GuildRoleAuthEntity",GuildRoleAuthEntity.class),
+
+    /**
+     * 任务
+     */
+    TaskEntity("TaskEntity", entity.conf.task.TaskEntity.class);
     ;
 
 

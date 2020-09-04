@@ -19,11 +19,11 @@
 
     <insert id="insertPotion" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
             parameterType="entity.db.UserPotionEntity">
-        INSERT INTO `user_potion` ( user_id, `props_id`,`number`,`location` ) VALUES ( #{userId}, #{propsId},#{number},#{location} );
+        INSERT INTO `user_potion` ( id,user_id, `props_id`,`number`,`location` ) VALUES (  #{potion.id},#{userId}, #{propsId},#{number},#{location} );
     </insert>
     <insert id="insertPotionBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
         <foreach collection="potionEntityCollection" item="potion" index="index" open="" close="" separator="">
-            INSERT INTO `user_potion` ( user_id, `props_id`,`number`,`location` ) VALUES ( #{potion.userId},
+            INSERT INTO `user_potion` (id, user_id, `props_id`,`number`,`location` ) VALUES ( #{potion.id},#{potion.userId},
             #{potion.propsId},#{potion.number},#{potion.location} );
         </foreach>
     </insert>

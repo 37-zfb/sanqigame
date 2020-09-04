@@ -51,6 +51,17 @@ public class User {
     private int userId;
 
     /**
+     * 当前等级
+     */
+    private Integer  lv;
+    /**
+     * 当前经验
+     */
+    private long experience;
+
+
+
+    /**
      * 职业id
      */
     private int professionId;
@@ -206,6 +217,10 @@ public class User {
      */
     private PlayGuild playGuild = null;
 
+    /**
+     * 任务系统
+     */
+    private final PlayTask playTask = new PlayTask();
 
     /**
      * 设置恢复mp终止时间
@@ -266,6 +281,7 @@ public class User {
         int subHp = (int) ((Math.random() * this.getBaseDamage()) + 500 + 10 * equDamage);
 
         log.info("玩家: {},伤害: {}", this.getUserName(), subHp);
+        subHp = 2000;
         return subHp;
     }
 

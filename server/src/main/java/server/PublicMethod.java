@@ -10,6 +10,8 @@ import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import server.cmdhandler.task.listener.TaskListener;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.duplicate.ForceAttackUser;
@@ -48,6 +50,8 @@ public final class PublicMethod {
 
     private final DbUserStateTimer userStateTimer = GameServer.APPLICATION_CONTEXT.getBean(DbUserStateTimer.class);
 
+    private TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+
     private PublicMethod() {
     }
 
@@ -73,6 +77,8 @@ public final class PublicMethod {
         userStateEntity.setBaseDefense(user.getBaseDefense());
         userStateEntity.setUserId(user.getUserId());
         userStateEntity.setMoney(user.getMoney());
+        userStateEntity.setLv(user.getLv());
+        userStateEntity.setExperience(user.getExperience());
 
         if (user.getPlayGuild() != null) {
             userStateEntity.setGuildId(user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).getGuildId());
@@ -101,6 +107,10 @@ public final class PublicMethod {
 
             if (currBossMonster.getHp() <= subHp) {
                 currBossMonster.setHp(0);
+
+                //加经验
+                taskPublicMethod.addExperience(BossMonsterConst.EXPERIENCE, user);
+
                 // boss已死，取消定时任务
                 BossAttackTimer.getInstance().cancelTask(currBossMonster.getScheduledFuture());
                 // 剩余血量 小于 应减少的值 boss已死
@@ -117,6 +127,11 @@ public final class PublicMethod {
                     sendMsg(user.getCtx(), nextBossResult);
 
                 } else {
+
+
+                    taskPublicMethod.listener(user);
+                    taskPublicMethod.addExperience(DuplicateConst.DUPLICATE_EXPERIENCE, user);
+
                     //组队进入，通知队员
 
                     // 此时副本已通关，计算奖励，退出副本
@@ -231,6 +246,12 @@ public final class PublicMethod {
                 log.info("玩家:{},击杀:{}!", user.getUserName(), monster.getName());
                 monster.setHp(0);
                 monster.getRunnableScheduledFuture().cancel(true);
+
+                //任务监听
+                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+                taskPublicMethod.listener(user);
+                //增加经验
+                taskPublicMethod.addExperience(SceneConst.SCENE_MONSTER_EXPERIENCE,user);
 
                 // 添加奖励
                 String propsIdString = monster.getPropsId();
@@ -360,7 +381,7 @@ public final class PublicMethod {
      * @param props
      * @throws CustomizeException 如果背包满了，则抛出异常
      */
-    public void addEquipment(User user, Props props) {
+    public int addEquipment(User user, Props props) {
 
         Map<Integer, Props> backpack = user.getBackpack();
 
@@ -380,6 +401,7 @@ public final class PublicMethod {
         userEquipmentEntity.setUserId(user.getUserId());
 
         Equipment equ = null;
+        int location = 0;
         for (int i = 1; i < BackPackConst.MAX_CAPACITY; i++) {
             if (!backpack.keySet().contains(i)) {
                 Props pro = new Props();
@@ -389,6 +411,7 @@ public final class PublicMethod {
                 pro.setPropsProperty(equ);
 
                 backpack.put(i, pro);
+                location = i;
                 userEquipmentEntity.setLocation(i);
                 break;
             }
@@ -398,6 +421,7 @@ public final class PublicMethod {
 
         userStateTimer.addUserEquipment(userEquipmentEntity);
 
+        return location;
     }
 
     /**

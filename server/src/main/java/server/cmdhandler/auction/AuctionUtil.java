@@ -6,7 +6,7 @@ import entity.db.DbBidderEntity;
 import entity.db.DbSendMailEntity;
 import msg.GameMsg;
 import server.GameServer;
-import server.model.MailProps;
+import entity.MailProps;
 import server.model.User;
 import server.model.UserManager;
 import server.timer.auction.DbAuctionTimer;

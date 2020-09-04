@@ -1,16 +1,21 @@
 package server;
 
 import com.google.protobuf.GeneratedMessageV3;
+import entity.conf.task.TaskEntity;
+import entity.db.DbTaskEntity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import entity.db.CurrUserStateEntity;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.User;
 import server.model.UserManager;
 import server.service.MailService;
+import server.service.TaskService;
 import server.service.UserService;
+import type.TaskType;
 
 /**
  * @author 张丰博
@@ -49,6 +54,8 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         ApplicationContext context = GameServer.APPLICATION_CONTEXT;
         UserService userService = context.getBean(UserService.class);
         MailService mailService = context.getBean(MailService.class);
+        TaskService taskService = context.getBean(TaskService.class);
+        TaskPublicMethod taskPublicMethod = context.getBean(TaskPublicMethod.class);
 
         User user = UserManager.getUserById(userId);
         user.setCurrDuplicate(null);
@@ -60,6 +67,12 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
 
         // 保存用户所在地
         userService.modifyUserState(userStateEntity);
+
+        //改变任务状态
+        if (user.getPlayTask().isHaveTask()) {
+            DbTaskEntity taskEntity = taskPublicMethod.getTaskEntity(user);
+            taskService.modifyTaskState(taskEntity);
+        }
 
         // 持久化,邮件
         mailService.modifyMailState(user.getMail().getMailEntityMap().values());

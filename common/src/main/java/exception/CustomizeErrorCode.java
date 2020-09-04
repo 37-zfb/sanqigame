@@ -69,6 +69,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     PROPS_NOT_EXIST(-433,"道具不存在;"),
     AUTH_NOT_ENOUGH(-434,"权限不够;"),
     WAREHOUSE_POTION_NUMBER_NOT_ENOUGH(-435,"药剂数量不足;"),
+    NOT_QUIT(-438,"会长不能退出;"),
 
     /**
      * 拍卖行

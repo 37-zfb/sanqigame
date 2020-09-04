@@ -63,7 +63,11 @@ public class ExcelReaderUtil {
                         } else if (excelColType == CellType.NUMERIC) {
                             columnValue = row.getCell(colNum).getNumericCellValue();
                         }
-                        jsonData.append(excelTitleNames.get(colNum) + ":\"" + columnValue.toString() + "\",");
+                        if (excelTitleNames.get(colNum).equals("rewardProps")){
+                            jsonData.append(excelTitleNames.get(colNum) + ":" + columnValue.toString() + ",");
+                        }else {
+                            jsonData.append(excelTitleNames.get(colNum) + ":\"" + columnValue.toString() + "\",");
+                        }
                     }
                     excelData.add(jsonData.substring(0, jsonData.length() - 1) + "}");
                 }

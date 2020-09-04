@@ -223,6 +223,18 @@ enum MsgCode {
   CANCEL_AUCTION_ITEM_CMD = 147;
   CANCEL_AUCTION_ITEM_RESULT = 148;
 
+  LOOK_ALL_TASK_CMD = 149;
+  LOOK_ALL_TASK_RESULT = 150;
+  RECEIVE_TASK_CMD = 151;
+  RECEIVE_TASK_RESULT = 152;
+  DIALOGUE_TASK_CMD = 153;
+  TASK_COMPLETED_RESULT = 154;
+  RECEIVE_TASK_AWARD_CMD = 155;
+  RECEIVE_TASK_AWARD_RESULT = 156;
+
+
+
+  USER_UP_LV_RESULT = 157;
 
   ERROR_RESULT = 96;
 }
@@ -397,6 +409,11 @@ message UserLoginResult {
   //公会
   string guildName = 16;
   uint32 guildPosition = 17;
+
+  //任务
+  bool isHaveTask = 18;
+  uint32 currTaskId = 19;
+  bool currTaskCompleted = 20;
 }
 message Props {
   uint32 location = 1;
@@ -1165,4 +1182,36 @@ message CancelAuctionItemCmd{
 }
 message  CancelAuctionItemResult{
 
+}
+
+
+//查看所有任务
+message LookAllTaskCmd{
+}
+message LookAllTaskResult{
+  uint32 taskId = 1;
+}
+// 领取任务
+message ReceiveTaskCmd{
+  uint32 taskId = 1;
+}
+message ReceiveTaskResult {
+  uint32 taskId = 1;
+}
+//请求
+message  DialogueTaskCmd{
+}
+message  TaskCompletedResult{
+}
+//领取任务奖励
+message ReceiveTaskAwardCmd{
+  uint32 taskId = 1;
+}
+message ReceiveTaskAwardResult{
+  repeated Props props = 1;
+  uint32  money = 2;
+}
+//升级
+message UserUpLvResult{
+  uint32 lv = 1;
 }

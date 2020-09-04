@@ -1,8 +1,11 @@
 package server.cmdhandler.duplicate;
 
+import constant.BossMonsterConst;
 import constant.DuplicateConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import server.GameServer;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.props.AbstractPropsProperty;
@@ -34,6 +37,7 @@ import java.util.Map;
 public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
     @Autowired
     private UserService userService;
+
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.AttkBossCmd attkBossCmd) {
@@ -69,11 +73,16 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
         synchronized (currBossMonster.getATTACK_BOSS_MONITOR()) {
             if (currBossMonster.getHp() <= 0) {
                 // boss已死
+                return;
             }
             if (currBossMonster.getHp() <= subHp) {
                 currBossMonster.setHp(0);
                 // boss已死，取消定时任务
                 BossAttackTimer.getInstance().cancelTask(currBossMonster.getScheduledFuture());
+                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+
+                //增加经验
+                taskPublicMethod.addExperience(BossMonsterConst.EXPERIENCE, user);
 
                 // 剩余血量 小于 应减少的值 boss已死
                 if (currDuplicate.getBossMonsterMap().size() > 0) {
@@ -88,6 +97,11 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                     PublicMethod.getInstance().sendMsg(ctx, nextBossResult);
 
                 } else {
+
+                    // 增加经验
+                    taskPublicMethod.addExperience(DuplicateConst.DUPLICATE_EXPERIENCE, user);
+                    //任务监听
+                    taskPublicMethod.listener(user);
                     //组队进入，通知队员
 
                     // 此时副本已通关，计算奖励，退出副本
@@ -141,7 +155,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                 // 剩余血量 大于 应减少的值
                 currBossMonster.setHp(currBossMonster.getHp() - subHp);
                 log.info("boss {} 受到伤害 {}, 剩余HP: {}", currBossMonster.getBossName(), subHp, currBossMonster.getHp());
-                currBossMonster.putUserIdMap(user.getUserId(),subHp);
+                currBossMonster.putUserIdMap(user.getUserId(), subHp);
             }
         }
         if (currBossMonster.getScheduledFuture() == null) {
@@ -152,12 +166,6 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
         GameMsg.AttkBossResult attkBossResult = GameMsg.AttkBossResult.newBuilder().setUserId(user.getUserId()).setSubHp(subHp).build();
         PublicMethod.getInstance().sendMsg(ctx, attkBossResult);
     }
-
-
-
-
-
-
 
 
 }

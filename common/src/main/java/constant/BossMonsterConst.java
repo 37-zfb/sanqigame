@@ -14,5 +14,9 @@ public interface BossMonsterConst {
      */
     int ORDINARY_ATTACK = 4;
 
+    /**
+     *  经验奖励
+     */
+    int EXPERIENCE = 20000;
 
 }

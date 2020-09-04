@@ -6,7 +6,7 @@ package type;
 public enum GuildMemberType {
 
     /**
-     * 为加入公会
+     * 未加入公会
      */
     Public(0, "未加入公会;"),
 

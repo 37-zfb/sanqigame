@@ -12,6 +12,8 @@ import client.model.server.props.Props;
 import client.model.server.scene.Npc;
 import client.model.server.scene.Scene;
 import client.model.server.store.Goods;
+import client.model.server.task.Task;
+import client.model.task.PlayTaskClient;
 import client.scene.GameData;
 import client.thread.BossThread;
 import client.thread.DealThread;
@@ -71,6 +73,11 @@ public class UserCmd {
                 if (role.getMail().isHave()) {
                     log.info("======> {}", "存在未领取的邮件");
                 }
+                PlayTaskClient playTaskClient = role.getPlayTaskClient();
+                if (playTaskClient.getCurrTaskId() != null){
+                    Map<Integer, Task> taskMap = GameData.getInstance().getTaskMap();
+                    log.info("任务: {}",taskMap.get(playTaskClient.getCurrTaskId()).getTaskName());
+                }
 
                 while (true) {
                     log.info("请选择您的操作: ");
@@ -103,6 +110,7 @@ public class UserCmd {
                     System.out.println("======>27:进入交易界面;");
                     System.out.println("======>28:公会;");
                     System.out.println("======>29:拍卖行;");
+                    System.out.println("======>30:查看任务;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -156,8 +164,16 @@ public class UserCmd {
                                 System.out.println(npc.getId() + "、名称: " + npc.getName());
                             }
                             Integer npcId = scanner.nextInt();
-                            Npc npc = scene.getNpcMap().get(npcId);
-                            System.out.println(npc.getName() + ": " + npc.getInfo());
+                            if (role.getPlayTaskClient().getCurrTaskId() != null &&
+                                    npcId.equals(GameData.getInstance().getTaskMap().get(role.getPlayTaskClient().getCurrTaskId()).getNpcId()) ){
+                                //此时任务，和当前npc对话
+                                //发送协议，当前位置
+                                return GameMsg.DialogueTaskCmd.newBuilder().build();
+                            }else {
+                                Npc npc = scene.getNpcMap().get(npcId);
+                                System.out.println(npc.getName() + ": " + npc.getInfo());
+                            }
+
                         } else {
                             System.out.println("此场景没有NPC!");
                         }
@@ -537,14 +553,14 @@ public class UserCmd {
                                     .setAuction(auction)
                                     .setPrice(price)
                                     .build());
-                            if (props.getPropsProperty().getType() == PropsType.Potion){
-                                Potion potion = (Potion)props.getPropsProperty();
-                                if (potion.getNumber() > number){
+                            if (props.getPropsProperty().getType() == PropsType.Potion) {
+                                Potion potion = (Potion) props.getPropsProperty();
+                                if (potion.getNumber() > number) {
                                     potion.setNumber(potion.getNumber() - number);
-                                }else {
+                                } else {
                                     backpackClient.remove(location);
                                 }
-                            }else {
+                            } else {
                                 backpackClient.remove(location);
                             }
                         } else if (2 == nextInt) {
@@ -554,6 +570,9 @@ public class UserCmd {
                             return GameMsg.LookOneselfAuctionItemCmd.newBuilder().build();
                         }
 
+                    } else if ("30".equals(command)) {
+                        //查看任务
+                        return GameMsg.LookAllTaskCmd.newBuilder().build();
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -645,6 +664,10 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.UserCleanMailCmd) cmd);
         } else if (cmd instanceof GameMsg.LookOneselfAuctionItemCmd) {
             ctx.writeAndFlush((GameMsg.LookOneselfAuctionItemCmd) cmd);
+        }else if (cmd instanceof GameMsg.LookAllTaskCmd){
+            ctx.writeAndFlush((GameMsg.LookAllTaskCmd)cmd);
+        }else if (cmd instanceof  GameMsg.DialogueTaskCmd){
+            ctx.writeAndFlush((GameMsg.DialogueTaskCmd)cmd);
         }
 
 

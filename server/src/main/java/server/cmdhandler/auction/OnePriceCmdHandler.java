@@ -1,9 +1,7 @@
 package server.cmdhandler.auction;
 
-import com.alibaba.fastjson.JSON;
 import entity.db.CurrUserStateEntity;
 import entity.db.DbAuctionItemEntity;
-import entity.db.DbSendMailEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,21 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.model.MailProps;
 import server.model.PlayAuction;
 import server.model.User;
-import server.model.UserManager;
 import server.model.props.Props;
 import server.scene.GameData;
 import server.timer.auction.DbAuctionTimer;
 import server.timer.mail.DbSendMailTimer;
 import server.timer.state.DbUserStateTimer;
-import type.MailType;
 import util.MyUtil;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author 张丰博

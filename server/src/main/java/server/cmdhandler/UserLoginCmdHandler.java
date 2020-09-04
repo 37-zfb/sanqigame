@@ -3,6 +3,7 @@ package server.cmdhandler;
 import com.alibaba.fastjson.JSON;
 import constant.EquipmentConst;
 import constant.MailConst;
+import entity.MailProps;
 import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
@@ -26,12 +27,10 @@ import server.model.scene.Scene;
 import server.scene.GameData;
 import server.service.GuildService;
 import server.service.MailService;
+import server.service.TaskService;
 import server.service.UserService;
 import server.Broadcast;
-import type.GoodsLimitBuyType;
-import type.GuildMemberType;
-import type.MailType;
-import type.PropsType;
+import type.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +53,9 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     private MailService mailService;
     @Autowired
     private GuildService guildService;
+    @Autowired
+    private TaskService taskService;
+
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserLoginCmd cmd) {
@@ -119,6 +121,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             //封装公会
             packageGuild(user, resultBuilder);
 
+            //封装任务状态
+            packageTask(user,resultBuilder);
 
             loginResult = resultBuilder.build();
         } catch (CustomizeException e) {
@@ -133,8 +137,19 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     }
 
     /**
+     * 封装任务
+     * @param user
+     * @param resultBuilder
+     */
+    private void packageTask(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        PlayTask playTask = user.getPlayTask();
+        resultBuilder.setIsHaveTask(playTask.isHaveTask());
+        resultBuilder.setCurrTaskId(playTask.getCurrTaskId());
+        resultBuilder.setCurrTaskCompleted(playTask.isCurrTaskCompleted());
+    }
+
+    /**
      * 封装公会
-     *
      * @param user          用户对象
      * @param resultBuilder 结果构建者
      */
@@ -285,6 +300,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         user.setBaseDamage(userState.getBaseDamage());
         user.setBaseDefense(userState.getBaseDefense());
         user.setMoney(userState.getMoney());
+        user.setLv(userState.getLv());
+        user.setExperience(userState.getExperience());
 
         if (!userState.getGuildId().equals(GuildMemberType.Public.getRoleId())) {
             GuildMemberEntity memberEntity = guildService.findGuildMemberById(user.getUserId());
@@ -310,6 +327,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         loadWearEqu(user);
         loadLimitNumber(user);
         loadMail(user);
+        loadTask(user);
         // 群发邮件
         //sendMailAll(user);
 
@@ -319,6 +337,25 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         user.resumeMpTime();
 
         return user;
+    }
+
+    /**
+     * 加载当前任务状态
+     * @param user
+     */
+    private void loadTask(User user) {
+        DbTaskEntity taskEntity = taskService.getCurrTaskById(user.getUserId());
+        PlayTask playTask = user.getPlayTask();
+        playTask.setHaveTask(!taskEntity.getCompletedTask().equals(TaskType.NonTask.getTaskCode()));
+        if (playTask.isHaveTask()){
+            playTask.setCurrTaskId(taskEntity.getCurrTask());
+            playTask.setCurrTaskCompleted(taskEntity.getCurrTaskCompleted().equals(TaskType.CurrTaskCompleted.getTaskCode()));
+            playTask.setCompletedTaskId(taskEntity.getCompletedTask());
+            if (taskEntity.getCurrTask().equals(2)){
+                playTask.setKillNumber(taskEntity.getKillNumber());
+            }
+        }
+
     }
 
 

@@ -81,6 +81,11 @@ public enum GameExcelSheetEnum {
      */
     GuildRoleEntity("GuildRoleEntity", entity.conf.guild.GuildRoleEntity.class),
     GuildRoleAuthEntity("GuildRoleAuthEntity", entity.conf.guild.GuildRoleAuthEntity.class),
+
+    /**
+     * 任务
+     */
+    TaskEntity("TaskEntity", entity.conf.task.TaskEntity.class);
     ;
 
 

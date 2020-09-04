@@ -42,6 +42,11 @@ public class QuitGuildCmdHandler implements ICmdHandler<GameMsg.QuitGuildCmd> {
             //未加入公会
             throw new CustomizeException(CustomizeErrorCode.NOT_JOIN_GUILD);
         }
+        if (user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).getGuildPosition().equals(GuildMemberType.President.getRoleId())){
+            //会长，不能退出
+            throw new CustomizeException(CustomizeErrorCode.NOT_QUIT);
+
+        }
 
         PlayGuild playGuild = user.getPlayGuild();
         GuildMemberEntity guildMemberEntity = playGuild.getGuildMemberMap().get(user.getUserId());

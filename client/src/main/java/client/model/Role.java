@@ -8,6 +8,7 @@ import client.model.server.profession.Skill;
 import client.model.server.props.Equipment;
 import client.model.server.props.Potion;
 import client.model.server.props.Props;
+import client.model.task.PlayTaskClient;
 import client.model.team.PlayTeamClient;
 import client.scene.GameData;
 import client.timer.ResumeStateTimer;
@@ -154,6 +155,12 @@ public class Role {
      *  公会系统
      */
     private PlayGuildClient playGuildClient;
+
+
+    /**
+     * 任务
+     */
+    private final PlayTaskClient playTaskClient = new PlayTaskClient();
 
     private static final Role role = new Role();
 

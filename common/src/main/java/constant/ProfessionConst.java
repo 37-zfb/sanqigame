@@ -33,7 +33,10 @@ public interface ProfessionConst {
      */
     int INIT_MONEY = 0;
 
-
+    /**
+     * 升级需要的经验
+     */
+    int NEED_EXPERIENCE = 50000;
 
 
 }

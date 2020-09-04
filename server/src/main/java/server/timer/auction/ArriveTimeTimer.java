@@ -1,22 +1,11 @@
 package server.timer.auction;
 
-import com.alibaba.fastjson.JSON;
 import entity.db.DbAuctionItemEntity;
-import entity.db.DbSendMailEntity;
-import msg.GameMsg;
 import server.GameServer;
 import server.cmdhandler.auction.AuctionUtil;
-import server.model.MailProps;
 import server.model.PlayAuction;
-import server.model.User;
-import server.model.UserManager;
-import server.service.MailService;
-import type.MailType;
 import util.CustomizeThreadFactory;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
