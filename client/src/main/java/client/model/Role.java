@@ -37,6 +37,11 @@ public class Role {
     private Integer id;
 
     /**
+     * 等级
+     */
+    private Integer lv;
+
+    /**
      * 职业id
      */
     private Integer professionId;
@@ -153,6 +158,8 @@ public class Role {
 
     private boolean isTransferPresident = false;
 
+    private boolean addFriend = false;
+
     /**
      *  公会系统
      */
@@ -163,6 +170,11 @@ public class Role {
      * 任务
      */
     private final PlayTaskClient playTaskClient = new PlayTaskClient();
+
+    /**
+     * 朋友
+     */
+    private final PlayFriendClient playFriendClient = new PlayFriendClient();
 
     private static final Role role = new Role();
 

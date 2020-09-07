@@ -144,8 +144,10 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     private void packageTask(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
         PlayTask playTask = user.getPlayTask();
         resultBuilder.setIsHaveTask(playTask.isHaveTask());
-        resultBuilder.setCurrTaskId(playTask.getCurrTaskId());
-        resultBuilder.setCurrTaskCompleted(playTask.isCurrTaskCompleted());
+        if (playTask.isHaveTask()){
+            resultBuilder.setCurrTaskId(playTask.getCurrTaskId());
+            resultBuilder.setCurrTaskCompleted(playTask.isCurrTaskCompleted());
+        }
     }
 
     /**
@@ -352,7 +354,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             playTask.setCurrTaskCompleted(taskEntity.getCurrTaskCompleted().equals(TaskType.CurrTaskCompleted.getTaskCode()));
             playTask.setCompletedTaskId(taskEntity.getCompletedTask());
             if (taskEntity.getCurrTask().equals(2)){
-                playTask.setKillNumber(taskEntity.getKillNumber());
+                playTask.setKillNumber(taskEntity.getTaskProcess());
             }
         }
 

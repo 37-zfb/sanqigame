@@ -223,6 +223,11 @@ public class User {
     private final PlayTask playTask = new PlayTask();
 
     /**
+     * 朋友
+     */
+    private final PlayFriend playFriend = new PlayFriend();
+
+    /**
      * 设置恢复mp终止时间
      */
     public void resumeMpTime() {

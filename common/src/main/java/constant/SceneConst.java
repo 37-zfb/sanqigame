@@ -10,4 +10,6 @@ public interface SceneConst {
 
     int SCENE_MONSTER_EXPERIENCE = 10000;
 
+    int SCENE_MONSTER_MONEY = 20000;
+
 }

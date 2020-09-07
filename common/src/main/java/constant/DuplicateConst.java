@@ -45,4 +45,5 @@ public interface DuplicateConst {
      * 副本通关后，奖励的经验
      */
     int DUPLICATE_EXPERIENCE = 20000;
+
 }

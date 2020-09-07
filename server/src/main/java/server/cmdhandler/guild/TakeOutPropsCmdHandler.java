@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.PlayGuild;
 import server.model.User;
 import server.model.props.AbstractPropsProperty;
@@ -29,6 +30,10 @@ import util.MyUtil;
 public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsCmd> {
     @Autowired
     private DbGuildTimer guildTimer;
+
+    @Autowired
+    private TaskPublicMethod taskPublicMethod;
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.TakeOutPropsCmd takeOutPropsCmd) {
 
@@ -96,7 +101,6 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
 
         log.info("用户 {} 从仓库中取出 {}", user.getUserName(),p.getName());
 
-
-
+        taskPublicMethod.listener(user);
     }
 }

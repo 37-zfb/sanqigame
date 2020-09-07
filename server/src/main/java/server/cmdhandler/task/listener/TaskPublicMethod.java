@@ -29,7 +29,6 @@ public class TaskPublicMethod {
     @Autowired
     private TaskService taskService;
 
-
     /**
      * 领取任务
      *
@@ -53,9 +52,14 @@ public class TaskPublicMethod {
             DbTaskEntity taskEntity = getTaskEntity(user);
             taskService.modifyTaskState(taskEntity);
 
+            GameMsg.ReceiveTaskResult receiveTaskResult = GameMsg.ReceiveTaskResult.newBuilder()
+                    .setTaskId(TaskType.NonTask.getTaskCode())
+                    .build();
+            ctx.writeAndFlush(receiveTaskResult);
+
             return;
         }
-
+        task.setNum(0);
         playTask.setCurrTaskId(taskId);
         log.info("用户 {} 领取 {} 任务", user.getUserName(), task.getTaskName());
 
@@ -64,12 +68,21 @@ public class TaskPublicMethod {
                 .build();
         ctx.writeAndFlush(receiveTaskResult);
 
-        //加入公会任务
-        if (taskId.equals(3)){
-            TaskListener.getTaskListener().addGuild3(user);
+
+        int[] code = {3, 5, 6, 7, 8, 9, 12};
+        for (int typeCode : code) {
+            if (task.getTypeCode() == typeCode) {
+                Method method = TaskListener.getTaskListener().listenerMethod.get(typeCode);
+                try {
+                    method.invoke(TaskListener.getTaskListener(), user);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-//        if ()
 
     }
 
@@ -80,6 +93,7 @@ public class TaskPublicMethod {
      * @param user
      */
     public void addExperience(Integer experience, User user) {
+
         if ((user.getExperience() + experience) < ProfessionConst.NEED_EXPERIENCE) {
             //长经验
             log.info("用户 {} 获得 {} 经验;", user.getUserName(), experience);
@@ -94,6 +108,12 @@ public class TaskPublicMethod {
                 .setLv(user.getLv())
                 .build();
         user.getCtx().writeAndFlush(userUpLvResult);
+
+        Task task = GameData.getInstance().getTaskMap().get(user.getPlayTask().getCurrTaskId());
+        if (task.getTypeCode().equals(TaskType.LvType.getTaskCode())) {
+            //此时任务: 提升等级
+            listener(user);
+        }
     }
 
     /**
@@ -105,12 +125,14 @@ public class TaskPublicMethod {
     public DbTaskEntity getTaskEntity(User user) {
         DbTaskEntity dbTaskEntity = new DbTaskEntity();
         dbTaskEntity.setUserId(user.getUserId());
-        dbTaskEntity.setCompletedTask(user.getPlayTask().isHaveTask() ?user.getPlayTask().getCompletedTaskId(): TaskType.NonTask.getTaskCode());
+        dbTaskEntity.setCompletedTask(user.getPlayTask().isHaveTask() ? user.getPlayTask().getCompletedTaskId() : TaskType.NonTask.getTaskCode());
         dbTaskEntity.setCurrTaskCompleted(user.getPlayTask().isCurrTaskCompleted() ? TaskType.CurrTaskCompleted.getTaskCode() : TaskType.CurrTaskUnCompleted.getTaskCode());
         dbTaskEntity.setCurrTask(user.getPlayTask().getCurrTaskId());
 
-        if (user.getPlayTask().getCurrTaskId().equals(2)){
-            dbTaskEntity.setKillNumber(user.getPlayTask().getKillNumber());
+        Task task = GameData.getInstance().getTaskMap().get(user.getPlayTask().getCurrTaskId());
+
+        if (task.getTypeCode().equals(2)) {
+            dbTaskEntity.setTaskProcess(user.getPlayTask().getKillNumber());
         }
 
 
@@ -118,21 +140,22 @@ public class TaskPublicMethod {
     }
 
 
-    public void listener(User user){
+    public void listener(User user) {
 
         PlayTask playTask = user.getPlayTask();
-        if (!playTask.isHaveTask()){
+        if (!playTask.isHaveTask()) {
             //没有任务
             return;
         }
 
         Integer currTaskId = playTask.getCurrTaskId();
-        Method method = TaskListener.getTaskListener().listenerMethod.get(currTaskId);
+        Task task = GameData.getInstance().getTaskMap().get(currTaskId);
+        Method method = TaskListener.getTaskListener().listenerMethod.get(task.getTypeCode());
 
         try {
-
-            method.invoke(TaskListener.getTaskListener(), user);
-
+            if (method != null) {
+                method.invoke(TaskListener.getTaskListener(), user);
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {

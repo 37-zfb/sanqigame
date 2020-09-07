@@ -3,9 +3,11 @@ package server.cmdhandler.team;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.User;
 import server.model.UserManager;
 import util.MyUtil;
@@ -17,6 +19,10 @@ import util.MyUtil;
 @Component
 @Slf4j
 public class UserJoinTeamCmdHandler implements ICmdHandler<GameMsg.UserJoinTeamCmd> {
+
+    @Autowired
+    private TaskPublicMethod taskPublicMethod;
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserJoinTeamCmd userJoinTeamCmd) {
         MyUtil.checkIsNull(ctx, userJoinTeamCmd);
@@ -37,6 +43,9 @@ public class UserJoinTeamCmdHandler implements ICmdHandler<GameMsg.UserJoinTeamC
             originateUser.getCtx().writeAndFlush(userJoinTeamResult);
             log.info("{} 拒绝了 {} 的组队邀请;", user.getUserName(), originateUser.getUserName());
         } else {
+
+            taskPublicMethod.listener(user);
+
             // 此时加入队伍，
             GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder.setIsJoin(true).setTargetId(user.getUserId()).build();
             originateUser.getCtx().writeAndFlush(userJoinTeamResult);

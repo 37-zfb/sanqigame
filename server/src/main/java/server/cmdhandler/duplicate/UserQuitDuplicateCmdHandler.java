@@ -54,6 +54,8 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
         }
         user.setCurrHp(ProfessionConst.HP);
         user.setCurrMp(ProfessionConst.MP);
+
+
         // 用户退出
         GameMsg.UserQuitDuplicateResult userQuitDuplicateResult = newBuilder.build();
 

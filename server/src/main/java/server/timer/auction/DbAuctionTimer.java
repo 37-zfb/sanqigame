@@ -182,7 +182,14 @@ public final class DbAuctionTimer {
             List<DbBidderEntity> bidderEntityList = auctionService.listBidder(auctionItemEntity.getId());
             if (currDate.getTime() >= auctionItemDate.getTime()) {
                 //此时竞价结束
-                AuctionUtil.auctionResult(auctionItemEntity,bidderEntityList.get(0));
+                if (bidderEntityList.size() != 0){
+                    //有竞拍者
+                    AuctionUtil.auctionResult(auctionItemEntity,bidderEntityList.get(0));
+                }else {
+                    //没有竞拍者
+                    AuctionUtil.sendMailBuyer(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"未卖掉的竞拍品;");
+                }
+                auctionService.deleteAuctionItem(auctionItemEntity);
             } else {
                 //此时竞价没有结束
                 if (bidderEntityList != null && bidderEntityList.size() != 0) {

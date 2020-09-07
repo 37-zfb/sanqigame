@@ -3,11 +3,14 @@ package server.cmdhandler.arena;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.User;
 import server.model.UserManager;
+import server.model.task.Task;
 import util.MyUtil;
 
 /**
@@ -16,6 +19,10 @@ import util.MyUtil;
 @Component
 @Slf4j
 public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> {
+
+    @Autowired
+    private TaskPublicMethod taskPublicMethod;
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserAttackCmd userAttackCmd) {
         MyUtil.checkIsNull(ctx, userAttackCmd);
@@ -38,14 +45,6 @@ public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> 
         }
         log.info("用户:{}, 对用户:{} 的伤害 {}", user.getUserName(), targetUser.getUserName(), subHp);
 
-
-//        GameMsg.UserAttackResult userAttackResult = GameMsg.UserAttackResult.newBuilder()
-//                .setAttackUserId(user.getUserId())
-//                .setTargetUserId(targetUserId)
-//                .build();
-//        ctx.writeAndFlush(userAttackResult);
-//        targetUser.getCtx().writeAndFlush(userAttackResult);
-
         GameMsg.UserSubtractHpResult userSubtractHpResult = GameMsg.UserSubtractHpResult.newBuilder()
                 .setTargetUserId(targetUserId)
                 .setSubtractHp(subHp)
@@ -57,6 +56,9 @@ public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> 
             // 此时用户死了
             targetUser.getPlayArena().setTargetUserId(null);
             user.getPlayArena().setTargetUserId(null);
+
+            taskPublicMethod.listener(user);
+
             GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
                     .setTargetUserId(targetUserId)
                     .build();

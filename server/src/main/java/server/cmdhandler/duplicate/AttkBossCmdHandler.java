@@ -100,8 +100,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
 
                     // 增加经验
                     taskPublicMethod.addExperience(DuplicateConst.DUPLICATE_EXPERIENCE, user);
-                    //任务监听
-                    taskPublicMethod.listener(user);
+
                     //组队进入，通知队员
 
                     // 此时副本已通关，计算奖励，退出副本
@@ -149,6 +148,8 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
 
                     GameMsg.DuplicateFinishResult duplicateFinishResult = newBuilder.setUserId(user.getUserId()).build();
                     PublicMethod.getInstance().sendMsg(ctx, duplicateFinishResult);
+                    //任务监听
+                    taskPublicMethod.listener(user);
                 }
                 return;
             } else {

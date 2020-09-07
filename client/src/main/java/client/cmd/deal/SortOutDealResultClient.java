@@ -28,6 +28,7 @@ public class SortOutDealResultClient implements ICmd<GameMsg.SortOutDealResult> 
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
         List<GameMsg.Props> propsList = sortOutDealResult.getPropsList();
         Map<Integer, Props> backpackClient = role.getBackpackClient();
+        backpackClient.clear();
         for (GameMsg.Props props : propsList) {
             Props pro = propsMap.get(props.getPropsId());
             if (pro.getPropsProperty().getType() == PropsType.Equipment){

@@ -78,6 +78,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     ADD_ITEM_ERROR(-436,"添加拍卖品失败;"),
     ITEM_NOT_FOUNT(-437,"拍卖品不存在;"),
     ALREADY_JOIN_BIDDING(-440,"已经参与竞拍;"),
+    FRIEND_REACH_LIMIT(-441,"好友已达上限;"),
     ;
 
     private String message;

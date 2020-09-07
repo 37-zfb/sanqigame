@@ -19,6 +19,11 @@ public class TaskEntity {
     private Integer id;
 
     /**
+     * 任务类型
+     */
+    private Integer type;
+
+    /**
      * 任务名称
      */
     private String taskName;

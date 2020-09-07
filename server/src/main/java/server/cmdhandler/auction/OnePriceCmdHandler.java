@@ -73,7 +73,7 @@ public class OnePriceCmdHandler implements ICmdHandler<GameMsg.OnePriceCmd> {
         GameMsg.OnePriceResult onePriceResult = GameMsg.OnePriceResult.newBuilder()
                 .setPrice(auctionItemEntity.getPrice())
                 .build();
-        ctx.writeAndFlush(onePriceCmd);
+        ctx.writeAndFlush(onePriceResult);
     }
 
 }

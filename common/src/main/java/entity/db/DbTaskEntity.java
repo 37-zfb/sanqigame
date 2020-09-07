@@ -37,5 +37,5 @@ public class DbTaskEntity {
     /**
      * 击杀个数
      */
-    private Integer killNumber = -1;
+    private Integer taskProcess = -1;
 }

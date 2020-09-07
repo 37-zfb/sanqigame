@@ -3,6 +3,7 @@ package server.cmdhandler.equipment;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private TaskPublicMethod taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserWearEquipmentCmd userWearEquipmentCmd) {
@@ -85,6 +88,8 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
             }
         }
         userService.modifyWearEquipment(equipment.getId(), 1,-1);
+
+        taskPublicMethod.listener(user);
 
         GameMsg.UserWearEquipmentResult.Builder builder = GameMsg.UserWearEquipmentResult.newBuilder();
         GameMsg.UserWearEquipmentResult equipmentResult = builder.setPropsId(wearEqu.getPropsId())

@@ -29,6 +29,9 @@
             delete from `auction` where id = #{item.id};
         </foreach>
     </delete>
+    <delete id="deleteAuction" parameterType="entity.db.DbAuctionItemEntity">
+            delete from `auction` where id = #{id};
+    </delete>
 
     <update id="updateAuctionItemBatch" parameterType="collection">
         <foreach collection="auctionItemCollection" item="item" index="index" open="" close="" separator="">

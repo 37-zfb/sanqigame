@@ -105,4 +105,8 @@ public class AuctionService {
     public List<DbBidderEntity> listBidder(Integer auctionId) {
         return bidderDAO.selectBidderByAuctionId(auctionId);
     }
+
+    public void deleteAuctionItem(DbAuctionItemEntity auctionItemEntity) {
+        auctionItemDAO.deleteAuction(auctionItemEntity);
+    }
 }

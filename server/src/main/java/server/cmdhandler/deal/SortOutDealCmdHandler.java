@@ -3,9 +3,11 @@ package server.cmdhandler.deal;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.DealProps;
 import server.model.PlayDeal;
 import server.model.User;
@@ -26,6 +28,10 @@ import java.util.Map;
 @Component
 @Slf4j
 public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd> {
+
+    @Autowired
+    private TaskPublicMethod taskPublicMethod;
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.SortOutDealCmd sortOutDealCmd) {
 
@@ -35,7 +41,7 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
         Map<Integer, Props> backpack = user.getBackpack();
         PlayDeal play_deal = user.getPLAY_DEAL();
         play_deal.setAgreeNumber(0);
-
+        play_deal.getTargetUserId().set(0);
 
         Integer prepareMoney = play_deal.getPrepareMoney();
         user.setMoney(user.getMoney()-prepareMoney);
@@ -103,6 +109,9 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
             newBuilder.addProps(propsResult);
         }
         newBuilder.setMoney(user.getMoney());
+
+        taskPublicMethod.listener(user);
+
         GameMsg.SortOutDealResult sortOutDealResult = newBuilder.build();
         ctx.writeAndFlush(sortOutDealResult);
     }

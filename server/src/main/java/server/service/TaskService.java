@@ -41,20 +41,16 @@ public class TaskService {
         if (dbTaskEntity != null) {
             EX.submit(() -> {
                 try {
-
                     taskDAO.update(dbTaskEntity);
-
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                 }
-
             });
         }
     }
 
     /**
      * 通过userId获取当前任务
-     *
      * @param userId
      */
     public DbTaskEntity getCurrTaskById(Integer userId) {
@@ -62,7 +58,6 @@ public class TaskService {
         if (userId != null) {
             dbTaskEntity = taskDAO.selectByUserId(userId);
         }
-
         return dbTaskEntity;
     }
 

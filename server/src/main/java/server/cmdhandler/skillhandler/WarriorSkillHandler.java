@@ -92,12 +92,6 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
                         // 怪死，减蓝、技能设为cd; 重新定义恢复终止时间
                         user.subMp(skill.getConsumeMp());
                         log.info("{} 已被其他玩家击杀!", monster.getName());
-                        GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
-                                .setMonsterId(monster.getId())
-                                .setIsDieBefore(true)
-                                .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
-                                .build();
-                        user.getCtx().channel().writeAndFlush(dieResult);
                     } else {
                         ForceAttackUser forceAttackUser = PublicMethod.getInstance().createForeAttackUser(user.getUserId(), skillProperty.getEffectTime());
                         AtomicReference<ForceAttackUser> attackUserAtomicReference = monster.getAttackUserAtomicReference();
@@ -117,13 +111,6 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
                 // 减蓝
                 user.subMp(skill.getConsumeMp());
             }
-        } else {
-            //当前场景中的怪全死了
-            GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
-            GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder
-                    .setFalseReason("no")
-                    .build();
-            user.getCtx().writeAndFlush(userSkillAttkResult);
         }
     }
 

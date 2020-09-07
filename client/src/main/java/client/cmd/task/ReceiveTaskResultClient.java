@@ -8,6 +8,7 @@ import client.scene.GameData;
 import client.thread.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
+import type.TaskType;
 import util.MyUtil;
 
 /**
@@ -21,10 +22,17 @@ public class ReceiveTaskResultClient implements ICmd<GameMsg.ReceiveTaskResult> 
         Role role = Role.getInstance();
 
         int taskId = receiveTaskResult.getTaskId();
-        PlayTaskClient playTaskClient = role.getPlayTaskClient();
-        playTaskClient.setCurrTaskId(taskId);
 
-        System.out.println("领取任务: "+ GameData.getInstance().getTaskMap().get(taskId).getTaskName());
+        PlayTaskClient playTaskClient = role.getPlayTaskClient();
+        if (taskId == TaskType.NonTask.getTaskCode()){
+            playTaskClient.setCurrTaskId(taskId);
+            System.out.println("任务全部完成;");
+        }else {
+            playTaskClient.setCurrTaskId(taskId);
+            System.out.println("领取任务: "+ GameData.getInstance().getTaskMap().get(taskId).getTaskName());
+        }
+
+
 //        CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
     }
 }

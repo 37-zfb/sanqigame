@@ -52,35 +52,35 @@ public class ReceiveTaskAwardCmdHandler implements ICmdHandler<GameMsg.ReceiveTa
         Integer rewardMoney = task.getRewardMoney();
         List<MailProps> rewardProps = task.getRewardProps();
         Integer experience = task.getExperience();
-        //领取新任务
-        taskPublicMethod.receiveTask(ctx, taskId + 1);
 
-        //添加经验
-        taskPublicMethod.addExperience(experience, user);
 
         // 添加奖励
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
         user.setMoney(user.getMoney() + rewardMoney);
 
         log.info("用户 {} 完成 {} 任务，获得 {} 经验，", user.getUserName(), task.getTaskName(), experience);
-        if (rewardProps.get(0) != null) {
-            log.info("用户 {} 获得 {} 金币，获得 {} 号道具", user.getUserName(),rewardMoney,rewardProps.get(0).getPropsId());
+        if (rewardProps.size() != 0) {
+            log.info("用户 {} 获得 {} 金币，获得 {} 号道具", user.getUserName(), rewardMoney, rewardProps.get(0).getPropsId());
         }
-
 
         GameMsg.ReceiveTaskAwardResult.Builder newBuilder = GameMsg.ReceiveTaskAwardResult.newBuilder();
         for (MailProps rewardProp : rewardProps) {
             Props props = propsMap.get(rewardProp.getPropsId());
-//            int location = PublicMethod.getInstance().addEquipment(user, props);
+            int location = PublicMethod.getInstance().addEquipment(user, props);
 
             GameMsg.Props.Builder reward = GameMsg.Props.newBuilder()
                     .setPropsId(props.getId())
-//                    .setLocation(location)
+                    .setLocation(location)
                     .setPropsNumber(rewardProp.getNumber());
-//            newBuilder.addProps(reward);
+            newBuilder.addProps(reward);
         }
         newBuilder.setMoney(rewardMoney);
         GameMsg.ReceiveTaskAwardResult receiveTaskAwardResult = newBuilder.build();
         ctx.writeAndFlush(receiveTaskAwardResult);
+
+        //添加经验
+        taskPublicMethod.addExperience(experience, user);
+        //领取新任务
+        taskPublicMethod.receiveTask(ctx, taskId + 1);
     }
 }

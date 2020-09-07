@@ -4,9 +4,11 @@ import constant.TeamConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
@@ -14,15 +16,18 @@ import util.MyUtil;
 
 /**
  * @author 张丰博
- *  同意队伍请求的被邀请方，加入队伍
+ * 同意队伍请求的被邀请方，加入队伍
  */
 @Component
 @Slf4j
 public class UserJoinTeamPerformHandler implements ICmdHandler<GameMsg.UserJoinTeamPerformCmd> {
+    @Autowired
+    private TaskPublicMethod taskPublicMethod;
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserJoinTeamPerformCmd userJoinTeamPerform) {
 
-        MyUtil.checkIsNull(ctx,userJoinTeamPerform);
+        MyUtil.checkIsNull(ctx, userJoinTeamPerform);
         User originateUser = PublicMethod.getInstance().getUser(ctx);
 
         int targetId = userJoinTeamPerform.getTargetId();
@@ -39,14 +44,14 @@ public class UserJoinTeamPerformHandler implements ICmdHandler<GameMsg.UserJoinT
         // 此时两者都不是组队状态
         if (originateUserPlayTeam == null && userPlayTeam == null) {
             // 下面的逻辑，两者都不是组队状态，使用目标用户的锁，
-            bothNoTeam(user,originateUser);
+            bothNoTeam(user, originateUser);
 
         } else if (originateUserPlayTeam != null && userPlayTeam != null) {
             // 两者都有队伍，此时不能组队
             enterTeamFail(ctx);
         } else if (originateUserPlayTeam != null) {
             // 发起者有队伍，应答者没有队伍
-            originateHaveTeam(user,originateUser);
+            originateHaveTeam(user, originateUser);
 
         } else {
             // 发起者没有队伍，应答者有队伍
@@ -64,6 +69,7 @@ public class UserJoinTeamPerformHandler implements ICmdHandler<GameMsg.UserJoinT
 
     /**
      * 两者都没有队伍
+     *
      * @param user
      * @param originateUser
      */
@@ -110,6 +116,9 @@ public class UserJoinTeamPerformHandler implements ICmdHandler<GameMsg.UserJoinT
                         .build();
                 user.getCtx().writeAndFlush(userJoinTeamResult1);
                 log.info("用户 {} 加入 {} 的队伍;", user.getUserName(), originateUser.getUserName());
+
+                taskPublicMethod.listener(user);
+                taskPublicMethod.listener(originateUser);
             } else if (originateUser.getPlayTeam() != null && user.getPlayTeam() == null) {
 
             } else {
@@ -171,6 +180,9 @@ public class UserJoinTeamPerformHandler implements ICmdHandler<GameMsg.UserJoinT
                 }
                 originateUser.getPlayTeam().setTeamNumber(originateUser.getPlayTeam().getTeamNumber() + 1);
                 log.info("用户 {} 加入 {} 的队伍;", user.getUserName(), originateUser.getUserName());
+
+                taskPublicMethod.listener(user);
+
                 GameMsg.UserJoinTeamPerformResult userJoinTeamResult = newBuilder.setIsJoin(true).build();
                 user.getCtx().writeAndFlush(userJoinTeamResult);
             } else {

@@ -225,6 +225,7 @@ enum MsgCode {
   CANCEL_AUCTION_ITEM_CMD = 147;
   CANCEL_AUCTION_ITEM_RESULT = 148;
 
+
   LOOK_ALL_TASK_CMD = 149;
   LOOK_ALL_TASK_RESULT = 150;
   RECEIVE_TASK_CMD = 151;
@@ -234,6 +235,11 @@ enum MsgCode {
   RECEIVE_TASK_AWARD_CMD = 155;
   RECEIVE_TASK_AWARD_RESULT = 156;
 
+
+  ADD_FRIEND_CMD = 158;
+  ADD_FRIEND_RESULT = 159;
+  DELETE_FRIEND_CMD = 160;
+  DELETE_FRIEND_RESULT = 161;
 
 
   USER_UP_LV_RESULT = 157;
@@ -1225,4 +1231,21 @@ message ReceiveTaskAwardResult{
 //升级
 message UserUpLvResult{
   uint32 lv = 1;
+}
+//添加好友
+message  AddFriendCmd{
+  uint32 userId = 1;
+  string userName = 2;
+}
+message  AddFriendResult{
+  uint32 userId = 1;
+  string userName = 2;
+}
+
+//删除好友
+message DeleteFriendCmd{
+  uint32 userId = 1;
+}
+message DeleteFriendResult{
+  uint32 userId = 1;
 }

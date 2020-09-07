@@ -50,6 +50,6 @@ public class ReceiveTaskAwardResultClient implements ICmd<GameMsg.ReceiveTaskAwa
             }
         }
 
-        CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+//        CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
     }
 }

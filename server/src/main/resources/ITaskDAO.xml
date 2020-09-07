@@ -7,13 +7,13 @@
         <result property="currTask" column="curr_task"/>
         <result property="currTaskCompleted" column="curr_task_completed"/>
         <result property="completedTask" column="completed_task"/>
-        <result property="killNumber" column="kill_number"/>
+        <result property="taskProcess" column="task_process"/>
     </resultMap>
 
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="entity.db.DbTaskEntity">
-            insert into `task` (`id`,`user_id`,`curr_task`,`curr_task_completed`,`completed_task`,`kill_number`)
-            values (#{id},#{userId},#{currTask},#{currTaskCompleted},#{completedTask},#{killNumber});
+            insert into `task` (`id`,`user_id`,`curr_task`,`curr_task_completed`,`completed_task`,`task_process`)
+            values (#{id},#{userId},#{currTask},#{currTaskCompleted},#{completedTask},#{taskProcess});
     </insert>
 
     <select id="select" resultMap="taskEntity" resultType="list">
@@ -33,7 +33,7 @@
                     curr_task = #{currTask},
                     curr_task_completed = #{currTaskCompleted},
                     completed_task = #{completedTask},
-                    kill_number = #{killNumber}
+                    task_process = #{taskProcess}
             where user_id = #{userId};
     </update>
 

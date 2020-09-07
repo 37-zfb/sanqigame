@@ -13,14 +13,58 @@ public enum  TaskType {
      * 击杀类型
      */
     killType(2,"kill"),
+
+    /**
+     * 加入XXX
+     */
+    JoinType(3,"join"),
+
     /**
      * 通关
      */
-    DuplicateType(3,"duplicate"),
+    DuplicateType(4,"duplicate"),
+
     /**
      * 第一次XXX任务
      */
-    FirstTime(4,"first"),
+    LvType(5,"first"),
+
+    /**
+     * 获得装备
+     */
+    GetEquipmentType(6,"getEquipment"),
+
+    /**
+     * 穿戴装备
+     */
+    WearEquipmentType(7,"wearEquipment"),
+
+    /**
+     * 添加好友
+     */
+    AddFriendType(8,"addFriend"),
+
+    /**
+     * 组队
+     */
+    AddTeamType(9,"addTeam"),
+
+    /**
+     * 与玩家交易
+     */
+    DealType(10,"deal"),
+
+    /**
+     * pk中获胜
+     */
+    PKWin(11,"pk"),
+
+
+    /**
+     * 金币达到
+     */
+    MoneyType(12,"money"),
+
     /**
      * 此时表示任务已做完
      */

@@ -10,8 +10,11 @@ import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import server.cmdhandler.task.listener.TaskListener;
+import msg.GameMsg;
 import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.model.PlayTeam;
+import server.model.User;
+import server.model.UserManager;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.duplicate.ForceAttackUser;
@@ -21,12 +24,7 @@ import server.model.props.Equipment;
 import server.model.props.Potion;
 import server.model.props.Props;
 import server.model.scene.Monster;
-import msg.GameMsg;
 import server.scene.GameData;
-import server.model.PlayTeam;
-import server.model.User;
-import server.model.UserManager;
-import server.service.UserService;
 import server.timer.BossAttackTimer;
 import server.timer.MonsterAttakTimer;
 import server.timer.state.DbUserStateTimer;
@@ -128,15 +126,11 @@ public final class PublicMethod {
 
                 } else {
 
-
-                    taskPublicMethod.listener(user);
-                    taskPublicMethod.addExperience(DuplicateConst.DUPLICATE_EXPERIENCE, user);
-
                     //组队进入，通知队员
-
                     // 此时副本已通关，计算奖励，退出副本
                     System.out.println("计算奖励,存入数据库");
                     List<Integer> propsIdList = currDuplicate.getPropsIdList();
+
                     // 副本得到的奖励进行持久化
                     PublicMethod.getInstance().addProps(propsIdList, user);
                     //背包满了，得到的奖励无法放入背包
@@ -174,6 +168,8 @@ public final class PublicMethod {
                     GameMsg.DuplicateFinishResult duplicateFinishResult = newBuilder.setUserId(user.getUserId()).build();
                     sendMsg(user.getCtx(), duplicateFinishResult);
                 }
+                taskPublicMethod.listener(user);
+                taskPublicMethod.addExperience(DuplicateConst.DUPLICATE_EXPERIENCE, user);
                 return;
             } else {
                 // 剩余血量 大于 应减少的值
@@ -221,39 +217,21 @@ public final class PublicMethod {
     public void userOrSummonerAttackMonster(User user, Monster monster, SummonMonster summonMonster, Integer subHp) {
         GameMsg.AttkResult.Builder attkResultBuilder = GameMsg.AttkResult.newBuilder();
         // 普通攻击
-
-//        int subHp;
-//        if (summonMonster == null) {
-//            subHp = user.calMonsterSubHp();
-//        } else {
-//            subHp = summonMonster.calMonsterSubHp();
-//        }
-
         // 使用当前被攻击的怪对象，做锁对象
         synchronized (monster.getSubHpMonitor()) {
             // 减血  (0~99) + 500
             if (monster.isDie()) {
                 log.info("{} 已被其他玩家击杀!", monster.getName());
                 // 有可能刚被前一用户杀死，
-                GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
-                        .setMonsterId(monster.getId())
-                        .setIsDieBefore(true)
-                        .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
-                        .build();
-                user.getCtx().channel().writeAndFlush(dieResult);
                 return;
             } else if (monster.getHp() <= subHp) {
                 log.info("玩家:{},击杀:{}!", user.getUserName(), monster.getName());
                 monster.setHp(0);
                 monster.getRunnableScheduledFuture().cancel(true);
 
-                //任务监听
-                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
-                taskPublicMethod.listener(user);
-                //增加经验
-                taskPublicMethod.addExperience(SceneConst.SCENE_MONSTER_EXPERIENCE,user);
-
                 // 添加奖励
+                user.setMoney(user.getMoney() + SceneConst.SCENE_MONSTER_MONEY);
+
                 String propsIdString = monster.getPropsId();
                 String[] split = propsIdString.split(",");
                 int propsId = Integer.parseInt(split[(int) Math.random() * split.length]);
@@ -267,6 +245,12 @@ public final class PublicMethod {
                         .build();
 
                 Broadcast.broadcast(user.getCurSceneId(), dieResult);
+
+                //任务监听
+                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+                taskPublicMethod.listener(user);
+                //增加经验
+                taskPublicMethod.addExperience(SceneConst.SCENE_MONSTER_EXPERIENCE, user);
                 return;
             } else {
                 // 减血
@@ -308,10 +292,6 @@ public final class PublicMethod {
         // 怪减血，广播通知当前场景所有用户
         GameMsg.AttkResult attkResult = attkResultBuilder.build();
         Broadcast.broadcast(user.getCurSceneId(), attkResult);
-    }
-
-    public void subMonsterHp() {
-
     }
 
 
@@ -420,6 +400,8 @@ public final class PublicMethod {
         equ.setId(userEquipmentEntity.getId());
 
         userStateTimer.addUserEquipment(userEquipmentEntity);
+
+
 
         return location;
     }

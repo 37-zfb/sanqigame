@@ -11,6 +11,7 @@ import server.model.User;
 import server.model.UserManager;
 import server.timer.auction.DbAuctionTimer;
 import server.timer.mail.DbSendMailTimer;
+import server.util.IdWorker;
 import type.MailType;
 
 import java.util.*;
@@ -36,6 +37,7 @@ public final class AuctionUtil {
     public static void sendMailSeller(Integer userId,Integer money,String title){
         //发送邮件
         DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
+        dbSendMailEntity.setId(IdWorker.generateId());
         dbSendMailEntity.setTargetUserId(userId);
         dbSendMailEntity.setSrcUserId(0);
         dbSendMailEntity.setMoney(money);
@@ -66,6 +68,7 @@ public final class AuctionUtil {
     public static void sendMailBuyer(Integer userId, Integer propsId, Integer number,String title){
         //发送邮件
         DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
+        dbSendMailEntity.setId(IdWorker.generateId());
         dbSendMailEntity.setTargetUserId(userId);
         dbSendMailEntity.setSrcUserId(0);
         dbSendMailEntity.setMoney(0);

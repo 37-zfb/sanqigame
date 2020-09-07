@@ -35,4 +35,10 @@ public interface IAuctionItemDAO {
      * @return
      */
     List<DbAuctionItemEntity> selectAuctionItem();
+
+    /**
+     * 删除拍卖品
+     * @param auctionItemEntity
+     */
+    void deleteAuction(DbAuctionItemEntity auctionItemEntity);
 }

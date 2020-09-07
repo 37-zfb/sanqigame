@@ -8,6 +8,7 @@ import server.model.User;
 import server.model.props.Props;
 import server.model.task.Task;
 import server.scene.GameData;
+import type.DuplicateType;
 import type.PropsType;
 
 import java.lang.reflect.Method;
@@ -23,8 +24,11 @@ public class TaskListener {
 
     private static final TaskListener TASK_LISTENER = new TaskListener();
 
-
+    /**
+     * typeCode  方法
+     */
     public final Map<Integer, Method> listenerMethod = new HashMap<>();
+
 
     private TaskListener() {
     }
@@ -33,9 +37,15 @@ public class TaskListener {
         Method[] declaredMethods = TaskListener.class.getDeclaredMethods();
         for (Task task : GameData.getInstance().getTaskMap().values()) {
             for (Method declaredMethod : declaredMethods) {
-                if (declaredMethod.getName().contains(String.valueOf(task.getId()))) {
-                    listenerMethod.put(task.getId(), declaredMethod);
-                }
+               try {
+                   if (task.getTypeCode() != 1 && task.getTypeCode().equals(Integer.valueOf(declaredMethod.getName().substring(declaredMethod.getName().length() - 2)))) {
+
+                       listenerMethod.put(task.getTypeCode(), declaredMethod);
+                       break;
+                   }
+               }catch (Exception e){
+               }
+
             }
         }
     }
@@ -46,11 +56,11 @@ public class TaskListener {
     }
 
     /**
-     * 任务2: 击杀森林怪
+     * 任务类型1: 对话
      *
      * @param user
      */
-    public void killForestMonster1(User user) {
+    public void dialogue01(User user) {
         Integer currTaskId = user.getPlayTask().getCurrTaskId();
         Task task = GameData.getInstance().getTaskMap().get(currTaskId);
         if (!(user.getCurSceneId().equals(task.getSceneId()) && currTaskId.equals(user.getPlayTask().getCurrTaskId()))) {
@@ -69,11 +79,11 @@ public class TaskListener {
     }
 
     /**
-     * 任务2: 击杀森林怪
+     * 任务类型2: 击杀xxx怪
      *
      * @param user
      */
-    public void killForestMonster2(User user) {
+    public void killForestMonster02(User user) {
         Integer currTaskId = user.getPlayTask().getCurrTaskId();
 
         Task task = GameData.getInstance().getTaskMap().get(currTaskId);
@@ -97,11 +107,11 @@ public class TaskListener {
     }
 
     /**
-     * 任务3: 加入公会
+     * 任务类型3: 加入公会
      *
      * @param user
      */
-    public void addGuild3(User user) {
+    public void addGuild03(User user) {
 
         if (user.getPlayGuild() != null) {
             //完成任务
@@ -117,11 +127,15 @@ public class TaskListener {
     }
 
     /**
-     * 任务4: 通关领主之塔
+     * 任务类型4: 通关领主之塔
      *
      * @param user
      */
-    public void throughLordTower4(User user) {
+    public void throughLordTower04(User user) {
+        if (user.getCurrDuplicate() == null || !user.getCurrDuplicate().getName().equals(DuplicateType.LordTower.getName())) {
+            return;
+        }
+
         PlayTask playTask = user.getPlayTask();
         playTask.setCurrTaskCompleted(true);
         Task task = GameData.getInstance().getTaskMap().get(playTask.getCurrTaskId());
@@ -132,29 +146,38 @@ public class TaskListener {
     }
 
     /**
-     * 任务5: 等级达到5级
+     * 任务类型5: 等级达到5级
      *
      * @param user
      */
-    public void reachLv5(User user) {
+    public void reachLv05(User user) {
+
         int targetLv = 5;
         if (user.getLv() >= targetLv) {
             PlayTask playTask = user.getPlayTask();
             playTask.setCurrTaskCompleted(true);
             Task task = GameData.getInstance().getTaskMap().get(playTask.getCurrTaskId());
 
+            if (task.getNum() >= 1){
+                return;
+            }
+            task.setNum(task.getNum()+1);
+
             log.info("用户 {} 完成 {} 任务", user.getUserName(), task.getTaskName());
             GameMsg.TaskCompletedResult taskCompletedResult = GameMsg.TaskCompletedResult.newBuilder().build();
             user.getCtx().writeAndFlush(taskCompletedResult);
+
+
+
         }
     }
 
     /**
-     * 任务6:获得8件极品装备
+     * 任务类型6:获得8件极品装备
      *
      * @param user
      */
-    public void getEqu6(User user) {
+    public void getEqu06(User user) {
 
         int targetEquSize = 8;
 
@@ -180,13 +203,13 @@ public class TaskListener {
     }
 
     /**
-     * 任务7:穿戴的9件装备
+     * 任务类型7:穿戴的6件装备
      *
      * @param user
      */
-    public void wearEquReachNine7(User user) {
+    public void wearEquReachNine07(User user) {
 
-        int targetNumber = 9;
+        int targetNumber = 6;
         int currSize = 0;
         for (UserEquipmentEntity userEquipmentEntity : user.getUserEquipmentArr()) {
             if (userEquipmentEntity != null) {
@@ -208,12 +231,15 @@ public class TaskListener {
     }
 
     /**
-     * 任务8:添加好友
+     * 任务类型8:添加好友
      *
      * @param user
      */
-    public void addFriend8(User user) {
+    public void addFriend08(User user) {
 
+        if (user.getPlayFriend().getFRIEND_MAP().size() == 0) {
+            return;
+        }
 
         PlayTask playTask = user.getPlayTask();
         playTask.setCurrTaskCompleted(true);
@@ -225,11 +251,11 @@ public class TaskListener {
     }
 
     /**
-     * 任务9:组队
+     * 任务类型9:组队
      *
      * @param user
      */
-    public void team9(User user) {
+    public void team09(User user) {
 
         if (user.getPlayTeam() == null) {
             return;
@@ -245,7 +271,7 @@ public class TaskListener {
     }
 
     /**
-     * 任务10:与玩家交易
+     * 任务类型10:与玩家交易
      *
      * @param user
      */
@@ -261,7 +287,7 @@ public class TaskListener {
     }
 
     /**
-     * 任务11: 在pk中战胜
+     * 任务类型11: 在pk中战胜
      *
      * @param user
      */
@@ -282,11 +308,11 @@ public class TaskListener {
      */
     public void reachMoney12(User user) {
         int targetMoney = 10000;
-        if (user.getMoney() < targetMoney){
+        if (user.getMoney() < targetMoney) {
             return;
         }
 
-            PlayTask playTask = user.getPlayTask();
+        PlayTask playTask = user.getPlayTask();
         playTask.setCurrTaskCompleted(true);
         Task task = GameData.getInstance().getTaskMap().get(playTask.getCurrTaskId());
 

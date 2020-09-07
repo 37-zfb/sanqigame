@@ -39,10 +39,37 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
             System.out.println("============用户id:" + userInfo.getUserId() + "、 名字: " + userInfo.getUserName());
         }
 
-        // 不是聊天
-        if (role.isChat()) {
+        Scanner scanner = new Scanner(System.in);
+
+        if (role.isAddFriend()){
+            role.setAddFriend(false);
+            //添加好友
+            System.out.println("0、退出;");
+            System.out.println("1、添加好友;");
+            int anInt = scanner.nextInt();
+            scanner.nextLine();
+            if (anInt == 1){
+                System.out.println("输入用户;");
+                int userId = scanner.nextInt();
+                scanner.nextLine();
+
+                String userName = "";
+                for (GameMsg.UserInfo userInfo : userInfoList) {
+                    if (userInfo.getUserId() == userId){
+                        userName = userInfo.getUserName();
+                    }
+                }
+
+                GameMsg.AddFriendCmd friendCmd = GameMsg.AddFriendCmd.newBuilder()
+                        .setUserId(userId)
+                        .setUserName(userName)
+                        .build();
+                ctx.writeAndFlush(friendCmd);
+            }
+
+
+        }else if (role.isChat()) {
             // 聊天
-            Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
             int userId = scanner.nextInt();
             scanner.nextLine();
@@ -61,7 +88,6 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
             ctx.writeAndFlush(userChatInfoCmd);
         } else if (role.isTeam()) {
             // 组队
-            Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
             int userId = scanner.nextInt();
 
@@ -73,7 +99,6 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
             ctx.writeAndFlush(userTeamUpCmd);
         } else if (role.isDeal()) {
             // 交易
-            Scanner scanner = new Scanner(System.in);
             System.out.println("选择用户: ");
             int userId = scanner.nextInt();
 

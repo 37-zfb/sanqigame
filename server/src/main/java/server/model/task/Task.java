@@ -18,6 +18,7 @@ public class Task {
      */
     private Integer id;
 
+
     /**
      * 任务名称
      */
@@ -51,7 +52,7 @@ public class Task {
     private Integer killNumber;
 
     /**
-     * 类型编码
+     * 任务类型编码
      */
     private Integer typeCode;
 
@@ -69,4 +70,6 @@ public class Task {
      * npcId
      */
     private Integer npcId;
+
+    private Integer num = 0;
 }

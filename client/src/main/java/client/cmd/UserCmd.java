@@ -1,6 +1,7 @@
 package client.cmd;
 
 import client.model.MailClient;
+import client.model.PlayFriendClient;
 import client.model.PlayUserClient;
 import client.model.Role;
 import client.model.client.MailEntityClient;
@@ -74,9 +75,9 @@ public class UserCmd {
                     log.info("======> {}", "存在未领取的邮件");
                 }
                 PlayTaskClient playTaskClient = role.getPlayTaskClient();
-                if (playTaskClient.getCurrTaskId() != null){
+                if (playTaskClient.getCurrTaskId() != null && !playTaskClient.getCurrTaskId().equals(TaskType.NonTask.getTaskCode())) {
                     Map<Integer, Task> taskMap = GameData.getInstance().getTaskMap();
-                    log.info("任务: {}",taskMap.get(playTaskClient.getCurrTaskId()).getTaskName());
+                    log.info("任务: {}", taskMap.get(playTaskClient.getCurrTaskId()).getTaskName());
                 }
 
                 while (true) {
@@ -111,6 +112,7 @@ public class UserCmd {
                     System.out.println("======>28:公会;");
                     System.out.println("======>29:拍卖行;");
                     System.out.println("======>30:查看任务;");
+                    System.out.println("======>31:好友列表;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -165,11 +167,11 @@ public class UserCmd {
                             }
                             Integer npcId = scanner.nextInt();
                             if (role.getPlayTaskClient().getCurrTaskId() != null &&
-                                    npcId.equals(GameData.getInstance().getTaskMap().get(role.getPlayTaskClient().getCurrTaskId()).getNpcId()) ){
+                                    npcId.equals(GameData.getInstance().getTaskMap().get(role.getPlayTaskClient().getCurrTaskId()).getNpcId())) {
                                 //此时任务，和当前npc对话
                                 //发送协议，当前位置
-                                return GameMsg.DialogueTaskCmd.newBuilder().build();
-                            }else {
+                                ctx.writeAndFlush(GameMsg.DialogueTaskCmd.newBuilder().build());
+                            } else {
                                 Npc npc = scene.getNpcMap().get(npcId);
                                 System.out.println(npc.getName() + ": " + npc.getInfo());
                             }
@@ -574,6 +576,34 @@ public class UserCmd {
                     } else if ("30".equals(command)) {
                         //查看任务
                         return GameMsg.LookAllTaskCmd.newBuilder().build();
+                    } else if ("31".equals(command)) {
+                        //查看好友
+                        PlayFriendClient playFriendClient = role.getPlayFriendClient();
+                        Map<Integer, String> friendMap = playFriendClient.getFriendMap();
+                        for (Map.Entry<Integer, String> entry : friendMap.entrySet()) {
+                            System.out.println(entry.getKey() + "、" + entry.getValue());
+                        }
+
+                        System.out.println("0、退出;");
+                        System.out.println("1、查看当前场景用户;");
+                        System.out.println("2、删除好友;");
+                        int anInt = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (1 == anInt) {
+                            role.setAddFriend(true);
+                            return GameMsg.WhoElseIsHereCmd.newBuilder().build();
+                        } else if (2 == anInt) {
+                            System.out.println("输入用户;");
+                            int userId = scanner.nextInt();
+                            scanner.nextLine();
+
+                            return GameMsg.DeleteFriendCmd
+                                    .newBuilder()
+                                    .setUserId(userId)
+                                    .build();
+                        }
+
                     } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
@@ -665,10 +695,10 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.UserCleanMailCmd) cmd);
         } else if (cmd instanceof GameMsg.LookOneselfAuctionItemCmd) {
             ctx.writeAndFlush((GameMsg.LookOneselfAuctionItemCmd) cmd);
-        }else if (cmd instanceof GameMsg.LookAllTaskCmd){
-            ctx.writeAndFlush((GameMsg.LookAllTaskCmd)cmd);
-        }else if (cmd instanceof  GameMsg.DialogueTaskCmd){
-            ctx.writeAndFlush((GameMsg.DialogueTaskCmd)cmd);
+        } else if (cmd instanceof GameMsg.LookAllTaskCmd) {
+            ctx.writeAndFlush((GameMsg.LookAllTaskCmd) cmd);
+        } else if (cmd instanceof GameMsg.DialogueTaskCmd) {
+            ctx.writeAndFlush((GameMsg.DialogueTaskCmd) cmd);
         }
 
 
