@@ -20,6 +20,7 @@ import util.MyUtil;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.ScheduledFuture;
 
 /**
  * @author 张丰博
@@ -64,7 +65,7 @@ public class ShelveGoodsCmdHandler implements ICmdHandler<GameMsg.ShelveGoodsCmd
         dbAuctionItemEntity.setPropsId(props.getId());
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 5);
         Date date = calendar.getTime();
         dbAuctionItemEntity.setDate(date);
         log.info("拍卖物 {} 到期时间: {}", props.getName(), date);
@@ -75,7 +76,8 @@ public class ShelveGoodsCmdHandler implements ICmdHandler<GameMsg.ShelveGoodsCmd
         //添加进数据库
         auctionTimer.addAuctionItem(dbAuctionItemEntity);
         //定时器
-        ArriveTimeTimer.getArriveTimeTimer().process(dbAuctionItemEntity, date.getTime() - System.currentTimeMillis());
+        ScheduledFuture<?> scheduledFuture = ArriveTimeTimer.getArriveTimeTimer().process(dbAuctionItemEntity.getId(), date.getTime() - System.currentTimeMillis());
+        dbAuctionItemEntity.setScheduledFuture(scheduledFuture);
 
         log.info("用户 {} 上架 {} {}个;", user.getUserName(),props.getName(),number);
     }

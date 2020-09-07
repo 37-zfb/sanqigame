@@ -151,6 +151,8 @@ public class Role {
 
     private boolean isEliminate = false;
 
+    private boolean isTransferPresident = false;
+
     /**
      *  公会系统
      */

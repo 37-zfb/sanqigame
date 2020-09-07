@@ -72,8 +72,6 @@ public class LookAuctionItemResultClient implements ICmd<GameMsg.LookAuctionItem
             int money = scanner.nextInt();
             scanner.nextLine();
 
-            role.setMoney(role.getMoney() - money);
-
             ctx.writeAndFlush(GameMsg.BiddingGoodsCmd.newBuilder()
                     .setMoney(money)
                     .setAuctionId(id)
@@ -89,72 +87,7 @@ public class LookAuctionItemResultClient implements ICmd<GameMsg.LookAuctionItem
             }
 
             int number = auction.getNumber();
-            role.setMoney(role.getMoney() - auction.getPrice());
 
-//            //从拍卖行买到装备
-//            Map<Integer, Props> backpackClient = role.getBackpackClient();
-//            Props pro = propsMap.get(auction.getPropsId());
-//            if (pro.getPropsProperty().getType() == PropsType.Equipment) {
-//                Equipment equipment = (Equipment) pro.getPropsProperty();
-//
-//                Equipment equ = null;
-//                for (int j = 1; j < BackPackConst.MAX_CAPACITY; j++) {
-//                    if (!backpackClient.keySet().contains(j)) {
-//                        Props addPro = new Props();
-//                        addPro.setId(equipment.getPropsId());
-//                        addPro.setName(pro.getName());
-//                        equ = new Equipment(null, pro.getId(), EquipmentConst.MAX_DURABILITY, equipment.getDamage(), equipment.getEquipmentType());
-//                        pro.setPropsProperty(equ);
-//
-//                        backpackClient.put(j, pro);
-//                        break;
-//                    }
-//                }
-//            } else if (pro.getPropsProperty().getType() == PropsType.Potion) {
-//                Potion potion = (Potion) pro.getPropsProperty();
-//
-//                boolean isExist = false;
-//                for (Props existPro : backpackClient.values()) {
-//                    // 查询背包中是否有该药剂
-//                    if (potion.getPropsId().equals(existPro.getId())) {
-//                        // 判断该药剂的数量是否达到上限
-//                        // 背包中已有该药剂
-//                        Potion po = (Potion) existPro.getPropsProperty();
-//                        if ((po.getNumber() + number) > PotionConst.POTION_MAX_NUMBER) {
-//                            throw new CustomizeException(CustomizeErrorCode.PROPS_REACH_LIMIT);
-//                        }
-//
-//                        po.setNumber(po.getNumber() + number);
-//                        isExist = true;
-//                        break;
-//                    }
-//                }
-//                // 背包中还没有该药剂
-//                Potion po = null;
-//                if (!isExist) {
-//                    if (backpackClient.size() >= BackPackConst.MAX_CAPACITY) {
-//                        // 此时背包已满，
-//                        throw new CustomizeException(CustomizeErrorCode.BACKPACK_SPACE_INSUFFICIENT);
-//                    }
-//
-//                    for (int j = 1; j < BackPackConst.MAX_CAPACITY; j++) {
-//                        if (!backpackClient.keySet().contains(j)) {
-//                            Props addPro = new Props();
-//                            addPro.setId(potion.getPropsId());
-//                            addPro.setName(pro.getName());
-//                            po = new Potion(null, potion.getPropsId(), potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), number);
-//                            addPro.setPropsProperty(po);
-//
-//                            // 药剂添加进背包
-//                            backpackClient.put(j, pro);
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//            }
-//
-//
             ctx.writeAndFlush(GameMsg.OnePriceCmd.newBuilder()
                     .setAuctionId(id)
                     .build());

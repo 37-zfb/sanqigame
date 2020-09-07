@@ -70,12 +70,14 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     AUTH_NOT_ENOUGH(-434,"权限不够;"),
     WAREHOUSE_POTION_NUMBER_NOT_ENOUGH(-435,"药剂数量不足;"),
     NOT_QUIT(-438,"会长不能退出;"),
+    NOT_JOIN_THIS_GUILD(-439,"未加入此公会;"),
 
     /**
      * 拍卖行
      */
     ADD_ITEM_ERROR(-436,"添加拍卖品失败;"),
     ITEM_NOT_FOUNT(-437,"拍卖品不存在;"),
+    ALREADY_JOIN_BIDDING(-440,"已经参与竞拍;"),
     ;
 
     private String message;

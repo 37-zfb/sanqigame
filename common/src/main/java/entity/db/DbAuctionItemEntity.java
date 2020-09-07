@@ -1,5 +1,7 @@
 package entity.db;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -63,26 +65,27 @@ public class DbAuctionItemEntity {
 
 
     /**
-     * 竞拍者集合 ，  用户id 竞拍信息
+     * 竞拍者信息
      */
-    private final Map<Integer,DbBidderEntity> BIDDER_MAP  = new ConcurrentHashMap<>();
-
+    private DbBidderEntity bidder;
 
     /**
      * 添加竞拍者
+     *
      * @param bidderEntity
      */
-    public void addBidder(DbBidderEntity bidderEntity){
-        if (bidderEntity != null){
-            BIDDER_MAP.put(bidderEntity.getUserId(), bidderEntity);
+    public DbBidderEntity addBidder(DbBidderEntity bidderEntity) {
+        if (bidder != null && bidder.getMoney() > bidderEntity.getMoney()) {
+            throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
         }
-    }
-    public void addListBidder(List<DbBidderEntity> dbBidderEntityList){
-        if (dbBidderEntityList != null){
-            for (DbBidderEntity dbBidderEntity : dbBidderEntityList) {
-                addBidder(dbBidderEntity);
-            }
+
+        if (bidder.getUserId().equals(bidderEntity.getUserId())) {
+            throw new CustomizeException(CustomizeErrorCode.ALREADY_JOIN_BIDDING);
         }
+        DbBidderEntity temp = bidder;
+        bidder = bidderEntity;
+        return temp;
     }
+
 
 }

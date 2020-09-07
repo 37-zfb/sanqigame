@@ -48,11 +48,12 @@ public class CancelAuctionItemCmdHandler implements ICmdHandler<GameMsg.CancelAu
         AuctionUtil.sendMailBuyer(user.getUserId(), dbAuctionItemEntity.getPropsId(), dbAuctionItemEntity.getNumber(), "取消上架商品");
 
         //取消所有竞拍者，把钱还给他们
-        backMoney(dbAuctionItemEntity.getBIDDER_MAP());
+        DbBidderEntity bidder = dbAuctionItemEntity.getBidder();
+        AuctionUtil.sendMailSeller(bidder.getUserId(), bidder.getMoney(), "竞拍物被取消");
 
         //删除拍卖品
         auctionTimer.deleteAuctionItem(dbAuctionItemEntity);
-        auctionTimer.deleteBidderAll(dbAuctionItemEntity.getBIDDER_MAP().values());
+        auctionTimer.deleteBidder(bidder);
 
     }
 
@@ -62,7 +63,7 @@ public class CancelAuctionItemCmdHandler implements ICmdHandler<GameMsg.CancelAu
      */
     private void backMoney(Map<Integer, DbBidderEntity> bidderMap){
         for (DbBidderEntity bidderEntity : bidderMap.values()) {
-            AuctionUtil.sendMailSeller(bidderEntity.getUserId(), bidderEntity.getMoney(), "竞拍物被取消");
+
         }
     }
 

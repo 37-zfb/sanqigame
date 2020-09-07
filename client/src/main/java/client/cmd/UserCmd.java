@@ -448,10 +448,11 @@ public class UserCmd {
                         return null;
                     } else if ("28".equals(command)) {
                         //公会操作
+                        System.out.println("===>0:退出;");
                         System.out.println("===>1:创建公会,需要200000金币;");
                         System.out.println("===>2:解散公会;");
                         System.out.println("===>3:任命;");
-//                        System.out.println("===>4:发送公会邮件;");
+                        System.out.println("===>4:转移会长;");
                         System.out.println("===>5:退出公会;");
                         System.out.println("===>6:踢出公会;");
                         System.out.println("===>7:查看公会仓库;");
@@ -484,7 +485,8 @@ public class UserCmd {
                                 return GameMsg.ShowGuildMemberCmd.newBuilder().build();
                             }
                         } else if (nextInt == 4) {
-
+                            role.setTransferPresident(true);
+                            return GameMsg.ShowGuildMemberCmd.newBuilder().build();
                         } else if (nextInt == 5) {
                             return GameMsg.QuitGuildCmd.newBuilder().build();
                         } else if (nextInt == 6) {
@@ -501,7 +503,6 @@ public class UserCmd {
                             return GameMsg.ShowGuildCmd.newBuilder().build();
                         }
 
-                        return null;
                     } else if ("29".equals(command)) {
                         //拍卖行
                         System.out.println("0、退出;");

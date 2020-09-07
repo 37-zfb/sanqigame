@@ -111,33 +111,17 @@ public final class AuctionUtil {
     /**
      * 当物品上架时间到时，计算是否有竞拍者，有则把物品给最高价者
      * @param auctionItemEntity
-     * @param bidderEntityCollection
+     * @param dbBidderEntity
      */
-    public static void auctionResult(DbAuctionItemEntity auctionItemEntity, Collection<DbBidderEntity> bidderEntityCollection) {
-        //此时应该下架了
-        if (bidderEntityCollection != null && bidderEntityCollection.size() != 0) {
-            //选择
-            Optional<DbBidderEntity> max = bidderEntityCollection.stream().max((o1, o2) -> {
-                if (o1.getMoney().equals(o2.getMoney())) {
-                    return o1.getId() - o2.getId();
-                }
-                return o1.getMoney() - o2.getMoney();
-            });
-
+    public static void auctionResult(DbAuctionItemEntity auctionItemEntity, DbBidderEntity dbBidderEntity) {
+        //下架时间到
+        if (dbBidderEntity != null) {
             //出价最高者
-            DbBidderEntity dbBidderEntity = max.get();
             AuctionUtil.sendMailBuyer(dbBidderEntity.getUserId(), auctionItemEntity.getPropsId(), auctionItemEntity.getNumber(),"竞拍成功,获得拍卖品");
-
-            for (DbBidderEntity bidderEntity : bidderEntityCollection) {
-                if (!bidderEntity.getId().equals(max.get().getId())) {
-                    //竞价失败者
-                    AuctionUtil.sendMailSeller(bidderEntity.getUserId(), bidderEntity.getMoney(), "竞价失败,金币退回");
-                }
-                //删除竞拍者
-                auctionTimer.deleteBidder(bidderEntity);
-            }
+            //删除竞拍者
+            auctionTimer.deleteBidder(dbBidderEntity);
             //把钱发给拍卖者
-            AuctionUtil.sendMailSeller(auctionItemEntity.getUserId(), max.get().getMoney(), "拍卖物品卖出金币");
+            AuctionUtil.sendMailSeller(auctionItemEntity.getUserId(), dbBidderEntity.getMoney(), "拍卖物品卖出金币");
         }else {
             // 若没有竞拍者，此时把拍卖品返回拍卖者
             AuctionUtil.sendMailBuyer(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"拍卖失败,返回拍卖品");

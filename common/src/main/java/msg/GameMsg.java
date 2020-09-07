@@ -568,6 +568,14 @@ public final class GameMsg {
      */
     PUT_IN_MONEY_RESULT(136),
     /**
+     * <code>TRANSFER_PRESIDENT_CMD = 200;</code>
+     */
+    TRANSFER_PRESIDENT_CMD(200),
+    /**
+     * <code>TRANSFER_PRESIDENT_RESULT = 201;</code>
+     */
+    TRANSFER_PRESIDENT_RESULT(201),
+    /**
      * <code>LOOK_AUCTION_ITEM_CMD = 137;</code>
      */
     LOOK_AUCTION_ITEM_CMD(137),
@@ -1203,6 +1211,14 @@ public final class GameMsg {
      */
     public static final int PUT_IN_MONEY_RESULT_VALUE = 136;
     /**
+     * <code>TRANSFER_PRESIDENT_CMD = 200;</code>
+     */
+    public static final int TRANSFER_PRESIDENT_CMD_VALUE = 200;
+    /**
+     * <code>TRANSFER_PRESIDENT_RESULT = 201;</code>
+     */
+    public static final int TRANSFER_PRESIDENT_RESULT_VALUE = 201;
+    /**
      * <code>LOOK_AUCTION_ITEM_CMD = 137;</code>
      */
     public static final int LOOK_AUCTION_ITEM_CMD_VALUE = 137;
@@ -1452,6 +1468,8 @@ public final class GameMsg {
         case 134: return TAKE_OUT_MONEY_RESULT;
         case 135: return PUT_IN_MONEY_CMD;
         case 136: return PUT_IN_MONEY_RESULT;
+        case 200: return TRANSFER_PRESIDENT_CMD;
+        case 201: return TRANSFER_PRESIDENT_RESULT;
         case 137: return LOOK_AUCTION_ITEM_CMD;
         case 138: return LOOK_AUCTION_ITEM_RESULT;
         case 139: return SHELVE_GOODS_CMD;
@@ -97994,6 +98012,986 @@ public final class GameMsg {
 
   }
 
+  public interface TransferPresidentCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.TransferPresidentCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 userId = 1;</code>
+     * @return The userId.
+     */
+    int getUserId();
+  }
+  /**
+   * <pre>
+   *转移会长
+   * </pre>
+   *
+   * Protobuf type {@code msg.TransferPresidentCmd}
+   */
+  public  static final class TransferPresidentCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.TransferPresidentCmd)
+      TransferPresidentCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransferPresidentCmd.newBuilder() to construct.
+    private TransferPresidentCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransferPresidentCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new TransferPresidentCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransferPresidentCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              userId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_TransferPresidentCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_TransferPresidentCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.TransferPresidentCmd.class, msg.GameMsg.TransferPresidentCmd.Builder.class);
+    }
+
+    public static final int USERID_FIELD_NUMBER = 1;
+    private int userId_;
+    /**
+     * <code>uint32 userId = 1;</code>
+     * @return The userId.
+     */
+    public int getUserId() {
+      return userId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (userId_ != 0) {
+        output.writeUInt32(1, userId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (userId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, userId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.TransferPresidentCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.TransferPresidentCmd other = (msg.GameMsg.TransferPresidentCmd) obj;
+
+      if (getUserId()
+          != other.getUserId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERID_FIELD_NUMBER;
+      hash = (53 * hash) + getUserId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.TransferPresidentCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.TransferPresidentCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *转移会长
+     * </pre>
+     *
+     * Protobuf type {@code msg.TransferPresidentCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.TransferPresidentCmd)
+        msg.GameMsg.TransferPresidentCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_TransferPresidentCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_TransferPresidentCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.TransferPresidentCmd.class, msg.GameMsg.TransferPresidentCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.TransferPresidentCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        userId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_TransferPresidentCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.TransferPresidentCmd getDefaultInstanceForType() {
+        return msg.GameMsg.TransferPresidentCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.TransferPresidentCmd build() {
+        msg.GameMsg.TransferPresidentCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.TransferPresidentCmd buildPartial() {
+        msg.GameMsg.TransferPresidentCmd result = new msg.GameMsg.TransferPresidentCmd(this);
+        result.userId_ = userId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.TransferPresidentCmd) {
+          return mergeFrom((msg.GameMsg.TransferPresidentCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.TransferPresidentCmd other) {
+        if (other == msg.GameMsg.TransferPresidentCmd.getDefaultInstance()) return this;
+        if (other.getUserId() != 0) {
+          setUserId(other.getUserId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.TransferPresidentCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.TransferPresidentCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int userId_ ;
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @return The userId.
+       */
+      public int getUserId() {
+        return userId_;
+      }
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @param value The userId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUserId(int value) {
+        
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUserId() {
+        
+        userId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.TransferPresidentCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.TransferPresidentCmd)
+    private static final msg.GameMsg.TransferPresidentCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.TransferPresidentCmd();
+    }
+
+    public static msg.GameMsg.TransferPresidentCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransferPresidentCmd>
+        PARSER = new com.google.protobuf.AbstractParser<TransferPresidentCmd>() {
+      @java.lang.Override
+      public TransferPresidentCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransferPresidentCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransferPresidentCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransferPresidentCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.TransferPresidentCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TransferPresidentResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.TransferPresidentResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 userId = 1;</code>
+     * @return The userId.
+     */
+    int getUserId();
+  }
+  /**
+   * Protobuf type {@code msg.TransferPresidentResult}
+   */
+  public  static final class TransferPresidentResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.TransferPresidentResult)
+      TransferPresidentResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TransferPresidentResult.newBuilder() to construct.
+    private TransferPresidentResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TransferPresidentResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new TransferPresidentResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TransferPresidentResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              userId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_TransferPresidentResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_TransferPresidentResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.TransferPresidentResult.class, msg.GameMsg.TransferPresidentResult.Builder.class);
+    }
+
+    public static final int USERID_FIELD_NUMBER = 1;
+    private int userId_;
+    /**
+     * <code>uint32 userId = 1;</code>
+     * @return The userId.
+     */
+    public int getUserId() {
+      return userId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (userId_ != 0) {
+        output.writeUInt32(1, userId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (userId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, userId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.TransferPresidentResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.TransferPresidentResult other = (msg.GameMsg.TransferPresidentResult) obj;
+
+      if (getUserId()
+          != other.getUserId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERID_FIELD_NUMBER;
+      hash = (53 * hash) + getUserId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.TransferPresidentResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.TransferPresidentResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.TransferPresidentResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.TransferPresidentResult)
+        msg.GameMsg.TransferPresidentResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_TransferPresidentResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_TransferPresidentResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.TransferPresidentResult.class, msg.GameMsg.TransferPresidentResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.TransferPresidentResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        userId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_TransferPresidentResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.TransferPresidentResult getDefaultInstanceForType() {
+        return msg.GameMsg.TransferPresidentResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.TransferPresidentResult build() {
+        msg.GameMsg.TransferPresidentResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.TransferPresidentResult buildPartial() {
+        msg.GameMsg.TransferPresidentResult result = new msg.GameMsg.TransferPresidentResult(this);
+        result.userId_ = userId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.TransferPresidentResult) {
+          return mergeFrom((msg.GameMsg.TransferPresidentResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.TransferPresidentResult other) {
+        if (other == msg.GameMsg.TransferPresidentResult.getDefaultInstance()) return this;
+        if (other.getUserId() != 0) {
+          setUserId(other.getUserId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.TransferPresidentResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.TransferPresidentResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int userId_ ;
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @return The userId.
+       */
+      public int getUserId() {
+        return userId_;
+      }
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @param value The userId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUserId(int value) {
+        
+        userId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 userId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUserId() {
+        
+        userId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.TransferPresidentResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.TransferPresidentResult)
+    private static final msg.GameMsg.TransferPresidentResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.TransferPresidentResult();
+    }
+
+    public static msg.GameMsg.TransferPresidentResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TransferPresidentResult>
+        PARSER = new com.google.protobuf.AbstractParser<TransferPresidentResult>() {
+      @java.lang.Override
+      public TransferPresidentResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransferPresidentResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TransferPresidentResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransferPresidentResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.TransferPresidentResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface LookAuctionItemCmdOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.LookAuctionItemCmd)
       com.google.protobuf.MessageOrBuilder {
@@ -101944,6 +102942,12 @@ public final class GameMsg {
   public interface BiddingGoodsResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.BiddingGoodsResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 money = 1;</code>
+     * @return The money.
+     */
+    int getMoney();
   }
   /**
    * Protobuf type {@code msg.BiddingGoodsResult}
@@ -101990,6 +102994,11 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              money_ = input.readUInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -102022,6 +103031,16 @@ public final class GameMsg {
               msg.GameMsg.BiddingGoodsResult.class, msg.GameMsg.BiddingGoodsResult.Builder.class);
     }
 
+    public static final int MONEY_FIELD_NUMBER = 1;
+    private int money_;
+    /**
+     * <code>uint32 money = 1;</code>
+     * @return The money.
+     */
+    public int getMoney() {
+      return money_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -102036,6 +103055,9 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (money_ != 0) {
+        output.writeUInt32(1, money_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -102045,6 +103067,10 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
+      if (money_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, money_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -102060,6 +103086,8 @@ public final class GameMsg {
       }
       msg.GameMsg.BiddingGoodsResult other = (msg.GameMsg.BiddingGoodsResult) obj;
 
+      if (getMoney()
+          != other.getMoney()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -102071,6 +103099,8 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MONEY_FIELD_NUMBER;
+      hash = (53 * hash) + getMoney();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -102204,6 +103234,8 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        money_ = 0;
+
         return this;
       }
 
@@ -102230,6 +103262,7 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.BiddingGoodsResult buildPartial() {
         msg.GameMsg.BiddingGoodsResult result = new msg.GameMsg.BiddingGoodsResult(this);
+        result.money_ = money_;
         onBuilt();
         return result;
       }
@@ -102278,6 +103311,9 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.BiddingGoodsResult other) {
         if (other == msg.GameMsg.BiddingGoodsResult.getDefaultInstance()) return this;
+        if (other.getMoney() != 0) {
+          setMoney(other.getMoney());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -102304,6 +103340,36 @@ public final class GameMsg {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private int money_ ;
+      /**
+       * <code>uint32 money = 1;</code>
+       * @return The money.
+       */
+      public int getMoney() {
+        return money_;
+      }
+      /**
+       * <code>uint32 money = 1;</code>
+       * @param value The money to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoney(int value) {
+        
+        money_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 money = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoney() {
+        
+        money_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -102856,6 +103922,12 @@ public final class GameMsg {
   public interface OnePriceResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.OnePriceResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 price = 1;</code>
+     * @return The price.
+     */
+    int getPrice();
   }
   /**
    * Protobuf type {@code msg.OnePriceResult}
@@ -102902,6 +103974,11 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              price_ = input.readUInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -102934,6 +104011,16 @@ public final class GameMsg {
               msg.GameMsg.OnePriceResult.class, msg.GameMsg.OnePriceResult.Builder.class);
     }
 
+    public static final int PRICE_FIELD_NUMBER = 1;
+    private int price_;
+    /**
+     * <code>uint32 price = 1;</code>
+     * @return The price.
+     */
+    public int getPrice() {
+      return price_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -102948,6 +104035,9 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (price_ != 0) {
+        output.writeUInt32(1, price_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -102957,6 +104047,10 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
+      if (price_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, price_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -102972,6 +104066,8 @@ public final class GameMsg {
       }
       msg.GameMsg.OnePriceResult other = (msg.GameMsg.OnePriceResult) obj;
 
+      if (getPrice()
+          != other.getPrice()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -102983,6 +104079,8 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + PRICE_FIELD_NUMBER;
+      hash = (53 * hash) + getPrice();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -103116,6 +104214,8 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        price_ = 0;
+
         return this;
       }
 
@@ -103142,6 +104242,7 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.OnePriceResult buildPartial() {
         msg.GameMsg.OnePriceResult result = new msg.GameMsg.OnePriceResult(this);
+        result.price_ = price_;
         onBuilt();
         return result;
       }
@@ -103190,6 +104291,9 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.OnePriceResult other) {
         if (other == msg.GameMsg.OnePriceResult.getDefaultInstance()) return this;
+        if (other.getPrice() != 0) {
+          setPrice(other.getPrice());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -103216,6 +104320,36 @@ public final class GameMsg {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private int price_ ;
+      /**
+       * <code>uint32 price = 1;</code>
+       * @return The price.
+       */
+      public int getPrice() {
+        return price_;
+      }
+      /**
+       * <code>uint32 price = 1;</code>
+       * @param value The price to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPrice(int value) {
+        
+        price_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 price = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPrice() {
+        
+        price_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -110723,6 +111857,16 @@ public final class GameMsg {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_PutInMoneyResult_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_TransferPresidentCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_TransferPresidentCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_TransferPresidentResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_TransferPresidentResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_LookAuctionItemCmd_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -111047,137 +112191,141 @@ public final class GameMsg {
       ".msg.Props\"\022\n\020PutInPropsResult\" \n\017TakeOu" +
       "tMoneyCmd\022\r\n\005money\030\001 \001(\r\"\024\n\022TakeOutMoney" +
       "Result\"\036\n\rPutInMoneyCmd\022\r\n\005money\030\001 \001(\r\"\022" +
-      "\n\020PutInMoneyResult\"\024\n\022LookAuctionItemCmd" +
-      "\">\n\025LookAuctionItemResult\022%\n\013auctionItem" +
-      "\030\001 \003(\0132\020.msg.AuctionItem\"z\n\013AuctionItem\022" +
-      "\n\n\002id\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\017\n\007propsId" +
-      "\030\003 \001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005price\030\005 \001(\r\022\016" +
-      "\n\006number\030\006 \001(\r\022\014\n\004date\030\007 \001(\004\"R\n\016ShelveGo" +
-      "odsCmd\022\020\n\010location\030\001 \001(\r\022\016\n\006number\030\002 \001(\r" +
-      "\022\017\n\007auction\030\003 \001(\r\022\r\n\005price\030\004 \001(\r\"\023\n\021Shel" +
-      "veGoodsResult\"3\n\017BiddingGoodsCmd\022\021\n\tauct" +
-      "ionId\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"\024\n\022BiddingGoo" +
-      "dsResult\" \n\013OnePriceCmd\022\021\n\tauctionId\030\001 \001" +
-      "(\r\"\020\n\016OnePriceResult\"\033\n\031LookOneselfAucti" +
-      "onItemCmd\"E\n\034LookOneselfAuctionItemResul" +
-      "t\022%\n\013auctionItem\030\001 \003(\0132\020.msg.AuctionItem" +
-      "\")\n\024CancelAuctionItemCmd\022\021\n\tauctionId\030\001 " +
-      "\001(\r\"\031\n\027CancelAuctionItemResult\"\020\n\016LookAl" +
-      "lTaskCmd\"#\n\021LookAllTaskResult\022\016\n\006taskId\030" +
-      "\001 \001(\r\" \n\016ReceiveTaskCmd\022\016\n\006taskId\030\001 \001(\r\"" +
-      "#\n\021ReceiveTaskResult\022\016\n\006taskId\030\001 \001(\r\"\021\n\017" +
-      "DialogueTaskCmd\"\025\n\023TaskCompletedResult\"%" +
-      "\n\023ReceiveTaskAwardCmd\022\016\n\006taskId\030\001 \001(\r\"B\n" +
-      "\026ReceiveTaskAwardResult\022\031\n\005props\030\001 \003(\0132\n" +
-      ".msg.Props\022\r\n\005money\030\002 \001(\r\"\034\n\016UserUpLvRes" +
-      "ult\022\n\n\002lv\030\001 \001(\r*\246!\n\007MsgCode\022\030\n\024WHO_ELSE_" +
-      "IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS_HERE_RESULT" +
-      "\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017" +
-      "\n\013ATTK_RESULT\020\004\022\033\n\027USER_SUBTRACT_HP_RESU" +
-      "LT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016USER_LOGIN_CMD\020\007" +
-      "\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n\021USER_REGISTER" +
-      "_CMD\020\t\022\030\n\024USER_REGISTER_RESULT\020\n\022\024\n\020ATTK" +
-      "_MONSTER_CMD\020\013\022\033\n\027STOP_CUR_USER_ALL_TIME" +
-      "R\020\014\022\031\n\025USER_SWITCH_SCENE_CMD\020\r\022\034\n\030USER_S" +
-      "WITCH_SCENE_RESULT\020\016\022\033\n\027MONSTER_START_AT" +
-      "TK_USER\020\017\022\026\n\022NOTICE_USER_ATTKED\020\020\022\027\n\023USE" +
-      "R_SKILL_ATTK_CMD\020\021\022\032\n\026USER_SKILL_ATTK_RE" +
-      "SULT\020\022\022\026\n\022SKILL_STATE_SWITCH\020\023\022\025\n\021ROB_EQ" +
-      "UIPMENT_CMD\020\024\022\020\n\014BACKPACK_CMD\020\025\022\023\n\017BACKP" +
-      "ACK_RESULT\020\026\022\030\n\024ROB_EQUIPMENT_RESULT\020\027\022\023" +
-      "\n\017USER_POTION_CMD\020\030\022\026\n\022USER_POTION_RESUL" +
-      "T\020\031\022\034\n\030USER_RESUME_STATE_RESULT\020\032\022\033\n\027USE" +
-      "R_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032USER_WEAR_EQUI" +
-      "PMENT_RESULT\020\034\022\033\n\027USER_UNDO_EQUIPMENT_CM" +
-      "D\020\035\022\036\n\032USER_UNDO_EQUIPMENT_RESULT\020\036\022 \n\034D" +
-      "URABILITY_DEFICIENCY_RESULT\020\037\022\030\n\024REPAIR_" +
-      "EQUIPMENT_CMD\020 \022\033\n\027REPAIR_EQUIPMENT_RESU" +
-      "LT\020!\022\034\n\030MONSTER_DROP_HP_AUTO_DIE\020\"\022\027\n\023EN" +
-      "TER_DUPLICATE_CMD\020#\022\032\n\026ENTER_DUPLICATE_R" +
-      "ESULT\020$\022\021\n\rATTK_BOSS_CMD\020%\022\024\n\020ATTK_BOSS_" +
-      "RESULT\020&\022\024\n\020NEXT_BOSS_RESULT\020\'\022\033\n\027DUPLIC" +
-      "ATE_FINISH_RESULT\020(\022\033\n\027USER_QUIT_DUPLICA" +
-      "TE_CMD\020)\022\036\n\032USER_QUIT_DUPLICATE_RESULT\020*" +
-      "\022\031\n\025BOSS_ATTK_USER_RESULT\020+\022\037\n\033BOSS_SKIL" +
-      "L_ATTK_USER_RESULT\020,\022\031\n\025BOSS_KILL_USER_R" +
-      "ESULT\020-\022\026\n\022USER_BUY_GOODS_CMD\020.\022\031\n\025USER_" +
-      "BUY_GOODS_RESULT\020/\022\026\n\022USER_CHAT_INFO_CMD" +
-      "\0200\022\031\n\025USER_CHAT_INFO_RESULT\0201\022\021\n\rSEND_MA" +
-      "IL_CMD\0202\022\024\n\020SEND_MAIL_RESULT\0203\022\020\n\014ALL_US" +
-      "ER_CMD\0204\022\023\n\017ALL_USER_RESULT\0205\022\037\n\033NOTICE_" +
-      "USER_GET_MAIL_RESULT\0206\022\025\n\021USER_SEE_MAIL_" +
-      "CMD\0207\022\030\n\024USER_SEE_MAIL_RESULT\0208\022\031\n\025USER_" +
-      "RECEIVE_MAIL_CMD\0209\022\034\n\030USER_RECEIVE_MAIL_" +
-      "RESULT\020:\022\030\n\024USER_ENTER_ARENA_CMD\020;\022\033\n\027US" +
-      "ER_ENTER_ARENA_RESULT\020<\022\034\n\030USER_CHOOSE_O" +
-      "PPONENT_CMD\020=\022\037\n\033USER_CHOOSE_OPPONENT_RE" +
-      "SULT\020>\022 \n\034TARGET_USER_CHALLENGE_RESULT\020?" +
-      "\022\034\n\030TARGET_USER_RESPONSE_CMD\020@\022\037\n\033TARGET" +
-      "_USER_RESPONSE_RESULT\020A\022\027\n\023USER_QUIT_ARE" +
-      "NA_CMD\020B\022\032\n\026USER_QUIT_ARENA_RESULT\020C\022\023\n\017" +
-      "USER_ATTACK_CMD\020D\022\026\n\022USER_ATTACK_RESULT\020" +
-      "E\022\023\n\017USER_DIE_RESULT\020F\022\024\n\020USER_TEAM_UP_C" +
-      "MD\020G\022\027\n\023USER_TEAM_UP_RESULT\020H\022\026\n\022ASK_TEA" +
-      "M_UP_RESULT\020I\022\026\n\022USER_JOIN_TEAM_CMD\020J\022\031\n" +
-      "\025USER_JOIN_TEAM_RESULT\020K\022\026\n\022USER_QUIT_TE" +
-      "AM_CMD\020L\022\031\n\025USER_QUIT_TEAM_RESULT\020M\022\037\n\033U" +
-      "SER_ENTER_TEAM_FAIL_RESULT\020N\022$\n USER_QUI" +
-      "T_TEAM_AND_DUPLICATE_CMD\020O\022\'\n#USER_QUIT_" +
-      "TEAM_AND_DUPLICATE_RESULT\020P\022$\n USER_SKIL" +
-      "L_ATTK_DUPLICATE_RESULT\020Q\022\027\n\023PASTOR_SKIL" +
-      "L_RESULT\020R\022 \n\034SUMMON_MONSTER_SUB_HP_RESU" +
-      "LT\020S\022\036\n\032USER_JOIN_TEAM_PERFORM_CMD\020T\022!\n\035" +
-      "USER_JOIN_TEAM_PERFORM_RESULT\020U\022\027\n\023USER_" +
-      "CLEAN_MAIL_CMD\020V\022\032\n\026USER_CLEAN_MAIL_RESU" +
-      "LT\020W\022\031\n\025USER_DEAL_REQUEST_CMD\020X\022\034\n\030USER_" +
-      "DEAL_REQUEST_RESULT\020Y\022\032\n\026ASK_TARGET_USER" +
-      "_RESULT\020Z\022!\n\035DEAL_TARGET_USER_RESPONSE_C" +
-      "MD\020[\022\024\n\020DEAL_CHANNEL_CMD\020\\\022\027\n\023DEAL_CHANN" +
-      "EL_RESULT\020]\022\026\n\022USER_DEAL_ITEM_CMD\020^\022\031\n\025U" +
-      "SER_DEAL_ITEM_RESULT\020_\022\031\n\025USER_ADD_COMPL" +
-      "ETE_CMD\020a\022\034\n\030USER_ADD_COMPLETE_RESULT\020b\022" +
-      "\030\n\024USER_CANCEL_DEAL_CMD\020c\022\033\n\027USER_CANCEL" +
-      "_DEAL_RESULT\020d\022\031\n\025USER_CONFIRM_DEAL_CMD\020" +
-      "e\022\034\n\030USER_CONFIRM_DEAL_RESULT\020f\022 \n\034USER_" +
-      "CANCEL_DEAL_CONFIRM_CMD\020g\022#\n\037USER_CANCEL" +
-      "_DEAL_CONFIRM_RESULT\020h\022\025\n\021SORT_OUT_DEAL_" +
-      "CMD\020i\022\030\n\024SORT_OUT_DEAL_RESULT\020j\022\031\n\025USER_" +
-      "CREATE_GUILD_CMD\020k\022\034\n\030USER_CREATE_GUILD_" +
-      "RESULT\020l\022\033\n\027USER_DISSOLVE_GUILD_CMD\020m\022\036\n" +
-      "\032USER_DISSOLVE_GUILD_RESULT\020n\022\022\n\016SHOW_GU" +
-      "ILD_CMD\020o\022\025\n\021SHOW_GUILD_RESULT\020p\022\030\n\024USER" +
-      "_ENTER_GUILD_CMD\020q\022\033\n\027USER_ENTER_GUILD_R" +
-      "ESULT\020r\022\031\n\025SHOW_GUILD_MEMBER_CMD\020s\022\034\n\030SH" +
-      "OW_GUILD_MEMBER_RESULT\020t\022\036\n\032LOOK_GUiLD_M" +
-      "EMBER_INFO_CMD\020u\022!\n\035LOOK_GUiLD_MEMBER_IN" +
-      "FO_RESULT\020v\022\022\n\016QUIT_GUILD_CMD\020w\022\025\n\021QUIT_" +
-      "GUILD_RESULT\020x\022\026\n\022APPOINT_MEMBER_CMD\020y\022\031" +
-      "\n\025APPOINT_MEMBER_RESULT\020z\022\027\n\023ELIMINATE_G" +
-      "UILD_CMD\020{\022\032\n\026ELIMINATE_GUILD_RESULT\020|\022\035" +
-      "\n\031MODIFY_GUILD_POSITION_CMD\020}\022\032\n\026MODIFY_" +
-      "GUILD_STATE_CMD\020~\022\034\n\030LOOK_GUILD_WAREHOUS" +
-      "E_CMD\020\177\022 \n\033LOOK_GUILD_WAREHOUSE_RESULT\020\200" +
-      "\001\022\027\n\022TAKE_OUT_PROPS_CMD\020\201\001\022\032\n\025TAKE_OUT_P" +
-      "ROPS_RESULT\020\202\001\022\025\n\020PUT_IN_PROPS_CMD\020\203\001\022\030\n" +
-      "\023PUT_IN_PROPS_RESULT\020\204\001\022\027\n\022TAKE_OUT_MONE" +
-      "Y_CMD\020\205\001\022\032\n\025TAKE_OUT_MONEY_RESULT\020\206\001\022\025\n\020" +
-      "PUT_IN_MONEY_CMD\020\207\001\022\030\n\023PUT_IN_MONEY_RESU" +
-      "LT\020\210\001\022\032\n\025LOOK_AUCTION_ITEM_CMD\020\211\001\022\035\n\030LOO" +
-      "K_AUCTION_ITEM_RESULT\020\212\001\022\025\n\020SHELVE_GOODS" +
-      "_CMD\020\213\001\022\030\n\023SHELVE_GOODS_RESULT\020\214\001\022\026\n\021BID" +
-      "DING_GOODS_CMD\020\215\001\022\031\n\024BIDDING_GOODS_RESUL" +
-      "T\020\216\001\022\022\n\rONE_PRICE_CMD\020\217\001\022\025\n\020ONE_PRICE_RE" +
-      "SULT\020\220\001\022\"\n\035LOOK_ONESELF_AUCTION_ITEM_CMD" +
-      "\020\221\001\022%\n LOOK_ONESELF_AUCTION_ITEM_RESULT\020" +
-      "\222\001\022\034\n\027CANCEL_AUCTION_ITEM_CMD\020\223\001\022\037\n\032CANC" +
-      "EL_AUCTION_ITEM_RESULT\020\224\001\022\026\n\021LOOK_ALL_TA" +
-      "SK_CMD\020\225\001\022\031\n\024LOOK_ALL_TASK_RESULT\020\226\001\022\025\n\020" +
-      "RECEIVE_TASK_CMD\020\227\001\022\030\n\023RECEIVE_TASK_RESU" +
-      "LT\020\230\001\022\026\n\021DIALOGUE_TASK_CMD\020\231\001\022\032\n\025TASK_CO" +
-      "MPLETED_RESULT\020\232\001\022\033\n\026RECEIVE_TASK_AWARD_" +
-      "CMD\020\233\001\022\036\n\031RECEIVE_TASK_AWARD_RESULT\020\234\001\022\026" +
-      "\n\021USER_UP_LV_RESULT\020\235\001\022\020\n\014ERROR_RESULT\020`" +
-      "B\005\n\003msgb\006proto3"
+      "\n\020PutInMoneyResult\"&\n\024TransferPresidentC" +
+      "md\022\016\n\006userId\030\001 \001(\r\")\n\027TransferPresidentR" +
+      "esult\022\016\n\006userId\030\001 \001(\r\"\024\n\022LookAuctionItem" +
+      "Cmd\">\n\025LookAuctionItemResult\022%\n\013auctionI" +
+      "tem\030\001 \003(\0132\020.msg.AuctionItem\"z\n\013AuctionIt" +
+      "em\022\n\n\002id\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\017\n\007prop" +
+      "sId\030\003 \001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005price\030\005 \001(" +
+      "\r\022\016\n\006number\030\006 \001(\r\022\014\n\004date\030\007 \001(\004\"R\n\016Shelv" +
+      "eGoodsCmd\022\020\n\010location\030\001 \001(\r\022\016\n\006number\030\002 " +
+      "\001(\r\022\017\n\007auction\030\003 \001(\r\022\r\n\005price\030\004 \001(\r\"\023\n\021S" +
+      "helveGoodsResult\"3\n\017BiddingGoodsCmd\022\021\n\ta" +
+      "uctionId\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"#\n\022Bidding" +
+      "GoodsResult\022\r\n\005money\030\001 \001(\r\" \n\013OnePriceCm" +
+      "d\022\021\n\tauctionId\030\001 \001(\r\"\037\n\016OnePriceResult\022\r" +
+      "\n\005price\030\001 \001(\r\"\033\n\031LookOneselfAuctionItemC" +
+      "md\"E\n\034LookOneselfAuctionItemResult\022%\n\013au" +
+      "ctionItem\030\001 \003(\0132\020.msg.AuctionItem\")\n\024Can" +
+      "celAuctionItemCmd\022\021\n\tauctionId\030\001 \001(\r\"\031\n\027" +
+      "CancelAuctionItemResult\"\020\n\016LookAllTaskCm" +
+      "d\"#\n\021LookAllTaskResult\022\016\n\006taskId\030\001 \001(\r\" " +
+      "\n\016ReceiveTaskCmd\022\016\n\006taskId\030\001 \001(\r\"#\n\021Rece" +
+      "iveTaskResult\022\016\n\006taskId\030\001 \001(\r\"\021\n\017Dialogu" +
+      "eTaskCmd\"\025\n\023TaskCompletedResult\"%\n\023Recei" +
+      "veTaskAwardCmd\022\016\n\006taskId\030\001 \001(\r\"B\n\026Receiv" +
+      "eTaskAwardResult\022\031\n\005props\030\001 \003(\0132\n.msg.Pr" +
+      "ops\022\r\n\005money\030\002 \001(\r\"\034\n\016UserUpLvResult\022\n\n\002" +
+      "lv\030\001 \001(\r*\343!\n\007MsgCode\022\030\n\024WHO_ELSE_IS_HERE" +
+      "_CMD\020\000\022\033\n\027WHO_ELSE_IS_HERE_RESULT\020\001\022\024\n\020U" +
+      "SER_QUIT_RESULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_" +
+      "RESULT\020\004\022\033\n\027USER_SUBTRACT_HP_RESULT\020\005\022\016\n" +
+      "\nDIE_RESULT\020\006\022\022\n\016USER_LOGIN_CMD\020\007\022\025\n\021USE" +
+      "R_LOGIN_RESULT\020\010\022\025\n\021USER_REGISTER_CMD\020\t\022" +
+      "\030\n\024USER_REGISTER_RESULT\020\n\022\024\n\020ATTK_MONSTE" +
+      "R_CMD\020\013\022\033\n\027STOP_CUR_USER_ALL_TIMER\020\014\022\031\n\025" +
+      "USER_SWITCH_SCENE_CMD\020\r\022\034\n\030USER_SWITCH_S" +
+      "CENE_RESULT\020\016\022\033\n\027MONSTER_START_ATTK_USER" +
+      "\020\017\022\026\n\022NOTICE_USER_ATTKED\020\020\022\027\n\023USER_SKILL" +
+      "_ATTK_CMD\020\021\022\032\n\026USER_SKILL_ATTK_RESULT\020\022\022" +
+      "\026\n\022SKILL_STATE_SWITCH\020\023\022\025\n\021ROB_EQUIPMENT" +
+      "_CMD\020\024\022\020\n\014BACKPACK_CMD\020\025\022\023\n\017BACKPACK_RES" +
+      "ULT\020\026\022\030\n\024ROB_EQUIPMENT_RESULT\020\027\022\023\n\017USER_" +
+      "POTION_CMD\020\030\022\026\n\022USER_POTION_RESULT\020\031\022\034\n\030" +
+      "USER_RESUME_STATE_RESULT\020\032\022\033\n\027USER_WEAR_" +
+      "EQUIPMENT_CMD\020\033\022\036\n\032USER_WEAR_EQUIPMENT_R" +
+      "ESULT\020\034\022\033\n\027USER_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032" +
+      "USER_UNDO_EQUIPMENT_RESULT\020\036\022 \n\034DURABILI" +
+      "TY_DEFICIENCY_RESULT\020\037\022\030\n\024REPAIR_EQUIPME" +
+      "NT_CMD\020 \022\033\n\027REPAIR_EQUIPMENT_RESULT\020!\022\034\n" +
+      "\030MONSTER_DROP_HP_AUTO_DIE\020\"\022\027\n\023ENTER_DUP" +
+      "LICATE_CMD\020#\022\032\n\026ENTER_DUPLICATE_RESULT\020$" +
+      "\022\021\n\rATTK_BOSS_CMD\020%\022\024\n\020ATTK_BOSS_RESULT\020" +
+      "&\022\024\n\020NEXT_BOSS_RESULT\020\'\022\033\n\027DUPLICATE_FIN" +
+      "ISH_RESULT\020(\022\033\n\027USER_QUIT_DUPLICATE_CMD\020" +
+      ")\022\036\n\032USER_QUIT_DUPLICATE_RESULT\020*\022\031\n\025BOS" +
+      "S_ATTK_USER_RESULT\020+\022\037\n\033BOSS_SKILL_ATTK_" +
+      "USER_RESULT\020,\022\031\n\025BOSS_KILL_USER_RESULT\020-" +
+      "\022\026\n\022USER_BUY_GOODS_CMD\020.\022\031\n\025USER_BUY_GOO" +
+      "DS_RESULT\020/\022\026\n\022USER_CHAT_INFO_CMD\0200\022\031\n\025U" +
+      "SER_CHAT_INFO_RESULT\0201\022\021\n\rSEND_MAIL_CMD\020" +
+      "2\022\024\n\020SEND_MAIL_RESULT\0203\022\020\n\014ALL_USER_CMD\020" +
+      "4\022\023\n\017ALL_USER_RESULT\0205\022\037\n\033NOTICE_USER_GE" +
+      "T_MAIL_RESULT\0206\022\025\n\021USER_SEE_MAIL_CMD\0207\022\030" +
+      "\n\024USER_SEE_MAIL_RESULT\0208\022\031\n\025USER_RECEIVE" +
+      "_MAIL_CMD\0209\022\034\n\030USER_RECEIVE_MAIL_RESULT\020" +
+      ":\022\030\n\024USER_ENTER_ARENA_CMD\020;\022\033\n\027USER_ENTE" +
+      "R_ARENA_RESULT\020<\022\034\n\030USER_CHOOSE_OPPONENT" +
+      "_CMD\020=\022\037\n\033USER_CHOOSE_OPPONENT_RESULT\020>\022" +
+      " \n\034TARGET_USER_CHALLENGE_RESULT\020?\022\034\n\030TAR" +
+      "GET_USER_RESPONSE_CMD\020@\022\037\n\033TARGET_USER_R" +
+      "ESPONSE_RESULT\020A\022\027\n\023USER_QUIT_ARENA_CMD\020" +
+      "B\022\032\n\026USER_QUIT_ARENA_RESULT\020C\022\023\n\017USER_AT" +
+      "TACK_CMD\020D\022\026\n\022USER_ATTACK_RESULT\020E\022\023\n\017US" +
+      "ER_DIE_RESULT\020F\022\024\n\020USER_TEAM_UP_CMD\020G\022\027\n" +
+      "\023USER_TEAM_UP_RESULT\020H\022\026\n\022ASK_TEAM_UP_RE" +
+      "SULT\020I\022\026\n\022USER_JOIN_TEAM_CMD\020J\022\031\n\025USER_J" +
+      "OIN_TEAM_RESULT\020K\022\026\n\022USER_QUIT_TEAM_CMD\020" +
+      "L\022\031\n\025USER_QUIT_TEAM_RESULT\020M\022\037\n\033USER_ENT" +
+      "ER_TEAM_FAIL_RESULT\020N\022$\n USER_QUIT_TEAM_" +
+      "AND_DUPLICATE_CMD\020O\022\'\n#USER_QUIT_TEAM_AN" +
+      "D_DUPLICATE_RESULT\020P\022$\n USER_SKILL_ATTK_" +
+      "DUPLICATE_RESULT\020Q\022\027\n\023PASTOR_SKILL_RESUL" +
+      "T\020R\022 \n\034SUMMON_MONSTER_SUB_HP_RESULT\020S\022\036\n" +
+      "\032USER_JOIN_TEAM_PERFORM_CMD\020T\022!\n\035USER_JO" +
+      "IN_TEAM_PERFORM_RESULT\020U\022\027\n\023USER_CLEAN_M" +
+      "AIL_CMD\020V\022\032\n\026USER_CLEAN_MAIL_RESULT\020W\022\031\n" +
+      "\025USER_DEAL_REQUEST_CMD\020X\022\034\n\030USER_DEAL_RE" +
+      "QUEST_RESULT\020Y\022\032\n\026ASK_TARGET_USER_RESULT" +
+      "\020Z\022!\n\035DEAL_TARGET_USER_RESPONSE_CMD\020[\022\024\n" +
+      "\020DEAL_CHANNEL_CMD\020\\\022\027\n\023DEAL_CHANNEL_RESU" +
+      "LT\020]\022\026\n\022USER_DEAL_ITEM_CMD\020^\022\031\n\025USER_DEA" +
+      "L_ITEM_RESULT\020_\022\031\n\025USER_ADD_COMPLETE_CMD" +
+      "\020a\022\034\n\030USER_ADD_COMPLETE_RESULT\020b\022\030\n\024USER" +
+      "_CANCEL_DEAL_CMD\020c\022\033\n\027USER_CANCEL_DEAL_R" +
+      "ESULT\020d\022\031\n\025USER_CONFIRM_DEAL_CMD\020e\022\034\n\030US" +
+      "ER_CONFIRM_DEAL_RESULT\020f\022 \n\034USER_CANCEL_" +
+      "DEAL_CONFIRM_CMD\020g\022#\n\037USER_CANCEL_DEAL_C" +
+      "ONFIRM_RESULT\020h\022\025\n\021SORT_OUT_DEAL_CMD\020i\022\030" +
+      "\n\024SORT_OUT_DEAL_RESULT\020j\022\031\n\025USER_CREATE_" +
+      "GUILD_CMD\020k\022\034\n\030USER_CREATE_GUILD_RESULT\020" +
+      "l\022\033\n\027USER_DISSOLVE_GUILD_CMD\020m\022\036\n\032USER_D" +
+      "ISSOLVE_GUILD_RESULT\020n\022\022\n\016SHOW_GUILD_CMD" +
+      "\020o\022\025\n\021SHOW_GUILD_RESULT\020p\022\030\n\024USER_ENTER_" +
+      "GUILD_CMD\020q\022\033\n\027USER_ENTER_GUILD_RESULT\020r" +
+      "\022\031\n\025SHOW_GUILD_MEMBER_CMD\020s\022\034\n\030SHOW_GUIL" +
+      "D_MEMBER_RESULT\020t\022\036\n\032LOOK_GUiLD_MEMBER_I" +
+      "NFO_CMD\020u\022!\n\035LOOK_GUiLD_MEMBER_INFO_RESU" +
+      "LT\020v\022\022\n\016QUIT_GUILD_CMD\020w\022\025\n\021QUIT_GUILD_R" +
+      "ESULT\020x\022\026\n\022APPOINT_MEMBER_CMD\020y\022\031\n\025APPOI" +
+      "NT_MEMBER_RESULT\020z\022\027\n\023ELIMINATE_GUILD_CM" +
+      "D\020{\022\032\n\026ELIMINATE_GUILD_RESULT\020|\022\035\n\031MODIF" +
+      "Y_GUILD_POSITION_CMD\020}\022\032\n\026MODIFY_GUILD_S" +
+      "TATE_CMD\020~\022\034\n\030LOOK_GUILD_WAREHOUSE_CMD\020\177" +
+      "\022 \n\033LOOK_GUILD_WAREHOUSE_RESULT\020\200\001\022\027\n\022TA" +
+      "KE_OUT_PROPS_CMD\020\201\001\022\032\n\025TAKE_OUT_PROPS_RE" +
+      "SULT\020\202\001\022\025\n\020PUT_IN_PROPS_CMD\020\203\001\022\030\n\023PUT_IN" +
+      "_PROPS_RESULT\020\204\001\022\027\n\022TAKE_OUT_MONEY_CMD\020\205" +
+      "\001\022\032\n\025TAKE_OUT_MONEY_RESULT\020\206\001\022\025\n\020PUT_IN_" +
+      "MONEY_CMD\020\207\001\022\030\n\023PUT_IN_MONEY_RESULT\020\210\001\022\033" +
+      "\n\026TRANSFER_PRESIDENT_CMD\020\310\001\022\036\n\031TRANSFER_" +
+      "PRESIDENT_RESULT\020\311\001\022\032\n\025LOOK_AUCTION_ITEM" +
+      "_CMD\020\211\001\022\035\n\030LOOK_AUCTION_ITEM_RESULT\020\212\001\022\025" +
+      "\n\020SHELVE_GOODS_CMD\020\213\001\022\030\n\023SHELVE_GOODS_RE" +
+      "SULT\020\214\001\022\026\n\021BIDDING_GOODS_CMD\020\215\001\022\031\n\024BIDDI" +
+      "NG_GOODS_RESULT\020\216\001\022\022\n\rONE_PRICE_CMD\020\217\001\022\025" +
+      "\n\020ONE_PRICE_RESULT\020\220\001\022\"\n\035LOOK_ONESELF_AU" +
+      "CTION_ITEM_CMD\020\221\001\022%\n LOOK_ONESELF_AUCTIO" +
+      "N_ITEM_RESULT\020\222\001\022\034\n\027CANCEL_AUCTION_ITEM_" +
+      "CMD\020\223\001\022\037\n\032CANCEL_AUCTION_ITEM_RESULT\020\224\001\022" +
+      "\026\n\021LOOK_ALL_TASK_CMD\020\225\001\022\031\n\024LOOK_ALL_TASK" +
+      "_RESULT\020\226\001\022\025\n\020RECEIVE_TASK_CMD\020\227\001\022\030\n\023REC" +
+      "EIVE_TASK_RESULT\020\230\001\022\026\n\021DIALOGUE_TASK_CMD" +
+      "\020\231\001\022\032\n\025TASK_COMPLETED_RESULT\020\232\001\022\033\n\026RECEI" +
+      "VE_TASK_AWARD_CMD\020\233\001\022\036\n\031RECEIVE_TASK_AWA" +
+      "RD_RESULT\020\234\001\022\026\n\021USER_UP_LV_RESULT\020\235\001\022\020\n\014" +
+      "ERROR_RESULT\020`B\005\n\003msgb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -112077,134 +113225,146 @@ public final class GameMsg {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInMoneyResult_descriptor,
         new java.lang.String[] { });
-    internal_static_msg_LookAuctionItemCmd_descriptor =
+    internal_static_msg_TransferPresidentCmd_descriptor =
       getDescriptor().getMessageTypes().get(141);
+    internal_static_msg_TransferPresidentCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_TransferPresidentCmd_descriptor,
+        new java.lang.String[] { "UserId", });
+    internal_static_msg_TransferPresidentResult_descriptor =
+      getDescriptor().getMessageTypes().get(142);
+    internal_static_msg_TransferPresidentResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_TransferPresidentResult_descriptor,
+        new java.lang.String[] { "UserId", });
+    internal_static_msg_LookAuctionItemCmd_descriptor =
+      getDescriptor().getMessageTypes().get(143);
     internal_static_msg_LookAuctionItemCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAuctionItemCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookAuctionItemResult_descriptor =
-      getDescriptor().getMessageTypes().get(142);
+      getDescriptor().getMessageTypes().get(144);
     internal_static_msg_LookAuctionItemResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAuctionItemResult_descriptor,
         new java.lang.String[] { "AuctionItem", });
     internal_static_msg_AuctionItem_descriptor =
-      getDescriptor().getMessageTypes().get(143);
+      getDescriptor().getMessageTypes().get(145);
     internal_static_msg_AuctionItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AuctionItem_descriptor,
         new java.lang.String[] { "Id", "UserName", "PropsId", "Auction", "Price", "Number", "Date", });
     internal_static_msg_ShelveGoodsCmd_descriptor =
-      getDescriptor().getMessageTypes().get(144);
+      getDescriptor().getMessageTypes().get(146);
     internal_static_msg_ShelveGoodsCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShelveGoodsCmd_descriptor,
         new java.lang.String[] { "Location", "Number", "Auction", "Price", });
     internal_static_msg_ShelveGoodsResult_descriptor =
-      getDescriptor().getMessageTypes().get(145);
+      getDescriptor().getMessageTypes().get(147);
     internal_static_msg_ShelveGoodsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShelveGoodsResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_BiddingGoodsCmd_descriptor =
-      getDescriptor().getMessageTypes().get(146);
+      getDescriptor().getMessageTypes().get(148);
     internal_static_msg_BiddingGoodsCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BiddingGoodsCmd_descriptor,
         new java.lang.String[] { "AuctionId", "Money", });
     internal_static_msg_BiddingGoodsResult_descriptor =
-      getDescriptor().getMessageTypes().get(147);
+      getDescriptor().getMessageTypes().get(149);
     internal_static_msg_BiddingGoodsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BiddingGoodsResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Money", });
     internal_static_msg_OnePriceCmd_descriptor =
-      getDescriptor().getMessageTypes().get(148);
+      getDescriptor().getMessageTypes().get(150);
     internal_static_msg_OnePriceCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_OnePriceCmd_descriptor,
         new java.lang.String[] { "AuctionId", });
     internal_static_msg_OnePriceResult_descriptor =
-      getDescriptor().getMessageTypes().get(149);
+      getDescriptor().getMessageTypes().get(151);
     internal_static_msg_OnePriceResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_OnePriceResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Price", });
     internal_static_msg_LookOneselfAuctionItemCmd_descriptor =
-      getDescriptor().getMessageTypes().get(150);
+      getDescriptor().getMessageTypes().get(152);
     internal_static_msg_LookOneselfAuctionItemCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookOneselfAuctionItemCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookOneselfAuctionItemResult_descriptor =
-      getDescriptor().getMessageTypes().get(151);
+      getDescriptor().getMessageTypes().get(153);
     internal_static_msg_LookOneselfAuctionItemResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookOneselfAuctionItemResult_descriptor,
         new java.lang.String[] { "AuctionItem", });
     internal_static_msg_CancelAuctionItemCmd_descriptor =
-      getDescriptor().getMessageTypes().get(152);
+      getDescriptor().getMessageTypes().get(154);
     internal_static_msg_CancelAuctionItemCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_CancelAuctionItemCmd_descriptor,
         new java.lang.String[] { "AuctionId", });
     internal_static_msg_CancelAuctionItemResult_descriptor =
-      getDescriptor().getMessageTypes().get(153);
+      getDescriptor().getMessageTypes().get(155);
     internal_static_msg_CancelAuctionItemResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_CancelAuctionItemResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookAllTaskCmd_descriptor =
-      getDescriptor().getMessageTypes().get(154);
+      getDescriptor().getMessageTypes().get(156);
     internal_static_msg_LookAllTaskCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAllTaskCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookAllTaskResult_descriptor =
-      getDescriptor().getMessageTypes().get(155);
+      getDescriptor().getMessageTypes().get(157);
     internal_static_msg_LookAllTaskResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAllTaskResult_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_ReceiveTaskCmd_descriptor =
-      getDescriptor().getMessageTypes().get(156);
+      getDescriptor().getMessageTypes().get(158);
     internal_static_msg_ReceiveTaskCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskCmd_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_ReceiveTaskResult_descriptor =
-      getDescriptor().getMessageTypes().get(157);
+      getDescriptor().getMessageTypes().get(159);
     internal_static_msg_ReceiveTaskResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskResult_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_DialogueTaskCmd_descriptor =
-      getDescriptor().getMessageTypes().get(158);
+      getDescriptor().getMessageTypes().get(160);
     internal_static_msg_DialogueTaskCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DialogueTaskCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_TaskCompletedResult_descriptor =
-      getDescriptor().getMessageTypes().get(159);
+      getDescriptor().getMessageTypes().get(161);
     internal_static_msg_TaskCompletedResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TaskCompletedResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_ReceiveTaskAwardCmd_descriptor =
-      getDescriptor().getMessageTypes().get(160);
+      getDescriptor().getMessageTypes().get(162);
     internal_static_msg_ReceiveTaskAwardCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskAwardCmd_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_ReceiveTaskAwardResult_descriptor =
-      getDescriptor().getMessageTypes().get(161);
+      getDescriptor().getMessageTypes().get(163);
     internal_static_msg_ReceiveTaskAwardResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskAwardResult_descriptor,
         new java.lang.String[] { "Props", "Money", });
     internal_static_msg_UserUpLvResult_descriptor =
-      getDescriptor().getMessageTypes().get(162);
+      getDescriptor().getMessageTypes().get(164);
     internal_static_msg_UserUpLvResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserUpLvResult_descriptor,

@@ -10,6 +10,7 @@ import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
 import server.timer.MonsterAttakTimer;
+import util.MyUtil;
 
 import java.util.Map;
 import java.util.concurrent.RunnableScheduledFuture;
@@ -25,9 +26,7 @@ public class MonsterStartAttkUserHandler implements ICmdHandler<GameMsg.MonsterS
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.MonsterStartAttkUser cmd) {
 
-        if (ctx == null || cmd == null) {
-            return;
-        }
+        MyUtil.checkIsNull(ctx,cmd);
         User user = PublicMethod.getInstance().getUser(ctx);
         Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
 

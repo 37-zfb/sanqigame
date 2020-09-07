@@ -208,6 +208,8 @@ enum MsgCode {
   TAKE_OUT_MONEY_RESULT = 134;
   PUT_IN_MONEY_CMD = 135;
   PUT_IN_MONEY_RESULT = 136;
+  TRANSFER_PRESIDENT_CMD = 200;
+  TRANSFER_PRESIDENT_RESULT = 201;
 
 
   LOOK_AUCTION_ITEM_CMD = 137;
@@ -1127,6 +1129,13 @@ message PutInMoneyCmd{
 }
 message PutInMoneyResult{
 }
+//转移会长
+message TransferPresidentCmd{
+  uint32 userId = 1;
+}
+message TransferPresidentResult{
+  uint32 userId = 1;
+}
 
 
 //查看拍卖
@@ -1163,12 +1172,14 @@ message BiddingGoodsCmd{
   uint32 money = 2;
 }
 message BiddingGoodsResult{
+  uint32 money = 1;
 }
 // 一口价
 message OnePriceCmd{
   uint32 auctionId = 1;
 }
 message OnePriceResult{
+  uint32 price = 1;
 }
 //查看自己上架物品
 message LookOneselfAuctionItemCmd{

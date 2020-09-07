@@ -69,6 +69,11 @@ public class OnePriceCmdHandler implements ICmdHandler<GameMsg.OnePriceCmd> {
         AuctionUtil.sendMailBuyer(user.getUserId(),props.getId(),auctionItemEntity.getNumber(),"购买拍卖品成功;");
         //给拍卖者发邮件
         AuctionUtil.sendMailSeller(auctionItemEntity.getUserId(),auctionItemEntity.getPrice(),"拍卖物品卖出金币");
+
+        GameMsg.OnePriceResult onePriceResult = GameMsg.OnePriceResult.newBuilder()
+                .setPrice(auctionItemEntity.getPrice())
+                .build();
+        ctx.writeAndFlush(onePriceCmd);
     }
 
 }

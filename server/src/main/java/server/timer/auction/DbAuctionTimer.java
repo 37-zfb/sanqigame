@@ -14,10 +14,7 @@ import util.CustomizeThreadFactory;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author 张丰博
@@ -119,11 +116,7 @@ public final class DbAuctionTimer {
             deleteBidder.add(bidderEntity);
         }
     }
-    public void deleteBidderAll(Collection<DbBidderEntity> bidderEntityList) {
-        if (bidderEntityList != null) {
-            deleteBidder.addAll(bidderEntityList);
-        }
-    }
+
 
     private void persistenceDate() {
         scheduledThreadPool.scheduleWithFixedDelay(() -> {
@@ -189,15 +182,18 @@ public final class DbAuctionTimer {
             List<DbBidderEntity> bidderEntityList = auctionService.listBidder(auctionItemEntity.getId());
             if (currDate.getTime() >= auctionItemDate.getTime()) {
                 //此时竞价结束
-                AuctionUtil.auctionResult(auctionItemEntity,bidderEntityList);
+                AuctionUtil.auctionResult(auctionItemEntity,bidderEntityList.get(0));
             } else {
                 //此时竞价没有结束
                 if (bidderEntityList != null && bidderEntityList.size() != 0) {
-                    auctionItemEntity.addListBidder(bidderEntityList);
+                    for (DbBidderEntity bidderEntity : bidderEntityList) {
+                        auctionItemEntity.addBidder(bidderEntity);
+                    }
                 }
                 PlayAuction.addAuctionItem(auctionItemEntity);
                 //启动定时器
-                ArriveTimeTimer.getArriveTimeTimer().process(auctionItemEntity, auctionItemDate.getTime()-currDate.getTime());
+                ScheduledFuture<?> scheduledFuture = ArriveTimeTimer.getArriveTimeTimer().process(auctionItemEntity.getId(), auctionItemDate.getTime() - currDate.getTime());
+                auctionItemEntity.setScheduledFuture(scheduledFuture);
             }
         }
 

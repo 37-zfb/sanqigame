@@ -42,7 +42,7 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
         int auctionId = biddingGoodsCmd.getAuctionId();
 
         DbAuctionItemEntity auctionItemById = PlayAuction.getAuctionItemById(auctionId);
-        if (auctionItemById == null){
+        if (auctionItemById == null) {
             //拍卖品已卖出
             throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
         }
@@ -57,7 +57,7 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
         dbBidderEntity.setMoney(money);
         dbBidderEntity.setUserId(user.getUserId());
         //添加竞拍者
-        PlayAuction.addBidder(dbBidderEntity);
+        DbBidderEntity beforeBidder = PlayAuction.addBidder(dbBidderEntity);
 
         user.setMoney(user.getMoney() - money);
 
@@ -65,6 +65,16 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
         userStateTimer.modifyUserState(userState);
 
         auctionTimer.addBidder(dbBidderEntity);
+        if (beforeBidder != null) {
+            AuctionUtil.sendMailSeller(beforeBidder.getUserId(),beforeBidder.getMoney(),"竞拍金币返回;");
+            auctionTimer.deleteBidder(beforeBidder);
+        }
+
+
         log.info("用户 {} 参与竞拍 {} 拍卖物;", user.getUserName(), auctionId);
+        GameMsg.BiddingGoodsResult biddingGoodsResult = GameMsg.BiddingGoodsResult.newBuilder()
+                .setMoney(money)
+                .build();
+        ctx.writeAndFlush(biddingGoodsResult);
     }
 }

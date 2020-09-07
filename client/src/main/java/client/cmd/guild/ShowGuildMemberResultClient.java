@@ -28,7 +28,15 @@ public class ShowGuildMemberResultClient implements ICmd<GameMsg.ShowGuildMember
         }
         Scanner scanner = new Scanner(System.in);
 
-        if (role.isEliminate()) {
+        if (role.isTransferPresident()) {
+            role.setTransferPresident(false);
+            System.out.println("选择玩家;");
+            int userId = scanner.nextInt();
+            GameMsg.TransferPresidentCmd transferPresidentCmd = GameMsg.TransferPresidentCmd.newBuilder()
+                    .setUserId(userId)
+                    .build();
+            ctx.writeAndFlush(transferPresidentCmd);
+        } else if (role.isEliminate()) {
             role.setEliminate(false);
             System.out.println("踢人:");
             System.out.println("0、退出");

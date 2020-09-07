@@ -52,14 +52,14 @@ public final class PlayAuction {
     /**
      * 添加竞拍者
      */
-    public static synchronized void addBidder(DbBidderEntity dbBidderEntity) {
+    public static synchronized DbBidderEntity addBidder(DbBidderEntity dbBidderEntity) {
         DbAuctionItemEntity dbAuctionItemEntity = AUCTION_ITEM.get(dbBidderEntity.getAuctionId());
 
         if (dbAuctionItemEntity == null){
             throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
         }
 
-        dbAuctionItemEntity.addBidder(dbBidderEntity);
+        return dbAuctionItemEntity.addBidder(dbBidderEntity);
     }
 
     /**
