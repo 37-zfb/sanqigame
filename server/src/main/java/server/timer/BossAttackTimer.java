@@ -46,12 +46,13 @@ public class BossAttackTimer {
                             SummonMonster summonMonster = bossMonster.chooseSummonMonster();
 
                             // 挑选伤害最高者
-                            if (bossMonster.getSummonMonsterMap().get(summonMonster) < bossMonster.getUserIdMap().get(user.getUserId())) {
-                                summonMonster = null;
-                            } else {
-                                user = null;
+                            if (bossMonster.getSummonMonsterMap().get(summonMonster) != null && bossMonster.getUserIdMap().get(user.getUserId()) != null) {
+                                if (bossMonster.getSummonMonsterMap().get(summonMonster) < bossMonster.getUserIdMap().get(user.getUserId())) {
+                                    summonMonster = null;
+                                } else {
+                                    user = null;
+                                }
                             }
-
 
                             if (user == null && summonMonster == null) {
                                 // 此时用户全部阵亡
@@ -72,13 +73,13 @@ public class BossAttackTimer {
                             if (user != null) {
                                 subHp = bossMonster.calUserSubHp(user.getBaseDefense(), user.getWeakenDefense());
 //                            int subHp = 5000;
-                                user.bossAttackSubHp(bossMonster,subHp);
+                                user.bossAttackSubHp(bossMonster, subHp);
 
                             } else {
                                 // 召唤兽
                                 subHp = bossMonster.calUserSubHp(summonMonster.getBaseDefense(), summonMonster.getWeakenDefense());
 //                                subHp = 5000;
-                                summonMonster.bossAttackSubHp(bossMonster,subHp);
+                                summonMonster.bossAttackSubHp(bossMonster, subHp);
 
                             }
                         }, 0, 2000, TimeUnit.MILLISECONDS);
