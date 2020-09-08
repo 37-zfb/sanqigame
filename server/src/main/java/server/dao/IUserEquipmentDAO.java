@@ -59,5 +59,5 @@ public interface IUserEquipmentDAO {
      * 批量修改装备
      * @param userEquipmentCollection
      */
-    void modifyEquipmentBatch(@Param("userEquipmentCollection") Collection<UserEquipmentEntity> userEquipmentCollection);
+    void updateEquipmentBatch(@Param("userEquipmentCollection") Collection<UserEquipmentEntity> userEquipmentCollection);
 }

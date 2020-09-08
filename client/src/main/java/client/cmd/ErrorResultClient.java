@@ -61,6 +61,15 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
         }else if (CustomizeErrorCode.USER_EXISTS.getCode() == code){
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
             GameClient.cmdLogin(ctx.channel());
+        }else if (code == CustomizeErrorCode.USER_NOT_HAVE_THIS_SKILL.getCode()
+                || code == CustomizeErrorCode.SCENE_NOT_MONSTER.getCode()
+                || code == CustomizeErrorCode.SKILL_CD.getCode()
+                || code == CustomizeErrorCode.MP_NOT_ENOUGH.getCode()){
+            //技能
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+        }else if (code == CustomizeErrorCode.POTION_CD_TIME.getCode()){
+
         }
 
 

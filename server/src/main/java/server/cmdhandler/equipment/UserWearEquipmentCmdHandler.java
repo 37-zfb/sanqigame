@@ -1,8 +1,10 @@
 package server.cmdhandler.equipment;
 
+import constant.EquipmentConst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import server.PublicMethod;
 import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.props.Props;
 import msg.GameMsg;
@@ -15,6 +17,9 @@ import server.model.User;
 import server.model.UserManager;
 import server.model.props.Equipment;
 import server.service.UserService;
+import server.timer.state.DbUserStateTimer;
+import type.EquipmentType;
+import util.MyUtil;
 
 import java.util.Map;
 
@@ -29,16 +34,17 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DbUserStateTimer userStateTimer;
+
     @Autowired
     private TaskPublicMethod taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserWearEquipmentCmd userWearEquipmentCmd) {
-        if (ctx == null || userWearEquipmentCmd == null) {
-            return;
-        }
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        User user = UserManager.getUserById(userId);
+        MyUtil.checkIsNull(ctx, userWearEquipmentCmd);
+        User user = PublicMethod.getInstance().getUser(ctx);
 
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
 
@@ -55,7 +61,7 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
         // 背包中的装备
         // 将要穿戴的装备
         UserEquipmentEntity wearEqu =
-                new UserEquipmentEntity(userEquipmentId, userId, props.getId(), 1, equipment.getDurability());
+                new UserEquipmentEntity(equipment.getId(), user.getUserId(), props.getId(), EquipmentConst.WEAR, equipment.getDurability());
 
         //去掉背包中的装备
         backpack.remove(location);
@@ -65,7 +71,8 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
         boolean isSuccess = false;
         for (int i = 0; i < userEquipmentArr.length; i++) {
             // 如果类型相同
-            if (userEquipmentArr[i] != null && equipment.getEquipmentType().getType() == ((Equipment) propsMap.get(userEquipmentArr[i].getPropsId()).getPropsProperty()).getEquipmentType().getType()) {
+            if (userEquipmentArr[i] != null
+                    && equipment.getEquipmentType().getType().equals(((Equipment) propsMap.get(userEquipmentArr[i].getPropsId()).getPropsProperty()).getEquipmentType().getType())) {
 
                 Props pro = propsMap.get(userEquipmentArr[i].getPropsId());
                 Equipment equ = (Equipment) pro.getPropsProperty();
@@ -73,7 +80,11 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
                 // 把换下来的装备加入背包
                 backpack.put(location, new Props(pro.getId(), pro.getName(), new Equipment(userEquipmentArr[i].getId(), pro.getId(), userEquipmentArr[i].getDurability(), equ.getDamage(), equ.getEquipmentType())));
                 // 更新数据库,脱下来的装备
-                userService.modifyWearEquipment(userEquipmentArr[i].getId(), 0,location);
+                userEquipmentArr[i].setIsWear(EquipmentConst.NO_WEAR);
+                userEquipmentArr[i].setLocation(location);
+                userStateTimer.modifyUserEquipment(userEquipmentArr[i]);
+
+//                userService.modifyWearEquipment(userEquipmentArr[i].getId(), 0,location);
                 // 穿上指定的装备
                 userEquipmentArr[i] = wearEqu;
                 isSuccess = true;
@@ -87,14 +98,17 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
                 }
             }
         }
-        userService.modifyWearEquipment(equipment.getId(), 1,-1);
+//        userService.modifyWearEquipment(equipment.getId(), 1,-1);
+        wearEqu.setLocation(-1);
+        userStateTimer.modifyUserEquipment(wearEqu);
 
         taskPublicMethod.listener(user);
 
-        GameMsg.UserWearEquipmentResult.Builder builder = GameMsg.UserWearEquipmentResult.newBuilder();
-        GameMsg.UserWearEquipmentResult equipmentResult = builder.setPropsId(wearEqu.getPropsId())
+        GameMsg.UserWearEquipmentResult equipmentResult = GameMsg.UserWearEquipmentResult.newBuilder()
+                .setPropsId(wearEqu.getPropsId())
                 .setLocation(location)
-                .setUserEquipmentId(wearEqu.getId()).build();
+                .setUserEquipmentId(wearEqu.getId())
+                .build();
 
         ctx.channel().writeAndFlush(equipmentResult);
 

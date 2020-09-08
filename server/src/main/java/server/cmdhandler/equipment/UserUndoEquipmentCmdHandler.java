@@ -1,9 +1,13 @@
 package server.cmdhandler.equipment;
 
 import constant.BackPackConst;
+import constant.EquipmentConst;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import server.PublicMethod;
 import server.model.props.Equipment;
 import server.model.props.Props;
 import msg.GameMsg;
@@ -15,12 +19,13 @@ import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
 import server.service.UserService;
+import server.timer.state.DbUserStateTimer;
+import util.MyUtil;
 
 import java.util.Map;
 
 /**
  * 脱装备
- *
  * @author 张丰博
  */
 @Component
@@ -28,27 +33,24 @@ import java.util.Map;
 public class UserUndoEquipmentCmdHandler implements ICmdHandler<GameMsg.UserUndoEquipmentCmd> {
 
     @Autowired
-    private UserService userService;
+    private DbUserStateTimer userStateTimer;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserUndoEquipmentCmd userUndoEquipmentCmd) {
-        if (ctx == null || userUndoEquipmentCmd == null) {
-            return;
-        }
-        // 获取用户
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        User user = UserManager.getUserById(userId);
+        MyUtil.checkIsNull(ctx, userUndoEquipmentCmd);
+        User user = PublicMethod.getInstance().getUser(ctx);
 
         int propsId = userUndoEquipmentCmd.getPropsId();
-        int userEquipmentId = userUndoEquipmentCmd.getUserEquipmentId();
+        long userEquipmentId = userUndoEquipmentCmd.getUserEquipmentId();
         Map<Integer, Props> backpack = user.getBackpack();
 
         if (backpack.size() >= BackPackConst.MAX_CAPACITY) {
             log.error("背包容量已达到上限!");
-            return;
+            throw new CustomizeException(CustomizeErrorCode.BACKPACK_SPACE_INSUFFICIENT);
         }
 
         UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
+        int location = 0;
         for (int i = 0; i < userEquipmentArr.length; i++) {
             if (userEquipmentArr[i] != null && userEquipmentArr[i].getId() == userEquipmentId) {
 
@@ -64,20 +66,22 @@ public class UserUndoEquipmentCmdHandler implements ICmdHandler<GameMsg.UserUndo
                     }
                 }
 
-//                UserEquipmentEntity userEquipmentEntity = new UserEquipmentEntity();
-//                userEquipmentEntity.setId(userEquipmentArr[i].getId());
-//                userEquipmentEntity.se
-
                 //更新数据库
-                userService.modifyWearEquipment(userEquipmentArr[i].getId(), 0,j);
+                userEquipmentArr[i].setIsWear(EquipmentConst.NO_WEAR);
+                userEquipmentArr[i].setLocation(j);
+                userStateTimer.modifyUserEquipment(userEquipmentArr[i]);
+                location = j;
+
                 // 装备栏该位置设值未空
                 userEquipmentArr[i] = null;
+                break;
             }
         }
 
         GameMsg.UserUndoEquipmentResult userUndoEquipmentResult = GameMsg.UserUndoEquipmentResult.newBuilder()
                 .setPropsId(userUndoEquipmentCmd.getPropsId())
                 .setUserEquipmentId(userUndoEquipmentCmd.getUserEquipmentId())
+                .setLocation(location)
                 .build();
         ctx.channel().writeAndFlush(userUndoEquipmentResult);
     }

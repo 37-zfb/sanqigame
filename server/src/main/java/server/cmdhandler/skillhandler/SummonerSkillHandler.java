@@ -34,7 +34,7 @@ public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty
         User user = PublicMethod.getInstance().getUser(ctx);
 
         //先判断是否有副本
-        Duplicate currDuplicate = PublicMethod.getInstance().getPlayTeam(user);
+        Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
 
         Skill skill = user.getSkillMap().get(skillId);
         SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();

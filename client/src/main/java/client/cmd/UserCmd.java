@@ -74,6 +74,9 @@ public class UserCmd {
                 if (role.getMail().isHave()) {
                     log.info("======> {}", "存在未领取的邮件");
                 }
+
+                System.out.println("当前等级: "+role.getLv());
+
                 PlayTaskClient playTaskClient = role.getPlayTaskClient();
                 if (playTaskClient.getCurrTaskId() != null && !playTaskClient.getCurrTaskId().equals(TaskType.NonTask.getTaskCode())) {
                     Map<Integer, Task> taskMap = GameData.getInstance().getTaskMap();
@@ -252,9 +255,10 @@ public class UserCmd {
 
                         // 装备位置
                         int location = scanner.nextInt();
-                        Props props = backpackClient.get(location);
-                        Equipment equipment = (Equipment) props.getPropsProperty();
-                        return GameMsg.UserWearEquipmentCmd.newBuilder().setLocation(location).setUserEquipmentId(equipment.getId()).build();
+                        return GameMsg.UserWearEquipmentCmd
+                                .newBuilder()
+                                .setLocation(location)
+                                .build();
 
                     } else if ("11".equals(command)) {
                         //卸装备
@@ -270,7 +274,7 @@ public class UserCmd {
                                 System.out.println(userEquipmentEntity.getId() + "、类型: " + equipment.getEquipmentType().getType() + " 名称: " + props.getName());
                             }
                         }
-                        int nextInt = scanner.nextInt();
+                        long nextInt = scanner.nextLong();
                         for (UserEquipmentEntity equipment : userEquipmentEntityList) {
                             if (equipment.getId() == nextInt) {
                                 return GameMsg.UserUndoEquipmentCmd.newBuilder().setUserEquipmentId(nextInt).setPropsId(equipment.getPropsId()).build();

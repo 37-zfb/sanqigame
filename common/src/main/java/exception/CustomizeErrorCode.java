@@ -81,6 +81,11 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     FRIEND_REACH_LIMIT(-441,"好友已达上限;"),
 
     USER_ALREADY_LOGIN(-442,"用户已经登陆;"),
+    USER_NOT_HAVE_THIS_SKILL(-443,"该用户不存在此技能;"),
+    SCENE_NOT_MONSTER(-444,"当前场景没有怪;"),
+    SKILL_CD(-445,"技能冷却中;"),
+    MP_NOT_ENOUGH(-446,"MP不足;"),
+    POTION_CD_TIME(-447,"该药剂在cd中;"),
     ;
 
     private String message;

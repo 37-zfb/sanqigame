@@ -29,7 +29,7 @@ public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProper
         User user = PublicMethod.getInstance().getUser(ctx);
 
         //先判断是否有副本
-        Duplicate currDuplicate = PublicMethod.getInstance().getPlayTeam(user);
+        Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
 
         Skill skill = user.getSkillMap().get(skillId);
         SorceressSkillProperty skillProperty = (SorceressSkillProperty) skill.getSkillProperty();

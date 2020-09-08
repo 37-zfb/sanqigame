@@ -116,7 +116,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                         .setCurrSceneId(user.getCurSceneId())
                         .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
                         .setProfessionId(user.getProfessionId())
-                        .setMoney(user.getMoney());
+                        .setMoney(user.getMoney())
+                        .setLv(user.getLv());
 
                 //封装 当前用户的技能.
                 packageSkill(user, resultBuilder);

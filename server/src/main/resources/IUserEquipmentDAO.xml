@@ -41,10 +41,10 @@
     <update id="updateEquipmentDurability">
          UPDATE `user_equipment` SET  durability = #{durability} WHERE id = #{id}
     </update>
-    <update id="modifyEquipmentBatch" parameterType="collection">
+    <update id="updateEquipmentBatch" parameterType="collection">
         <foreach collection="userEquipmentCollection" item="equipment" index="index" open="" close="" separator="">
             UPDATE `user_equipment`
-            SET is_wear = #{equipment.state},location=#{equipment.location},durability = #{equipment.durability}
+            SET is_wear = #{equipment.isWear},location=#{equipment.location},durability = #{equipment.durability}
             WHERE id = #{equipment.id};
         </foreach>
     </update>

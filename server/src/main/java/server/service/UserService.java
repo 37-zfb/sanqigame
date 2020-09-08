@@ -15,7 +15,6 @@ import server.dao.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author 张丰博
@@ -345,7 +344,7 @@ public class UserService {
      */
     public void modifyEquipmentBatch(Collection<UserEquipmentEntity> userEquipmentCollection) {
         if (userEquipmentCollection != null) {
-            userEquipmentDAO.modifyEquipmentBatch(userEquipmentCollection);
+            userEquipmentDAO.updateEquipmentBatch(userEquipmentCollection);
         }
     }
 

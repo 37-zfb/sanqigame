@@ -1,4 +1,4 @@
-package server.cmdhandler.potionhandler;
+package server.cmdhandler.potion;
 
 import constant.PotionConst;
 import server.model.props.Potion;
@@ -7,6 +7,7 @@ import server.model.User;
 
 /**
  * @author 张丰博
+ * 缓慢恢复
  */
 @Component
 public class SlowResume {

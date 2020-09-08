@@ -422,6 +422,9 @@ message UserLoginResult {
   bool isHaveTask = 18;
   uint32 currTaskId = 19;
   bool currTaskCompleted = 20;
+
+  //等级
+  uint32 lv = 21;
 }
 message Props {
   uint32 location = 1;
@@ -619,14 +622,17 @@ message UserUndoEquipmentCmd {
   // 装备id
   uint32 propsId = 1;
   // 用户装备id
-  uint32 userEquipmentId = 2;
+  uint64 userEquipmentId = 2;
 }
 // 脱装备结果
 message UserUndoEquipmentResult {
   // 装备id
   uint32 propsId = 1;
   // 用户装备id
-  uint32 userEquipmentId = 2;
+  uint64 userEquipmentId = 2;
+  // 脱下来装备的位置
+  uint32 location = 3;
+
 }
 // 耐久度不足
 message DurabilityDeficiencyResult {

@@ -2,6 +2,7 @@ package client.cmd;
 
 import client.model.server.props.Potion;
 import client.model.server.props.Props;
+import client.thread.BossThread;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
@@ -31,7 +32,7 @@ public class UserPotionResultClient implements ICmd<GameMsg.UserPotionResult> {
 
             Potion potion = (Potion) props.getPropsProperty();
             // 数量-1
-            potion.setNumber(potion.getNumber()-1);
+            potion.setNumber(potion.getNumber() - 1);
             if (potion.getInfo().contains(PotionType.HP.getType())) {
                 // 恢复HP
                 if (potion.getInfo().contains(PotionType.IMMEDIATELY.getType())) {
@@ -90,6 +91,12 @@ public class UserPotionResultClient implements ICmd<GameMsg.UserPotionResult> {
         } else {
             System.out.println("冷却中;");
         }
-        CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+        if (role.getCurrDuplicate() == null) {
+            //如果是在副本中应进副本线程
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+        }else {
+            BossThread.getInstance().process(ctx, role);
+        }
+
     }
 }

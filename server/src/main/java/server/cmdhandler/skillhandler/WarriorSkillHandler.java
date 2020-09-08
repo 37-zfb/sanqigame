@@ -35,12 +35,12 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
         User user = PublicMethod.getInstance().getUser(ctx);
 
         //先判断是否有副本
-        Duplicate currDuplicate = PublicMethod.getInstance().getPlayTeam(user);
+        Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
 
         Skill skill = user.getSkillMap().get(skillId);
         skill.setLastUseTime(System.currentTimeMillis());
         WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
-        // 此时在场景中；并且有怪
+        // 此时在场景中;
         // 在公共地图
         Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
         // 存活着的怪

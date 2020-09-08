@@ -1,4 +1,4 @@
-package server.cmdhandler.potionhandler;
+package server.cmdhandler.potion;
 
 import constant.ProfessionConst;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,7 @@ import server.model.User;
 
 /**
  * @author 张丰博
+ * 立即恢复
  */
 @Component
 @Slf4j
@@ -29,7 +30,6 @@ public class ImmediatelyResume {
             if (mp >= ProfessionConst.MP) {
                 user.setCurrMp(ProfessionConst.MP);
             } else {
-
                 // 加mp
                 user.setCurrMp(mp);
             }

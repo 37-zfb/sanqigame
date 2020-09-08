@@ -11,6 +11,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import server.cmdhandler.auction.AuctionUtil;
 import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.PlayTeam;
 import server.model.User;
@@ -320,6 +321,8 @@ public final class PublicMethod {
                 log.info("获得道具失败, 道具id: {}", propsId);
                 //此时给玩家发邮件
                 log.error(e.getMessage(), e);
+
+                AuctionUtil.sendMailBuyer(user.getUserId(), propsId, 1, "背包已满;");
             } catch (NullPointerException e) {
                 log.info("获得道具失败, 道具id: {}", propsId);
                 //此时给玩家发邮件
@@ -400,8 +403,6 @@ public final class PublicMethod {
         equ.setId(userEquipmentEntity.getId());
 
         userStateTimer.addUserEquipment(userEquipmentEntity);
-
-
 
         return location;
     }
@@ -580,7 +581,7 @@ public final class PublicMethod {
      * @param user
      * @return
      */
-    public Duplicate getPlayTeam(User user) {
+    public Duplicate getDuplicate(User user) {
         PlayTeam playTeam = user.getPlayTeam();
         if (playTeam == null) {
             return user.getCurrDuplicate();
