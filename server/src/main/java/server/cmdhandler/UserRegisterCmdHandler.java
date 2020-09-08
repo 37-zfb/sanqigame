@@ -1,16 +1,18 @@
 package server.cmdhandler;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import entity.db.UserEntity;
+import server.async.RegisterService;
 import server.service.UserService;
 
 
 /**
- *
  * 用户注册
  *
  * @author 张丰博
@@ -20,7 +22,7 @@ import server.service.UserService;
 public class UserRegisterCmdHandler implements ICmdHandler<GameMsg.UserRegisterCmd> {
 
     @Autowired
-    private UserService userService;
+    private RegisterService registerService;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserRegisterCmd userRegisterCmd) {
@@ -34,25 +36,18 @@ public class UserRegisterCmdHandler implements ICmdHandler<GameMsg.UserRegisterC
         userEntity.setPassword(userRegisterCmd.getNewPassword());
         userEntity.setProfessionId(userRegisterCmd.getProfessionId());
 
-        GameMsg.UserRegisterResult.Builder registerResultBuilder = GameMsg.UserRegisterResult.newBuilder();
-        GameMsg.UserRegisterResult registerResult = null;
 
-        try {
-            userService.addUser(userEntity);
-
-            registerResultBuilder.setIsSucceed(true);
+        registerService.asyn(userEntity, ctx, ()->{
             log.info("创建新用户:{}", userEntity.getUserName());
-            log.info("当前线程:{}", Thread.currentThread().getName());
 
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            registerResultBuilder.setIsSucceed(false);
+            GameMsg.UserRegisterResult userRegisterResult = GameMsg.UserRegisterResult
+                    .newBuilder()
+                    .setIsSucceed(true)
+                    .build();
+            ctx.writeAndFlush(userRegisterResult);
+            return null;
+        });
 
-        } finally {
-            // 构建返回结果
-            registerResult = registerResultBuilder.build();
-            ctx.channel().writeAndFlush(registerResult);
-        }
 
 
     }

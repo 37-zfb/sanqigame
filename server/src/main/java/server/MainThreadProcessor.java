@@ -107,6 +107,20 @@ public class MainThreadProcessor {
 
     }
 
+    /**
+     * 处理消息对象
+     *
+     * @param runnable
+     */
+    public void process(ChannelHandlerContext ctx, Runnable runnable) {
+
+        if (runnable != null) {
+            Random random = new Random();
+            int randomInt = random.nextInt(8);
+            this.ex[randomInt].submit(runnable);
+        }
+
+    }
 
     /**
      * 转义消息对象

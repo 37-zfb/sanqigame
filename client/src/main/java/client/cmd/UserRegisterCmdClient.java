@@ -21,11 +21,6 @@ public class UserRegisterCmdClient implements ICmd<GameMsg.UserRegisterResult> {
             return;
         }
 
-        if (!userRegisterResult.getIsSucceed()) {
-            System.out.println("注册失败,已存在此用户!");
-            GameClient.cmdLogin(ctx.channel());
-        }
-
         UserLoginCmdClient loginCmdClient = new UserLoginCmdClient();
         User user = loginCmdClient.login();
         GameMsg.UserLoginCmd userLoginCmd = GameMsg.UserLoginCmd.newBuilder()

@@ -63,10 +63,14 @@ public class UserService {
     public UserEntity getUserByName(String userName) {
         UserEntity user;
         if (userName == null) {
-            user = null;
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_FOUND);
         }
         user = userDAO.selectUserByName(userName);
+
+        if (user == null) {
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_FOUND);
+        }
+
         return user;
     }
 

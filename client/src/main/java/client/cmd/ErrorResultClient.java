@@ -1,5 +1,6 @@
 package client.cmd;
 
+import client.GameClient;
 import client.model.Role;
 import client.model.SceneData;
 import client.thread.CmdThread;
@@ -54,6 +55,12 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
             CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }else if (code == CustomizeErrorCode.USER_MONEY_INSUFFICIENT.getCode()){
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
+        }else if (code == CustomizeErrorCode.USER_ALREADY_LOGIN.getCode() || code == CustomizeErrorCode.USER_NOT_FOUND.getCode()){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
+            GameClient.cmdLogin(ctx.channel());
+        }else if (CustomizeErrorCode.USER_EXISTS.getCode() == code){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
+            GameClient.cmdLogin(ctx.channel());
         }
 
 
