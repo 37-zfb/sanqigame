@@ -4,7 +4,7 @@ import com.google.protobuf.GeneratedMessageV3;
 import lombok.extern.slf4j.Slf4j;
 import server.model.profession.skill.AbstractSkillProperty;
 import server.GameServer;
-import server.cmdhandler.skillhandler.ISkillHandler;
+import server.cmdhandler.skill.ISkillHandler;
 import util.PackageUtil;
 
 import java.lang.reflect.Method;

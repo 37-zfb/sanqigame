@@ -286,6 +286,10 @@ public class User {
         return subHp;
     }
 
+    /**
+     * 获得装备伤害加成
+     * @return
+     */
     public int getEquDamage() {
         int equDamage = 0;
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
@@ -300,7 +304,6 @@ public class User {
                         log.info("用户: {}, 武器: {}, 耐久度: {}", this.getUserName(), props.getName(), userEquipmentArr[i].getDurability());
                         GameMsg.DurabilityDeficiencyResult durabilityDeficiencyResult = GameMsg.DurabilityDeficiencyResult.newBuilder()
                                 .setUserEquipmentId(userEquipmentArr[i].getId())
-                                .setPropsId(userEquipmentArr[i].getPropsId())
                                 .build();
                         ctx.channel().writeAndFlush(durabilityDeficiencyResult);
                     } else {

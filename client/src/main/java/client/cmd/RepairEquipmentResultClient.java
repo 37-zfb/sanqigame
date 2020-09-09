@@ -25,7 +25,7 @@ public class RepairEquipmentResultClient implements ICmd<GameMsg.RepairEquipment
         }
         Role role = Role.getInstance();
         // 需要修理的装备id
-        int userEquipmentId = repairEquipmentResult.getUserEquipmentId();
+        long userEquipmentId = repairEquipmentResult.getUserEquipmentId();
         UserEquipmentEntity[] userEquipmentArr = role.getUserEquipmentEntityArr();
 
         for (int i = 0; i < userEquipmentArr.length; i++) {

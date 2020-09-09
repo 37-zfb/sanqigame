@@ -636,19 +636,17 @@ message UserUndoEquipmentResult {
 }
 // 耐久度不足
 message DurabilityDeficiencyResult {
-  // 装备id
-  uint32 propsId = 1;
   // 用户装备id
-  uint64 userEquipmentId = 2;
+  uint64 userEquipmentId = 1;
 }
 // 修理装备 指令
 message RepairEquipmentCmd {
-  uint32 userEquipmentId = 1;
+  uint64 userEquipmentId = 1;
 }
 // 修理装备 结果
 message RepairEquipmentResult {
 
-  uint32 userEquipmentId = 1;
+  uint64 userEquipmentId = 1;
 }
 // 自动掉血死亡
 message MonsterDropHpAutoDie {

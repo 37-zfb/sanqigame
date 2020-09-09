@@ -1,20 +1,24 @@
 package server.cmdhandler.equipment;
 
 import constant.EquipmentConst;
+import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import server.model.props.Equipment;
-import server.model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import entity.db.UserEquipmentEntity;
+import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
+import server.model.props.Equipment;
+import server.model.props.Props;
+import server.scene.GameData;
 import server.service.UserService;
+import server.timer.state.DbUserStateTimer;
 import type.PropsType;
+import util.MyUtil;
 
 import java.util.Map;
 
@@ -25,26 +29,26 @@ import java.util.Map;
 @Component
 @Slf4j
 public class RepairEquipmentCmdHandler implements ICmdHandler<GameMsg.RepairEquipmentCmd> {
+
     @Autowired
-    private UserService userService;
+    private DbUserStateTimer userStateTimer;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.RepairEquipmentCmd repairEquipmentCmd) {
-        if (ctx == null || repairEquipmentCmd == null) {
-            return;
-        }
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        User user = UserManager.getUserById(userId);
+        MyUtil.checkIsNull(ctx, repairEquipmentCmd);
+        User user = PublicMethod.getInstance().getUser(ctx);
 
         // 需要修理的装备id
-        int userEquipmentId = repairEquipmentCmd.getUserEquipmentId();
+        long userEquipmentId = repairEquipmentCmd.getUserEquipmentId();
         UserEquipmentEntity[] userEquipmentArr = user.getUserEquipmentArr();
         for (int i = 0; i < userEquipmentArr.length; i++) {
             if (userEquipmentArr[i] != null && userEquipmentId == userEquipmentArr[i].getId()) {
                 // 修理装备，设置耐久度100
                 userEquipmentArr[i].setDurability(EquipmentConst.MAX_DURABILITY);
                 // 持久化数据库
-                userService.modifyEquipmentDurability(userEquipmentId, userEquipmentArr[i].getDurability());
+                userStateTimer.modifyUserEquipment(userEquipmentArr[i]);
+
+                log.info("用户 {} 修理已穿戴装备 {} ",user.getUserName(),GameData.getInstance().getPropsMap().get(userEquipmentArr[i].getPropsId()).getName());
             }
         }
         Map<Integer, Props> backpack = user.getBackpack();
@@ -54,8 +58,14 @@ public class RepairEquipmentCmdHandler implements ICmdHandler<GameMsg.RepairEqui
                 if (equipment.getId() == userEquipmentId){
                     // 修理装备，设置耐久度100
                     equipment.setDurability(EquipmentConst.MAX_DURABILITY);
+
                     // 持久化数据库
-                    userService.modifyEquipmentDurability(userEquipmentId, equipment.getDurability());
+                    UserEquipmentEntity equipmentEntity = new UserEquipmentEntity();
+                    equipmentEntity.setId(equipment.getId());
+                    equipmentEntity.setDurability(EquipmentConst.MAX_DURABILITY);
+                    userStateTimer.modifyUserEquipment(equipmentEntity);
+
+                    log.info("用户 {} 修理已穿戴装备 {} ",user.getUserName(),props.getName());
                 }
 
             }

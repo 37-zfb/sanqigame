@@ -493,7 +493,6 @@ public final class PublicMethod {
         if (user == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_MANAGER);
         }
-
         return user;
     }
 

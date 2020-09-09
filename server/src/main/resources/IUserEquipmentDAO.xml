@@ -23,7 +23,7 @@
             parameterType="collection">
         <foreach collection="equipmentCollection" item="equipment" index="index" open="" close="" separator="">
             INSERT INTO `user_equipment` ( id, user_id, `props_id`,`is_wear`,`durability`,`location` ) VALUES (
-              #{equipment.id}  ,#{equipment.userId},
+            #{equipment.id} ,#{equipment.userId},
             #{equipment.propsId} ,#{equipment.isWear},#{equipment.durability},#{equipment.location});
         </foreach>
     </insert>
@@ -44,7 +44,17 @@
     <update id="updateEquipmentBatch" parameterType="collection">
         <foreach collection="userEquipmentCollection" item="equipment" index="index" open="" close="" separator="">
             UPDATE `user_equipment`
-            SET is_wear = #{equipment.isWear},location=#{equipment.location},durability = #{equipment.durability}
+            <set>
+                <if test="equipment.isWear!=null">
+                    is_wear = #{equipment.isWear },
+                </if>
+                <if test="equipment.location!=null">
+                    location=#{equipment.location },
+                </if>
+                <if test="equipment.durability!=null">
+                    durability = #{equipment.durability }
+                </if>
+            </set>
             WHERE id = #{equipment.id};
         </foreach>
     </update>

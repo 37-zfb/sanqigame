@@ -1,8 +1,14 @@
 package server.cmdhandler;
 
+import constant.SceneConst;
+import entity.db.CurrUserStateEntity;
+import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import server.model.props.Equipment;
+import server.model.props.Props;
 import server.model.scene.Monster;
 import server.model.scene.Npc;
 import server.model.scene.Scene;
@@ -13,6 +19,13 @@ import server.Broadcast;
 import server.PublicMethod;
 import server.model.User;
 import server.model.UserManager;
+import server.timer.state.DbUserStateTimer;
+import type.EquipmentType;
+import type.SceneType;
+import util.MyUtil;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -21,15 +34,15 @@ import server.model.UserManager;
 @Slf4j
 @Component
 public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitchSceneCmd> {
+
+    @Autowired
+    private DbUserStateTimer userStateTimer;
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserSwitchSceneCmd cmd) {
 
-        if (ctx == null || cmd == null) {
-            return;
-        }
-
-        Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        User user = UserManager.getUserById(userId);
+        MyUtil.checkIsNull(ctx, cmd);
+        User user = PublicMethod.getInstance().getUser(ctx);
 
         GameMsg.UserSwitchSceneResult.Builder resultBuilder = GameMsg.UserSwitchSceneResult.newBuilder();
 
@@ -66,16 +79,32 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
 
         // 把对应的 channel 加入到ChannelGroup中
         // 把信道转移到要移动到的场景中
-        Broadcast.removeChannel(user.getCurSceneId(),ctx.channel());
-        Broadcast.addChannel(toScene.getId(),ctx.channel());
+        Broadcast.removeChannel(user.getCurSceneId(), ctx.channel());
+        Broadcast.addChannel(toScene.getId(), ctx.channel());
+
+
+        //如果当前场景是公共地图，切换地图时则更新装备耐久度
+        List<Integer> sceneId = SceneType.getSceneIdByType("野外");
+        if (sceneId.contains(user.getCurSceneId())){
+            //持久化装备耐久度
+            Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
+            for (UserEquipmentEntity equipmentEntity : user.getUserEquipmentArr()) {
+                if (equipmentEntity != null) {
+                    if (((Equipment) propsMap.get(equipmentEntity.getPropsId()).getPropsProperty()).getEquipmentType() == EquipmentType.Weapon) {
+                        //如果是武器
+                        userStateTimer.modifyUserEquipment(equipmentEntity);
+                    }
+                }
+
+            }
+        }
+
+
         // 修改 当前用户所在场景
         user.setCurSceneId(cmd.getToSceneId());
-
         GameMsg.UserSwitchSceneResult userSwitchSceneResult = resultBuilder.build();
         ctx.channel().writeAndFlush(userSwitchSceneResult);
     }
-
-
 
 
 }

@@ -10,6 +10,7 @@ import type.BossMonsterType;
 
 /**
  * @author 张丰博
+ * boss技能
  */
 @Slf4j
 public class BossSkillAttack {

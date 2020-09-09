@@ -1,4 +1,4 @@
-package server.cmdhandler.skillhandler;
+package server.cmdhandler.skill;
 
 import constant.SkillConst;
 import exception.CustomizeErrorCode;

@@ -308,7 +308,7 @@ public class UserCmd {
                             }
 
                         }
-                        int nextInt = scanner.nextInt();
+                        long nextInt = scanner.nextLong();
                         return GameMsg.RepairEquipmentCmd.newBuilder().setUserEquipmentId(nextInt).build();
                     } else if ("13".equals(command)) {
                         Map<Integer, Duplicate> duplicateMap = GameData.getInstance().getDuplicateMap();

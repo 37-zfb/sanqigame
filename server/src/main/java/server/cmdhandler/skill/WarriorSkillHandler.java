@@ -1,4 +1,4 @@
-package server.cmdhandler.skillhandler;
+package server.cmdhandler.skill;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
