@@ -86,6 +86,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     SKILL_CD(-445,"技能冷却中;"),
     MP_NOT_ENOUGH(-446,"MP不足;"),
     POTION_CD_TIME(-447,"该药剂在cd中;"),
+    TARGET_USER_QUIT(-448,"对方已离线;"),
+    USER_NOT_ARENA(-449,"不在竞技场中;"),
     ;
 
     private String message;

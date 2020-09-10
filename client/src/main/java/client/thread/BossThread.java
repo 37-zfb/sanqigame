@@ -114,7 +114,6 @@ public class BossThread {
                 GameMsg.AttkBossCmd attkBossCmd = GameMsg.AttkBossCmd.newBuilder().build();
                 // 发送数据
                 ctx.writeAndFlush(attkBossCmd);
-                break;
             } else if ("2".equals(command) && role.getCurrHp() > 0) {
 
                 System.out.println("当前所拥有技能如下: ");
@@ -127,7 +126,6 @@ public class BossThread {
                         .setSkillId(skillId)
                         .build();
                 ctx.writeAndFlush(userSkillAttkCmd);
-                break;
 
             } else if ("3".equals(command)) {
                 break;

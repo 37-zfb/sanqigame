@@ -18,16 +18,13 @@ import client.model.task.PlayTaskClient;
 import client.scene.GameData;
 import client.thread.BossThread;
 import client.thread.DealThread;
-import com.sun.org.apache.regexp.internal.RE;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-
 import msg.GameMsg;
 import type.*;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -76,6 +73,8 @@ public class UserCmd {
                 }
 
                 System.out.println("当前等级: "+role.getLv());
+                System.out.println("当前血量: "+role.getCurrHp());
+                System.out.println("当前蓝量: "+role.getCurrMp());
 
                 PlayTaskClient playTaskClient = role.getPlayTaskClient();
                 if (playTaskClient.getCurrTaskId() != null && !playTaskClient.getCurrTaskId().equals(TaskType.NonTask.getTaskCode())) {
@@ -146,8 +145,7 @@ public class UserCmd {
                         return GameMsg.WhoElseIsHereCmd.newBuilder().build();
                     } else if ("3".equals(command)) {
                         // 普通攻击
-                        GameMsg.AttkCmd.Builder cmdBuilder = GameMsg.AttkCmd.newBuilder();
-                        return cmdBuilder;
+                        ctx.writeAndFlush(GameMsg.AttkCmd.newBuilder().build());
                     } else if ("4".equals(command)) {
                         System.out.println("当前所拥有技能如下: ");
                         for (Skill skill : role.getSkillMap().values()) {
@@ -158,8 +156,9 @@ public class UserCmd {
                         GameMsg.UserSkillAttkCmd userSkillAttkCmd = GameMsg.UserSkillAttkCmd.newBuilder()
                                 .setSkillId(skillId)
                                 .build();
+                        ctx.writeAndFlush(userSkillAttkCmd);
 
-                        return userSkillAttkCmd;
+
 
                     } else if ("5".equals(command)) {
 

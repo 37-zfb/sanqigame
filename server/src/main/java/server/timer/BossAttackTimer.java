@@ -1,7 +1,9 @@
 package server.timer;
 
 import lombok.extern.slf4j.Slf4j;
+import server.model.UserManager;
 import server.model.duplicate.BossMonster;
+import server.model.duplicate.ForceAttackUser;
 import server.model.profession.SummonMonster;
 import server.model.User;
 import type.ProfessionType;
@@ -10,6 +12,7 @@ import util.CustomizeThreadFactory;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author 张丰博
@@ -34,31 +37,42 @@ public class BossAttackTimer {
      *
      * @param bossMonster
      */
-    public void bossNormalAttack(BossMonster bossMonster) {
+    public void bossNormalAttack(BossMonster bossMonster,User currUser) {
         if (bossMonster == null) {
             return;
         }
         ScheduledFuture<?> scheduledFuture =
                 scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
-                            // 选择当前要攻击的user
-                            User user = bossMonster.chooseUser();
-                            SummonMonster summonMonster = bossMonster.chooseSummonMonster();
+
+                            User user = null;
+                            Integer forceId = bossMonster.getForceId();
+                            if (forceId != null) {
+                                user = UserManager.getUserById(forceId);
+                            }
+
+                            SummonMonster summonMonster = null;
+                            if (user == null) {
+                                // 选择当前要攻击的user
+                                user = bossMonster.chooseUser();
+                                summonMonster = bossMonster.chooseSummonMonster();
+                            }
+
+                            if (user == null && summonMonster == null) {
+                                // 此时没有攻击目标
+                                log.info("boss {} 没有攻击目标;", bossMonster.getBossName());
+                                bossMonster.getScheduledFuture().cancel(true);
+                                bossMonster.setScheduledFuture(null);
+                                return;
+                            }
 
                             // 挑选伤害最高者
-                            if (bossMonster.getSummonMonsterMap().get(summonMonster) != null && bossMonster.getUserIdMap().get(user.getUserId()) != null) {
+                            if (user != null && summonMonster != null) {
                                 if (bossMonster.getSummonMonsterMap().get(summonMonster) < bossMonster.getUserIdMap().get(user.getUserId())) {
                                     summonMonster = null;
                                 } else {
                                     user = null;
                                 }
-                            }
-
-                            if (user == null && summonMonster == null) {
-                                // 此时用户全部阵亡
-                                log.info("用户全部阵亡;");
-                                bossMonster.getScheduledFuture().cancel(true);
-                                return;
                             }
 
                             // 如果是牧师，并且在吟唱状态，此时受到攻击，定时器加血加蓝取消
@@ -69,17 +83,16 @@ public class BossAttackTimer {
                                 }
                             }
 
-                            int subHp = 0;
                             if (user != null) {
-                                subHp = bossMonster.calUserSubHp(user.getBaseDefense(), user.getWeakenDefense());
+                                int subHp = bossMonster.calUserSubHp(user.getBaseDefense(), user.getWeakenDefense());
 //                            int subHp = 5000;
                                 user.bossAttackSubHp(bossMonster, subHp);
 
-                            } else {
+                            } else if (summonMonster != null) {
                                 // 召唤兽
-                                subHp = bossMonster.calUserSubHp(summonMonster.getBaseDefense(), summonMonster.getWeakenDefense());
+                                int subHp = bossMonster.calUserSubHp(summonMonster.getBaseDefense(), summonMonster.getWeakenDefense());
 //                                subHp = 5000;
-                                summonMonster.bossAttackSubHp(bossMonster, subHp);
+                                summonMonster.bossAttackSubHp(bossMonster, subHp,currUser);
 
                             }
                         }, 0, 2000, TimeUnit.MILLISECONDS);

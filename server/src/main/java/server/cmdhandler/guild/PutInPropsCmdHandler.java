@@ -103,6 +103,7 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
             UserPotionEntity userPotionEntity = new UserPotionEntity();
             userPotionEntity.setUserId(user.getUserId());
             userPotionEntity.setLocation(location);
+            userPotionEntity.setId(potion.getId());
             if (potion.getNumber() > propsNumber) {
                 potion.setNumber(potion.getNumber() - propsNumber);
                 userPotionEntity.setNumber(potion.getNumber());

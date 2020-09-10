@@ -59,35 +59,9 @@ public class DieResultClient implements ICmd<GameMsg.DieResult> {
                 System.out.println(monster.getName() + " 已被击杀!");
             }
         }
-        CmdThread.getInstance().process(ctx, Role.getInstance(), scene.getNpcMap().values());
+//        CmdThread.getInstance().process(ctx, Role.getInstance(), scene.getNpcMap().values());
     }
 
-    /**
-     * 抢装备or放弃
-     */
-    private void robOrGiveUpEqu(ChannelHandlerContext ctx, Monster monster, Integer type) {
-        while (true) {
-            System.out.println("1、捡起;");
-            System.out.println("2、放弃;");
-            Scanner scanner = new Scanner(System.in);
-            String cmd = scanner.nextLine();
-            if ("2".equals(cmd)) {
-                //放弃
-                log.info("放弃当前装备!");
-                break;
-            } else if ("1".equals(cmd)) {
-                // 捡起
-                log.info("抢道具!");
-                GameMsg.RobEquipmentCmd robPropsCmd = GameMsg.RobEquipmentCmd.newBuilder().setMonsterId(monster.getId()).setType(type).build();
-                ctx.channel().writeAndFlush(robPropsCmd);
-                break;
-            } else {
-                System.out.println("命令有误请重新输入!");
-            }
-        }
-
-
-    }
 
 
 }

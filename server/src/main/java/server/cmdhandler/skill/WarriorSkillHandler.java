@@ -1,7 +1,10 @@
 package server.cmdhandler.skill;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import server.model.PlayArena;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.duplicate.ForceAttackUser;
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Component;
 import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
+import server.timer.BossAttackTimer;
+import server.timer.MonsterAttakTimer;
 import type.skill.WarriorSkillType;
 
 import java.lang.reflect.Method;
@@ -32,122 +37,123 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
     @Override
     public void skillHandle(ChannelHandlerContext ctx, WarriorSkillProperty warriorSkillProperty, Integer skillId) {
 
+        if (ctx == null || warriorSkillProperty == null || skillId == null) {
+            return;
+        }
+
         User user = PublicMethod.getInstance().getUser(ctx);
-
-        //先判断是否有副本
-        Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
-
         Skill skill = user.getSkillMap().get(skillId);
+        if (skill == null) {
+            return;
+        }
+
         skill.setLastUseTime(System.currentTimeMillis());
         WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
-        // 此时在场景中;
-        // 在公共地图
-        Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
-        // 存活着的怪
-        List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
+
         for (WarriorSkillType skillType : WarriorSkillType.values()) {
             if (!skillType.getId().equals(skillProperty.getId())) {
                 continue;
             }
             try {
-                Method declaredMethod;
-                if (currDuplicate == null) {
-                    // 公共地图中
-                    declaredMethod = WarriorSkillHandler.class.getDeclaredMethod(skillType.getName() + "SkillScene", List.class, User.class, Integer.class);
-                    declaredMethod.invoke(this,monsterAliveList, user, skillId);
-
-                } else {
-                    //
-                    declaredMethod = WarriorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Duplicate.class, Integer.class);
-                    declaredMethod.invoke(this, user, currDuplicate, skillId);
-
-                }
+                Method declaredMethod = WarriorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Integer.class);
+                declaredMethod.invoke(this, user, skillId);
                 break;
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-
-
-    }
-
-    /**
-     * 嘲讽当前场景中的所有存活在的怪
-     *
-     * @param monsterAliveList 存活怪的集合
-     * @param user             用户对象
-     * @param skillId          技能id
-     */
-    private void ridiculeSkillScene(List<Monster> monsterAliveList, User user, Integer skillId) {
-        Skill skill = user.getSkillMap().get(skillId);
-        WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
-        if (monsterAliveList.size() != 0) {
-            // 嘲讽当前场景中所有的怪
-            for (Monster monster : monsterAliveList) {
-                // 后端架构如果采用多线程，怪减血时要加synchronized
-                synchronized (monster.getSubHpMonitor()) {
-                    if (monster.isDie()) {
-                        // 有可能刚被前一用户杀死，
-                        // 怪死，减蓝、技能设为cd; 重新定义恢复终止时间
-                        user.subMp(skill.getConsumeMp());
-                        log.info("{} 已被其他玩家击杀!", monster.getName());
-                    } else {
-                        ForceAttackUser forceAttackUser = PublicMethod.getInstance().createForeAttackUser(user.getUserId(), skillProperty.getEffectTime());
-                        AtomicReference<ForceAttackUser> attackUserAtomicReference = monster.getAttackUserAtomicReference();
-                        boolean isSuccess = attackUserAtomicReference.compareAndSet(null, forceAttackUser);
-
-                        // 减蓝
-                        user.subMp(skill.getConsumeMp());
-                        log.info("用户 {} 在 {} 释放 {} 吸引 {} 火力；", user.getUserName(), GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getName(), skill.getName(), monster.getName());
-                        GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
-                        GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(isSuccess)
-                                .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
-                                .setSubtractHp(0)
-                                .build();
-                        user.getCtx().writeAndFlush(userSkillAttkResult);
-                    }
-                }
-                // 减蓝
-                user.subMp(skill.getConsumeMp());
+                log.error(e.getMessage(), e);
             }
         }
+
     }
 
     /**
      * 嘲讽当前副本中的boss
      *
-     * @param user      用户对象
-     * @param duplicate 副本集合
-     * @param skillId   技能id
+     * @param user    用户对象
+     * @param skillId 技能id
      */
-    private void ridiculeSkill(User user, Duplicate duplicate, Integer skillId) {
+    private void ridiculeSkill(User user, Integer skillId) {
+        if (user == null || skillId == null) {
+            return;
+        }
+
+        //先判断是否有副本
+        Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
+        //竞技场
+        PlayArena playArena = user.getPlayArena();
+        // 此时在野外
+        Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
+
         Skill skill = user.getSkillMap().get(skillId);
         WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
 
-        // 吸引boss火力
-        // 副本中;  设置自己成为boss强制攻击的玩家
-        BossMonster currBossMonster = duplicate.getCurrBossMonster();
-        ForceAttackUser forceAttackUser = PublicMethod.getInstance().createForeAttackUser(user.getUserId(), skillProperty.getEffectTime());
-        AtomicReference<ForceAttackUser> attackUserAtomicReference = currBossMonster.getAttackUserAtomicReference();
-        boolean isSuccess = attackUserAtomicReference.compareAndSet(null, forceAttackUser);
+        if (currDuplicate != null) {
+            // 副本中;  设置自己成为boss强制攻击的玩家
+            BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
+            ForceAttackUser forceAttackUser = PublicMethod.getInstance().createForeAttackUser(user.getUserId(), skillProperty.getEffectTime());
+            AtomicReference<ForceAttackUser> attackUserAtomicReference = currBossMonster.getAttackUserAtomicReference();
+            boolean isSuccess = attackUserAtomicReference.compareAndSet(null, forceAttackUser);
+
+            if (isSuccess) {
+                log.info("用户 {} 在副本 {} 释放 {} 吸引 {} 火力；",
+                        user.getUserName(),
+                        currDuplicate.getName(),
+                        skill.getName(),
+                        currBossMonster.getBossName());
+            }
+
+            if (currBossMonster.getScheduledFuture() == null) {
+                //设置boss定时器， 攻击玩家
+                BossAttackTimer.getInstance().bossNormalAttack(currBossMonster,user);
+            }
+
+        } else if (playArena != null) {
+        } else if (monsterMap.size() != 0) {
+            //野外
+            List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
+            if (monsterAliveList == null) {
+                return;
+            }
+
+            // 嘲讽当前场景中所有的怪
+            for (Monster monster : monsterAliveList) {
+                synchronized (monster.getSubHpMonitor()) {
+                    if (monster.isDie()) {
+                        log.info("{} 已被其他玩家击杀!", monster.getName());
+                        continue;
+                    }
+                }
+
+                ForceAttackUser forceAttackUser = PublicMethod.getInstance()
+                        .createForeAttackUser(user.getUserId(), skillProperty.getEffectTime());
+                AtomicReference<ForceAttackUser> attackUserAtomicReference = monster.getAttackUserAtomicReference();
+                boolean isSuccess = attackUserAtomicReference.compareAndSet(null, forceAttackUser);
+
+                if (isSuccess) {
+                    log.info("用户 {} 在 {} 释放 {} 吸引 {} 火力；",
+                            user.getUserName(),
+                            GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getName(),
+                            skill.getName(),
+                            monster.getName());
+
+                }
+
+                if (monster.getRunnableScheduledFuture() == null) {
+                    // 定时器为null,设置boss定时器， 攻击玩家
+                    MonsterAttakTimer.getInstance().monsterNormalAttk(monster);
+                }
+            }
+        }
 
         // 减蓝
         user.subMp(skill.getConsumeMp());
 
-        log.info("用户 {} 释放 {} 吸引boss火力；", user.getUserName(), skill.getName());
         GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
-        GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(isSuccess)
+        GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(true)
                 .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
                 .setSubtractHp(0)
                 .build();
         user.getCtx().writeAndFlush(userSkillAttkResult);
     }
 
-    /**
-     * 竞技场嘲讽
-     */
-    private void ridiculeSkillArena() {
 
-    }
 }

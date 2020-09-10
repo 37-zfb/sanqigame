@@ -69,7 +69,7 @@ public class UserNormalAttkResultClient implements ICmd<GameMsg.AttkResult> {
 
         }
 
-        CmdThread.getInstance().process(ctx, role, curScene.getNpcMap().values());
+//        CmdThread.getInstance().process(ctx, role, curScene.getNpcMap().values());
 
     }
 

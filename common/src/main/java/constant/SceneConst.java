@@ -12,4 +12,6 @@ public interface SceneConst {
 
     int SCENE_MONSTER_MONEY = 20000;
 
+    String FIELD = "野外";
+
 }

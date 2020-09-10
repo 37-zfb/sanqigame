@@ -96,7 +96,7 @@ public class User {
      */
     private final Map<Integer, Skill> skillMap = new HashMap<>();
     /**
-     * 释放在吟唱状态
+     * 释放技能时的吟唱状态
      */
     private RunnableScheduledFuture<?> isPrepare;
     /**
@@ -119,7 +119,7 @@ public class User {
     /**
      * 附加属性
      */
-    private int weakenDefense = 0;
+    private volatile int weakenDefense = 0;
 
 
     /**
@@ -288,6 +288,7 @@ public class User {
 
     /**
      * 获得装备伤害加成
+     *
      * @return
      */
     public int getEquDamage() {
@@ -457,15 +458,15 @@ public class User {
      * @param subHp
      */
     public void bossAttackSubHp(BossMonster bossMonster, Integer subHp) {
-        synchronized (this.getHpMonitor()) {
-            if (bossMonster.getOrdinaryAttack() > BossMonsterConst.ORDINARY_ATTACK) {
-                //十秒后，防御属性回归正常
-                this.setWeakenDefense(0);
-                bossMonster.setOrdinaryAttack(0);
-                // 每五次普通攻击，一次技能攻击
-                BossSkillAttack.getInstance().bossSkillAttack(this, bossMonster, null);
-            }
+        if (bossMonster.getOrdinaryAttack() > BossMonsterConst.ORDINARY_ATTACK) {
+            //十秒后，防御属性回归正常
+            this.setWeakenDefense(0);
+            bossMonster.setOrdinaryAttack(0);
+            // 每五次普通攻击，一次技能攻击
+            BossSkillAttack.getInstance().bossSkillAttack(this, bossMonster, null);
+        }
 
+        synchronized (this.getHpMonitor()) {
             // 用户减血
             if (this.getCurrHp() <= 0 || (this.getCurrHp() - subHp) <= 0) {
                 log.info("用户: {} 已死亡;", this.getUserName());
@@ -562,6 +563,7 @@ public class User {
             }
 
             UserPotionEntity userPotionEntity = new UserPotionEntity();
+            userPotionEntity.setId(potion.getId());
             userPotionEntity.setLocation(location);
             userPotionEntity.setUserId(userId);
             if (potion.getNumber() > number) {

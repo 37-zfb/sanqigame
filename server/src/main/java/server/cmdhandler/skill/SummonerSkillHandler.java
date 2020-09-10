@@ -4,6 +4,7 @@ import constant.ProfessionConst;
 import constant.SkillConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import server.model.PlayArena;
 import server.model.duplicate.Duplicate;
 import server.model.profession.Skill;
 import server.model.profession.SummonMonster;
@@ -16,6 +17,7 @@ import server.PublicMethod;
 import server.model.User;
 import server.timer.SummonMonsterTimer;
 import type.skill.SummonerSkillType;
+import util.MyUtil;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -33,15 +35,9 @@ public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty
 
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        //先判断是否有副本
-        Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
-
         Skill skill = user.getSkillMap().get(skillId);
         SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();
         skill.setLastUseTime(System.currentTimeMillis());
-        Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
-        // 存活着的怪
-        List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
 
         // 此时在副本中
         for (SummonerSkillType skillType : SummonerSkillType.values()) {
@@ -49,16 +45,8 @@ public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty
                 continue;
             }
             try {
-                Method declaredMethod;
-                if (currDuplicate == null) {
-                    // 公共地图
-                    declaredMethod = SummonerSkillHandler.class.getDeclaredMethod(skillType.getName() + "SkillScene", List.class, User.class, Integer.class);
-                    declaredMethod.invoke(this, monsterAliveList, user, skillId);
-                } else {
-                    // 场景
-                    declaredMethod = SummonerSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Integer.class);
-                    declaredMethod.invoke(this, user, skillId);
-                }
+                Method declaredMethod = SummonerSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Integer.class);
+                declaredMethod.invoke(this, user, skillId);
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,11 +75,13 @@ public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty
      * @param skillId
      */
     private void summonSkill(User user, Integer skillId) {
+
         Skill skill = user.getSkillMap().get(skillId);
         SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();
 
         SummonMonster summonMonster = new SummonMonster();
         summonMonster.setSkillId(skillProperty.getSkillId());
+        summonMonster.setName("召唤兽");
         summonMonster.setStartTime(System.currentTimeMillis());
         summonMonster.setEndTime(System.currentTimeMillis() + skillProperty.getEffectTime() * SkillConst.CD_UNIt_SWITCH);
         summonMonster.setHp((int) (ProfessionConst.HP * 0.5));

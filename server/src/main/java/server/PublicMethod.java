@@ -33,10 +33,7 @@ import server.util.IdWorker;
 import type.DuplicateType;
 import type.PropsType;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.RunnableScheduledFuture;
 
 /**
@@ -127,6 +124,9 @@ public final class PublicMethod {
 
                 } else {
 
+                    // 取消召唤师定时器
+                    PublicMethod.getInstance().cancelSummonTimerOrPlayTeam(user);
+
                     //组队进入，通知队员
                     // 此时副本已通关，计算奖励，退出副本
                     System.out.println("计算奖励,存入数据库");
@@ -178,32 +178,18 @@ public final class PublicMethod {
                 log.info("boss {} 受到伤害 {}, 剩余HP: {}", currBossMonster.getBossName(), subHp, currBossMonster.getHp());
                 synchronized (currBossMonster.getCHOOSE_USER_MONITOR()) {
                     if (summonMonster == null) {
-                        Map<Integer, Integer> userIdMap = currBossMonster.getUserIdMap();
-                        if (!userIdMap.containsKey(user.getUserId())) {
-                            userIdMap.put(user.getUserId(), subHp);
-                        } else {
-                            Integer oldSubHp = userIdMap.get(user.getUserId());
-                            userIdMap.put(user.getUserId(), oldSubHp + subHp);
-                        }
+                        currBossMonster.putUserIdMap(user.getUserId(), subHp);
                     } else {
                         // 召唤兽
-                        Map<SummonMonster, Integer> summonMonsterMap = currBossMonster.getSummonMonsterMap();
-                        if (!summonMonsterMap.containsKey(summonMonster)) {
-                            summonMonsterMap.put(summonMonster, subHp);
-                        } else {
-                            Integer oldSubHp = summonMonsterMap.get(summonMonster);
-                            summonMonsterMap.put(summonMonster, oldSubHp + subHp);
-                        }
+                        currBossMonster.putSummonMonsterMap(summonMonster, subHp);
                         newBuilder1.setType("召唤兽");
                     }
-
                 }
             }
-
         }
         if (currBossMonster.getScheduledFuture() == null) {
             // 定时器为null,设置boss定时器， 攻击玩家
-            BossAttackTimer.getInstance().bossNormalAttack(currBossMonster);
+            BossAttackTimer.getInstance().bossNormalAttack(currBossMonster,user);
         }
         GameMsg.AttkBossResult attkBossResult = newBuilder1.setUserId(user.getUserId()).setSubHp(subHp).build();
         sendMsg(user.getCtx(), attkBossResult);
@@ -216,6 +202,11 @@ public final class PublicMethod {
      * @param summonMonster 召唤兽
      */
     public void userOrSummonerAttackMonster(User user, Monster monster, SummonMonster summonMonster, Integer subHp) {
+
+        if (user == null || monster == null  || subHp == null) {
+            return;
+        }
+
         GameMsg.AttkResult.Builder attkResultBuilder = GameMsg.AttkResult.newBuilder();
         // 普通攻击
         // 使用当前被攻击的怪对象，做锁对象
@@ -223,12 +214,20 @@ public final class PublicMethod {
             // 减血  (0~99) + 500
             if (monster.isDie()) {
                 log.info("{} 已被其他玩家击杀!", monster.getName());
-                // 有可能刚被前一用户杀死，
                 return;
-            } else if (monster.getHp() <= subHp) {
+            }
+
+            if (monster.getHp() <= subHp) {
                 log.info("玩家:{},击杀:{}!", user.getUserName(), monster.getName());
-                monster.setHp(0);
                 monster.getRunnableScheduledFuture().cancel(true);
+                monster.setHp(0);
+                monster.setRunnableScheduledFuture(null);
+                monster.setScheduledFuture(null);
+                monster.getDropHpNumber().set(0);
+                monster.getUserIdMap().clear();
+                monster.getSummonMonsterMap().clear();
+                monster.getAttackUserAtomicReference().set(null);
+
 
                 // 添加奖励
                 user.setMoney(user.getMoney() + SceneConst.SCENE_MONSTER_MONEY);
@@ -442,6 +441,7 @@ public final class PublicMethod {
 
                 userPotionEntity.setNumber(po.getNumber());
                 userPotionEntity.setLocation(pro.getKey());
+                userPotionEntity.setId(po.getId());
                 userStateTimer.modifyUserPotion(userPotionEntity);
                 break;
             }
@@ -564,7 +564,12 @@ public final class PublicMethod {
      * @return 存活怪的集合
      */
     public List<Monster> getMonsterAliveList(Collection<Monster> monsterList) {
+
+        if (monsterList == null) {
+            return null;
+        }
         List<Monster> monsterAliveList = new ArrayList<>();
+
         //存活的 怪
         for (Monster monster : monsterList) {
             if (!monster.isDie()) {
@@ -621,8 +626,14 @@ public final class PublicMethod {
             if (value != null) {
                 value.setHp((int) (ProfessionConst.HP * 0.5));
                 value.setWeakenDefense(0);
-                while (!user.getSummonMonsterRunnableScheduledFutureMap().get(value).cancel(true)) {
+                Map<SummonMonster, RunnableScheduledFuture<?>> map = user.getSummonMonsterRunnableScheduledFutureMap();
+                Iterator<Map.Entry<SummonMonster, RunnableScheduledFuture<?>>> iterator = map.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry<SummonMonster, RunnableScheduledFuture<?>> next = iterator.next();
+                    next.getValue().cancel(true);
+                    iterator.remove();
                 }
+
             }
         }
     }

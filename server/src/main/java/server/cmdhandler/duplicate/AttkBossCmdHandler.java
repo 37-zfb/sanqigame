@@ -98,11 +98,11 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
 
                 } else {
 
+                    // 取消召唤师定时器
+                    PublicMethod.getInstance().cancelSummonTimerOrPlayTeam(user);
                     // 增加经验
                     taskPublicMethod.addExperience(DuplicateConst.DUPLICATE_EXPERIENCE, user);
-
                     //组队进入，通知队员
-
                     // 此时副本已通关，计算奖励，退出副本
                     System.out.println("计算奖励,存入数据库");
 
@@ -161,7 +161,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
         }
         if (currBossMonster.getScheduledFuture() == null) {
             // 定时器为null,设置boss定时器， 攻击玩家
-            BossAttackTimer.getInstance().bossNormalAttack(currBossMonster);
+            BossAttackTimer.getInstance().bossNormalAttack(currBossMonster,user);
         }
 
         GameMsg.AttkBossResult attkBossResult = GameMsg.AttkBossResult.newBuilder().setUserId(user.getUserId()).setSubHp(subHp).build();

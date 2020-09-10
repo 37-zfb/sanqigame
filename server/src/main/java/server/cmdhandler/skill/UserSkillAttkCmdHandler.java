@@ -52,22 +52,7 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
         user.calCurrMp();
         user.resumeMpTime();
 
-        Duplicate currDuplicate = null;
-        //先判断是否有副本
-        PlayTeam playTeam = user.getPlayTeam();
-        if (playTeam == null) {
-            currDuplicate = user.getCurrDuplicate();
-        } else {
-            currDuplicate = playTeam.getCurrDuplicate();
-        }
-        //所在场景
-        Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
-        // 判断当前场景中是否有怪
-        if (currDuplicate == null && scene.getMonsterMap().size() == 0) {
-            // 当前场景没有怪
-            log.info("场景: {} 没有怪;", scene.getName());
-            throw new CustomizeException(CustomizeErrorCode.SCENE_NOT_MONSTER);
-        }
+        SkillUtil.getSkillUtil().skillDestination(user);
 
         if ((System.currentTimeMillis() - skill.getLastUseTime()) < skill.getCdTime() * SkillConst.CD_UNIt_SWITCH) {
             // 此时技能未冷却好

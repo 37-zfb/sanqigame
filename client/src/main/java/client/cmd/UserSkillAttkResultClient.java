@@ -9,6 +9,7 @@ import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
+import util.MyUtil;
 
 /**
  * @author 张丰博
@@ -18,9 +19,7 @@ public class UserSkillAttkResultClient implements ICmd<GameMsg.UserSkillAttkResu
     @Override
     public void cmd(ChannelHandlerContext ctx, GameMsg.UserSkillAttkResult userSkillAttkResult) {
 
-        if (ctx == null || userSkillAttkResult == null) {
-            return;
-        }
+        MyUtil.checkIsNull(ctx, userSkillAttkResult);
 
         Role role = Role.getInstance();
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
@@ -37,7 +36,6 @@ public class UserSkillAttkResultClient implements ICmd<GameMsg.UserSkillAttkResu
             Duplicate currDuplicate = role.getCurrDuplicate();
             if (currDuplicate!=null){
                 // 副本不为空
-                BossThread.getInstance().process(ctx, role);
                 return;
             }else {
                 // 目标减血
@@ -49,6 +47,5 @@ public class UserSkillAttkResultClient implements ICmd<GameMsg.UserSkillAttkResu
             }
         }
 
-        CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }
 }

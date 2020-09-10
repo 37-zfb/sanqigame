@@ -71,11 +71,11 @@ public class DuplicateFinishResultClient implements ICmd<GameMsg.DuplicateFinish
                     backpackClient.put(props.getLocation(),new Props(props.getPropsId(),pro.getName(), propsProperty));
                 }
             }
-            System.out.println("副本已通关;");
-            GameMsg.UserQuitDuplicateCmd quitDuplicateCmd = GameMsg.UserQuitDuplicateCmd.newBuilder().build();
-            ctx.writeAndFlush(quitDuplicateCmd);
+            System.out.println("副本已通关,请退出;");
+//            GameMsg.UserQuitDuplicateCmd quitDuplicateCmd = GameMsg.UserQuitDuplicateCmd.newBuilder().build();
+//            ctx.writeAndFlush(quitDuplicateCmd);
         }else {
-            System.out.println("副本已通关;");
+            System.out.println("副本已通关,请退出;");
         }
 
 

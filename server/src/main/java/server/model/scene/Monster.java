@@ -36,12 +36,12 @@ public class Monster {
 
 
     /**
-     *  血量
+     * 血量
      */
     private Integer hp;
 
     /**
-     *  道具id字符串
+     * 道具id字符串
      */
     private String propsId;
 
@@ -52,7 +52,7 @@ public class Monster {
     private final Object subHpMonitor = new Object();
 
     /**
-     *  记录要攻击的用户的id
+     * 记录要攻击的用户的id
      */
     private final AtomicReference<ForceAttackUser> attackUserAtomicReference = new AtomicReference<>();
     /**
@@ -64,17 +64,15 @@ public class Monster {
      */
     private final Map<SummonMonster, Integer> summonMonsterMap = new HashMap<>();
     /**
-     *  选择攻击目标监视器
-     *
+     * 选择攻击目标监视器
      */
     private final Object CHOOSE_USER_MONITOR = new Object();
 
 
     /**
-     *  怪攻击定时器
+     * 怪攻击定时器
      */
-    private  RunnableScheduledFuture runnableScheduledFuture;
-
+    private volatile RunnableScheduledFuture runnableScheduledFuture;
 
 
     /**
@@ -85,7 +83,6 @@ public class Monster {
      * 记录掉血次数
      */
     private final AtomicInteger dropHpNumber = new AtomicInteger(0);
-
 
 
     public Monster(Integer id, Integer sceneId, String name, Integer hp) {
@@ -116,15 +113,13 @@ public class Monster {
     }
 
 
-
-
-
     /**
-     *  添加或更新用户id进入Map
+     * 添加或更新用户id进入Map
+     *
      * @param userId
      * @param subHp
      */
-    public void putUserIdMap(Integer userId,Integer subHp){
+    public void putUserIdMap(Integer userId, Integer subHp) {
         synchronized (this.getCHOOSE_USER_MONITOR()) {
             Map<Integer, Integer> userIdMap = this.getUserIdMap();
             if (!userIdMap.containsKey(userId)) {
@@ -136,33 +131,39 @@ public class Monster {
         }
     }
 
+
+    public Integer getForceId() {
+        AtomicReference<ForceAttackUser> atomicReference = this.getAttackUserAtomicReference();
+        ForceAttackUser forceAttackUser = atomicReference.get();
+        if (forceAttackUser != null && System.currentTimeMillis() < forceAttackUser.getEndTime()) {
+            return forceAttackUser.getUserId();
+        } else {
+            atomicReference.compareAndSet(forceAttackUser, null);
+        }
+        return null;
+    }
+
+
     /**
-     *  选择当前对boss上海最高的用户；
+     * 选择当前对boss上海最高的用户；
+     *
      * @return 返回user对象
      */
     public User chooseUser() {
         User user = null;
         synchronized (this.getCHOOSE_USER_MONITOR()) {
             // 选择对boss伤害最高的用户
-            AtomicReference<ForceAttackUser> atomicReference = this.getAttackUserAtomicReference();
-            ForceAttackUser forceAttackUser = atomicReference.get();
-            if (forceAttackUser != null && System.currentTimeMillis() < forceAttackUser.getEndTime()) {
-                user = UserManager.getUserById(forceAttackUser.getUserId());
-                log.info("用户 {} 吸引boss {} 的攻击;", user.getUserName(), this.getName());
-            } else {
-                Map<Integer, Integer> userIdMap = this.getUserIdMap();
-                while (userIdMap.size() > 0 && user == null) {
-                    Optional<Map.Entry<Integer, Integer>> max = userIdMap.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
-                    user = UserManager.getUserById(max.get().getKey());
-                    if (user.getCurrHp() <= 0) {
-                        userIdMap.remove(user.getUserId());
-                        user = null;
-                    }
-                    log.info("用户 {} 对boss减血量 {}", user.getUserName(), max.get().getValue());
+            Map<Integer, Integer> userIdMap = this.getUserIdMap();
+            while (userIdMap.size() > 0 && user == null) {
+                Optional<Map.Entry<Integer, Integer>> max = userIdMap.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
+                user = UserManager.getUserById(max.get().getKey());
+                if (user.getCurrHp() <= 0) {
+                    userIdMap.remove(user.getUserId());
+                    user = null;
                 }
-                atomicReference.compareAndSet(forceAttackUser, null);
-
+                log.info("用户 {} 对boss减血量 {}", user.getUserName(), max.get().getValue());
             }
+
         }
         return user;
     }
@@ -170,6 +171,7 @@ public class Monster {
 
     /**
      * 选择攻击boss血量最高的召唤兽
+     *
      * @return 召唤兽对象，当没有召唤兽攻击boss时为null；
      */
     public SummonMonster chooseSummonMonster() {
@@ -190,16 +192,13 @@ public class Monster {
     }
 
     /**
-     *  计算用户减血量
+     * 计算用户减血量
+     *
      * @return
      */
     public int calUserSubHp() {
         return new Random().nextInt(300);
     }
-
-
-
-
 
 
 }

@@ -1,6 +1,9 @@
 package server.timer;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.AnnotationUtils;
+import server.model.UserManager;
+import server.model.duplicate.ForceAttackUser;
 import server.model.profession.SummonMonster;
 import server.model.scene.Monster;
 import server.model.User;
@@ -8,10 +11,11 @@ import type.ProfessionType;
 import util.CustomizeThreadFactory;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author 张丰博
- *  怪 攻击用户 定时器
+ * 怪 攻击用户 定时器
  */
 @Slf4j
 public class MonsterAttakTimer {
@@ -30,26 +34,40 @@ public class MonsterAttakTimer {
      * @return
      */
     public void monsterNormalAttk(Monster monster) {
-
+        if (monster == null) {
+            return;
+        }
         RunnableScheduledFuture<?> scheduledFuture =
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
 
-                            SummonMonster summonMonster = monster.chooseSummonMonster();
-                            User user = monster.chooseUser();
+                            User user = null;
+                            Integer forceId = monster.getForceId();
+                            if (forceId != null) {
+                                user = UserManager.getUserById(forceId);
+                            }
 
-                            // 挑选伤害最高者
-                            Integer summonMonsterSub = monster.getSummonMonsterMap().get(summonMonster);
-                            if ((summonMonster ==null ? 0 : summonMonsterSub) < monster.getUserIdMap().get(user.getUserId())) {
-                                summonMonster = null;
-                            } else {
-                                user = null;
+                            SummonMonster summonMonster = null;
+                            if (user == null) {
+                                summonMonster = monster.chooseSummonMonster();
+                                user = monster.chooseUser();
                             }
 
                             // 都为空，取消定时器
-                            if (user == null && summonMonster == null){
+                            if (user == null && summonMonster == null) {
+                                log.info("{} 没有要攻击的对象;", monster.getName());
                                 monster.getRunnableScheduledFuture().cancel(true);
+                                monster.setRunnableScheduledFuture(null);
                                 return;
+                            }
+
+                            //都不为空,选择对monster伤害最高的
+                            if (user != null && summonMonster != null) {
+                                if (monster.getSummonMonsterMap().get(summonMonster) < monster.getUserIdMap().get(user.getUserId())) {
+                                    summonMonster = null;
+                                } else {
+                                    user = null;
+                                }
                             }
 
                             // 如果是牧师，并且在吟唱状态，此时受到攻击，定时器加血加蓝取消
@@ -63,15 +81,14 @@ public class MonsterAttakTimer {
                             int subHp = monster.calUserSubHp();
                             // 怪的普通攻击
                             if (user != null) {
-                                user.monsterAttackSubHp(monster.getName(),subHp);
-                                log.info("用户 {} 受到 {} 攻击,减血 {},剩余血量 {}",user.getUserName(),monster.getName(),subHp,user.getCurrHp());
+                                user.monsterAttackSubHp(monster.getName(), subHp);
+                                log.info("用户 {} 受到 {} 攻击,减血 {},剩余血量 {}", user.getUserName(), monster.getName(), subHp, user.getCurrHp());
                             } else {
                                 // 召唤兽
                                 summonMonster.monsterAttackSubHp(subHp);
-                                log.info("召唤兽 受到 {} 攻击,减血 {},剩余血量 {}",summonMonster.getName(),subHp,summonMonster.getHp());
+                                log.info("召唤兽 受到 {} 攻击,减血 {},剩余血量 {}", summonMonster.getName(), subHp, summonMonster.getHp());
                             }
-
-                        }, 3000, 3000, TimeUnit.MILLISECONDS);
+                        }, 0, 2000, TimeUnit.MILLISECONDS);
 
         monster.setRunnableScheduledFuture(scheduledFuture);
     }

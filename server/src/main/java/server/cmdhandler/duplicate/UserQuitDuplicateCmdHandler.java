@@ -55,10 +55,8 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
             BossAttackTimer.getInstance().cancelTask(currDuplicate.getCurrBossMonster().getScheduledFuture());
         }
 
-        /**
-         *  取消召唤师定时器
-         */
-        PublicMethod.getInstance().cancelSummonTimerOrPlayTeam(user);
+//        // 取消召唤师定时器
+//        PublicMethod.getInstance().cancelSummonTimerOrPlayTeam(user);
 
         user.setCurrHp(ProfessionConst.HP);
         user.setCurrMp(ProfessionConst.MP);
@@ -68,7 +66,7 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
         for (UserEquipmentEntity equipmentEntity : user.getUserEquipmentArr()) {
             if (equipmentEntity != null) {
                 if (((Equipment) propsMap.get(equipmentEntity.getPropsId()).getPropsProperty()).getEquipmentType() == EquipmentType.Weapon) {
-                    //如果是武器
+                    //是武器
                     userStateTimer.modifyUserEquipment(equipmentEntity);
                 }
             }

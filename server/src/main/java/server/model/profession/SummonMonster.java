@@ -77,41 +77,32 @@ public class SummonMonster {
             return false;
         }
         SummonMonster that = (SummonMonster) o;
-        return startTime == that.startTime &&
-                endTime == that.endTime &&
-                weakenDefense == that.weakenDefense &&
-                subHpNumber == that.subHpNumber &&
-                Objects.equals(skillId, that.skillId) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(hp, that.hp) &&
-                Objects.equals(damage, that.damage) &&
-                Objects.equals(baseDefense, that.baseDefense) &&
-                Objects.equals(ctx, that.ctx) &&
-                Objects.equals(subHpMonitor, that.subHpMonitor) &&
-                Objects.equals(subHpTask, that.subHpTask);
+        return Objects.equals(skillId, that.skillId) &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(skillId, name, hp, damage, startTime, endTime, baseDefense, weakenDefense, ctx, subHpMonitor, subHpNumber, subHpTask);
+        return Objects.hash(skillId, name);
     }
 
     /**
-     *  受到boss攻击，减血
+     * 受到boss攻击，减血
+     *
      * @param bossMonster boss对象
-     * @param subHp 减血量
+     * @param subHp       减血量
      */
-    public void bossAttackSubHp(BossMonster bossMonster,Integer subHp){
+    public void bossAttackSubHp(BossMonster bossMonster, Integer subHp, User user) {
         // 防止多线程执行时，减血超减
+        if (bossMonster.getOrdinaryAttack() > BossMonsterConst.ORDINARY_ATTACK) {
+            //十秒后，防御属性回归正常
+            this.setWeakenDefense(0);
+            bossMonster.setOrdinaryAttack(0);
+            // 每五次普通攻击，一次技能攻击
+            BossSkillAttack.getInstance().bossSkillAttack(user, bossMonster, this);
+        }
+        GameMsg.SummonMonsterSubHpResult.Builder newBuilder = GameMsg.SummonMonsterSubHpResult.newBuilder();
         synchronized (this.getSubHpMonitor()) {
-            if (bossMonster.getOrdinaryAttack() > BossMonsterConst.ORDINARY_ATTACK) {
-                //十秒后，防御属性回归正常
-                this.setWeakenDefense(0);
-                bossMonster.setOrdinaryAttack(0);
-                // 每五次普通攻击，一次技能攻击
-                BossSkillAttack.getInstance().bossSkillAttack(null, bossMonster, this);
-            }
-            GameMsg.SummonMonsterSubHpResult.Builder newBuilder = GameMsg.SummonMonsterSubHpResult.newBuilder();
             // 召唤兽减血
             if (this.getHp() <= 0 || (this.getHp() - subHp) <= 0) {
                 log.info("召唤兽已死亡;");
@@ -133,16 +124,18 @@ public class SummonMonster {
     }
 
     /**
-     *  发送消息
+     * 发送消息
+     *
      * @param summonMonsterSubHpResult 消息对象
      */
-    private void sendMsg(GameMsg.SummonMonsterSubHpResult summonMonsterSubHpResult){
+    private void sendMsg(GameMsg.SummonMonsterSubHpResult summonMonsterSubHpResult) {
         PublicMethod publicMethod = PublicMethod.getInstance();
-        publicMethod.sendMsg(ctx,summonMonsterSubHpResult);
+        publicMethod.sendMsg(ctx, summonMonsterSubHpResult);
     }
 
     /**
-     *  怪攻击，减血
+     * 怪攻击，减血
+     *
      * @param subHp 减血量
      */
     public void monsterAttackSubHp(Integer subHp) {
@@ -166,10 +159,11 @@ public class SummonMonster {
     }
 
     /**
-     *  计算怪应该减去的血量
+     * 计算怪应该减去的血量
+     *
      * @return 血量值
      */
-    public int calMonsterSubHp(){
-       return  (int) ((Math.random() * this.getDamage()) + 300);
+    public int calMonsterSubHp() {
+        return (int) ((Math.random() * this.getDamage()) + 300);
     }
 }

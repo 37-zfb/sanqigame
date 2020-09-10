@@ -110,7 +110,7 @@ public class TaskPublicMethod {
         user.getCtx().writeAndFlush(userUpLvResult);
 
         Task task = GameData.getInstance().getTaskMap().get(user.getPlayTask().getCurrTaskId());
-        if (task.getTypeCode().equals(TaskType.LvType.getTaskCode())) {
+        if (task!=null && task.getTypeCode().equals(TaskType.LvType.getTaskCode())) {
             //此时任务: 提升等级
             listener(user);
         }

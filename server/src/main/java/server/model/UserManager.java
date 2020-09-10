@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class UserManager {
 
-    private static final Map<Integer, User> USER_MAP = new ConcurrentHashMap<>();
+    private static final Map<Integer, User> USER_MAP = new HashMap<>();
 
     private UserManager() {
     }
@@ -22,7 +22,7 @@ public class UserManager {
      *  添加用户角色
      * @param user
      */
-    public static void addUser(User user) {
+    public synchronized static void addUser(User user) {
         if (user != null){
             USER_MAP.put(user.getUserId(),user);
         }
@@ -32,7 +32,7 @@ public class UserManager {
      *  根据 用户id 移除用户
      * @param userId
      */
-    public static void removeUser(Integer userId){
+    public synchronized static void removeUser(Integer userId){
         USER_MAP.remove(userId);
     }
 
@@ -40,7 +40,7 @@ public class UserManager {
      *
      * @return  用户集合
      */
-    public static Collection<User> listUser(){
+    public synchronized static Collection<User> listUser(){
         return USER_MAP.values();
     }
 
@@ -49,7 +49,7 @@ public class UserManager {
      * @param userId
      * @return
      */
-    public static User getUserById(Integer userId){
+    public synchronized static User getUserById(Integer userId){
         return USER_MAP.get(userId);
     }
 

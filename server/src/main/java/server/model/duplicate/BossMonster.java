@@ -1,8 +1,13 @@
 package server.model.duplicate;
 
+import constant.BossMonsterConst;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import msg.GameMsg;
+import org.apache.poi.ss.formula.functions.T;
+import server.PublicMethod;
+import server.cmdhandler.duplicate.BossSkillAttack;
 import server.model.profession.SummonMonster;
 import server.model.User;
 import server.model.UserManager;
@@ -108,31 +113,38 @@ public class BossMonster {
 
 
     /**
-     *  选择当前对boss上海最高的用户；
+     *
+     */
+    public Integer getForceId(){
+        AtomicReference<ForceAttackUser> atomicReference = this.getAttackUserAtomicReference();
+        ForceAttackUser forceAttackUser = atomicReference.get();
+        if (forceAttackUser != null && System.currentTimeMillis() < forceAttackUser.getEndTime()) {
+            return forceAttackUser.getUserId();
+        } else {
+            atomicReference.compareAndSet(forceAttackUser, null);
+        }
+        return null;
+    }
+
+
+    /**
+     * 选择当前对boss伤害最高的用户；
+     *
      * @return 返回user对象
      */
     public User chooseUser() {
         User user = null;
         synchronized (this.getCHOOSE_USER_MONITOR()) {
             // 选择对boss伤害最高的用户
-            AtomicReference<ForceAttackUser> atomicReference = this.getAttackUserAtomicReference();
-            ForceAttackUser forceAttackUser = atomicReference.get();
-            if (forceAttackUser != null && System.currentTimeMillis() < forceAttackUser.getEndTime()) {
-                user = UserManager.getUserById(forceAttackUser.getUserId());
-                log.info("用户 {} 吸引boss {} 的攻击;", user.getUserName(), this.getBossName());
-            } else {
-                Map<Integer, Integer> userIdMap = this.getUserIdMap();
-                while (userIdMap.size() > 0 && user == null) {
-                    Optional<Map.Entry<Integer, Integer>> max = userIdMap.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
-                    user = UserManager.getUserById(max.get().getKey());
-                    if (user.getCurrHp() <= 0) {
-                        userIdMap.remove(user.getUserId());
-                        user = null;
-                    }
-                    log.info("用户 {} 对boss减血量 {}", user.getUserName(), max.get().getValue());
+            Map<Integer, Integer> userIdMap = this.getUserIdMap();
+            while (userIdMap.size() > 0 && user == null) {
+                Optional<Map.Entry<Integer, Integer>> max = userIdMap.entrySet().stream().max(Comparator.comparing(Map.Entry::getValue));
+                user = UserManager.getUserById(max.get().getKey());
+                if (user.getCurrHp() <= 0) {
+                    userIdMap.remove(user.getUserId());
+                    user = null;
                 }
-                atomicReference.compareAndSet(forceAttackUser, null);
-
+                log.info("用户 {} 对boss减血量 {}", user.getUserName(), max.get().getValue());
             }
         }
         return user;
@@ -162,11 +174,15 @@ public class BossMonster {
     }
 
     /**
-     *  添加或更新用户id进入Map
+     * 添加或更新用户id进入Map
+     *
      * @param userId
      * @param subHp
      */
-    public void putUserIdMap(Integer userId,Integer subHp){
+    public void putUserIdMap(Integer userId, Integer subHp) {
+        if (userId == null || subHp == null){
+            return;
+        }
         synchronized (this.getCHOOSE_USER_MONITOR()) {
             Map<Integer, Integer> userIdMap = this.getUserIdMap();
             if (!userIdMap.containsKey(userId)) {
@@ -177,6 +193,31 @@ public class BossMonster {
             }
         }
     }
+
+    /**
+     * 添加或更新召唤兽攻击血量
+     * @param summonMonster
+     * @param subHp
+     */
+    public void putSummonMonsterMap(SummonMonster summonMonster,Integer subHp){
+        if (summonMonster == null || subHp == null){
+            return;
+        }
+        synchronized (this.getCHOOSE_USER_MONITOR()) {
+            Map<SummonMonster, Integer> summonMonsterMap = this.getSummonMonsterMap();
+            if (!summonMonsterMap.containsKey(summonMonster)) {
+                summonMonsterMap.put(summonMonster, subHp);
+            } else {
+                Integer oldSubHp = summonMonsterMap.get(summonMonster);
+                summonMonsterMap.put(summonMonster, oldSubHp + subHp);
+            }
+        }
+
+
+    }
+
+
+
 
 }
 

@@ -33,7 +33,7 @@
     </update>
     <update id="updatePotionBatch" parameterType="collection">
         <foreach collection="updateUserPotionCollection" item="potion" index="index" open="" close="" separator="">
-            UPDATE `user_potion` SET `number` = #{potion.number} where id=#{potion.id}
+            UPDATE `user_potion` SET `number` = #{potion.number} where id=#{potion.id};
         </foreach>
     </update>
 

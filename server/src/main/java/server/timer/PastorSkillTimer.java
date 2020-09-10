@@ -37,28 +37,39 @@ public class PastorSkillTimer {
      * @param user
      */
     public RunnableScheduledFuture<?> userChant(User user, PastorSkillProperty skillProperty) {
+        if (user == null || skillProperty == null) {
+            return null;
+        }
+
         RunnableScheduledFuture<?> scheduledFuture =
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .schedule(() -> {
                             PlayTeam playTeam = user.getPlayTeam();
+
                             if (playTeam != null) {
                                 // 给全部队友加血；
                                 Integer[] team_member = playTeam.getTEAM_MEMBER();
                                 for (Integer id : team_member) {
-                                    if (id != null) {
-                                        User userById = UserManager.getUserById(id);
-                                        addState(userById,skillProperty);
-
-                                        GameMsg.PastorSkillResult pastorSkillResult = GameMsg.PastorSkillResult.newBuilder()
-                                                .setHp(skillProperty.getRecoverHp())
-                                                .setMp(skillProperty.getRecoverMp())
-                                                .build();
-                                        userById.getCtx().writeAndFlush(pastorSkillResult);
+                                    if (id == null) {
+                                        continue;
                                     }
+
+                                    User userById = UserManager.getUserById(id);
+                                    if (userById == null) {
+                                        continue;
+                                    }
+
+                                    addState(userById, skillProperty);
+
+                                    GameMsg.PastorSkillResult pastorSkillResult = GameMsg.PastorSkillResult.newBuilder()
+                                            .setHp(skillProperty.getRecoverHp())
+                                            .setMp(skillProperty.getRecoverMp())
+                                            .build();
+                                    userById.getCtx().writeAndFlush(pastorSkillResult);
                                 }
                             } else {
                                 // 给自己加血
-                                addState(user,skillProperty);
+                                addState(user, skillProperty);
                                 GameMsg.PastorSkillResult pastorSkillResult = GameMsg.PastorSkillResult.newBuilder()
                                         .setHp(skillProperty.getRecoverHp())
                                         .setMp(skillProperty.getRecoverMp())
@@ -66,11 +77,16 @@ public class PastorSkillTimer {
                                 user.getCtx().writeAndFlush(pastorSkillResult);
                             }
                             user.setIsPrepare(null);
+
                         }, (long) (skillProperty.getPrepareTime() * 1000), TimeUnit.MILLISECONDS);
         return scheduledFuture;
     }
 
-    private void addState(User userById,PastorSkillProperty skillProperty){
+    private void addState(User userById, PastorSkillProperty skillProperty) {
+        if (userById == null || skillProperty == null) {
+            return;
+        }
+
         synchronized (userById.getHpMonitor()) {
             userById.calCurrHp();
             log.info("玩家:{}, 当前血量:{} +{}", userById.getUserName(), userById.getCurrHp(), skillProperty.getRecoverHp());
@@ -94,14 +110,12 @@ public class PastorSkillTimer {
                 // 加mp
                 userById.setCurrMp(mp);
             }
-            log.info("玩家:{},+{} 当前MP:{} ", userById.getUserName(),skillProperty.getRecoverMp(), userById.getCurrMp());
+            log.info("玩家:{},+{} 当前MP:{} ", userById.getUserName(), skillProperty.getRecoverMp(), userById.getCurrMp());
             // 设置终止时间
             userById.resumeMpTime();
         }
 
     }
-
-
 
 
 }

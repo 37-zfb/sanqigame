@@ -31,35 +31,19 @@ public class PastorSkillHandler implements ISkillHandler<PastorSkillProperty> {
 
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        //先判断是否有副本
-        Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
 
         Skill skill = user.getSkillMap().get(skillId);
-        skill.setLastUseTime(System.currentTimeMillis());
         PastorSkillProperty skillProperty = (PastorSkillProperty) skill.getSkillProperty();
+        skill.setLastUseTime(System.currentTimeMillis());
         // 此时在场景中；并且有怪
 
-        // 在公共地图
-        Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
-        // 存活着的怪
-        List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
         for (PastorSkillType skillType : PastorSkillType.values()) {
             if (!skillType.getId().equals(skillProperty.getId())) {
                 continue;
             }
             try {
-                Method declaredMethod;
-                if (currDuplicate == null) {
-                    // 在公共地图中
-                    // 存活着的怪
-                    declaredMethod = PastorSkillHandler.class.getDeclaredMethod(skillType.getName() + "SkillScene", List.class, User.class, Integer.class);
-                    declaredMethod.invoke(this, monsterAliveList, user, skillId);
-                } else {
-                    // 副本中
-
-                    declaredMethod = PastorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Duplicate.class, Integer.class);
-                    declaredMethod.invoke(this, user, currDuplicate, skillId);
-                }
+                Method declaredMethod = PastorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Integer.class);
+                declaredMethod.invoke(this, user, skillId);
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,17 +61,19 @@ public class PastorSkillHandler implements ISkillHandler<PastorSkillProperty> {
      * @param skillId          技能id
      */
     private void therapySkillScene(List<Monster> monsterAliveList, User user, Integer skillId) {
-        therapySkill(user, user.getCurrDuplicate(), skillId);
     }
 
     /**
      * 治疗
      *
      * @param user
-     * @param duplicate
      * @param skillId
      */
-    private void therapySkill(User user, Duplicate duplicate, Integer skillId) {
+    private void therapySkill(User user, Integer skillId) {
+        if (user == null || skillId == null){
+            return;
+        }
+
         Skill skill = user.getSkillMap().get(skillId);
         PastorSkillProperty skillProperty = (PastorSkillProperty) skill.getSkillProperty();
 
