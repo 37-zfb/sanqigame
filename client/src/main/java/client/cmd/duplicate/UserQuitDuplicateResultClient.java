@@ -22,12 +22,7 @@ public class UserQuitDuplicateResultClient implements ICmd<GameMsg.UserQuitDupli
         // 用户退出类型
         String quitDuplicateType = userQuitDuplicateResult.getQuitDuplicateType();
         Role role = Role.getInstance();
-        role.setCurrDuplicate(null);
-        role.setCurrHp(ProfessionConst.HP);
-        role.setCurrMp(ProfessionConst.MP);
-
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
-
         System.out.println(quitDuplicateType);
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }

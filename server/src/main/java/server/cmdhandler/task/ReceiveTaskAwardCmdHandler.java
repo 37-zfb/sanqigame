@@ -12,6 +12,7 @@ import server.cmdhandler.ICmdHandler;
 import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.PlayTask;
 import server.model.User;
+import server.model.props.Equipment;
 import server.model.props.Props;
 import server.model.task.Task;
 import server.scene.GameData;
@@ -63,6 +64,8 @@ public class ReceiveTaskAwardCmdHandler implements ICmdHandler<GameMsg.ReceiveTa
             log.info("用户 {} 获得 {} 金币，获得 {} 号道具", user.getUserName(), rewardMoney, rewardProps.get(0).getPropsId());
         }
 
+        Map<Integer, Props> backpack = user.getBackpack();
+
         GameMsg.ReceiveTaskAwardResult.Builder newBuilder = GameMsg.ReceiveTaskAwardResult.newBuilder();
         for (MailProps rewardProp : rewardProps) {
             Props props = propsMap.get(rewardProp.getPropsId());
@@ -70,11 +73,13 @@ public class ReceiveTaskAwardCmdHandler implements ICmdHandler<GameMsg.ReceiveTa
 
             GameMsg.Props.Builder reward = GameMsg.Props.newBuilder()
                     .setPropsId(props.getId())
+                    .setUserPropsId(((Equipment)backpack.get(location).getPropsProperty()).getId())
                     .setLocation(location)
                     .setPropsNumber(rewardProp.getNumber());
             newBuilder.addProps(reward);
         }
         newBuilder.setMoney(rewardMoney);
+
         GameMsg.ReceiveTaskAwardResult receiveTaskAwardResult = newBuilder.build();
         ctx.writeAndFlush(receiveTaskAwardResult);
 

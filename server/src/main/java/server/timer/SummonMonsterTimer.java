@@ -131,6 +131,11 @@ public class SummonMonsterTimer {
                                 }
 
                                 PublicMethod.getInstance().userOrSummonerAttackMonster(user, monster, summonMonster, summonMonster.calMonsterSubHp());
+
+                                monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(scene.getMonsterMap().values());
+                                if (monsterAliveList.size() == 0) {
+                                    MonsterTimer.getInstance().resurrectionMonster(scene.getMonsterMap().values(),user.getCurSceneId());
+                                }
                             }
 
                         }, 3000, 3000, TimeUnit.MILLISECONDS);

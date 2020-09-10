@@ -1,6 +1,8 @@
 package server.cmdhandler.duplicate;
 
 import constant.DuplicateConst;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import server.model.duplicate.BossMonster;
@@ -29,20 +31,14 @@ public class EnterDuplicateCmdHandler implements ICmdHandler<GameMsg.EnterDuplic
     public void handle(ChannelHandlerContext ctx, GameMsg.EnterDuplicateCmd duplicateCmd) {
 
         MyUtil.checkIsNull(ctx, duplicateCmd);
+        User user = PublicMethod.getInstance().getUser(ctx);
 
         // 要进入的副本id
         int duplicateId = duplicateCmd.getDuplicateId();
 
-        User user = PublicMethod.getInstance().getUser(ctx);
         if (user.getPlayTeam() != null && !user.getPlayTeam().getTeamLeaderId().equals(user.getUserId())) {
             //当前用户是不是此队伍的 队长
-            log.info("{} 不是队长，禁止带队进入副本;",user.getUserName());
-            GameMsg.EnterDuplicateResult enterDuplicateResult =
-                    GameMsg.EnterDuplicateResult.newBuilder()
-                            .setIsSuccess(false)
-                            .build();
-            ctx.channel().writeAndFlush(enterDuplicateResult);
-            return;
+            throw new CustomizeException(CustomizeErrorCode.NOT_TEAM_LEADER);
         }
 
         Duplicate duplicateTemplate = GameData.getInstance().getDuplicateMap().get(duplicateId);
@@ -62,6 +58,7 @@ public class EnterDuplicateCmdHandler implements ICmdHandler<GameMsg.EnterDuplic
             bossMonster.setDuplicateId(value.getDuplicateId());
             bossMonster.setBaseDamage(value.getBaseDamage());
             bossMonster.setHp(value.getHp());
+
             Map<Integer, BossSkill> bossSkillMap = bossMonster.getBossSkillMap();
 
             for (Map.Entry<Integer, BossSkill> skillEntry : value.getBossSkillMap().entrySet()) {
@@ -75,36 +72,40 @@ public class EnterDuplicateCmdHandler implements ICmdHandler<GameMsg.EnterDuplic
         if (user.getPlayTeam() != null) {
             //设置 队伍副本；此时要通知队伍成员
             user.getPlayTeam().setCurrDuplicate(duplicate);
-            noticeUser(duplicate,user.getUserId(),user.getPlayTeam().getTEAM_MEMBER());
-            log.info("{} 队长，带队进入副本 {};", user.getUserName(),duplicate.getName());
+            noticeUser(duplicate, user.getUserId(), user.getPlayTeam().getTEAM_MEMBER());
+            log.info("队长 {}，带队进入副本 {};", user.getUserName(), duplicate.getName());
         } else {
             user.setCurrDuplicate(duplicate);
-            noticeUser(duplicate,user.getUserId(),user.getUserId());
-            log.info("{} ，进入副本 {};", user.getUserName(),duplicate.getName());
+            noticeUser(duplicate, user.getUserId(), user.getUserId());
+            log.info("{} ，进入副本 {};", user.getUserName(), duplicate.getName());
         }
 
     }
 
     /**
-     *  
      * @param duplicate
      * @param teamLeaderId
      * @param ids
      */
-    private void noticeUser(Duplicate duplicate,Integer teamLeaderId,Integer ... ids){
+    private void noticeUser(Duplicate duplicate, Integer teamLeaderId, Integer... ids) {
         for (Integer id : ids) {
-            if (id != null){
-                User user = UserManager.getUserById(id);
-                GameMsg.EnterDuplicateResult enterDuplicateResult =
-                        GameMsg.EnterDuplicateResult.newBuilder()
-                                .setDuplicateId(duplicate.getId())
-                                .setIsSuccess(true)
-                                .setUserId(teamLeaderId)
-                                .setStartTime(duplicate.getStartTime())
-                                .setBossMonsterId(duplicate.getCurrBossMonster().getId())
-                                .build();
-                user.getCtx().channel().writeAndFlush(enterDuplicateResult);
+            if (id == null) {
+                continue;
             }
+
+            User user = UserManager.getUserById(id);
+            if (user == null){
+                continue;
+            }
+
+            GameMsg.EnterDuplicateResult enterDuplicateResult =
+                    GameMsg.EnterDuplicateResult.newBuilder()
+                            .setDuplicateId(duplicate.getId())
+                            .setUserId(teamLeaderId)
+                            .setStartTime(duplicate.getStartTime())
+                            .setBossMonsterId(duplicate.getCurrBossMonster().getId())
+                            .build();
+            user.getCtx().channel().writeAndFlush(enterDuplicateResult);
         }
     }
 

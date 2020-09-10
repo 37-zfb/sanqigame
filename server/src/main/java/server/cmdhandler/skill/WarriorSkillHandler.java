@@ -1,7 +1,5 @@
 package server.cmdhandler.skill;
 
-import exception.CustomizeErrorCode;
-import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import server.model.PlayArena;
@@ -17,7 +15,7 @@ import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
 import server.timer.BossAttackTimer;
-import server.timer.MonsterAttakTimer;
+import server.timer.MonsterTimer;
 import type.skill.WarriorSkillType;
 
 import java.lang.reflect.Method;
@@ -139,7 +137,7 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
 
                 if (monster.getRunnableScheduledFuture() == null) {
                     // 定时器为null,设置boss定时器， 攻击玩家
-                    MonsterAttakTimer.getInstance().monsterNormalAttk(monster);
+                    MonsterTimer.getInstance().monsterNormalAttk(monster);
                 }
             }
         }

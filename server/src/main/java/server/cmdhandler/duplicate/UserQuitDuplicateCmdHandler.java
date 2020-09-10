@@ -32,9 +32,6 @@ import java.util.Map;
 @Slf4j
 public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuitDuplicateCmd> {
 
-    @Autowired
-    private DbUserStateTimer userStateTimer;
-
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserQuitDuplicateCmd userQuitDuplicateCmd) {
 
@@ -56,22 +53,13 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
         }
 
 //        // 取消召唤师定时器
-//        PublicMethod.getInstance().cancelSummonTimerOrPlayTeam(user);
+        PublicMethod.getInstance().cancelSummonTimer(user);
 
         user.setCurrHp(ProfessionConst.HP);
         user.setCurrMp(ProfessionConst.MP);
 
         //持久化装备耐久度
-        Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-        for (UserEquipmentEntity equipmentEntity : user.getUserEquipmentArr()) {
-            if (equipmentEntity != null) {
-                if (((Equipment) propsMap.get(equipmentEntity.getPropsId()).getPropsProperty()).getEquipmentType() == EquipmentType.Weapon) {
-                    //是武器
-                    userStateTimer.modifyUserEquipment(equipmentEntity);
-                }
-            }
-
-        }
+        PublicMethod.getInstance().dbWeaponDurability(user.getUserEquipmentArr());
 
         GameMsg.UserQuitDuplicateResult.Builder newBuilder = GameMsg.UserQuitDuplicateResult.newBuilder();
         if (user.getCurrHp() <= 0) {

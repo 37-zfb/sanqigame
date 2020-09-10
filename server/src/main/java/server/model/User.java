@@ -14,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import server.GameServer;
 import server.PublicMethod;
+import server.cmdhandler.auction.AuctionUtil;
 import server.cmdhandler.duplicate.BossSkillAttack;
+import server.cmdhandler.duplicate.PropsUtil;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.profession.Skill;
@@ -529,12 +531,18 @@ public class User {
      */
     public void addMonsterReward(Integer propsId) {
         Props props = GameData.getInstance().getPropsMap().get(propsId);
-        if (props.getPropsProperty().getType() == PropsType.Equipment) {
-            PublicMethod.getInstance().addEquipment(this, props);
-        } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-            PublicMethod.getInstance().addPotion(props, this, 1);
 
+        try {
+            if (props.getPropsProperty().getType() == PropsType.Equipment) {
+                PropsUtil.getPropsUtil().addEquipment(this, props);
+            } else if (props.getPropsProperty().getType() == PropsType.Potion) {
+                PropsUtil.getPropsUtil().addPotion(props, this, 1);
+            }
+        }catch (CustomizeException e){
+            log.error(e.getMessage(), e);
+            AuctionUtil.sendMailBuyer(userId,propsId, 1, "击杀怪的奖励;");
         }
+
     }
 
 

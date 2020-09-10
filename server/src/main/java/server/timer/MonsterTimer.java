@@ -1,32 +1,45 @@
 package server.timer;
 
+import constant.MonsterConst;
+import constant.SceneConst;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.AnnotationUtils;
+import msg.GameMsg;
+import server.Broadcast;
 import server.model.UserManager;
-import server.model.duplicate.ForceAttackUser;
 import server.model.profession.SummonMonster;
 import server.model.scene.Monster;
 import server.model.User;
+import server.model.scene.Scene;
+import server.scene.GameData;
 import type.ProfessionType;
+import type.SceneType;
 import util.CustomizeThreadFactory;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author 张丰博
  * 怪 攻击用户 定时器
  */
 @Slf4j
-public class MonsterAttakTimer {
+public class MonsterTimer {
     private final ScheduledThreadPoolExecutor scheduledThreadPool = new ScheduledThreadPoolExecutor(
             1,
             new CustomizeThreadFactory("怪攻击")
     );
 
-    private static final MonsterAttakTimer MONSTER_ATTACK_TIMER = new MonsterAttakTimer();
+    private static final MonsterTimer MONSTER_ATTACK_TIMER = new MonsterTimer();
 
-    public static MonsterAttakTimer getInstance() {
+    /**
+     * 复活定时器
+     */
+    private Set<Integer> resurrectionMonsterSceneId = new HashSet<>();
+
+    public static MonsterTimer getInstance() {
         return MONSTER_ATTACK_TIMER;
     }
 
@@ -94,16 +107,43 @@ public class MonsterAttakTimer {
     }
 
 
-    /**
-     * 移除指定 任务
-     *
-     * @param runnableScheduledFuture
-     */
-    public void removeTask(RunnableScheduledFuture runnableScheduledFuture) {
-        if (runnableScheduledFuture == null) {
+    public void resurrectionMonster(Collection<Monster> monsterCollection, Integer sceneId) {
+        if (monsterCollection == null || sceneId == null) {
             return;
         }
-        scheduledThreadPool.remove(runnableScheduledFuture);
+
+        Scene scene = GameData.getInstance().getSceneMap().get(sceneId);
+        if (scene == null) {
+            return;
+        }
+
+        //使用set记录正在复活的场景id， 若包含则直接返回
+        synchronized (MonsterTimer.class) {
+            if (resurrectionMonsterSceneId.contains(sceneId)) {
+
+                log.info("场景 {} 中的怪正在复活;", scene.getName());
+                return;
+            }
+            resurrectionMonsterSceneId.add(sceneId);
+            log.info("{} 场景,添加复活定时器;",scene.getName());
+        }
+
+
+        scheduledThreadPool.schedule(() -> {
+
+            for (Monster monster : monsterCollection) {
+                synchronized (monster.getSubHpMonitor()) {
+                    monster.setHp(MonsterConst.HP);
+                }
+            }
+
+            log.info("场景 {} 中的怪正在复活;", scene.getName());
+            GameMsg.MonsterResurrectionResult monsterResurrectionResult = GameMsg.MonsterResurrectionResult
+                    .newBuilder()
+                    .setSceneId(sceneId)
+                    .build();
+            Broadcast.broadcast(sceneId, monsterResurrectionResult);
+        }, MonsterConst.RESURRECTION, TimeUnit.MINUTES);
     }
 
 

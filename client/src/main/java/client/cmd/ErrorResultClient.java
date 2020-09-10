@@ -4,6 +4,7 @@ import client.GameClient;
 import client.model.Role;
 import client.model.SceneData;
 import client.thread.CmdThread;
+import constant.ProfessionConst;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
@@ -70,6 +71,19 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
             CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }else if (code == CustomizeErrorCode.POTION_CD_TIME.getCode()){
 
+        }else if (code == CustomizeErrorCode.NOT_TEAM_LEADER.getCode()){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+        }else if (code == CustomizeErrorCode.DUPLICATE_TIME_OUT.getCode()){
+
+            role.setCurrDuplicate(null);
+            role.setCurrHp(ProfessionConst.HP);
+            role.setCurrMp(ProfessionConst.MP);
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+        }else if (code == CustomizeErrorCode.ALL_MONSTER_DIE.getCode()){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }
 
 

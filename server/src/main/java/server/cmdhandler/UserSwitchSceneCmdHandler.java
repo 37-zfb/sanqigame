@@ -84,19 +84,12 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
 
 
         //如果当前场景是公共地图，切换地图时则更新装备耐久度
-        List<Integer> sceneId = SceneType.getSceneIdByType("野外");
+        List<Integer> sceneId = SceneType.getSceneIdByType(SceneConst.FIELD);
         if (sceneId.contains(user.getCurSceneId())){
             //持久化装备耐久度
-            Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-            for (UserEquipmentEntity equipmentEntity : user.getUserEquipmentArr()) {
-                if (equipmentEntity != null) {
-                    if (((Equipment) propsMap.get(equipmentEntity.getPropsId()).getPropsProperty()).getEquipmentType() == EquipmentType.Weapon) {
-                        //如果是武器
-                        userStateTimer.modifyUserEquipment(equipmentEntity);
-                    }
-                }
-
-            }
+            PublicMethod.getInstance().dbWeaponDurability(user.getUserEquipmentArr());
+            //取消当前用户召唤兽定时器
+            PublicMethod.getInstance().cancelSummonTimer(user);
         }
 
 

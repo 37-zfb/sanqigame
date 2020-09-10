@@ -29,10 +29,7 @@ public class AttkBossResultClient implements ICmd<GameMsg.AttkBossResult> {
             System.out.println("召唤兽攻击 " + currBossMonster.getBossName() + " 减血 " + subHp);
         }
 
-//        if (role.getId() == attkBossResult.getUserId()) {
-//            BossThread.getInstance().process(ctx, role);
-//        } else {
         System.out.println(currBossMonster.getBossName() + " 减血 " + subHp);
-//        }
+
     }
 }

@@ -88,6 +88,9 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     POTION_CD_TIME(-447,"该药剂在cd中;"),
     TARGET_USER_QUIT(-448,"对方已离线;"),
     USER_NOT_ARENA(-449,"不在竞技场中;"),
+    NOT_TEAM_LEADER(-460,"不是队长;"),
+    DUPLICATE_TIME_OUT(-461,"副本超时;"),
+    ALL_MONSTER_DIE(-462,"当前场景没有存活的怪;"),
     ;
 
     private String message;

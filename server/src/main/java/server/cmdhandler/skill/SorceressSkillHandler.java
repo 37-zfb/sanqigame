@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
+import server.timer.MonsterTimer;
 import type.skill.SorceressSkillType;
 
 import java.lang.reflect.Method;
@@ -100,6 +101,12 @@ public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProper
             for (Monster monster : monsterAliveList) {
                 PublicMethod.getInstance().userOrSummonerAttackMonster(user, monster, null, subHp);
             }
+
+            monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
+            if (monsterAliveList.size() == 0) {
+                MonsterTimer.getInstance().resurrectionMonster(monsterMap.values(),user.getCurSceneId());
+            }
+
 
         }
 

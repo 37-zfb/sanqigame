@@ -672,6 +672,18 @@ public final class GameMsg {
      */
     DELETE_FRIEND_RESULT(161),
     /**
+     * <code>BOSS_ALL_KILL_RESULT = 162;</code>
+     */
+    BOSS_ALL_KILL_RESULT(162),
+    /**
+     * <code>DUPLICATE_FINISH_CMD = 163;</code>
+     */
+    DUPLICATE_FINISH_CMD(163),
+    /**
+     * <code>MONSTER_RESURRECTION_RESULT = 164;</code>
+     */
+    MONSTER_RESURRECTION_RESULT(164),
+    /**
      * <code>USER_UP_LV_RESULT = 157;</code>
      */
     USER_UP_LV_RESULT(157),
@@ -1331,6 +1343,18 @@ public final class GameMsg {
      */
     public static final int DELETE_FRIEND_RESULT_VALUE = 161;
     /**
+     * <code>BOSS_ALL_KILL_RESULT = 162;</code>
+     */
+    public static final int BOSS_ALL_KILL_RESULT_VALUE = 162;
+    /**
+     * <code>DUPLICATE_FINISH_CMD = 163;</code>
+     */
+    public static final int DUPLICATE_FINISH_CMD_VALUE = 163;
+    /**
+     * <code>MONSTER_RESURRECTION_RESULT = 164;</code>
+     */
+    public static final int MONSTER_RESURRECTION_RESULT_VALUE = 164;
+    /**
      * <code>USER_UP_LV_RESULT = 157;</code>
      */
     public static final int USER_UP_LV_RESULT_VALUE = 157;
@@ -1526,6 +1550,9 @@ public final class GameMsg {
         case 159: return ADD_FRIEND_RESULT;
         case 160: return DELETE_FRIEND_CMD;
         case 161: return DELETE_FRIEND_RESULT;
+        case 162: return BOSS_ALL_KILL_RESULT;
+        case 163: return DUPLICATE_FINISH_CMD;
+        case 164: return MONSTER_RESURRECTION_RESULT;
         case 157: return USER_UP_LV_RESULT;
         case 96: return ERROR_RESULT;
         default: return null;
@@ -36877,13 +36904,7 @@ public final class GameMsg {
     int getBossMonsterId();
 
     /**
-     * <code>bool isSuccess = 4;</code>
-     * @return The isSuccess.
-     */
-    boolean getIsSuccess();
-
-    /**
-     * <code>uint32 userId = 5;</code>
+     * <code>uint32 userId = 4;</code>
      * @return The userId.
      */
     int getUserId();
@@ -36954,11 +36975,6 @@ public final class GameMsg {
             }
             case 32: {
 
-              isSuccess_ = input.readBool();
-              break;
-            }
-            case 40: {
-
               userId_ = input.readUInt32();
               break;
             }
@@ -37024,20 +37040,10 @@ public final class GameMsg {
       return bossMonsterId_;
     }
 
-    public static final int ISSUCCESS_FIELD_NUMBER = 4;
-    private boolean isSuccess_;
-    /**
-     * <code>bool isSuccess = 4;</code>
-     * @return The isSuccess.
-     */
-    public boolean getIsSuccess() {
-      return isSuccess_;
-    }
-
-    public static final int USERID_FIELD_NUMBER = 5;
+    public static final int USERID_FIELD_NUMBER = 4;
     private int userId_;
     /**
-     * <code>uint32 userId = 5;</code>
+     * <code>uint32 userId = 4;</code>
      * @return The userId.
      */
     public int getUserId() {
@@ -37067,11 +37073,8 @@ public final class GameMsg {
       if (bossMonsterId_ != 0) {
         output.writeUInt32(3, bossMonsterId_);
       }
-      if (isSuccess_ != false) {
-        output.writeBool(4, isSuccess_);
-      }
       if (userId_ != 0) {
-        output.writeUInt32(5, userId_);
+        output.writeUInt32(4, userId_);
       }
       unknownFields.writeTo(output);
     }
@@ -37094,13 +37097,9 @@ public final class GameMsg {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(3, bossMonsterId_);
       }
-      if (isSuccess_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(4, isSuccess_);
-      }
       if (userId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(5, userId_);
+          .computeUInt32Size(4, userId_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -37123,8 +37122,6 @@ public final class GameMsg {
           != other.getStartTime()) return false;
       if (getBossMonsterId()
           != other.getBossMonsterId()) return false;
-      if (getIsSuccess()
-          != other.getIsSuccess()) return false;
       if (getUserId()
           != other.getUserId()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
@@ -37145,9 +37142,6 @@ public final class GameMsg {
           getStartTime());
       hash = (37 * hash) + BOSSMONSTERID_FIELD_NUMBER;
       hash = (53 * hash) + getBossMonsterId();
-      hash = (37 * hash) + ISSUCCESS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getIsSuccess());
       hash = (37 * hash) + USERID_FIELD_NUMBER;
       hash = (53 * hash) + getUserId();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -37293,8 +37287,6 @@ public final class GameMsg {
 
         bossMonsterId_ = 0;
 
-        isSuccess_ = false;
-
         userId_ = 0;
 
         return this;
@@ -37326,7 +37318,6 @@ public final class GameMsg {
         result.duplicateId_ = duplicateId_;
         result.startTime_ = startTime_;
         result.bossMonsterId_ = bossMonsterId_;
-        result.isSuccess_ = isSuccess_;
         result.userId_ = userId_;
         onBuilt();
         return result;
@@ -37384,9 +37375,6 @@ public final class GameMsg {
         }
         if (other.getBossMonsterId() != 0) {
           setBossMonsterId(other.getBossMonsterId());
-        }
-        if (other.getIsSuccess() != false) {
-          setIsSuccess(other.getIsSuccess());
         }
         if (other.getUserId() != 0) {
           setUserId(other.getUserId());
@@ -37510,46 +37498,16 @@ public final class GameMsg {
         return this;
       }
 
-      private boolean isSuccess_ ;
-      /**
-       * <code>bool isSuccess = 4;</code>
-       * @return The isSuccess.
-       */
-      public boolean getIsSuccess() {
-        return isSuccess_;
-      }
-      /**
-       * <code>bool isSuccess = 4;</code>
-       * @param value The isSuccess to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsSuccess(boolean value) {
-        
-        isSuccess_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool isSuccess = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsSuccess() {
-        
-        isSuccess_ = false;
-        onChanged();
-        return this;
-      }
-
       private int userId_ ;
       /**
-       * <code>uint32 userId = 5;</code>
+       * <code>uint32 userId = 4;</code>
        * @return The userId.
        */
       public int getUserId() {
         return userId_;
       }
       /**
-       * <code>uint32 userId = 5;</code>
+       * <code>uint32 userId = 4;</code>
        * @param value The userId to set.
        * @return This builder for chaining.
        */
@@ -37560,7 +37518,7 @@ public final class GameMsg {
         return this;
       }
       /**
-       * <code>uint32 userId = 5;</code>
+       * <code>uint32 userId = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearUserId() {
@@ -113495,6 +113453,1352 @@ public final class GameMsg {
 
   }
 
+  public interface BossAllKillResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.BossAllKillResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   *boss全部被击杀
+   * </pre>
+   *
+   * Protobuf type {@code msg.BossAllKillResult}
+   */
+  public  static final class BossAllKillResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.BossAllKillResult)
+      BossAllKillResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use BossAllKillResult.newBuilder() to construct.
+    private BossAllKillResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private BossAllKillResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new BossAllKillResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private BossAllKillResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_BossAllKillResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_BossAllKillResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.BossAllKillResult.class, msg.GameMsg.BossAllKillResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.BossAllKillResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.BossAllKillResult other = (msg.GameMsg.BossAllKillResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAllKillResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossAllKillResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.BossAllKillResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.BossAllKillResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *boss全部被击杀
+     * </pre>
+     *
+     * Protobuf type {@code msg.BossAllKillResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.BossAllKillResult)
+        msg.GameMsg.BossAllKillResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_BossAllKillResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_BossAllKillResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.BossAllKillResult.class, msg.GameMsg.BossAllKillResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.BossAllKillResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_BossAllKillResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossAllKillResult getDefaultInstanceForType() {
+        return msg.GameMsg.BossAllKillResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossAllKillResult build() {
+        msg.GameMsg.BossAllKillResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.BossAllKillResult buildPartial() {
+        msg.GameMsg.BossAllKillResult result = new msg.GameMsg.BossAllKillResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.BossAllKillResult) {
+          return mergeFrom((msg.GameMsg.BossAllKillResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.BossAllKillResult other) {
+        if (other == msg.GameMsg.BossAllKillResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.BossAllKillResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.BossAllKillResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.BossAllKillResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.BossAllKillResult)
+    private static final msg.GameMsg.BossAllKillResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.BossAllKillResult();
+    }
+
+    public static msg.GameMsg.BossAllKillResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<BossAllKillResult>
+        PARSER = new com.google.protobuf.AbstractParser<BossAllKillResult>() {
+      @java.lang.Override
+      public BossAllKillResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new BossAllKillResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<BossAllKillResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<BossAllKillResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.BossAllKillResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface DuplicateFinishCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.DuplicateFinishCmd)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   *副本结束
+   * </pre>
+   *
+   * Protobuf type {@code msg.DuplicateFinishCmd}
+   */
+  public  static final class DuplicateFinishCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.DuplicateFinishCmd)
+      DuplicateFinishCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DuplicateFinishCmd.newBuilder() to construct.
+    private DuplicateFinishCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DuplicateFinishCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new DuplicateFinishCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DuplicateFinishCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_DuplicateFinishCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_DuplicateFinishCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.DuplicateFinishCmd.class, msg.GameMsg.DuplicateFinishCmd.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.DuplicateFinishCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.DuplicateFinishCmd other = (msg.GameMsg.DuplicateFinishCmd) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DuplicateFinishCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.DuplicateFinishCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *副本结束
+     * </pre>
+     *
+     * Protobuf type {@code msg.DuplicateFinishCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.DuplicateFinishCmd)
+        msg.GameMsg.DuplicateFinishCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_DuplicateFinishCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_DuplicateFinishCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.DuplicateFinishCmd.class, msg.GameMsg.DuplicateFinishCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.DuplicateFinishCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_DuplicateFinishCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DuplicateFinishCmd getDefaultInstanceForType() {
+        return msg.GameMsg.DuplicateFinishCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DuplicateFinishCmd build() {
+        msg.GameMsg.DuplicateFinishCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DuplicateFinishCmd buildPartial() {
+        msg.GameMsg.DuplicateFinishCmd result = new msg.GameMsg.DuplicateFinishCmd(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.DuplicateFinishCmd) {
+          return mergeFrom((msg.GameMsg.DuplicateFinishCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.DuplicateFinishCmd other) {
+        if (other == msg.GameMsg.DuplicateFinishCmd.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.DuplicateFinishCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.DuplicateFinishCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.DuplicateFinishCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.DuplicateFinishCmd)
+    private static final msg.GameMsg.DuplicateFinishCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.DuplicateFinishCmd();
+    }
+
+    public static msg.GameMsg.DuplicateFinishCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DuplicateFinishCmd>
+        PARSER = new com.google.protobuf.AbstractParser<DuplicateFinishCmd>() {
+      @java.lang.Override
+      public DuplicateFinishCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DuplicateFinishCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DuplicateFinishCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DuplicateFinishCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.DuplicateFinishCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface MonsterResurrectionResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.MonsterResurrectionResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 sceneId = 1;</code>
+     * @return The sceneId.
+     */
+    int getSceneId();
+  }
+  /**
+   * <pre>
+   *击杀野外的怪
+   * </pre>
+   *
+   * Protobuf type {@code msg.MonsterResurrectionResult}
+   */
+  public  static final class MonsterResurrectionResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.MonsterResurrectionResult)
+      MonsterResurrectionResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use MonsterResurrectionResult.newBuilder() to construct.
+    private MonsterResurrectionResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private MonsterResurrectionResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new MonsterResurrectionResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private MonsterResurrectionResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              sceneId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_MonsterResurrectionResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_MonsterResurrectionResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.MonsterResurrectionResult.class, msg.GameMsg.MonsterResurrectionResult.Builder.class);
+    }
+
+    public static final int SCENEID_FIELD_NUMBER = 1;
+    private int sceneId_;
+    /**
+     * <code>uint32 sceneId = 1;</code>
+     * @return The sceneId.
+     */
+    public int getSceneId() {
+      return sceneId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (sceneId_ != 0) {
+        output.writeUInt32(1, sceneId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (sceneId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, sceneId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.MonsterResurrectionResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.MonsterResurrectionResult other = (msg.GameMsg.MonsterResurrectionResult) obj;
+
+      if (getSceneId()
+          != other.getSceneId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SCENEID_FIELD_NUMBER;
+      hash = (53 * hash) + getSceneId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.MonsterResurrectionResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.MonsterResurrectionResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *击杀野外的怪
+     * </pre>
+     *
+     * Protobuf type {@code msg.MonsterResurrectionResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.MonsterResurrectionResult)
+        msg.GameMsg.MonsterResurrectionResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_MonsterResurrectionResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_MonsterResurrectionResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.MonsterResurrectionResult.class, msg.GameMsg.MonsterResurrectionResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.MonsterResurrectionResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        sceneId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_MonsterResurrectionResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.MonsterResurrectionResult getDefaultInstanceForType() {
+        return msg.GameMsg.MonsterResurrectionResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.MonsterResurrectionResult build() {
+        msg.GameMsg.MonsterResurrectionResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.MonsterResurrectionResult buildPartial() {
+        msg.GameMsg.MonsterResurrectionResult result = new msg.GameMsg.MonsterResurrectionResult(this);
+        result.sceneId_ = sceneId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.MonsterResurrectionResult) {
+          return mergeFrom((msg.GameMsg.MonsterResurrectionResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.MonsterResurrectionResult other) {
+        if (other == msg.GameMsg.MonsterResurrectionResult.getDefaultInstance()) return this;
+        if (other.getSceneId() != 0) {
+          setSceneId(other.getSceneId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.MonsterResurrectionResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.MonsterResurrectionResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int sceneId_ ;
+      /**
+       * <code>uint32 sceneId = 1;</code>
+       * @return The sceneId.
+       */
+      public int getSceneId() {
+        return sceneId_;
+      }
+      /**
+       * <code>uint32 sceneId = 1;</code>
+       * @param value The sceneId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSceneId(int value) {
+        
+        sceneId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 sceneId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSceneId() {
+        
+        sceneId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.MonsterResurrectionResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.MonsterResurrectionResult)
+    private static final msg.GameMsg.MonsterResurrectionResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.MonsterResurrectionResult();
+    }
+
+    public static msg.GameMsg.MonsterResurrectionResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<MonsterResurrectionResult>
+        PARSER = new com.google.protobuf.AbstractParser<MonsterResurrectionResult>() {
+      @java.lang.Override
+      public MonsterResurrectionResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new MonsterResurrectionResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<MonsterResurrectionResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<MonsterResurrectionResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.MonsterResurrectionResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_WhoElseIsHereCmd_descriptor;
   private static final 
@@ -114380,6 +115684,21 @@ public final class GameMsg {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_DeleteFriendResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_BossAllKillResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_BossAllKillResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_DuplicateFinishCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_DuplicateFinishCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_MonsterResurrectionResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_MonsterResurrectionResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -114472,271 +115791,275 @@ public final class GameMsg {
       "entResult\022\027\n\017userEquipmentId\030\001 \001(\004\")\n\024Mo" +
       "nsterDropHpAutoDie\022\021\n\tmonsterId\030\001 \001(\r\"(\n" +
       "\021EnterDuplicateCmd\022\023\n\013duplicateId\030\001 \001(\r\"" +
-      "x\n\024EnterDuplicateResult\022\023\n\013duplicateId\030\001" +
+      "e\n\024EnterDuplicateResult\022\023\n\013duplicateId\030\001" +
       " \001(\r\022\021\n\tstartTime\030\002 \001(\004\022\025\n\rbossMonsterId" +
-      "\030\003 \001(\r\022\021\n\tisSuccess\030\004 \001(\010\022\016\n\006userId\030\005 \001(" +
-      "\r\"\r\n\013AttkBossCmd\"=\n\016AttkBossResult\022\r\n\005su" +
-      "bHp\030\001 \001(\r\022\016\n\006userId\030\002 \001(\r\022\014\n\004type\030\003 \001(\t\"" +
-      "J\n\016NextBossResult\022\025\n\rbossMonsterId\030\001 \001(\r" +
-      "\022\021\n\tstartTime\030\002 \001(\004\022\016\n\006userId\030\003 \001(\r\"b\n\025D" +
-      "uplicateFinishResult\022\017\n\007propsId\030\001 \003(\r\022\r\n" +
-      "\005money\030\002 \001(\r\022\031\n\005props\030\003 \003(\0132\n.msg.Props\022" +
-      "\016\n\006userId\030\004 \001(\r\"\026\n\024UserQuitDuplicateCmd\"" +
-      "4\n\027UserQuitDuplicateResult\022\031\n\021quitDuplic" +
-      "ateType\030\001 \001(\t\"\'\n\022BossAttkUserResult\022\021\n\ts" +
-      "ubUserHp\030\001 \001(\r\",\n\027BossSkillAttkUserResul" +
-      "t\022\021\n\tsubUserHp\030\001 \001(\r\"7\n\017UserBuyGoodsCmd\022" +
-      "\017\n\007goodsId\030\001 \001(\r\022\023\n\013goodsNumber\030\002 \001(\r\"\206\001" +
-      "\n\022UserBuyGoodsResult\022\021\n\tisSuccess\030\001 \001(\010\022" +
-      "\031\n\005props\030\002 \003(\0132\n.msg.Props\022\017\n\007goodsId\030\003 " +
-      "\001(\r\022\023\n\013goodsNumber\030\004 \001(\r\022\014\n\004code\030\005 \001(\r\022\016" +
-      "\n\006reason\030\006 \001(\t\"*\n\022BossKillUserResult\022\024\n\014" +
-      "targetUserId\030\001 \001(\r\"C\n\017UserChatInfoCmd\022\024\n" +
-      "\014targetUserId\030\001 \001(\r\022\014\n\004info\030\002 \001(\t\022\014\n\004typ" +
-      "e\030\003 \001(\t\"B\n\022UserChatInfoResult\022\020\n\010userNam" +
-      "e\030\001 \001(\t\022\014\n\004type\030\002 \001(\t\022\014\n\004info\030\003 \001(\t\"s\n\013S" +
-      "endMailCmd\022\035\n\005props\030\001 \003(\0132\016.msg.MailProp" +
-      "s\022\021\n\tsrcUserId\030\002 \001(\r\022\024\n\014targetUserId\030\003 \001" +
-      "(\r\022\r\n\005money\030\004 \001(\r\022\r\n\005title\030\005 \001(\t\",\n\tMail" +
-      "Props\022\017\n\007propsId\030\001 \001(\r\022\016\n\006number\030\002 \001(\r\"#" +
-      "\n\016SendMailResult\022\021\n\tisSuccess\030\001 \001(\010\"\014\n\nA" +
-      "llUserCmd\"0\n\rAllUserResult\022\037\n\010userInfo\030\001" +
-      " \003(\0132\r.msg.UserInfo\":\n\027NoticeUserGetMail" +
-      "Result\022\037\n\010mailInfo\030\001 \001(\0132\r.msg.MailInfo\"" +
-      "\020\n\016UserSeeMailCmd\"4\n\021UserSeeMailResult\022\037" +
-      "\n\010mailInfo\030\001 \003(\0132\r.msg.MailInfo\">\n\010MailI" +
-      "nfo\022\016\n\006mailId\030\001 \001(\004\022\023\n\013srcUserName\030\002 \001(\t" +
-      "\022\r\n\005title\030\003 \001(\t\"$\n\022UserReceiveMailCmd\022\016\n" +
-      "\006mailId\030\001 \001(\004\"Q\n\025UserReceiveMailResult\022\016" +
-      "\n\006mailId\030\001 \003(\004\022\031\n\005props\030\002 \003(\0132\n.msg.Prop" +
-      "s\022\r\n\005money\030\003 \001(\r\"\023\n\021UserEnterArenaCmd\"7\n" +
-      "\024UserEnterArenaResult\022\037\n\010userInfo\030\001 \003(\0132" +
-      "\r.msg.UserInfo\"\'\n\025UserChooseOpponentCmd\022" +
-      "\016\n\006userId\030\001 \001(\r\"f\n\030UserChooseOpponentRes" +
-      "ult\022\027\n\017acceptChallenge\030\001 \001(\010\022\027\n\017originat" +
-      "eUserId\030\002 \001(\r\022\030\n\020originatedUserId\030\003 \001(\r\"" +
-      "4\n\031TargetUserChallengeResult\022\027\n\017originat" +
-      "eUserId\030\001 \001(\r\"A\n\025TargetUserResponseCmd\022\017" +
-      "\n\007isAgree\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r" +
-      "\"\022\n\020UserQuitArenaCmd\"6\n\023UserQuitArenaRes" +
-      "ult\022\037\n\010userInfo\030\001 \001(\0132\r.msg.UserInfo\"%\n\r" +
-      "UserAttackCmd\022\024\n\014targetUserId\030\001 \001(\r\">\n\020U" +
-      "serAttackResult\022\024\n\014attackUserId\030\001 \001(\r\022\024\n" +
-      "\014targetUserId\030\002 \001(\r\"@\n\024UserSubtractHpRes" +
-      "ult\022\024\n\014targetUserId\030\001 \001(\r\022\022\n\nsubtractHp\030" +
-      "\002 \001(\r\"%\n\rUserDieResult\022\024\n\014targetUserId\030\001" +
-      " \001(\r\"%\n\rUserTeamUpCmd\022\024\n\014targetUserId\030\001 " +
-      "\001(\r\"\022\n\020UserTeamUpResult\"E\n\017AskTeamUpResu" +
-      "lt\022\027\n\017originateUserId\030\001 \001(\r\022\031\n\021originate" +
-      "UserName\030\002 \001(\t\":\n\017UserJoinTeamCmd\022\016\n\006isJ" +
-      "oin\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\"6\n\022Us" +
-      "erJoinTeamResult\022\016\n\006isJoin\030\001 \001(\010\022\020\n\010targ" +
-      "etId\030\002 \001(\r\"*\n\026UserJoinTeamPerformCmd\022\020\n\010" +
-      "targetId\030\001 \001(\r\"b\n\031UserJoinTeamPerformRes" +
-      "ult\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\022\024\n\014" +
-      "teamLeaderId\030\002 \001(\r\022\016\n\006isJoin\030\003 \001(\010\"\021\n\017Us" +
-      "erQuitTeamCmd\"K\n\022UserQuitTeamResult\022\037\n\010u" +
-      "serInfo\030\001 \001(\0132\r.msg.UserInfo\022\024\n\014teamLead" +
-      "erId\030\002 \001(\r\"\031\n\027UserEnterTeamFailResult\"\035\n" +
-      "\033UserQuitTeamAndDuplicateCmd\" \n\036UserQuit" +
-      "TeamAndDuplicateResult\"+\n\021PastorSkillRes" +
-      "ult\022\n\n\002hp\030\001 \001(\r\022\n\n\002mp\030\002 \001(\r\"8\n\030SummonMon" +
-      "sterSubHpResult\022\r\n\005isDie\030\001 \001(\010\022\r\n\005subHp\030" +
-      "\002 \001(\r\"\022\n\020UserCleanMailCmd\"6\n\023UserCleanMa" +
-      "ilResult\022\037\n\010mailInfo\030\001 \003(\0132\r.msg.MailInf" +
-      "o\"$\n\022UserDealRequestCmd\022\016\n\006userId\030\001 \001(\r\"" +
-      "i\n\025UserDealRequestResult\022\017\n\007isAgree\030\001 \001(" +
-      "\010\022\021\n\tisSuccess\030\002 \001(\010\022\024\n\014targetUserId\030\003 \001" +
-      "(\r\022\026\n\016targetUserName\030\004 \001(\t\"A\n\023AskTargetU" +
-      "serResult\022\023\n\013originateId\030\001 \001(\r\022\025\n\rorigin" +
-      "ateName\030\002 \001(\t\"A\n\031DealTargetUserResponseC" +
-      "md\022\023\n\013originateId\030\001 \001(\r\022\017\n\007isAgree\030\002 \001(\010" +
-      "\"\020\n\016DealChannelCmd\"\023\n\021DealChannelResult\"" +
-      "I\n\017UserDealItemCmd\022\r\n\005money\030\001 \001(\r\022\031\n\005pro" +
-      "ps\030\002 \001(\0132\n.msg.Props\022\014\n\004type\030\003 \001(\t\"L\n\022Us" +
-      "erDealItemResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props" +
-      "\030\002 \001(\0132\n.msg.Props\022\014\n\004type\030\003 \001(\t\"(\n\013Erro" +
-      "rResult\022\013\n\003msg\030\001 \001(\t\022\014\n\004code\030\002 \001(\r\"\024\n\022Us" +
-      "erAddCompleteCmd\"8\n\025UserAddCompleteResul" +
-      "t\022\037\n\010userInfo\030\001 \001(\0132\r.msg.UserInfo\")\n\021Us" +
-      "erCancelDealCmd\022\024\n\014isNeedNotice\030\001 \001(\010\"9\n" +
-      "\024UserCancelDealResult\022\021\n\tisSuccess\030\001 \001(\010" +
-      "\022\016\n\006userId\030\002 \001(\r\"\024\n\022UserConfirmDealCmd\"*" +
-      "\n\025UserConfirmDealResult\022\021\n\tisSuccess\030\001 \001" +
-      "(\010\"0\n\030UserCancelDealConfirmCmd\022\024\n\014isNeed" +
-      "Notice\030\001 \001(\010\"\035\n\033UserCancelDealConfirmRes" +
-      "ult\"\020\n\016SortOutDealCmd\"=\n\021SortOutDealResu" +
-      "lt\022\031\n\005props\030\001 \003(\0132\n.msg.Props\022\r\n\005money\030\002" +
-      " \001(\r\"\'\n\022UserCreateGuildCmd\022\021\n\tguildName\030" +
-      "\001 \001(\t\"*\n\025UserCreateGuildResult\022\021\n\tguildN" +
-      "ame\030\001 \001(\t\"\026\n\024UserDissolveGuildCmd\")\n\027Use" +
-      "rDissolveGuildResult\022\016\n\006userId\030\001 \001(\r\"\016\n\014" +
-      "ShowGuildCmd\",\n\017ShowGuildResult\022\031\n\005guild" +
-      "\030\001 \003(\0132\n.msg.Guild\"+\n\005Guild\022\017\n\007guildId\030\001" +
-      " \001(\r\022\021\n\tguildName\030\002 \001(\t\"$\n\021UserEnterGuil" +
-      "dCmd\022\017\n\007guildId\030\001 \001(\r\"1\n\024UserEnterGuildR" +
-      "esult\022\031\n\005guild\030\001 \001(\0132\n.msg.Guild\"\024\n\022Show" +
-      "GuildMemberCmd\"8\n\025ShowGuildMemberResult\022" +
-      "\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\"(\n\026Look" +
-      "GuildMemberInfoCmd\022\016\n\006userId\030\001 \001(\r\"*\n\031Lo" +
-      "okGuildMemberInfoResult\022\r\n\005equId\030\001 \003(\r\"\016" +
-      "\n\014QuitGuildCmd\"#\n\017QuitGuildResult\022\020\n\010use" +
-      "rName\030\001 \001(\t\"6\n\020AppointMemberCmd\022\016\n\006userI" +
-      "d\030\001 \001(\r\022\022\n\npositionId\030\002 \001(\r\")\n\023AppointMe" +
-      "mberResult\022\022\n\npositionId\030\001 \001(\r\"#\n\021Elimin" +
-      "ateGuildCmd\022\016\n\006userId\030\001 \001(\r\"\026\n\024Eliminate" +
-      "GuildResult\",\n\026ModifyGuildPositionCmd\022\022\n" +
-      "\npositionId\030\001 \001(\r\"\025\n\023ModifyGuildStateCmd" +
-      "\"\027\n\025LookGuildWarehouseCmd\"D\n\030LookGuildWa" +
-      "rehouseResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 " +
-      "\003(\0132\n.msg.Props\"<\n\017TakeOutPropsCmd\022\031\n\005pr" +
-      "ops\030\001 \001(\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"\024\n" +
-      "\022TakeOutPropsResult\"*\n\rPutInPropsCmd\022\031\n\005" +
-      "props\030\001 \001(\0132\n.msg.Props\"\022\n\020PutInPropsRes" +
-      "ult\" \n\017TakeOutMoneyCmd\022\r\n\005money\030\001 \001(\r\"\024\n" +
-      "\022TakeOutMoneyResult\"\036\n\rPutInMoneyCmd\022\r\n\005" +
-      "money\030\001 \001(\r\"\022\n\020PutInMoneyResult\"&\n\024Trans" +
-      "ferPresidentCmd\022\016\n\006userId\030\001 \001(\r\")\n\027Trans" +
-      "ferPresidentResult\022\016\n\006userId\030\001 \001(\r\"\024\n\022Lo" +
-      "okAuctionItemCmd\">\n\025LookAuctionItemResul" +
-      "t\022%\n\013auctionItem\030\001 \003(\0132\020.msg.AuctionItem" +
-      "\"z\n\013AuctionItem\022\n\n\002id\030\001 \001(\r\022\020\n\010userName\030" +
-      "\002 \001(\t\022\017\n\007propsId\030\003 \001(\r\022\017\n\007auction\030\004 \001(\r\022" +
-      "\r\n\005price\030\005 \001(\r\022\016\n\006number\030\006 \001(\r\022\014\n\004date\030\007" +
-      " \001(\004\"R\n\016ShelveGoodsCmd\022\020\n\010location\030\001 \001(\r" +
-      "\022\016\n\006number\030\002 \001(\r\022\017\n\007auction\030\003 \001(\r\022\r\n\005pri" +
-      "ce\030\004 \001(\r\"\023\n\021ShelveGoodsResult\"3\n\017Bidding" +
-      "GoodsCmd\022\021\n\tauctionId\030\001 \001(\r\022\r\n\005money\030\002 \001" +
-      "(\r\"#\n\022BiddingGoodsResult\022\r\n\005money\030\001 \001(\r\"" +
-      " \n\013OnePriceCmd\022\021\n\tauctionId\030\001 \001(\r\"\037\n\016One" +
-      "PriceResult\022\r\n\005price\030\001 \001(\r\"\033\n\031LookOnesel" +
-      "fAuctionItemCmd\"E\n\034LookOneselfAuctionIte" +
-      "mResult\022%\n\013auctionItem\030\001 \003(\0132\020.msg.Aucti" +
-      "onItem\")\n\024CancelAuctionItemCmd\022\021\n\tauctio" +
-      "nId\030\001 \001(\r\"\031\n\027CancelAuctionItemResult\"\020\n\016" +
-      "LookAllTaskCmd\"#\n\021LookAllTaskResult\022\016\n\006t" +
-      "askId\030\001 \001(\r\" \n\016ReceiveTaskCmd\022\016\n\006taskId\030" +
-      "\001 \001(\r\"#\n\021ReceiveTaskResult\022\016\n\006taskId\030\001 \001" +
-      "(\r\"\021\n\017DialogueTaskCmd\"\025\n\023TaskCompletedRe" +
-      "sult\"%\n\023ReceiveTaskAwardCmd\022\016\n\006taskId\030\001 " +
-      "\001(\r\"B\n\026ReceiveTaskAwardResult\022\031\n\005props\030\001" +
-      " \003(\0132\n.msg.Props\022\r\n\005money\030\002 \001(\r\"\034\n\016UserU" +
-      "pLvResult\022\n\n\002lv\030\001 \001(\r\"0\n\014AddFriendCmd\022\016\n" +
-      "\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"3\n\017AddFr" +
-      "iendResult\022\016\n\006userId\030\001 \001(\r\022\020\n\010userName\030\002" +
-      " \001(\t\"!\n\017DeleteFriendCmd\022\016\n\006userId\030\001 \001(\r\"" +
-      "$\n\022DeleteFriendResult\022\016\n\006userId\030\001 \001(\r*\303\"" +
-      "\n\007MsgCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027W" +
-      "HO_ELSE_IS_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RE" +
-      "SULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n" +
-      "\027USER_SUBTRACT_HP_RESULT\020\005\022\016\n\nDIE_RESULT" +
-      "\020\006\022\022\n\016USER_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RES" +
-      "ULT\020\010\022\025\n\021USER_REGISTER_CMD\020\t\022\030\n\024USER_REG" +
-      "ISTER_RESULT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027" +
-      "STOP_CUR_USER_ALL_TIMER\020\014\022\031\n\025USER_SWITCH" +
-      "_SCENE_CMD\020\r\022\034\n\030USER_SWITCH_SCENE_RESULT" +
-      "\020\016\022\033\n\027MONSTER_START_ATTK_USER\020\017\022\026\n\022NOTIC" +
-      "E_USER_ATTKED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021" +
-      "\022\032\n\026USER_SKILL_ATTK_RESULT\020\022\022\026\n\022SKILL_ST" +
-      "ATE_SWITCH\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014B" +
-      "ACKPACK_CMD\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024RO" +
-      "B_EQUIPMENT_RESULT\020\027\022\023\n\017USER_POTION_CMD\020" +
-      "\030\022\026\n\022USER_POTION_RESULT\020\031\022\034\n\030USER_RESUME" +
-      "_STATE_RESULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_C" +
-      "MD\020\033\022\036\n\032USER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027" +
-      "USER_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_E" +
-      "QUIPMENT_RESULT\020\036\022 \n\034DURABILITY_DEFICIEN" +
-      "CY_RESULT\020\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n" +
-      "\027REPAIR_EQUIPMENT_RESULT\020!\022\034\n\030MONSTER_DR" +
-      "OP_HP_AUTO_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020" +
-      "#\022\032\n\026ENTER_DUPLICATE_RESULT\020$\022\021\n\rATTK_BO" +
-      "SS_CMD\020%\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_B" +
-      "OSS_RESULT\020\'\022\033\n\027DUPLICATE_FINISH_RESULT\020" +
-      "(\022\033\n\027USER_QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_Q" +
-      "UIT_DUPLICATE_RESULT\020*\022\031\n\025BOSS_ATTK_USER" +
-      "_RESULT\020+\022\037\n\033BOSS_SKILL_ATTK_USER_RESULT" +
-      "\020,\022\031\n\025BOSS_KILL_USER_RESULT\020-\022\026\n\022USER_BU" +
-      "Y_GOODS_CMD\020.\022\031\n\025USER_BUY_GOODS_RESULT\020/" +
-      "\022\026\n\022USER_CHAT_INFO_CMD\0200\022\031\n\025USER_CHAT_IN" +
-      "FO_RESULT\0201\022\021\n\rSEND_MAIL_CMD\0202\022\024\n\020SEND_M" +
-      "AIL_RESULT\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n\017ALL_US" +
-      "ER_RESULT\0205\022\037\n\033NOTICE_USER_GET_MAIL_RESU" +
-      "LT\0206\022\025\n\021USER_SEE_MAIL_CMD\0207\022\030\n\024USER_SEE_" +
-      "MAIL_RESULT\0208\022\031\n\025USER_RECEIVE_MAIL_CMD\0209" +
-      "\022\034\n\030USER_RECEIVE_MAIL_RESULT\020:\022\030\n\024USER_E" +
-      "NTER_ARENA_CMD\020;\022\033\n\027USER_ENTER_ARENA_RES" +
-      "ULT\020<\022\034\n\030USER_CHOOSE_OPPONENT_CMD\020=\022\037\n\033U" +
-      "SER_CHOOSE_OPPONENT_RESULT\020>\022 \n\034TARGET_U" +
-      "SER_CHALLENGE_RESULT\020?\022\034\n\030TARGET_USER_RE" +
-      "SPONSE_CMD\020@\022\037\n\033TARGET_USER_RESPONSE_RES" +
-      "ULT\020A\022\027\n\023USER_QUIT_ARENA_CMD\020B\022\032\n\026USER_Q" +
-      "UIT_ARENA_RESULT\020C\022\023\n\017USER_ATTACK_CMD\020D\022" +
-      "\026\n\022USER_ATTACK_RESULT\020E\022\023\n\017USER_DIE_RESU" +
-      "LT\020F\022\024\n\020USER_TEAM_UP_CMD\020G\022\027\n\023USER_TEAM_" +
-      "UP_RESULT\020H\022\026\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022U" +
-      "SER_JOIN_TEAM_CMD\020J\022\031\n\025USER_JOIN_TEAM_RE" +
-      "SULT\020K\022\026\n\022USER_QUIT_TEAM_CMD\020L\022\031\n\025USER_Q" +
-      "UIT_TEAM_RESULT\020M\022\037\n\033USER_ENTER_TEAM_FAI" +
-      "L_RESULT\020N\022$\n USER_QUIT_TEAM_AND_DUPLICA" +
-      "TE_CMD\020O\022\'\n#USER_QUIT_TEAM_AND_DUPLICATE" +
-      "_RESULT\020P\022$\n USER_SKILL_ATTK_DUPLICATE_R" +
-      "ESULT\020Q\022\027\n\023PASTOR_SKILL_RESULT\020R\022 \n\034SUMM" +
-      "ON_MONSTER_SUB_HP_RESULT\020S\022\036\n\032USER_JOIN_" +
-      "TEAM_PERFORM_CMD\020T\022!\n\035USER_JOIN_TEAM_PER" +
-      "FORM_RESULT\020U\022\027\n\023USER_CLEAN_MAIL_CMD\020V\022\032" +
-      "\n\026USER_CLEAN_MAIL_RESULT\020W\022\031\n\025USER_DEAL_" +
-      "REQUEST_CMD\020X\022\034\n\030USER_DEAL_REQUEST_RESUL" +
-      "T\020Y\022\032\n\026ASK_TARGET_USER_RESULT\020Z\022!\n\035DEAL_" +
-      "TARGET_USER_RESPONSE_CMD\020[\022\024\n\020DEAL_CHANN" +
-      "EL_CMD\020\\\022\027\n\023DEAL_CHANNEL_RESULT\020]\022\026\n\022USE" +
-      "R_DEAL_ITEM_CMD\020^\022\031\n\025USER_DEAL_ITEM_RESU" +
-      "LT\020_\022\031\n\025USER_ADD_COMPLETE_CMD\020a\022\034\n\030USER_" +
-      "ADD_COMPLETE_RESULT\020b\022\030\n\024USER_CANCEL_DEA" +
-      "L_CMD\020c\022\033\n\027USER_CANCEL_DEAL_RESULT\020d\022\031\n\025" +
-      "USER_CONFIRM_DEAL_CMD\020e\022\034\n\030USER_CONFIRM_" +
-      "DEAL_RESULT\020f\022 \n\034USER_CANCEL_DEAL_CONFIR" +
-      "M_CMD\020g\022#\n\037USER_CANCEL_DEAL_CONFIRM_RESU" +
-      "LT\020h\022\025\n\021SORT_OUT_DEAL_CMD\020i\022\030\n\024SORT_OUT_" +
-      "DEAL_RESULT\020j\022\031\n\025USER_CREATE_GUILD_CMD\020k" +
-      "\022\034\n\030USER_CREATE_GUILD_RESULT\020l\022\033\n\027USER_D" +
-      "ISSOLVE_GUILD_CMD\020m\022\036\n\032USER_DISSOLVE_GUI" +
-      "LD_RESULT\020n\022\022\n\016SHOW_GUILD_CMD\020o\022\025\n\021SHOW_" +
-      "GUILD_RESULT\020p\022\030\n\024USER_ENTER_GUILD_CMD\020q" +
-      "\022\033\n\027USER_ENTER_GUILD_RESULT\020r\022\031\n\025SHOW_GU" +
-      "ILD_MEMBER_CMD\020s\022\034\n\030SHOW_GUILD_MEMBER_RE" +
-      "SULT\020t\022\036\n\032LOOK_GUiLD_MEMBER_INFO_CMD\020u\022!" +
-      "\n\035LOOK_GUiLD_MEMBER_INFO_RESULT\020v\022\022\n\016QUI" +
-      "T_GUILD_CMD\020w\022\025\n\021QUIT_GUILD_RESULT\020x\022\026\n\022" +
-      "APPOINT_MEMBER_CMD\020y\022\031\n\025APPOINT_MEMBER_R" +
-      "ESULT\020z\022\027\n\023ELIMINATE_GUILD_CMD\020{\022\032\n\026ELIM" +
-      "INATE_GUILD_RESULT\020|\022\035\n\031MODIFY_GUILD_POS" +
-      "ITION_CMD\020}\022\032\n\026MODIFY_GUILD_STATE_CMD\020~\022" +
-      "\034\n\030LOOK_GUILD_WAREHOUSE_CMD\020\177\022 \n\033LOOK_GU" +
-      "ILD_WAREHOUSE_RESULT\020\200\001\022\027\n\022TAKE_OUT_PROP" +
-      "S_CMD\020\201\001\022\032\n\025TAKE_OUT_PROPS_RESULT\020\202\001\022\025\n\020" +
-      "PUT_IN_PROPS_CMD\020\203\001\022\030\n\023PUT_IN_PROPS_RESU" +
-      "LT\020\204\001\022\027\n\022TAKE_OUT_MONEY_CMD\020\205\001\022\032\n\025TAKE_O" +
-      "UT_MONEY_RESULT\020\206\001\022\025\n\020PUT_IN_MONEY_CMD\020\207" +
-      "\001\022\030\n\023PUT_IN_MONEY_RESULT\020\210\001\022\033\n\026TRANSFER_" +
-      "PRESIDENT_CMD\020\310\001\022\036\n\031TRANSFER_PRESIDENT_R" +
-      "ESULT\020\311\001\022\032\n\025LOOK_AUCTION_ITEM_CMD\020\211\001\022\035\n\030" +
-      "LOOK_AUCTION_ITEM_RESULT\020\212\001\022\025\n\020SHELVE_GO" +
-      "ODS_CMD\020\213\001\022\030\n\023SHELVE_GOODS_RESULT\020\214\001\022\026\n\021" +
-      "BIDDING_GOODS_CMD\020\215\001\022\031\n\024BIDDING_GOODS_RE" +
-      "SULT\020\216\001\022\022\n\rONE_PRICE_CMD\020\217\001\022\025\n\020ONE_PRICE" +
-      "_RESULT\020\220\001\022\"\n\035LOOK_ONESELF_AUCTION_ITEM_" +
-      "CMD\020\221\001\022%\n LOOK_ONESELF_AUCTION_ITEM_RESU" +
-      "LT\020\222\001\022\034\n\027CANCEL_AUCTION_ITEM_CMD\020\223\001\022\037\n\032C" +
-      "ANCEL_AUCTION_ITEM_RESULT\020\224\001\022\026\n\021LOOK_ALL" +
-      "_TASK_CMD\020\225\001\022\031\n\024LOOK_ALL_TASK_RESULT\020\226\001\022" +
-      "\025\n\020RECEIVE_TASK_CMD\020\227\001\022\030\n\023RECEIVE_TASK_R" +
-      "ESULT\020\230\001\022\026\n\021DIALOGUE_TASK_CMD\020\231\001\022\032\n\025TASK" +
-      "_COMPLETED_RESULT\020\232\001\022\033\n\026RECEIVE_TASK_AWA" +
-      "RD_CMD\020\233\001\022\036\n\031RECEIVE_TASK_AWARD_RESULT\020\234" +
-      "\001\022\023\n\016ADD_FRIEND_CMD\020\236\001\022\026\n\021ADD_FRIEND_RES" +
-      "ULT\020\237\001\022\026\n\021DELETE_FRIEND_CMD\020\240\001\022\031\n\024DELETE" +
-      "_FRIEND_RESULT\020\241\001\022\026\n\021USER_UP_LV_RESULT\020\235" +
-      "\001\022\020\n\014ERROR_RESULT\020`B\005\n\003msgb\006proto3"
+      "\030\003 \001(\r\022\016\n\006userId\030\004 \001(\r\"\r\n\013AttkBossCmd\"=\n" +
+      "\016AttkBossResult\022\r\n\005subHp\030\001 \001(\r\022\016\n\006userId" +
+      "\030\002 \001(\r\022\014\n\004type\030\003 \001(\t\"J\n\016NextBossResult\022\025" +
+      "\n\rbossMonsterId\030\001 \001(\r\022\021\n\tstartTime\030\002 \001(\004" +
+      "\022\016\n\006userId\030\003 \001(\r\"b\n\025DuplicateFinishResul" +
+      "t\022\017\n\007propsId\030\001 \003(\r\022\r\n\005money\030\002 \001(\r\022\031\n\005pro" +
+      "ps\030\003 \003(\0132\n.msg.Props\022\016\n\006userId\030\004 \001(\r\"\026\n\024" +
+      "UserQuitDuplicateCmd\"4\n\027UserQuitDuplicat" +
+      "eResult\022\031\n\021quitDuplicateType\030\001 \001(\t\"\'\n\022Bo" +
+      "ssAttkUserResult\022\021\n\tsubUserHp\030\001 \001(\r\",\n\027B" +
+      "ossSkillAttkUserResult\022\021\n\tsubUserHp\030\001 \001(" +
+      "\r\"7\n\017UserBuyGoodsCmd\022\017\n\007goodsId\030\001 \001(\r\022\023\n" +
+      "\013goodsNumber\030\002 \001(\r\"\206\001\n\022UserBuyGoodsResul" +
+      "t\022\021\n\tisSuccess\030\001 \001(\010\022\031\n\005props\030\002 \003(\0132\n.ms" +
+      "g.Props\022\017\n\007goodsId\030\003 \001(\r\022\023\n\013goodsNumber\030" +
+      "\004 \001(\r\022\014\n\004code\030\005 \001(\r\022\016\n\006reason\030\006 \001(\t\"*\n\022B" +
+      "ossKillUserResult\022\024\n\014targetUserId\030\001 \001(\r\"" +
+      "C\n\017UserChatInfoCmd\022\024\n\014targetUserId\030\001 \001(\r" +
+      "\022\014\n\004info\030\002 \001(\t\022\014\n\004type\030\003 \001(\t\"B\n\022UserChat" +
+      "InfoResult\022\020\n\010userName\030\001 \001(\t\022\014\n\004type\030\002 \001" +
+      "(\t\022\014\n\004info\030\003 \001(\t\"s\n\013SendMailCmd\022\035\n\005props" +
+      "\030\001 \003(\0132\016.msg.MailProps\022\021\n\tsrcUserId\030\002 \001(" +
+      "\r\022\024\n\014targetUserId\030\003 \001(\r\022\r\n\005money\030\004 \001(\r\022\r" +
+      "\n\005title\030\005 \001(\t\",\n\tMailProps\022\017\n\007propsId\030\001 " +
+      "\001(\r\022\016\n\006number\030\002 \001(\r\"#\n\016SendMailResult\022\021\n" +
+      "\tisSuccess\030\001 \001(\010\"\014\n\nAllUserCmd\"0\n\rAllUse" +
+      "rResult\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo" +
+      "\":\n\027NoticeUserGetMailResult\022\037\n\010mailInfo\030" +
+      "\001 \001(\0132\r.msg.MailInfo\"\020\n\016UserSeeMailCmd\"4" +
+      "\n\021UserSeeMailResult\022\037\n\010mailInfo\030\001 \003(\0132\r." +
+      "msg.MailInfo\">\n\010MailInfo\022\016\n\006mailId\030\001 \001(\004" +
+      "\022\023\n\013srcUserName\030\002 \001(\t\022\r\n\005title\030\003 \001(\t\"$\n\022" +
+      "UserReceiveMailCmd\022\016\n\006mailId\030\001 \001(\004\"Q\n\025Us" +
+      "erReceiveMailResult\022\016\n\006mailId\030\001 \003(\004\022\031\n\005p" +
+      "rops\030\002 \003(\0132\n.msg.Props\022\r\n\005money\030\003 \001(\r\"\023\n" +
+      "\021UserEnterArenaCmd\"7\n\024UserEnterArenaResu" +
+      "lt\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\"\'\n\025U" +
+      "serChooseOpponentCmd\022\016\n\006userId\030\001 \001(\r\"f\n\030" +
+      "UserChooseOpponentResult\022\027\n\017acceptChalle" +
+      "nge\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\022\030\n\020or" +
+      "iginatedUserId\030\003 \001(\r\"4\n\031TargetUserChalle" +
+      "ngeResult\022\027\n\017originateUserId\030\001 \001(\r\"A\n\025Ta" +
+      "rgetUserResponseCmd\022\017\n\007isAgree\030\001 \001(\010\022\027\n\017" +
+      "originateUserId\030\002 \001(\r\"\022\n\020UserQuitArenaCm" +
+      "d\"6\n\023UserQuitArenaResult\022\037\n\010userInfo\030\001 \001" +
+      "(\0132\r.msg.UserInfo\"%\n\rUserAttackCmd\022\024\n\014ta" +
+      "rgetUserId\030\001 \001(\r\">\n\020UserAttackResult\022\024\n\014" +
+      "attackUserId\030\001 \001(\r\022\024\n\014targetUserId\030\002 \001(\r" +
+      "\"@\n\024UserSubtractHpResult\022\024\n\014targetUserId" +
+      "\030\001 \001(\r\022\022\n\nsubtractHp\030\002 \001(\r\"%\n\rUserDieRes" +
+      "ult\022\024\n\014targetUserId\030\001 \001(\r\"%\n\rUserTeamUpC" +
+      "md\022\024\n\014targetUserId\030\001 \001(\r\"\022\n\020UserTeamUpRe" +
+      "sult\"E\n\017AskTeamUpResult\022\027\n\017originateUser" +
+      "Id\030\001 \001(\r\022\031\n\021originateUserName\030\002 \001(\t\":\n\017U" +
+      "serJoinTeamCmd\022\016\n\006isJoin\030\001 \001(\010\022\027\n\017origin" +
+      "ateUserId\030\002 \001(\r\"6\n\022UserJoinTeamResult\022\016\n" +
+      "\006isJoin\030\001 \001(\010\022\020\n\010targetId\030\002 \001(\r\"*\n\026UserJ" +
+      "oinTeamPerformCmd\022\020\n\010targetId\030\001 \001(\r\"b\n\031U" +
+      "serJoinTeamPerformResult\022\037\n\010userInfo\030\001 \003" +
+      "(\0132\r.msg.UserInfo\022\024\n\014teamLeaderId\030\002 \001(\r\022" +
+      "\016\n\006isJoin\030\003 \001(\010\"\021\n\017UserQuitTeamCmd\"K\n\022Us" +
+      "erQuitTeamResult\022\037\n\010userInfo\030\001 \001(\0132\r.msg" +
+      ".UserInfo\022\024\n\014teamLeaderId\030\002 \001(\r\"\031\n\027UserE" +
+      "nterTeamFailResult\"\035\n\033UserQuitTeamAndDup" +
+      "licateCmd\" \n\036UserQuitTeamAndDuplicateRes" +
+      "ult\"+\n\021PastorSkillResult\022\n\n\002hp\030\001 \001(\r\022\n\n\002" +
+      "mp\030\002 \001(\r\"8\n\030SummonMonsterSubHpResult\022\r\n\005" +
+      "isDie\030\001 \001(\010\022\r\n\005subHp\030\002 \001(\r\"\022\n\020UserCleanM" +
+      "ailCmd\"6\n\023UserCleanMailResult\022\037\n\010mailInf" +
+      "o\030\001 \003(\0132\r.msg.MailInfo\"$\n\022UserDealReques" +
+      "tCmd\022\016\n\006userId\030\001 \001(\r\"i\n\025UserDealRequestR" +
+      "esult\022\017\n\007isAgree\030\001 \001(\010\022\021\n\tisSuccess\030\002 \001(" +
+      "\010\022\024\n\014targetUserId\030\003 \001(\r\022\026\n\016targetUserNam" +
+      "e\030\004 \001(\t\"A\n\023AskTargetUserResult\022\023\n\013origin" +
+      "ateId\030\001 \001(\r\022\025\n\roriginateName\030\002 \001(\t\"A\n\031De" +
+      "alTargetUserResponseCmd\022\023\n\013originateId\030\001" +
+      " \001(\r\022\017\n\007isAgree\030\002 \001(\010\"\020\n\016DealChannelCmd\"" +
+      "\023\n\021DealChannelResult\"I\n\017UserDealItemCmd\022" +
+      "\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \001(\0132\n.msg.Prop" +
+      "s\022\014\n\004type\030\003 \001(\t\"L\n\022UserDealItemResult\022\r\n" +
+      "\005money\030\001 \001(\r\022\031\n\005props\030\002 \001(\0132\n.msg.Props\022" +
+      "\014\n\004type\030\003 \001(\t\"(\n\013ErrorResult\022\013\n\003msg\030\001 \001(" +
+      "\t\022\014\n\004code\030\002 \001(\r\"\024\n\022UserAddCompleteCmd\"8\n" +
+      "\025UserAddCompleteResult\022\037\n\010userInfo\030\001 \001(\013" +
+      "2\r.msg.UserInfo\")\n\021UserCancelDealCmd\022\024\n\014" +
+      "isNeedNotice\030\001 \001(\010\"9\n\024UserCancelDealResu" +
+      "lt\022\021\n\tisSuccess\030\001 \001(\010\022\016\n\006userId\030\002 \001(\r\"\024\n" +
+      "\022UserConfirmDealCmd\"*\n\025UserConfirmDealRe" +
+      "sult\022\021\n\tisSuccess\030\001 \001(\010\"0\n\030UserCancelDea" +
+      "lConfirmCmd\022\024\n\014isNeedNotice\030\001 \001(\010\"\035\n\033Use" +
+      "rCancelDealConfirmResult\"\020\n\016SortOutDealC" +
+      "md\"=\n\021SortOutDealResult\022\031\n\005props\030\001 \003(\0132\n" +
+      ".msg.Props\022\r\n\005money\030\002 \001(\r\"\'\n\022UserCreateG" +
+      "uildCmd\022\021\n\tguildName\030\001 \001(\t\"*\n\025UserCreate" +
+      "GuildResult\022\021\n\tguildName\030\001 \001(\t\"\026\n\024UserDi" +
+      "ssolveGuildCmd\")\n\027UserDissolveGuildResul" +
+      "t\022\016\n\006userId\030\001 \001(\r\"\016\n\014ShowGuildCmd\",\n\017Sho" +
+      "wGuildResult\022\031\n\005guild\030\001 \003(\0132\n.msg.Guild\"" +
+      "+\n\005Guild\022\017\n\007guildId\030\001 \001(\r\022\021\n\tguildName\030\002" +
+      " \001(\t\"$\n\021UserEnterGuildCmd\022\017\n\007guildId\030\001 \001" +
+      "(\r\"1\n\024UserEnterGuildResult\022\031\n\005guild\030\001 \001(" +
+      "\0132\n.msg.Guild\"\024\n\022ShowGuildMemberCmd\"8\n\025S" +
+      "howGuildMemberResult\022\037\n\010userInfo\030\001 \003(\0132\r" +
+      ".msg.UserInfo\"(\n\026LookGuildMemberInfoCmd\022" +
+      "\016\n\006userId\030\001 \001(\r\"*\n\031LookGuildMemberInfoRe" +
+      "sult\022\r\n\005equId\030\001 \003(\r\"\016\n\014QuitGuildCmd\"#\n\017Q" +
+      "uitGuildResult\022\020\n\010userName\030\001 \001(\t\"6\n\020Appo" +
+      "intMemberCmd\022\016\n\006userId\030\001 \001(\r\022\022\n\nposition" +
+      "Id\030\002 \001(\r\")\n\023AppointMemberResult\022\022\n\nposit" +
+      "ionId\030\001 \001(\r\"#\n\021EliminateGuildCmd\022\016\n\006user" +
+      "Id\030\001 \001(\r\"\026\n\024EliminateGuildResult\",\n\026Modi" +
+      "fyGuildPositionCmd\022\022\n\npositionId\030\001 \001(\r\"\025" +
+      "\n\023ModifyGuildStateCmd\"\027\n\025LookGuildWareho" +
+      "useCmd\"D\n\030LookGuildWarehouseResult\022\r\n\005mo" +
+      "ney\030\001 \001(\r\022\031\n\005props\030\002 \003(\0132\n.msg.Props\"<\n\017" +
+      "TakeOutPropsCmd\022\031\n\005props\030\001 \001(\0132\n.msg.Pro" +
+      "ps\022\016\n\006number\030\002 \001(\r\"\024\n\022TakeOutPropsResult" +
+      "\"*\n\rPutInPropsCmd\022\031\n\005props\030\001 \001(\0132\n.msg.P" +
+      "rops\"\022\n\020PutInPropsResult\" \n\017TakeOutMoney" +
+      "Cmd\022\r\n\005money\030\001 \001(\r\"\024\n\022TakeOutMoneyResult" +
+      "\"\036\n\rPutInMoneyCmd\022\r\n\005money\030\001 \001(\r\"\022\n\020PutI" +
+      "nMoneyResult\"&\n\024TransferPresidentCmd\022\016\n\006" +
+      "userId\030\001 \001(\r\")\n\027TransferPresidentResult\022" +
+      "\016\n\006userId\030\001 \001(\r\"\024\n\022LookAuctionItemCmd\">\n" +
+      "\025LookAuctionItemResult\022%\n\013auctionItem\030\001 " +
+      "\003(\0132\020.msg.AuctionItem\"z\n\013AuctionItem\022\n\n\002" +
+      "id\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\017\n\007propsId\030\003 " +
+      "\001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005price\030\005 \001(\r\022\016\n\006n" +
+      "umber\030\006 \001(\r\022\014\n\004date\030\007 \001(\004\"R\n\016ShelveGoods" +
+      "Cmd\022\020\n\010location\030\001 \001(\r\022\016\n\006number\030\002 \001(\r\022\017\n" +
+      "\007auction\030\003 \001(\r\022\r\n\005price\030\004 \001(\r\"\023\n\021ShelveG" +
+      "oodsResult\"3\n\017BiddingGoodsCmd\022\021\n\tauction" +
+      "Id\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"#\n\022BiddingGoodsR" +
+      "esult\022\r\n\005money\030\001 \001(\r\" \n\013OnePriceCmd\022\021\n\ta" +
+      "uctionId\030\001 \001(\r\"\037\n\016OnePriceResult\022\r\n\005pric" +
+      "e\030\001 \001(\r\"\033\n\031LookOneselfAuctionItemCmd\"E\n\034" +
+      "LookOneselfAuctionItemResult\022%\n\013auctionI" +
+      "tem\030\001 \003(\0132\020.msg.AuctionItem\")\n\024CancelAuc" +
+      "tionItemCmd\022\021\n\tauctionId\030\001 \001(\r\"\031\n\027Cancel" +
+      "AuctionItemResult\"\020\n\016LookAllTaskCmd\"#\n\021L" +
+      "ookAllTaskResult\022\016\n\006taskId\030\001 \001(\r\" \n\016Rece" +
+      "iveTaskCmd\022\016\n\006taskId\030\001 \001(\r\"#\n\021ReceiveTas" +
+      "kResult\022\016\n\006taskId\030\001 \001(\r\"\021\n\017DialogueTaskC" +
+      "md\"\025\n\023TaskCompletedResult\"%\n\023ReceiveTask" +
+      "AwardCmd\022\016\n\006taskId\030\001 \001(\r\"B\n\026ReceiveTaskA" +
+      "wardResult\022\031\n\005props\030\001 \003(\0132\n.msg.Props\022\r\n" +
+      "\005money\030\002 \001(\r\"\034\n\016UserUpLvResult\022\n\n\002lv\030\001 \001" +
+      "(\r\"0\n\014AddFriendCmd\022\016\n\006userId\030\001 \001(\r\022\020\n\010us" +
+      "erName\030\002 \001(\t\"3\n\017AddFriendResult\022\016\n\006userI" +
+      "d\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"!\n\017DeleteFrien" +
+      "dCmd\022\016\n\006userId\030\001 \001(\r\"$\n\022DeleteFriendResu" +
+      "lt\022\016\n\006userId\030\001 \001(\r\"\023\n\021BossAllKillResult\"" +
+      "\024\n\022DuplicateFinishCmd\",\n\031MonsterResurrec" +
+      "tionResult\022\017\n\007sceneId\030\001 \001(\r*\233#\n\007MsgCode\022" +
+      "\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS" +
+      "_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014\n\010" +
+      "ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027USER_SUBT" +
+      "RACT_HP_RESULT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016USER" +
+      "_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n\021U" +
+      "SER_REGISTER_CMD\020\t\022\030\n\024USER_REGISTER_RESU" +
+      "LT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027STOP_CUR_U" +
+      "SER_ALL_TIMER\020\014\022\031\n\025USER_SWITCH_SCENE_CMD" +
+      "\020\r\022\034\n\030USER_SWITCH_SCENE_RESULT\020\016\022\033\n\027MONS" +
+      "TER_START_ATTK_USER\020\017\022\026\n\022NOTICE_USER_ATT" +
+      "KED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021\022\032\n\026USER_S" +
+      "KILL_ATTK_RESULT\020\022\022\026\n\022SKILL_STATE_SWITCH" +
+      "\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014BACKPACK_CM" +
+      "D\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024ROB_EQUIPMEN" +
+      "T_RESULT\020\027\022\023\n\017USER_POTION_CMD\020\030\022\026\n\022USER_" +
+      "POTION_RESULT\020\031\022\034\n\030USER_RESUME_STATE_RES" +
+      "ULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032US" +
+      "ER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027USER_UNDO_" +
+      "EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_EQUIPMENT_R" +
+      "ESULT\020\036\022 \n\034DURABILITY_DEFICIENCY_RESULT\020" +
+      "\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n\027REPAIR_EQ" +
+      "UIPMENT_RESULT\020!\022\034\n\030MONSTER_DROP_HP_AUTO" +
+      "_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020#\022\032\n\026ENTER" +
+      "_DUPLICATE_RESULT\020$\022\021\n\rATTK_BOSS_CMD\020%\022\024" +
+      "\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_BOSS_RESULT" +
+      "\020\'\022\033\n\027DUPLICATE_FINISH_RESULT\020(\022\033\n\027USER_" +
+      "QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_QUIT_DUPLIC" +
+      "ATE_RESULT\020*\022\031\n\025BOSS_ATTK_USER_RESULT\020+\022" +
+      "\037\n\033BOSS_SKILL_ATTK_USER_RESULT\020,\022\031\n\025BOSS" +
+      "_KILL_USER_RESULT\020-\022\026\n\022USER_BUY_GOODS_CM" +
+      "D\020.\022\031\n\025USER_BUY_GOODS_RESULT\020/\022\026\n\022USER_C" +
+      "HAT_INFO_CMD\0200\022\031\n\025USER_CHAT_INFO_RESULT\020" +
+      "1\022\021\n\rSEND_MAIL_CMD\0202\022\024\n\020SEND_MAIL_RESULT" +
+      "\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n\017ALL_USER_RESULT\020" +
+      "5\022\037\n\033NOTICE_USER_GET_MAIL_RESULT\0206\022\025\n\021US" +
+      "ER_SEE_MAIL_CMD\0207\022\030\n\024USER_SEE_MAIL_RESUL" +
+      "T\0208\022\031\n\025USER_RECEIVE_MAIL_CMD\0209\022\034\n\030USER_R" +
+      "ECEIVE_MAIL_RESULT\020:\022\030\n\024USER_ENTER_ARENA" +
+      "_CMD\020;\022\033\n\027USER_ENTER_ARENA_RESULT\020<\022\034\n\030U" +
+      "SER_CHOOSE_OPPONENT_CMD\020=\022\037\n\033USER_CHOOSE" +
+      "_OPPONENT_RESULT\020>\022 \n\034TARGET_USER_CHALLE" +
+      "NGE_RESULT\020?\022\034\n\030TARGET_USER_RESPONSE_CMD" +
+      "\020@\022\037\n\033TARGET_USER_RESPONSE_RESULT\020A\022\027\n\023U" +
+      "SER_QUIT_ARENA_CMD\020B\022\032\n\026USER_QUIT_ARENA_" +
+      "RESULT\020C\022\023\n\017USER_ATTACK_CMD\020D\022\026\n\022USER_AT" +
+      "TACK_RESULT\020E\022\023\n\017USER_DIE_RESULT\020F\022\024\n\020US" +
+      "ER_TEAM_UP_CMD\020G\022\027\n\023USER_TEAM_UP_RESULT\020" +
+      "H\022\026\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022USER_JOIN_T" +
+      "EAM_CMD\020J\022\031\n\025USER_JOIN_TEAM_RESULT\020K\022\026\n\022" +
+      "USER_QUIT_TEAM_CMD\020L\022\031\n\025USER_QUIT_TEAM_R" +
+      "ESULT\020M\022\037\n\033USER_ENTER_TEAM_FAIL_RESULT\020N" +
+      "\022$\n USER_QUIT_TEAM_AND_DUPLICATE_CMD\020O\022\'" +
+      "\n#USER_QUIT_TEAM_AND_DUPLICATE_RESULT\020P\022" +
+      "$\n USER_SKILL_ATTK_DUPLICATE_RESULT\020Q\022\027\n" +
+      "\023PASTOR_SKILL_RESULT\020R\022 \n\034SUMMON_MONSTER" +
+      "_SUB_HP_RESULT\020S\022\036\n\032USER_JOIN_TEAM_PERFO" +
+      "RM_CMD\020T\022!\n\035USER_JOIN_TEAM_PERFORM_RESUL" +
+      "T\020U\022\027\n\023USER_CLEAN_MAIL_CMD\020V\022\032\n\026USER_CLE" +
+      "AN_MAIL_RESULT\020W\022\031\n\025USER_DEAL_REQUEST_CM" +
+      "D\020X\022\034\n\030USER_DEAL_REQUEST_RESULT\020Y\022\032\n\026ASK" +
+      "_TARGET_USER_RESULT\020Z\022!\n\035DEAL_TARGET_USE" +
+      "R_RESPONSE_CMD\020[\022\024\n\020DEAL_CHANNEL_CMD\020\\\022\027" +
+      "\n\023DEAL_CHANNEL_RESULT\020]\022\026\n\022USER_DEAL_ITE" +
+      "M_CMD\020^\022\031\n\025USER_DEAL_ITEM_RESULT\020_\022\031\n\025US" +
+      "ER_ADD_COMPLETE_CMD\020a\022\034\n\030USER_ADD_COMPLE" +
+      "TE_RESULT\020b\022\030\n\024USER_CANCEL_DEAL_CMD\020c\022\033\n" +
+      "\027USER_CANCEL_DEAL_RESULT\020d\022\031\n\025USER_CONFI" +
+      "RM_DEAL_CMD\020e\022\034\n\030USER_CONFIRM_DEAL_RESUL" +
+      "T\020f\022 \n\034USER_CANCEL_DEAL_CONFIRM_CMD\020g\022#\n" +
+      "\037USER_CANCEL_DEAL_CONFIRM_RESULT\020h\022\025\n\021SO" +
+      "RT_OUT_DEAL_CMD\020i\022\030\n\024SORT_OUT_DEAL_RESUL" +
+      "T\020j\022\031\n\025USER_CREATE_GUILD_CMD\020k\022\034\n\030USER_C" +
+      "REATE_GUILD_RESULT\020l\022\033\n\027USER_DISSOLVE_GU" +
+      "ILD_CMD\020m\022\036\n\032USER_DISSOLVE_GUILD_RESULT\020" +
+      "n\022\022\n\016SHOW_GUILD_CMD\020o\022\025\n\021SHOW_GUILD_RESU" +
+      "LT\020p\022\030\n\024USER_ENTER_GUILD_CMD\020q\022\033\n\027USER_E" +
+      "NTER_GUILD_RESULT\020r\022\031\n\025SHOW_GUILD_MEMBER" +
+      "_CMD\020s\022\034\n\030SHOW_GUILD_MEMBER_RESULT\020t\022\036\n\032" +
+      "LOOK_GUiLD_MEMBER_INFO_CMD\020u\022!\n\035LOOK_GUi" +
+      "LD_MEMBER_INFO_RESULT\020v\022\022\n\016QUIT_GUILD_CM" +
+      "D\020w\022\025\n\021QUIT_GUILD_RESULT\020x\022\026\n\022APPOINT_ME" +
+      "MBER_CMD\020y\022\031\n\025APPOINT_MEMBER_RESULT\020z\022\027\n" +
+      "\023ELIMINATE_GUILD_CMD\020{\022\032\n\026ELIMINATE_GUIL" +
+      "D_RESULT\020|\022\035\n\031MODIFY_GUILD_POSITION_CMD\020" +
+      "}\022\032\n\026MODIFY_GUILD_STATE_CMD\020~\022\034\n\030LOOK_GU" +
+      "ILD_WAREHOUSE_CMD\020\177\022 \n\033LOOK_GUILD_WAREHO" +
+      "USE_RESULT\020\200\001\022\027\n\022TAKE_OUT_PROPS_CMD\020\201\001\022\032" +
+      "\n\025TAKE_OUT_PROPS_RESULT\020\202\001\022\025\n\020PUT_IN_PRO" +
+      "PS_CMD\020\203\001\022\030\n\023PUT_IN_PROPS_RESULT\020\204\001\022\027\n\022T" +
+      "AKE_OUT_MONEY_CMD\020\205\001\022\032\n\025TAKE_OUT_MONEY_R" +
+      "ESULT\020\206\001\022\025\n\020PUT_IN_MONEY_CMD\020\207\001\022\030\n\023PUT_I" +
+      "N_MONEY_RESULT\020\210\001\022\033\n\026TRANSFER_PRESIDENT_" +
+      "CMD\020\310\001\022\036\n\031TRANSFER_PRESIDENT_RESULT\020\311\001\022\032" +
+      "\n\025LOOK_AUCTION_ITEM_CMD\020\211\001\022\035\n\030LOOK_AUCTI" +
+      "ON_ITEM_RESULT\020\212\001\022\025\n\020SHELVE_GOODS_CMD\020\213\001" +
+      "\022\030\n\023SHELVE_GOODS_RESULT\020\214\001\022\026\n\021BIDDING_GO" +
+      "ODS_CMD\020\215\001\022\031\n\024BIDDING_GOODS_RESULT\020\216\001\022\022\n" +
+      "\rONE_PRICE_CMD\020\217\001\022\025\n\020ONE_PRICE_RESULT\020\220\001" +
+      "\022\"\n\035LOOK_ONESELF_AUCTION_ITEM_CMD\020\221\001\022%\n " +
+      "LOOK_ONESELF_AUCTION_ITEM_RESULT\020\222\001\022\034\n\027C" +
+      "ANCEL_AUCTION_ITEM_CMD\020\223\001\022\037\n\032CANCEL_AUCT" +
+      "ION_ITEM_RESULT\020\224\001\022\026\n\021LOOK_ALL_TASK_CMD\020" +
+      "\225\001\022\031\n\024LOOK_ALL_TASK_RESULT\020\226\001\022\025\n\020RECEIVE" +
+      "_TASK_CMD\020\227\001\022\030\n\023RECEIVE_TASK_RESULT\020\230\001\022\026" +
+      "\n\021DIALOGUE_TASK_CMD\020\231\001\022\032\n\025TASK_COMPLETED" +
+      "_RESULT\020\232\001\022\033\n\026RECEIVE_TASK_AWARD_CMD\020\233\001\022" +
+      "\036\n\031RECEIVE_TASK_AWARD_RESULT\020\234\001\022\023\n\016ADD_F" +
+      "RIEND_CMD\020\236\001\022\026\n\021ADD_FRIEND_RESULT\020\237\001\022\026\n\021" +
+      "DELETE_FRIEND_CMD\020\240\001\022\031\n\024DELETE_FRIEND_RE" +
+      "SULT\020\241\001\022\031\n\024BOSS_ALL_KILL_RESULT\020\242\001\022\031\n\024DU" +
+      "PLICATE_FINISH_CMD\020\243\001\022 \n\033MONSTER_RESURRE" +
+      "CTION_RESULT\020\244\001\022\026\n\021USER_UP_LV_RESULT\020\235\001\022" +
+      "\020\n\014ERROR_RESULT\020`B\005\n\003msgb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -115023,7 +116346,7 @@ public final class GameMsg {
     internal_static_msg_EnterDuplicateResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_EnterDuplicateResult_descriptor,
-        new java.lang.String[] { "DuplicateId", "StartTime", "BossMonsterId", "IsSuccess", "UserId", });
+        new java.lang.String[] { "DuplicateId", "StartTime", "BossMonsterId", "UserId", });
     internal_static_msg_AttkBossCmd_descriptor =
       getDescriptor().getMessageTypes().get(39);
     internal_static_msg_AttkBossCmd_fieldAccessorTable = new
@@ -115804,6 +117127,24 @@ public final class GameMsg {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DeleteFriendResult_descriptor,
         new java.lang.String[] { "UserId", });
+    internal_static_msg_BossAllKillResult_descriptor =
+      getDescriptor().getMessageTypes().get(169);
+    internal_static_msg_BossAllKillResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_BossAllKillResult_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_DuplicateFinishCmd_descriptor =
+      getDescriptor().getMessageTypes().get(170);
+    internal_static_msg_DuplicateFinishCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_DuplicateFinishCmd_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_MonsterResurrectionResult_descriptor =
+      getDescriptor().getMessageTypes().get(171);
+    internal_static_msg_MonsterResurrectionResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_MonsterResurrectionResult_descriptor,
+        new java.lang.String[] { "SceneId", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

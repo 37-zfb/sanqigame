@@ -241,6 +241,11 @@ enum MsgCode {
   DELETE_FRIEND_CMD = 160;
   DELETE_FRIEND_RESULT = 161;
 
+  BOSS_ALL_KILL_RESULT = 162;
+  DUPLICATE_FINISH_CMD = 163;
+
+  MONSTER_RESURRECTION_RESULT = 164;
+
 
   USER_UP_LV_RESULT = 157;
 
@@ -661,8 +666,7 @@ message EnterDuplicateResult {
   uint32 duplicateId = 1;
   uint64 startTime = 2;
   uint32 bossMonsterId = 3;
-  bool isSuccess = 4;
-  uint32 userId = 5;
+  uint32 userId = 4;
 }
 // 对boss的普通攻击
 message AttkBossCmd {
@@ -1253,3 +1257,15 @@ message DeleteFriendCmd{
 message DeleteFriendResult{
   uint32 userId = 1;
 }
+
+//boss全部被击杀
+message BossAllKillResult{
+}
+//副本结束
+message DuplicateFinishCmd{
+}
+//击杀野外的怪
+message MonsterResurrectionResult{
+  uint32 sceneId = 1;
+}
+
