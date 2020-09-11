@@ -1,9 +1,6 @@
 package client.model.client;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import type.MailType;
 
 import java.util.Objects;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString
 public class MailEntityClient {
 
     /**

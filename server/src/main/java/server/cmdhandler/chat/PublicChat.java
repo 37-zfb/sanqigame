@@ -3,12 +3,10 @@ package server.cmdhandler.chat;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.Broadcast;
 import server.PublicMethod;
 import server.model.User;
-import server.service.SensitiveFilterService;
 import util.MyUtil;
 
 /**
@@ -19,9 +17,6 @@ import util.MyUtil;
 @Slf4j
 public class PublicChat extends Chat {
 
-    @Autowired
-    private SensitiveFilterService sensitiveFilterService;
-
     @Override
     public void chat(ChannelHandlerContext ctx, GameMsg.UserChatInfoCmd userChatInfoCmd) {
 
@@ -29,7 +24,7 @@ public class PublicChat extends Chat {
         User user = PublicMethod.getInstance().getUser(ctx);
 
         // 聊天内容
-        String info = sensitiveWord(userChatInfoCmd);
+        String info = this.sensitiveWord(userChatInfoCmd);
         //聊天类型
         String chatType = userChatInfoCmd.getType();
 

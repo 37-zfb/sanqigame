@@ -1,10 +1,13 @@
 package server.service;
 
+import constant.TaskConst;
 import entity.db.DbTaskEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.dao.ITaskDAO;
+import server.util.IdWorker;
+import type.TaskType;
 import util.CustomizeThreadFactory;
 
 import java.util.concurrent.ExecutorService;
@@ -51,6 +54,7 @@ public class TaskService {
 
     /**
      * 通过userId获取当前任务
+     *
      * @param userId
      */
     public DbTaskEntity getCurrTaskById(Integer userId) {
@@ -59,6 +63,26 @@ public class TaskService {
             dbTaskEntity = taskDAO.selectByUserId(userId);
         }
         return dbTaskEntity;
+    }
+
+
+    /**
+     * 添加用户任务
+     *
+     * @param userId
+     */
+    public void addTask(Integer userId) {
+        if (userId == null) {
+            return;
+        }
+        DbTaskEntity taskEntity = new DbTaskEntity();
+        taskEntity.setId(IdWorker.generateId());
+        taskEntity.setUserId(userId);
+        taskEntity.setCurrTask(TaskConst.INIT_TASK);
+        taskEntity.setCompletedTask(TaskConst.INIT_TASK - 1);
+        taskEntity.setTaskProcess(-1);
+        taskEntity.setCurrTaskCompleted(TaskType.CurrTaskUnCompleted.getTaskCode());
+        taskDAO.insert(taskEntity);
     }
 
 }

@@ -40,20 +40,75 @@ public class UserReceiveMailResultClient implements ICmd<GameMsg.UserReceiveMail
             mailEntityClient.setMailType(MailType.READ);
 
         }
+
         role.setMoney(userReceiveMailResult.getMoney());
-        backpack(role,userReceiveMailResult.getPropsList());
+        List<GameMsg.Props> propsList = userReceiveMailResult.getPropsList();
+
+        Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
+        Map<Integer, Props> backpackClient = role.getBackpackClient();
+        for (GameMsg.Props props : propsList) {
+            int location = props.getLocation();
+            int propsId = props.getPropsId();
+            int propsNumber = props.getPropsNumber();
+
+            Props pro = propsMap.get(propsId);
+            System.out.println(pro.getName());
+
+            if (pro.getPropsProperty().getType() == PropsType.Equipment) {
+
+                Equipment equipment = (Equipment) pro.getPropsProperty();
+
+                Equipment propsProperty =
+                        //props.getUserPropsId() 是 表 user_equipment 中的id
+                        new Equipment(props.getUserPropsId(),
+                                equipment.getPropsId(),
+                                props.getDurability(),
+                                equipment.getDamage(),
+                                equipment.getEquipmentType());
+
+                backpackClient.put(location, new Props(pro.getId(), pro.getName(), propsProperty));
+            } else if (pro.getPropsProperty().getType() == PropsType.Potion) {
+                Props p = backpackClient.get(location);
+
+                if (p != null) {
+                    //已存在
+                    Potion propsProperty = (Potion) p.getPropsProperty();
+                    propsProperty.setNumber(propsProperty.getNumber() + propsNumber);
+                    continue;
+                }
+
+                //不存在
+                Potion potion = (Potion) pro.getPropsProperty();
+                Potion propsProperty =
+                        new Potion(props.getUserPropsId(),
+                                potion.getPropsId(),
+                                props.getDurability(),
+                                potion.getInfo(),
+                                potion.getResumeFigure(),
+                                potion.getPercent(),
+                                propsNumber);
+
+                backpackClient.put(location, new Props(pro.getId(), pro.getName(), propsProperty));
+            }
+
+        }
+
+
+//        backpack(role, userReceiveMailResult.getPropsList());
 //        if (mailMap.size() <= 0) {
 //            mail.setHave(false);
 //        }
 
+
         CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
     }
-    private void backpack(Role role,List<GameMsg.Props> propsList){
+
+    private void backpack(Role role, List<GameMsg.Props> propsList) {
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
         Map<Integer, Props> backpackClient = role.getBackpackClient();
         for (GameMsg.Props props : propsList) {
             Props pro = propsMap.get(props.getPropsId());
-            if (pro.getPropsProperty().getType() == PropsType.Equipment){
+            if (pro.getPropsProperty().getType() == PropsType.Equipment) {
                 Equipment equipment = (Equipment) pro.getPropsProperty();
 
                 Equipment propsProperty =
@@ -65,7 +120,7 @@ public class UserReceiveMailResultClient implements ICmd<GameMsg.UserReceiveMail
                                 equipment.getEquipmentType());
 
                 backpackClient.put(props.getLocation(), new Props(props.getPropsId(), pro.getName(), propsProperty));
-            }else if (pro.getPropsProperty().getType() == PropsType.Potion){
+            } else if (pro.getPropsProperty().getType() == PropsType.Potion) {
 
 
                 Potion potion = (Potion) pro.getPropsProperty();
@@ -80,7 +135,7 @@ public class UserReceiveMailResultClient implements ICmd<GameMsg.UserReceiveMail
                                 potion.getPercent(),
                                 props.getPropsNumber());
 
-                backpackClient.put(props.getLocation(),new Props(props.getPropsId(),pro.getName(), propsProperty));
+                backpackClient.put(props.getLocation(), new Props(props.getPropsId(), pro.getName(), propsProperty));
             }
 
 

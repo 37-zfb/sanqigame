@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import entity.MailProps;
+import server.cmdhandler.duplicate.PropsUtil;
 import server.model.User;
 import server.model.props.AbstractPropsProperty;
 import server.model.props.Equipment;
@@ -24,6 +25,7 @@ import type.MailType;
 import type.PropsType;
 import util.MyUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -55,31 +57,30 @@ public class UserReceiveMailCmdHandler implements ICmdHandler<GameMsg.UserReceiv
             // 全部领取; 把邮件中的道具、金币放进背包
             for (DbSendMailEntity mailEntity : mailMap.values()) {
                 if (mailEntity.getState().equals(MailType.UNREAD.getState())) {
-                    // 此时未读
-                    try {
-                        receiveMail(user, mailEntity);
-                        newBuilder.addMailId(mailEntity.getId());
-                    } catch (CustomizeException e) {
-                        log.info(e.getMessage(), e);
-                    }
+                    // 此时未读0
+                    receiveMail(user, mailEntity,newBuilder);
                 }
             }
-        } else {
-            // 领取对应的邮件; 把对应的道具、金币放进背包
-            DbSendMailEntity mailEntity = mailMap.get(mailId);
-            try {
-                receiveMail(user, mailEntity);
-                newBuilder.addMailId(mailEntity.getId());
-            } catch (CustomizeException e) {
-                log.info(e.getMessage(), e);
-            }
+            newBuilder.setMoney(user.getMoney());
+            GameMsg.UserReceiveMailResult userReceiveMailResult = newBuilder.setMoney(user.getMoney()).build();
+            ctx.writeAndFlush(userReceiveMailResult);
+            return;
         }
 
-        sortOutBackpack(user,newBuilder);
+
+        // 领取对应的邮件; 把对应的道具、金币放进背包
+        DbSendMailEntity mailEntity = mailMap.get(mailId);
+        receiveMail(user, mailEntity,newBuilder);
+        newBuilder.addMailId(mailEntity.getId());
+
+        newBuilder.setMoney(user.getMoney());
+        GameMsg.UserReceiveMailResult userReceiveMailResult = newBuilder.build();
+        ctx.writeAndFlush(userReceiveMailResult);
+        // sortOutBackpack(user, newBuilder);
     }
 
 
-    private void sortOutBackpack(User user, GameMsg.UserReceiveMailResult.Builder newBuilder){
+    private void sortOutBackpack(User user, GameMsg.UserReceiveMailResult.Builder newBuilder) {
         //  背包中的道具(装备、药剂等)  , 客户端更新背包中的数据
         Map<Integer, Props> backpack = user.getBackpack();
         for (Map.Entry<Integer, Props> propsEntry : backpack.entrySet()) {
@@ -107,7 +108,42 @@ public class UserReceiveMailCmdHandler implements ICmdHandler<GameMsg.UserReceiv
 
 
     /**
-     *  领取邮件
+     * 领取邮件
+     *
+     * @param user
+     * @param mailEntity
+     */
+    private void receiveMail(User user, DbSendMailEntity mailEntity, GameMsg.UserReceiveMailResult.Builder newBuilder) {
+        try {
+
+            String propsInfo = mailEntity.getPropsInfo();
+            List<MailProps> mailProps = JSON.parseArray(propsInfo, MailProps.class);
+
+            for (MailProps mailProp : mailProps) {
+                PropsUtil.getPropsUtil().addProps(Arrays.asList(mailProp.getPropsId()), user, newBuilder, mailProp.getNumber());
+            }
+
+            mailEntity.setState(MailType.READ.getState());
+            newBuilder.addMailId(mailEntity.getId());
+
+            sendMailTimer.modifyMailList(mailEntity);
+
+            user.setMoney(user.getMoney() + mailEntity.getMoney());
+            log.info("用户 {} 从邮件中获取 {}金币;", user.getUserName(), mailEntity.getMoney());
+            CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
+            userStateTimer.modifyUserState(userState);
+
+        } catch (CustomizeException e) {
+            log.error("用户 {} 领取 {} 邮件失败;",user.getUserName(),mailEntity.getTitle());
+            log.error(e.getMessage(), e);
+        }
+
+    }
+
+
+    /**
+     * 领取邮件
+     *
      * @param user
      * @param mailEntity
      */
@@ -124,18 +160,18 @@ public class UserReceiveMailCmdHandler implements ICmdHandler<GameMsg.UserReceiv
             if (props.getPropsProperty().getType() == PropsType.Equipment) {
                 // 添加装备
                 publicMethod.addEquipment(user, props);
-                log.info("用户 {} 从邮件中获取 {};", user.getUserName(),props.getName());
+                log.info("用户 {} 从邮件中获取 {};", user.getUserName(), props.getName());
             } else if (props.getPropsProperty().getType() == PropsType.Potion) {
                 // 添加药剂
                 publicMethod.addPotion(props, user, mailProp.getNumber());
-                log.info("用户 {} 从邮件中获取 {} {}个;", user.getUserName(),props.getName(),mailProp.getNumber());
+                log.info("用户 {} 从邮件中获取 {} {}个;", user.getUserName(), props.getName(), mailProp.getNumber());
             }
         }
         mailEntity.setState(MailType.READ.getState());
         sendMailTimer.modifyMailList(mailEntity);
 
         user.setMoney(user.getMoney() + mailEntity.getMoney());
-        log.info("用户 {} 从邮件中获取 {}金币;", user.getUserName(),mailEntity.getMoney());
+        log.info("用户 {} 从邮件中获取 {}金币;", user.getUserName(), mailEntity.getMoney());
         CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
         userStateTimer.modifyUserState(userState);
     }

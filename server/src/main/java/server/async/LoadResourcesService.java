@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.GuildManager;
+import server.cmdhandler.auction.AuctionUtil;
 import server.model.PlayGuild;
 import server.model.PlayMail;
 import server.model.PlayTask;
@@ -157,7 +158,7 @@ public class LoadResourcesService {
         loadMail(user);
         loadTask(user);
         // 群发邮件
-        //sendMailAll(user);
+//        sendMailAll(user);
 
         // 启动定时器
 //        user.startTimer();

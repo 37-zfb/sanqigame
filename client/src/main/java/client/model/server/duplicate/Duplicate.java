@@ -76,7 +76,7 @@ public class Duplicate {
             }
         }
 
-        for (int i = 0; i < DuplicateConst.PROPS_NUMBER; i++) {
+        for (int i = 0; i < DuplicateConst.DUPLICATE_REWARD_NUMBER; i++) {
             list.add(Integer.valueOf(propsId[(int)(Math.random()*(propsId.length))]));
         }
 

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserBuyGoodsLimitEntity {
 
-    private Integer id;
+    private Long id;
 
     private Integer userId;
 

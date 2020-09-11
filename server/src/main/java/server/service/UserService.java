@@ -104,6 +104,7 @@ public class UserService {
         currUserState.setBaseDefense(profession.getBaseDefense());
         currUserState.setMoney(ProfessionConst.INIT_MONEY);
 
+
         // 添加用户状态
         userState.insertUserSate(currUserState);
 

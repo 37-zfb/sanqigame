@@ -1,6 +1,7 @@
 package server.cmdhandler.duplicate;
 
 import constant.DuplicateConst;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -8,13 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.auction.AuctionUtil;
 import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.User;
 import server.model.duplicate.Duplicate;
+import server.model.props.Equipment;
+import server.model.props.Potion;
+import server.model.props.Props;
+import server.scene.GameData;
 import type.DuplicateType;
+import type.PropsType;
 import util.MyUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -43,12 +51,10 @@ public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateF
         System.out.println("计算奖励,存入数据库");
 
         List<Integer> propsIdList = currDuplicate.getPropsIdList();
-//      // 副本得到的奖励进行持久化
-//      PublicMethod.getInstance().addProps(propsIdList, user);
 
         GameMsg.DuplicateFinishResult.Builder newBuilder = GameMsg.DuplicateFinishResult.newBuilder();
 
-        PropsUtil.getPropsUtil().addProps(propsIdList, user, newBuilder);
+        PropsUtil.getPropsUtil().addProps(propsIdList, user, newBuilder,DuplicateConst.PROPS_NUMBER);
 
         for (DuplicateType duplicateType : DuplicateType.values()) {
             if (duplicateType.getName().equals(currDuplicate.getName())) {
@@ -64,4 +70,8 @@ public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateF
         //任务监听
         taskPublicMethod.listener(user);
     }
+
+
+
+
 }

@@ -91,6 +91,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     NOT_TEAM_LEADER(-460,"不是队长;"),
     DUPLICATE_TIME_OUT(-461,"副本超时;"),
     ALL_MONSTER_DIE(-462,"当前场景没有存活的怪;"),
+    GOODS_NOT_EXIST(-463,"不存在该商品;"),
+    MAIL_NUMBER_OVERFLOW(-464,"邮件道具个数超出最大数量;"),
     ;
 
     private String message;

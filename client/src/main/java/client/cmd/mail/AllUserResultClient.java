@@ -22,12 +22,20 @@ public class AllUserResultClient implements ICmd<GameMsg.AllUserResult> {
 
         Role role = Role.getInstance();
         System.out.println("请选择用户");
+        System.out.println("0、退出;");
         for (GameMsg.UserInfo userInfo : allUserResult.getUserInfoList()) {
-            System.out.println(userInfo.getUserId()+"、"+userInfo.getUserName());
+            System.out.println(userInfo.getUserId() + "、" + userInfo.getUserName());
         }
+
         Scanner scanner = new Scanner(System.in);
         int userId = scanner.nextInt();
         scanner.nextLine();
+
+        if (userId == 0) {
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+            return;
+        }
+
         GameMsg.SendMailCmd.Builder newBuilder = GameMsg.SendMailCmd.newBuilder();
         //设置收件人id
         newBuilder.setTargetUserId(userId);
@@ -43,23 +51,34 @@ public class AllUserResultClient implements ICmd<GameMsg.AllUserResult> {
         newBuilder.setMoney(money);
 
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-        System.out.println("道具如下");
+        System.out.println("道具如下:");
         for (Props props : propsMap.values()) {
             System.out.println(props.getId() + "、" + props.getName());
         }
-        //  道具id
-//        int propsId = scanner.nextInt();
-//        Props props = propsMap.get(propsId);
-//        newBuilder.setPropsId(propsId)
-//                .setNumber(1);
-//        if (props.getPropsProperty().getType() != PropsType.Equipment) {
-//            System.out.println("数量:");
-//            int number = scanner.nextInt();
-//            scanner.nextLine();
-//            newBuilder.setNumber(number);
-//        }
-        newBuilder.setSrcUserId(0);
 
+
+        while (true) {
+            System.out.println("0、退出;");
+            System.out.println("选择道具;");
+            int propsId = scanner.nextInt();
+            scanner.nextLine();
+            if (propsId == 0) {
+                break;
+            }
+
+            int number = 1;
+            if (propsMap.get(propsId).getPropsProperty().getType() == PropsType.Potion) {
+                System.out.println("数量;");
+                number = scanner.nextInt();
+                scanner.nextLine();
+            }
+            GameMsg.MailProps.Builder mailProps = GameMsg.MailProps.newBuilder()
+                    .setPropsId(propsId)
+                    .setNumber(number);
+            newBuilder.addProps(mailProps);
+        }
+
+        newBuilder.setSrcUserId(0);
 
         GameMsg.SendMailCmd sendMailCmd = newBuilder.build();
         ctx.writeAndFlush(sendMailCmd);

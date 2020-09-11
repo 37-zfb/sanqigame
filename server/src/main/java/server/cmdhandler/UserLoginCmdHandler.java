@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import server.GuildManager;
 import server.async.LoadResourcesService;
 import server.async.LoginService;
+import server.cmdhandler.auction.AuctionUtil;
+import server.cmdhandler.mail.MailUtil;
 import server.model.*;
 import server.model.store.Goods;
 import server.model.props.AbstractPropsProperty;
@@ -142,6 +144,9 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
 
                 GameMsg.UserLoginResult userLoginResult = resultBuilder.build();
                 ctx.writeAndFlush(userLoginResult);
+
+                //发送邮件
+//                MailUtil.getMailUtil().sendMail(user.getUserId(), 2000, "登录奖励;",new ArrayList<>());
                 return null;
             });
             return null;

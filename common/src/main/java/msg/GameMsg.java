@@ -42625,11 +42625,6 @@ public final class GameMsg {
     int getGoodsNumber();
   }
   /**
-   * <pre>
-   * 展示商店
-   * 命令
-   * </pre>
-   *
    * Protobuf type {@code msg.UserBuyGoodsCmd}
    */
   public  static final class UserBuyGoodsCmd extends
@@ -42903,11 +42898,6 @@ public final class GameMsg {
       return builder;
     }
     /**
-     * <pre>
-     * 展示商店
-     * 命令
-     * </pre>
-     *
      * Protobuf type {@code msg.UserBuyGoodsCmd}
      */
     public static final class Builder extends
@@ -43178,20 +43168,10 @@ public final class GameMsg {
 
     /**
      * <pre>
-     * 是否成功
-     * </pre>
-     *
-     * <code>bool isSuccess = 1;</code>
-     * @return The isSuccess.
-     */
-    boolean getIsSuccess();
-
-    /**
-     * <pre>
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     java.util.List<msg.GameMsg.Props> 
         getPropsList();
@@ -43200,7 +43180,7 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     msg.GameMsg.Props getProps(int index);
     /**
@@ -43208,7 +43188,7 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     int getPropsCount();
     /**
@@ -43216,7 +43196,7 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
         getPropsOrBuilderList();
@@ -43225,7 +43205,7 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
         int index);
@@ -43235,7 +43215,7 @@ public final class GameMsg {
      * 购买的商品id
      * </pre>
      *
-     * <code>uint32 goodsId = 3;</code>
+     * <code>uint32 goodsId = 2;</code>
      * @return The goodsId.
      */
     int getGoodsId();
@@ -43245,40 +43225,10 @@ public final class GameMsg {
      * 购买的商品数量
      * </pre>
      *
-     * <code>uint32 goodsNumber = 4;</code>
+     * <code>uint32 goodsNumber = 3;</code>
      * @return The goodsNumber.
      */
     int getGoodsNumber();
-
-    /**
-     * <pre>
-     * 失败码
-     * </pre>
-     *
-     * <code>uint32 code = 5;</code>
-     * @return The code.
-     */
-    int getCode();
-
-    /**
-     * <pre>
-     * 失败原因
-     * </pre>
-     *
-     * <code>string reason = 6;</code>
-     * @return The reason.
-     */
-    java.lang.String getReason();
-    /**
-     * <pre>
-     * 失败原因
-     * </pre>
-     *
-     * <code>string reason = 6;</code>
-     * @return The bytes for reason.
-     */
-    com.google.protobuf.ByteString
-        getReasonBytes();
   }
   /**
    * <pre>
@@ -43299,7 +43249,6 @@ public final class GameMsg {
     }
     private UserBuyGoodsResult() {
       props_ = java.util.Collections.emptyList();
-      reason_ = "";
     }
 
     @java.lang.Override
@@ -43333,12 +43282,7 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
-            case 8: {
-
-              isSuccess_ = input.readBool();
-              break;
-            }
-            case 18: {
+            case 10: {
               if (!((mutable_bitField0_ & 0x00000001) != 0)) {
                 props_ = new java.util.ArrayList<msg.GameMsg.Props>();
                 mutable_bitField0_ |= 0x00000001;
@@ -43347,25 +43291,14 @@ public final class GameMsg {
                   input.readMessage(msg.GameMsg.Props.parser(), extensionRegistry));
               break;
             }
-            case 24: {
+            case 16: {
 
               goodsId_ = input.readUInt32();
               break;
             }
-            case 32: {
+            case 24: {
 
               goodsNumber_ = input.readUInt32();
-              break;
-            }
-            case 40: {
-
-              code_ = input.readUInt32();
-              break;
-            }
-            case 50: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              reason_ = s;
               break;
             }
             default: {
@@ -43403,28 +43336,14 @@ public final class GameMsg {
               msg.GameMsg.UserBuyGoodsResult.class, msg.GameMsg.UserBuyGoodsResult.Builder.class);
     }
 
-    public static final int ISSUCCESS_FIELD_NUMBER = 1;
-    private boolean isSuccess_;
-    /**
-     * <pre>
-     * 是否成功
-     * </pre>
-     *
-     * <code>bool isSuccess = 1;</code>
-     * @return The isSuccess.
-     */
-    public boolean getIsSuccess() {
-      return isSuccess_;
-    }
-
-    public static final int PROPS_FIELD_NUMBER = 2;
+    public static final int PROPS_FIELD_NUMBER = 1;
     private java.util.List<msg.GameMsg.Props> props_;
     /**
      * <pre>
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     public java.util.List<msg.GameMsg.Props> getPropsList() {
       return props_;
@@ -43434,7 +43353,7 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
         getPropsOrBuilderList() {
@@ -43445,7 +43364,7 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     public int getPropsCount() {
       return props_.size();
@@ -43455,7 +43374,7 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     public msg.GameMsg.Props getProps(int index) {
       return props_.get(index);
@@ -43465,97 +43384,39 @@ public final class GameMsg {
      * 背包中的道具，前后端同步一下数据
      * </pre>
      *
-     * <code>repeated .msg.Props props = 2;</code>
+     * <code>repeated .msg.Props props = 1;</code>
      */
     public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
         int index) {
       return props_.get(index);
     }
 
-    public static final int GOODSID_FIELD_NUMBER = 3;
+    public static final int GOODSID_FIELD_NUMBER = 2;
     private int goodsId_;
     /**
      * <pre>
      * 购买的商品id
      * </pre>
      *
-     * <code>uint32 goodsId = 3;</code>
+     * <code>uint32 goodsId = 2;</code>
      * @return The goodsId.
      */
     public int getGoodsId() {
       return goodsId_;
     }
 
-    public static final int GOODSNUMBER_FIELD_NUMBER = 4;
+    public static final int GOODSNUMBER_FIELD_NUMBER = 3;
     private int goodsNumber_;
     /**
      * <pre>
      * 购买的商品数量
      * </pre>
      *
-     * <code>uint32 goodsNumber = 4;</code>
+     * <code>uint32 goodsNumber = 3;</code>
      * @return The goodsNumber.
      */
     public int getGoodsNumber() {
       return goodsNumber_;
-    }
-
-    public static final int CODE_FIELD_NUMBER = 5;
-    private int code_;
-    /**
-     * <pre>
-     * 失败码
-     * </pre>
-     *
-     * <code>uint32 code = 5;</code>
-     * @return The code.
-     */
-    public int getCode() {
-      return code_;
-    }
-
-    public static final int REASON_FIELD_NUMBER = 6;
-    private volatile java.lang.Object reason_;
-    /**
-     * <pre>
-     * 失败原因
-     * </pre>
-     *
-     * <code>string reason = 6;</code>
-     * @return The reason.
-     */
-    public java.lang.String getReason() {
-      java.lang.Object ref = reason_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        reason_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * 失败原因
-     * </pre>
-     *
-     * <code>string reason = 6;</code>
-     * @return The bytes for reason.
-     */
-    public com.google.protobuf.ByteString
-        getReasonBytes() {
-      java.lang.Object ref = reason_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        reason_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
     }
 
     private byte memoizedIsInitialized = -1;
@@ -43572,23 +43433,14 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (isSuccess_ != false) {
-        output.writeBool(1, isSuccess_);
-      }
       for (int i = 0; i < props_.size(); i++) {
-        output.writeMessage(2, props_.get(i));
+        output.writeMessage(1, props_.get(i));
       }
       if (goodsId_ != 0) {
-        output.writeUInt32(3, goodsId_);
+        output.writeUInt32(2, goodsId_);
       }
       if (goodsNumber_ != 0) {
-        output.writeUInt32(4, goodsNumber_);
-      }
-      if (code_ != 0) {
-        output.writeUInt32(5, code_);
-      }
-      if (!getReasonBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, reason_);
+        output.writeUInt32(3, goodsNumber_);
       }
       unknownFields.writeTo(output);
     }
@@ -43599,28 +43451,17 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
-      if (isSuccess_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, isSuccess_);
-      }
       for (int i = 0; i < props_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, props_.get(i));
+          .computeMessageSize(1, props_.get(i));
       }
       if (goodsId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, goodsId_);
+          .computeUInt32Size(2, goodsId_);
       }
       if (goodsNumber_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(4, goodsNumber_);
-      }
-      if (code_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(5, code_);
-      }
-      if (!getReasonBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, reason_);
+          .computeUInt32Size(3, goodsNumber_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -43637,18 +43478,12 @@ public final class GameMsg {
       }
       msg.GameMsg.UserBuyGoodsResult other = (msg.GameMsg.UserBuyGoodsResult) obj;
 
-      if (getIsSuccess()
-          != other.getIsSuccess()) return false;
       if (!getPropsList()
           .equals(other.getPropsList())) return false;
       if (getGoodsId()
           != other.getGoodsId()) return false;
       if (getGoodsNumber()
           != other.getGoodsNumber()) return false;
-      if (getCode()
-          != other.getCode()) return false;
-      if (!getReason()
-          .equals(other.getReason())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -43660,9 +43495,6 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ISSUCCESS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getIsSuccess());
       if (getPropsCount() > 0) {
         hash = (37 * hash) + PROPS_FIELD_NUMBER;
         hash = (53 * hash) + getPropsList().hashCode();
@@ -43671,10 +43503,6 @@ public final class GameMsg {
       hash = (53 * hash) + getGoodsId();
       hash = (37 * hash) + GOODSNUMBER_FIELD_NUMBER;
       hash = (53 * hash) + getGoodsNumber();
-      hash = (37 * hash) + CODE_FIELD_NUMBER;
-      hash = (53 * hash) + getCode();
-      hash = (37 * hash) + REASON_FIELD_NUMBER;
-      hash = (53 * hash) + getReason().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -43814,8 +43642,6 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        isSuccess_ = false;
-
         if (propsBuilder_ == null) {
           props_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
@@ -43825,10 +43651,6 @@ public final class GameMsg {
         goodsId_ = 0;
 
         goodsNumber_ = 0;
-
-        code_ = 0;
-
-        reason_ = "";
 
         return this;
       }
@@ -43857,7 +43679,6 @@ public final class GameMsg {
       public msg.GameMsg.UserBuyGoodsResult buildPartial() {
         msg.GameMsg.UserBuyGoodsResult result = new msg.GameMsg.UserBuyGoodsResult(this);
         int from_bitField0_ = bitField0_;
-        result.isSuccess_ = isSuccess_;
         if (propsBuilder_ == null) {
           if (((bitField0_ & 0x00000001) != 0)) {
             props_ = java.util.Collections.unmodifiableList(props_);
@@ -43869,8 +43690,6 @@ public final class GameMsg {
         }
         result.goodsId_ = goodsId_;
         result.goodsNumber_ = goodsNumber_;
-        result.code_ = code_;
-        result.reason_ = reason_;
         onBuilt();
         return result;
       }
@@ -43919,9 +43738,6 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.UserBuyGoodsResult other) {
         if (other == msg.GameMsg.UserBuyGoodsResult.getDefaultInstance()) return this;
-        if (other.getIsSuccess() != false) {
-          setIsSuccess(other.getIsSuccess());
-        }
         if (propsBuilder_ == null) {
           if (!other.props_.isEmpty()) {
             if (props_.isEmpty()) {
@@ -43954,13 +43770,6 @@ public final class GameMsg {
         if (other.getGoodsNumber() != 0) {
           setGoodsNumber(other.getGoodsNumber());
         }
-        if (other.getCode() != 0) {
-          setCode(other.getCode());
-        }
-        if (!other.getReason().isEmpty()) {
-          reason_ = other.reason_;
-          onChanged();
-        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -43991,48 +43800,6 @@ public final class GameMsg {
       }
       private int bitField0_;
 
-      private boolean isSuccess_ ;
-      /**
-       * <pre>
-       * 是否成功
-       * </pre>
-       *
-       * <code>bool isSuccess = 1;</code>
-       * @return The isSuccess.
-       */
-      public boolean getIsSuccess() {
-        return isSuccess_;
-      }
-      /**
-       * <pre>
-       * 是否成功
-       * </pre>
-       *
-       * <code>bool isSuccess = 1;</code>
-       * @param value The isSuccess to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsSuccess(boolean value) {
-        
-        isSuccess_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 是否成功
-       * </pre>
-       *
-       * <code>bool isSuccess = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsSuccess() {
-        
-        isSuccess_ = false;
-        onChanged();
-        return this;
-      }
-
       private java.util.List<msg.GameMsg.Props> props_ =
         java.util.Collections.emptyList();
       private void ensurePropsIsMutable() {
@@ -44050,7 +43817,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public java.util.List<msg.GameMsg.Props> getPropsList() {
         if (propsBuilder_ == null) {
@@ -44064,7 +43831,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public int getPropsCount() {
         if (propsBuilder_ == null) {
@@ -44078,7 +43845,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public msg.GameMsg.Props getProps(int index) {
         if (propsBuilder_ == null) {
@@ -44092,7 +43859,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder setProps(
           int index, msg.GameMsg.Props value) {
@@ -44113,7 +43880,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder setProps(
           int index, msg.GameMsg.Props.Builder builderForValue) {
@@ -44131,7 +43898,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder addProps(msg.GameMsg.Props value) {
         if (propsBuilder_ == null) {
@@ -44151,7 +43918,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder addProps(
           int index, msg.GameMsg.Props value) {
@@ -44172,7 +43939,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder addProps(
           msg.GameMsg.Props.Builder builderForValue) {
@@ -44190,7 +43957,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder addProps(
           int index, msg.GameMsg.Props.Builder builderForValue) {
@@ -44208,7 +43975,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder addAllProps(
           java.lang.Iterable<? extends msg.GameMsg.Props> values) {
@@ -44227,7 +43994,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder clearProps() {
         if (propsBuilder_ == null) {
@@ -44244,7 +44011,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public Builder removeProps(int index) {
         if (propsBuilder_ == null) {
@@ -44261,7 +44028,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public msg.GameMsg.Props.Builder getPropsBuilder(
           int index) {
@@ -44272,7 +44039,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
           int index) {
@@ -44286,7 +44053,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
            getPropsOrBuilderList() {
@@ -44301,7 +44068,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public msg.GameMsg.Props.Builder addPropsBuilder() {
         return getPropsFieldBuilder().addBuilder(
@@ -44312,7 +44079,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public msg.GameMsg.Props.Builder addPropsBuilder(
           int index) {
@@ -44324,7 +44091,7 @@ public final class GameMsg {
        * 背包中的道具，前后端同步一下数据
        * </pre>
        *
-       * <code>repeated .msg.Props props = 2;</code>
+       * <code>repeated .msg.Props props = 1;</code>
        */
       public java.util.List<msg.GameMsg.Props.Builder> 
            getPropsBuilderList() {
@@ -44351,7 +44118,7 @@ public final class GameMsg {
        * 购买的商品id
        * </pre>
        *
-       * <code>uint32 goodsId = 3;</code>
+       * <code>uint32 goodsId = 2;</code>
        * @return The goodsId.
        */
       public int getGoodsId() {
@@ -44362,7 +44129,7 @@ public final class GameMsg {
        * 购买的商品id
        * </pre>
        *
-       * <code>uint32 goodsId = 3;</code>
+       * <code>uint32 goodsId = 2;</code>
        * @param value The goodsId to set.
        * @return This builder for chaining.
        */
@@ -44377,7 +44144,7 @@ public final class GameMsg {
        * 购买的商品id
        * </pre>
        *
-       * <code>uint32 goodsId = 3;</code>
+       * <code>uint32 goodsId = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearGoodsId() {
@@ -44393,7 +44160,7 @@ public final class GameMsg {
        * 购买的商品数量
        * </pre>
        *
-       * <code>uint32 goodsNumber = 4;</code>
+       * <code>uint32 goodsNumber = 3;</code>
        * @return The goodsNumber.
        */
       public int getGoodsNumber() {
@@ -44404,7 +44171,7 @@ public final class GameMsg {
        * 购买的商品数量
        * </pre>
        *
-       * <code>uint32 goodsNumber = 4;</code>
+       * <code>uint32 goodsNumber = 3;</code>
        * @param value The goodsNumber to set.
        * @return This builder for chaining.
        */
@@ -44419,150 +44186,12 @@ public final class GameMsg {
        * 购买的商品数量
        * </pre>
        *
-       * <code>uint32 goodsNumber = 4;</code>
+       * <code>uint32 goodsNumber = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearGoodsNumber() {
         
         goodsNumber_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int code_ ;
-      /**
-       * <pre>
-       * 失败码
-       * </pre>
-       *
-       * <code>uint32 code = 5;</code>
-       * @return The code.
-       */
-      public int getCode() {
-        return code_;
-      }
-      /**
-       * <pre>
-       * 失败码
-       * </pre>
-       *
-       * <code>uint32 code = 5;</code>
-       * @param value The code to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCode(int value) {
-        
-        code_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 失败码
-       * </pre>
-       *
-       * <code>uint32 code = 5;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearCode() {
-        
-        code_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object reason_ = "";
-      /**
-       * <pre>
-       * 失败原因
-       * </pre>
-       *
-       * <code>string reason = 6;</code>
-       * @return The reason.
-       */
-      public java.lang.String getReason() {
-        java.lang.Object ref = reason_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          reason_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 失败原因
-       * </pre>
-       *
-       * <code>string reason = 6;</code>
-       * @return The bytes for reason.
-       */
-      public com.google.protobuf.ByteString
-          getReasonBytes() {
-        java.lang.Object ref = reason_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          reason_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * 失败原因
-       * </pre>
-       *
-       * <code>string reason = 6;</code>
-       * @param value The reason to set.
-       * @return This builder for chaining.
-       */
-      public Builder setReason(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        reason_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 失败原因
-       * </pre>
-       *
-       * <code>string reason = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearReason() {
-        
-        reason_ = getDefaultInstance().getReason();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * 失败原因
-       * </pre>
-       *
-       * <code>string reason = 6;</code>
-       * @param value The bytes for reason to set.
-       * @return This builder for chaining.
-       */
-      public Builder setReasonBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        reason_ = value;
         onChanged();
         return this;
       }
@@ -48800,12 +48429,6 @@ public final class GameMsg {
   public interface SendMailResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.SendMailResult)
       com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>bool isSuccess = 1;</code>
-     * @return The isSuccess.
-     */
-    boolean getIsSuccess();
   }
   /**
    * <pre>
@@ -48856,11 +48479,6 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
-            case 8: {
-
-              isSuccess_ = input.readBool();
-              break;
-            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -48893,16 +48511,6 @@ public final class GameMsg {
               msg.GameMsg.SendMailResult.class, msg.GameMsg.SendMailResult.Builder.class);
     }
 
-    public static final int ISSUCCESS_FIELD_NUMBER = 1;
-    private boolean isSuccess_;
-    /**
-     * <code>bool isSuccess = 1;</code>
-     * @return The isSuccess.
-     */
-    public boolean getIsSuccess() {
-      return isSuccess_;
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -48917,9 +48525,6 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (isSuccess_ != false) {
-        output.writeBool(1, isSuccess_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -48929,10 +48534,6 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
-      if (isSuccess_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(1, isSuccess_);
-      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -48948,8 +48549,6 @@ public final class GameMsg {
       }
       msg.GameMsg.SendMailResult other = (msg.GameMsg.SendMailResult) obj;
 
-      if (getIsSuccess()
-          != other.getIsSuccess()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -48961,9 +48560,6 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ISSUCCESS_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getIsSuccess());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -49101,8 +48697,6 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        isSuccess_ = false;
-
         return this;
       }
 
@@ -49129,7 +48723,6 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.SendMailResult buildPartial() {
         msg.GameMsg.SendMailResult result = new msg.GameMsg.SendMailResult(this);
-        result.isSuccess_ = isSuccess_;
         onBuilt();
         return result;
       }
@@ -49178,9 +48771,6 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.SendMailResult other) {
         if (other == msg.GameMsg.SendMailResult.getDefaultInstance()) return this;
-        if (other.getIsSuccess() != false) {
-          setIsSuccess(other.getIsSuccess());
-        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -49207,36 +48797,6 @@ public final class GameMsg {
             mergeFrom(parsedMessage);
           }
         }
-        return this;
-      }
-
-      private boolean isSuccess_ ;
-      /**
-       * <code>bool isSuccess = 1;</code>
-       * @return The isSuccess.
-       */
-      public boolean getIsSuccess() {
-        return isSuccess_;
-      }
-      /**
-       * <code>bool isSuccess = 1;</code>
-       * @param value The isSuccess to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsSuccess(boolean value) {
-        
-        isSuccess_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool isSuccess = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsSuccess() {
-        
-        isSuccess_ = false;
-        onChanged();
         return this;
       }
       @java.lang.Override
@@ -115805,261 +115365,260 @@ public final class GameMsg {
       "ssAttkUserResult\022\021\n\tsubUserHp\030\001 \001(\r\",\n\027B" +
       "ossSkillAttkUserResult\022\021\n\tsubUserHp\030\001 \001(" +
       "\r\"7\n\017UserBuyGoodsCmd\022\017\n\007goodsId\030\001 \001(\r\022\023\n" +
-      "\013goodsNumber\030\002 \001(\r\"\206\001\n\022UserBuyGoodsResul" +
-      "t\022\021\n\tisSuccess\030\001 \001(\010\022\031\n\005props\030\002 \003(\0132\n.ms" +
-      "g.Props\022\017\n\007goodsId\030\003 \001(\r\022\023\n\013goodsNumber\030" +
-      "\004 \001(\r\022\014\n\004code\030\005 \001(\r\022\016\n\006reason\030\006 \001(\t\"*\n\022B" +
-      "ossKillUserResult\022\024\n\014targetUserId\030\001 \001(\r\"" +
-      "C\n\017UserChatInfoCmd\022\024\n\014targetUserId\030\001 \001(\r" +
-      "\022\014\n\004info\030\002 \001(\t\022\014\n\004type\030\003 \001(\t\"B\n\022UserChat" +
-      "InfoResult\022\020\n\010userName\030\001 \001(\t\022\014\n\004type\030\002 \001" +
-      "(\t\022\014\n\004info\030\003 \001(\t\"s\n\013SendMailCmd\022\035\n\005props" +
-      "\030\001 \003(\0132\016.msg.MailProps\022\021\n\tsrcUserId\030\002 \001(" +
-      "\r\022\024\n\014targetUserId\030\003 \001(\r\022\r\n\005money\030\004 \001(\r\022\r" +
-      "\n\005title\030\005 \001(\t\",\n\tMailProps\022\017\n\007propsId\030\001 " +
-      "\001(\r\022\016\n\006number\030\002 \001(\r\"#\n\016SendMailResult\022\021\n" +
-      "\tisSuccess\030\001 \001(\010\"\014\n\nAllUserCmd\"0\n\rAllUse" +
-      "rResult\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo" +
-      "\":\n\027NoticeUserGetMailResult\022\037\n\010mailInfo\030" +
-      "\001 \001(\0132\r.msg.MailInfo\"\020\n\016UserSeeMailCmd\"4" +
-      "\n\021UserSeeMailResult\022\037\n\010mailInfo\030\001 \003(\0132\r." +
-      "msg.MailInfo\">\n\010MailInfo\022\016\n\006mailId\030\001 \001(\004" +
-      "\022\023\n\013srcUserName\030\002 \001(\t\022\r\n\005title\030\003 \001(\t\"$\n\022" +
-      "UserReceiveMailCmd\022\016\n\006mailId\030\001 \001(\004\"Q\n\025Us" +
-      "erReceiveMailResult\022\016\n\006mailId\030\001 \003(\004\022\031\n\005p" +
-      "rops\030\002 \003(\0132\n.msg.Props\022\r\n\005money\030\003 \001(\r\"\023\n" +
-      "\021UserEnterArenaCmd\"7\n\024UserEnterArenaResu" +
-      "lt\022\037\n\010userInfo\030\001 \003(\0132\r.msg.UserInfo\"\'\n\025U" +
-      "serChooseOpponentCmd\022\016\n\006userId\030\001 \001(\r\"f\n\030" +
-      "UserChooseOpponentResult\022\027\n\017acceptChalle" +
-      "nge\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\022\030\n\020or" +
-      "iginatedUserId\030\003 \001(\r\"4\n\031TargetUserChalle" +
-      "ngeResult\022\027\n\017originateUserId\030\001 \001(\r\"A\n\025Ta" +
-      "rgetUserResponseCmd\022\017\n\007isAgree\030\001 \001(\010\022\027\n\017" +
-      "originateUserId\030\002 \001(\r\"\022\n\020UserQuitArenaCm" +
-      "d\"6\n\023UserQuitArenaResult\022\037\n\010userInfo\030\001 \001" +
-      "(\0132\r.msg.UserInfo\"%\n\rUserAttackCmd\022\024\n\014ta" +
-      "rgetUserId\030\001 \001(\r\">\n\020UserAttackResult\022\024\n\014" +
-      "attackUserId\030\001 \001(\r\022\024\n\014targetUserId\030\002 \001(\r" +
-      "\"@\n\024UserSubtractHpResult\022\024\n\014targetUserId" +
-      "\030\001 \001(\r\022\022\n\nsubtractHp\030\002 \001(\r\"%\n\rUserDieRes" +
-      "ult\022\024\n\014targetUserId\030\001 \001(\r\"%\n\rUserTeamUpC" +
-      "md\022\024\n\014targetUserId\030\001 \001(\r\"\022\n\020UserTeamUpRe" +
-      "sult\"E\n\017AskTeamUpResult\022\027\n\017originateUser" +
-      "Id\030\001 \001(\r\022\031\n\021originateUserName\030\002 \001(\t\":\n\017U" +
-      "serJoinTeamCmd\022\016\n\006isJoin\030\001 \001(\010\022\027\n\017origin" +
-      "ateUserId\030\002 \001(\r\"6\n\022UserJoinTeamResult\022\016\n" +
-      "\006isJoin\030\001 \001(\010\022\020\n\010targetId\030\002 \001(\r\"*\n\026UserJ" +
-      "oinTeamPerformCmd\022\020\n\010targetId\030\001 \001(\r\"b\n\031U" +
-      "serJoinTeamPerformResult\022\037\n\010userInfo\030\001 \003" +
-      "(\0132\r.msg.UserInfo\022\024\n\014teamLeaderId\030\002 \001(\r\022" +
-      "\016\n\006isJoin\030\003 \001(\010\"\021\n\017UserQuitTeamCmd\"K\n\022Us" +
-      "erQuitTeamResult\022\037\n\010userInfo\030\001 \001(\0132\r.msg" +
-      ".UserInfo\022\024\n\014teamLeaderId\030\002 \001(\r\"\031\n\027UserE" +
-      "nterTeamFailResult\"\035\n\033UserQuitTeamAndDup" +
-      "licateCmd\" \n\036UserQuitTeamAndDuplicateRes" +
-      "ult\"+\n\021PastorSkillResult\022\n\n\002hp\030\001 \001(\r\022\n\n\002" +
-      "mp\030\002 \001(\r\"8\n\030SummonMonsterSubHpResult\022\r\n\005" +
-      "isDie\030\001 \001(\010\022\r\n\005subHp\030\002 \001(\r\"\022\n\020UserCleanM" +
-      "ailCmd\"6\n\023UserCleanMailResult\022\037\n\010mailInf" +
-      "o\030\001 \003(\0132\r.msg.MailInfo\"$\n\022UserDealReques" +
-      "tCmd\022\016\n\006userId\030\001 \001(\r\"i\n\025UserDealRequestR" +
-      "esult\022\017\n\007isAgree\030\001 \001(\010\022\021\n\tisSuccess\030\002 \001(" +
-      "\010\022\024\n\014targetUserId\030\003 \001(\r\022\026\n\016targetUserNam" +
-      "e\030\004 \001(\t\"A\n\023AskTargetUserResult\022\023\n\013origin" +
-      "ateId\030\001 \001(\r\022\025\n\roriginateName\030\002 \001(\t\"A\n\031De" +
-      "alTargetUserResponseCmd\022\023\n\013originateId\030\001" +
-      " \001(\r\022\017\n\007isAgree\030\002 \001(\010\"\020\n\016DealChannelCmd\"" +
-      "\023\n\021DealChannelResult\"I\n\017UserDealItemCmd\022" +
-      "\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \001(\0132\n.msg.Prop" +
-      "s\022\014\n\004type\030\003 \001(\t\"L\n\022UserDealItemResult\022\r\n" +
-      "\005money\030\001 \001(\r\022\031\n\005props\030\002 \001(\0132\n.msg.Props\022" +
-      "\014\n\004type\030\003 \001(\t\"(\n\013ErrorResult\022\013\n\003msg\030\001 \001(" +
-      "\t\022\014\n\004code\030\002 \001(\r\"\024\n\022UserAddCompleteCmd\"8\n" +
-      "\025UserAddCompleteResult\022\037\n\010userInfo\030\001 \001(\013" +
-      "2\r.msg.UserInfo\")\n\021UserCancelDealCmd\022\024\n\014" +
-      "isNeedNotice\030\001 \001(\010\"9\n\024UserCancelDealResu" +
-      "lt\022\021\n\tisSuccess\030\001 \001(\010\022\016\n\006userId\030\002 \001(\r\"\024\n" +
-      "\022UserConfirmDealCmd\"*\n\025UserConfirmDealRe" +
-      "sult\022\021\n\tisSuccess\030\001 \001(\010\"0\n\030UserCancelDea" +
-      "lConfirmCmd\022\024\n\014isNeedNotice\030\001 \001(\010\"\035\n\033Use" +
-      "rCancelDealConfirmResult\"\020\n\016SortOutDealC" +
-      "md\"=\n\021SortOutDealResult\022\031\n\005props\030\001 \003(\0132\n" +
-      ".msg.Props\022\r\n\005money\030\002 \001(\r\"\'\n\022UserCreateG" +
-      "uildCmd\022\021\n\tguildName\030\001 \001(\t\"*\n\025UserCreate" +
-      "GuildResult\022\021\n\tguildName\030\001 \001(\t\"\026\n\024UserDi" +
-      "ssolveGuildCmd\")\n\027UserDissolveGuildResul" +
-      "t\022\016\n\006userId\030\001 \001(\r\"\016\n\014ShowGuildCmd\",\n\017Sho" +
-      "wGuildResult\022\031\n\005guild\030\001 \003(\0132\n.msg.Guild\"" +
-      "+\n\005Guild\022\017\n\007guildId\030\001 \001(\r\022\021\n\tguildName\030\002" +
-      " \001(\t\"$\n\021UserEnterGuildCmd\022\017\n\007guildId\030\001 \001" +
-      "(\r\"1\n\024UserEnterGuildResult\022\031\n\005guild\030\001 \001(" +
-      "\0132\n.msg.Guild\"\024\n\022ShowGuildMemberCmd\"8\n\025S" +
-      "howGuildMemberResult\022\037\n\010userInfo\030\001 \003(\0132\r" +
-      ".msg.UserInfo\"(\n\026LookGuildMemberInfoCmd\022" +
-      "\016\n\006userId\030\001 \001(\r\"*\n\031LookGuildMemberInfoRe" +
-      "sult\022\r\n\005equId\030\001 \003(\r\"\016\n\014QuitGuildCmd\"#\n\017Q" +
-      "uitGuildResult\022\020\n\010userName\030\001 \001(\t\"6\n\020Appo" +
-      "intMemberCmd\022\016\n\006userId\030\001 \001(\r\022\022\n\nposition" +
-      "Id\030\002 \001(\r\")\n\023AppointMemberResult\022\022\n\nposit" +
-      "ionId\030\001 \001(\r\"#\n\021EliminateGuildCmd\022\016\n\006user" +
-      "Id\030\001 \001(\r\"\026\n\024EliminateGuildResult\",\n\026Modi" +
-      "fyGuildPositionCmd\022\022\n\npositionId\030\001 \001(\r\"\025" +
-      "\n\023ModifyGuildStateCmd\"\027\n\025LookGuildWareho" +
-      "useCmd\"D\n\030LookGuildWarehouseResult\022\r\n\005mo" +
-      "ney\030\001 \001(\r\022\031\n\005props\030\002 \003(\0132\n.msg.Props\"<\n\017" +
-      "TakeOutPropsCmd\022\031\n\005props\030\001 \001(\0132\n.msg.Pro" +
-      "ps\022\016\n\006number\030\002 \001(\r\"\024\n\022TakeOutPropsResult" +
-      "\"*\n\rPutInPropsCmd\022\031\n\005props\030\001 \001(\0132\n.msg.P" +
-      "rops\"\022\n\020PutInPropsResult\" \n\017TakeOutMoney" +
-      "Cmd\022\r\n\005money\030\001 \001(\r\"\024\n\022TakeOutMoneyResult" +
-      "\"\036\n\rPutInMoneyCmd\022\r\n\005money\030\001 \001(\r\"\022\n\020PutI" +
-      "nMoneyResult\"&\n\024TransferPresidentCmd\022\016\n\006" +
-      "userId\030\001 \001(\r\")\n\027TransferPresidentResult\022" +
-      "\016\n\006userId\030\001 \001(\r\"\024\n\022LookAuctionItemCmd\">\n" +
-      "\025LookAuctionItemResult\022%\n\013auctionItem\030\001 " +
-      "\003(\0132\020.msg.AuctionItem\"z\n\013AuctionItem\022\n\n\002" +
-      "id\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\017\n\007propsId\030\003 " +
-      "\001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005price\030\005 \001(\r\022\016\n\006n" +
-      "umber\030\006 \001(\r\022\014\n\004date\030\007 \001(\004\"R\n\016ShelveGoods" +
-      "Cmd\022\020\n\010location\030\001 \001(\r\022\016\n\006number\030\002 \001(\r\022\017\n" +
-      "\007auction\030\003 \001(\r\022\r\n\005price\030\004 \001(\r\"\023\n\021ShelveG" +
-      "oodsResult\"3\n\017BiddingGoodsCmd\022\021\n\tauction" +
-      "Id\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"#\n\022BiddingGoodsR" +
-      "esult\022\r\n\005money\030\001 \001(\r\" \n\013OnePriceCmd\022\021\n\ta" +
-      "uctionId\030\001 \001(\r\"\037\n\016OnePriceResult\022\r\n\005pric" +
-      "e\030\001 \001(\r\"\033\n\031LookOneselfAuctionItemCmd\"E\n\034" +
-      "LookOneselfAuctionItemResult\022%\n\013auctionI" +
-      "tem\030\001 \003(\0132\020.msg.AuctionItem\")\n\024CancelAuc" +
-      "tionItemCmd\022\021\n\tauctionId\030\001 \001(\r\"\031\n\027Cancel" +
-      "AuctionItemResult\"\020\n\016LookAllTaskCmd\"#\n\021L" +
-      "ookAllTaskResult\022\016\n\006taskId\030\001 \001(\r\" \n\016Rece" +
-      "iveTaskCmd\022\016\n\006taskId\030\001 \001(\r\"#\n\021ReceiveTas" +
-      "kResult\022\016\n\006taskId\030\001 \001(\r\"\021\n\017DialogueTaskC" +
-      "md\"\025\n\023TaskCompletedResult\"%\n\023ReceiveTask" +
-      "AwardCmd\022\016\n\006taskId\030\001 \001(\r\"B\n\026ReceiveTaskA" +
-      "wardResult\022\031\n\005props\030\001 \003(\0132\n.msg.Props\022\r\n" +
-      "\005money\030\002 \001(\r\"\034\n\016UserUpLvResult\022\n\n\002lv\030\001 \001" +
-      "(\r\"0\n\014AddFriendCmd\022\016\n\006userId\030\001 \001(\r\022\020\n\010us" +
-      "erName\030\002 \001(\t\"3\n\017AddFriendResult\022\016\n\006userI" +
-      "d\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"!\n\017DeleteFrien" +
-      "dCmd\022\016\n\006userId\030\001 \001(\r\"$\n\022DeleteFriendResu" +
-      "lt\022\016\n\006userId\030\001 \001(\r\"\023\n\021BossAllKillResult\"" +
-      "\024\n\022DuplicateFinishCmd\",\n\031MonsterResurrec" +
-      "tionResult\022\017\n\007sceneId\030\001 \001(\r*\233#\n\007MsgCode\022" +
-      "\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS" +
-      "_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014\n\010" +
-      "ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027USER_SUBT" +
-      "RACT_HP_RESULT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016USER" +
-      "_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n\021U" +
-      "SER_REGISTER_CMD\020\t\022\030\n\024USER_REGISTER_RESU" +
-      "LT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027STOP_CUR_U" +
-      "SER_ALL_TIMER\020\014\022\031\n\025USER_SWITCH_SCENE_CMD" +
-      "\020\r\022\034\n\030USER_SWITCH_SCENE_RESULT\020\016\022\033\n\027MONS" +
-      "TER_START_ATTK_USER\020\017\022\026\n\022NOTICE_USER_ATT" +
-      "KED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021\022\032\n\026USER_S" +
-      "KILL_ATTK_RESULT\020\022\022\026\n\022SKILL_STATE_SWITCH" +
-      "\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014BACKPACK_CM" +
-      "D\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024ROB_EQUIPMEN" +
-      "T_RESULT\020\027\022\023\n\017USER_POTION_CMD\020\030\022\026\n\022USER_" +
-      "POTION_RESULT\020\031\022\034\n\030USER_RESUME_STATE_RES" +
-      "ULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032US" +
-      "ER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027USER_UNDO_" +
-      "EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_EQUIPMENT_R" +
-      "ESULT\020\036\022 \n\034DURABILITY_DEFICIENCY_RESULT\020" +
-      "\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n\027REPAIR_EQ" +
-      "UIPMENT_RESULT\020!\022\034\n\030MONSTER_DROP_HP_AUTO" +
-      "_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020#\022\032\n\026ENTER" +
-      "_DUPLICATE_RESULT\020$\022\021\n\rATTK_BOSS_CMD\020%\022\024" +
-      "\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_BOSS_RESULT" +
-      "\020\'\022\033\n\027DUPLICATE_FINISH_RESULT\020(\022\033\n\027USER_" +
-      "QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_QUIT_DUPLIC" +
-      "ATE_RESULT\020*\022\031\n\025BOSS_ATTK_USER_RESULT\020+\022" +
-      "\037\n\033BOSS_SKILL_ATTK_USER_RESULT\020,\022\031\n\025BOSS" +
-      "_KILL_USER_RESULT\020-\022\026\n\022USER_BUY_GOODS_CM" +
-      "D\020.\022\031\n\025USER_BUY_GOODS_RESULT\020/\022\026\n\022USER_C" +
-      "HAT_INFO_CMD\0200\022\031\n\025USER_CHAT_INFO_RESULT\020" +
-      "1\022\021\n\rSEND_MAIL_CMD\0202\022\024\n\020SEND_MAIL_RESULT" +
-      "\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n\017ALL_USER_RESULT\020" +
-      "5\022\037\n\033NOTICE_USER_GET_MAIL_RESULT\0206\022\025\n\021US" +
-      "ER_SEE_MAIL_CMD\0207\022\030\n\024USER_SEE_MAIL_RESUL" +
-      "T\0208\022\031\n\025USER_RECEIVE_MAIL_CMD\0209\022\034\n\030USER_R" +
-      "ECEIVE_MAIL_RESULT\020:\022\030\n\024USER_ENTER_ARENA" +
-      "_CMD\020;\022\033\n\027USER_ENTER_ARENA_RESULT\020<\022\034\n\030U" +
-      "SER_CHOOSE_OPPONENT_CMD\020=\022\037\n\033USER_CHOOSE" +
-      "_OPPONENT_RESULT\020>\022 \n\034TARGET_USER_CHALLE" +
-      "NGE_RESULT\020?\022\034\n\030TARGET_USER_RESPONSE_CMD" +
-      "\020@\022\037\n\033TARGET_USER_RESPONSE_RESULT\020A\022\027\n\023U" +
-      "SER_QUIT_ARENA_CMD\020B\022\032\n\026USER_QUIT_ARENA_" +
-      "RESULT\020C\022\023\n\017USER_ATTACK_CMD\020D\022\026\n\022USER_AT" +
-      "TACK_RESULT\020E\022\023\n\017USER_DIE_RESULT\020F\022\024\n\020US" +
-      "ER_TEAM_UP_CMD\020G\022\027\n\023USER_TEAM_UP_RESULT\020" +
-      "H\022\026\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022USER_JOIN_T" +
-      "EAM_CMD\020J\022\031\n\025USER_JOIN_TEAM_RESULT\020K\022\026\n\022" +
-      "USER_QUIT_TEAM_CMD\020L\022\031\n\025USER_QUIT_TEAM_R" +
-      "ESULT\020M\022\037\n\033USER_ENTER_TEAM_FAIL_RESULT\020N" +
-      "\022$\n USER_QUIT_TEAM_AND_DUPLICATE_CMD\020O\022\'" +
-      "\n#USER_QUIT_TEAM_AND_DUPLICATE_RESULT\020P\022" +
-      "$\n USER_SKILL_ATTK_DUPLICATE_RESULT\020Q\022\027\n" +
-      "\023PASTOR_SKILL_RESULT\020R\022 \n\034SUMMON_MONSTER" +
-      "_SUB_HP_RESULT\020S\022\036\n\032USER_JOIN_TEAM_PERFO" +
-      "RM_CMD\020T\022!\n\035USER_JOIN_TEAM_PERFORM_RESUL" +
-      "T\020U\022\027\n\023USER_CLEAN_MAIL_CMD\020V\022\032\n\026USER_CLE" +
-      "AN_MAIL_RESULT\020W\022\031\n\025USER_DEAL_REQUEST_CM" +
-      "D\020X\022\034\n\030USER_DEAL_REQUEST_RESULT\020Y\022\032\n\026ASK" +
-      "_TARGET_USER_RESULT\020Z\022!\n\035DEAL_TARGET_USE" +
-      "R_RESPONSE_CMD\020[\022\024\n\020DEAL_CHANNEL_CMD\020\\\022\027" +
-      "\n\023DEAL_CHANNEL_RESULT\020]\022\026\n\022USER_DEAL_ITE" +
-      "M_CMD\020^\022\031\n\025USER_DEAL_ITEM_RESULT\020_\022\031\n\025US" +
-      "ER_ADD_COMPLETE_CMD\020a\022\034\n\030USER_ADD_COMPLE" +
-      "TE_RESULT\020b\022\030\n\024USER_CANCEL_DEAL_CMD\020c\022\033\n" +
-      "\027USER_CANCEL_DEAL_RESULT\020d\022\031\n\025USER_CONFI" +
-      "RM_DEAL_CMD\020e\022\034\n\030USER_CONFIRM_DEAL_RESUL" +
-      "T\020f\022 \n\034USER_CANCEL_DEAL_CONFIRM_CMD\020g\022#\n" +
-      "\037USER_CANCEL_DEAL_CONFIRM_RESULT\020h\022\025\n\021SO" +
-      "RT_OUT_DEAL_CMD\020i\022\030\n\024SORT_OUT_DEAL_RESUL" +
-      "T\020j\022\031\n\025USER_CREATE_GUILD_CMD\020k\022\034\n\030USER_C" +
-      "REATE_GUILD_RESULT\020l\022\033\n\027USER_DISSOLVE_GU" +
-      "ILD_CMD\020m\022\036\n\032USER_DISSOLVE_GUILD_RESULT\020" +
-      "n\022\022\n\016SHOW_GUILD_CMD\020o\022\025\n\021SHOW_GUILD_RESU" +
-      "LT\020p\022\030\n\024USER_ENTER_GUILD_CMD\020q\022\033\n\027USER_E" +
-      "NTER_GUILD_RESULT\020r\022\031\n\025SHOW_GUILD_MEMBER" +
-      "_CMD\020s\022\034\n\030SHOW_GUILD_MEMBER_RESULT\020t\022\036\n\032" +
-      "LOOK_GUiLD_MEMBER_INFO_CMD\020u\022!\n\035LOOK_GUi" +
-      "LD_MEMBER_INFO_RESULT\020v\022\022\n\016QUIT_GUILD_CM" +
-      "D\020w\022\025\n\021QUIT_GUILD_RESULT\020x\022\026\n\022APPOINT_ME" +
-      "MBER_CMD\020y\022\031\n\025APPOINT_MEMBER_RESULT\020z\022\027\n" +
-      "\023ELIMINATE_GUILD_CMD\020{\022\032\n\026ELIMINATE_GUIL" +
-      "D_RESULT\020|\022\035\n\031MODIFY_GUILD_POSITION_CMD\020" +
-      "}\022\032\n\026MODIFY_GUILD_STATE_CMD\020~\022\034\n\030LOOK_GU" +
-      "ILD_WAREHOUSE_CMD\020\177\022 \n\033LOOK_GUILD_WAREHO" +
-      "USE_RESULT\020\200\001\022\027\n\022TAKE_OUT_PROPS_CMD\020\201\001\022\032" +
-      "\n\025TAKE_OUT_PROPS_RESULT\020\202\001\022\025\n\020PUT_IN_PRO" +
-      "PS_CMD\020\203\001\022\030\n\023PUT_IN_PROPS_RESULT\020\204\001\022\027\n\022T" +
-      "AKE_OUT_MONEY_CMD\020\205\001\022\032\n\025TAKE_OUT_MONEY_R" +
-      "ESULT\020\206\001\022\025\n\020PUT_IN_MONEY_CMD\020\207\001\022\030\n\023PUT_I" +
-      "N_MONEY_RESULT\020\210\001\022\033\n\026TRANSFER_PRESIDENT_" +
-      "CMD\020\310\001\022\036\n\031TRANSFER_PRESIDENT_RESULT\020\311\001\022\032" +
-      "\n\025LOOK_AUCTION_ITEM_CMD\020\211\001\022\035\n\030LOOK_AUCTI" +
-      "ON_ITEM_RESULT\020\212\001\022\025\n\020SHELVE_GOODS_CMD\020\213\001" +
-      "\022\030\n\023SHELVE_GOODS_RESULT\020\214\001\022\026\n\021BIDDING_GO" +
-      "ODS_CMD\020\215\001\022\031\n\024BIDDING_GOODS_RESULT\020\216\001\022\022\n" +
-      "\rONE_PRICE_CMD\020\217\001\022\025\n\020ONE_PRICE_RESULT\020\220\001" +
-      "\022\"\n\035LOOK_ONESELF_AUCTION_ITEM_CMD\020\221\001\022%\n " +
-      "LOOK_ONESELF_AUCTION_ITEM_RESULT\020\222\001\022\034\n\027C" +
-      "ANCEL_AUCTION_ITEM_CMD\020\223\001\022\037\n\032CANCEL_AUCT" +
-      "ION_ITEM_RESULT\020\224\001\022\026\n\021LOOK_ALL_TASK_CMD\020" +
-      "\225\001\022\031\n\024LOOK_ALL_TASK_RESULT\020\226\001\022\025\n\020RECEIVE" +
-      "_TASK_CMD\020\227\001\022\030\n\023RECEIVE_TASK_RESULT\020\230\001\022\026" +
-      "\n\021DIALOGUE_TASK_CMD\020\231\001\022\032\n\025TASK_COMPLETED" +
-      "_RESULT\020\232\001\022\033\n\026RECEIVE_TASK_AWARD_CMD\020\233\001\022" +
-      "\036\n\031RECEIVE_TASK_AWARD_RESULT\020\234\001\022\023\n\016ADD_F" +
-      "RIEND_CMD\020\236\001\022\026\n\021ADD_FRIEND_RESULT\020\237\001\022\026\n\021" +
-      "DELETE_FRIEND_CMD\020\240\001\022\031\n\024DELETE_FRIEND_RE" +
-      "SULT\020\241\001\022\031\n\024BOSS_ALL_KILL_RESULT\020\242\001\022\031\n\024DU" +
-      "PLICATE_FINISH_CMD\020\243\001\022 \n\033MONSTER_RESURRE" +
-      "CTION_RESULT\020\244\001\022\026\n\021USER_UP_LV_RESULT\020\235\001\022" +
-      "\020\n\014ERROR_RESULT\020`B\005\n\003msgb\006proto3"
+      "\013goodsNumber\030\002 \001(\r\"U\n\022UserBuyGoodsResult" +
+      "\022\031\n\005props\030\001 \003(\0132\n.msg.Props\022\017\n\007goodsId\030\002" +
+      " \001(\r\022\023\n\013goodsNumber\030\003 \001(\r\"*\n\022BossKillUse" +
+      "rResult\022\024\n\014targetUserId\030\001 \001(\r\"C\n\017UserCha" +
+      "tInfoCmd\022\024\n\014targetUserId\030\001 \001(\r\022\014\n\004info\030\002" +
+      " \001(\t\022\014\n\004type\030\003 \001(\t\"B\n\022UserChatInfoResult" +
+      "\022\020\n\010userName\030\001 \001(\t\022\014\n\004type\030\002 \001(\t\022\014\n\004info" +
+      "\030\003 \001(\t\"s\n\013SendMailCmd\022\035\n\005props\030\001 \003(\0132\016.m" +
+      "sg.MailProps\022\021\n\tsrcUserId\030\002 \001(\r\022\024\n\014targe" +
+      "tUserId\030\003 \001(\r\022\r\n\005money\030\004 \001(\r\022\r\n\005title\030\005 " +
+      "\001(\t\",\n\tMailProps\022\017\n\007propsId\030\001 \001(\r\022\016\n\006num" +
+      "ber\030\002 \001(\r\"\020\n\016SendMailResult\"\014\n\nAllUserCm" +
+      "d\"0\n\rAllUserResult\022\037\n\010userInfo\030\001 \003(\0132\r.m" +
+      "sg.UserInfo\":\n\027NoticeUserGetMailResult\022\037" +
+      "\n\010mailInfo\030\001 \001(\0132\r.msg.MailInfo\"\020\n\016UserS" +
+      "eeMailCmd\"4\n\021UserSeeMailResult\022\037\n\010mailIn" +
+      "fo\030\001 \003(\0132\r.msg.MailInfo\">\n\010MailInfo\022\016\n\006m" +
+      "ailId\030\001 \001(\004\022\023\n\013srcUserName\030\002 \001(\t\022\r\n\005titl" +
+      "e\030\003 \001(\t\"$\n\022UserReceiveMailCmd\022\016\n\006mailId\030" +
+      "\001 \001(\004\"Q\n\025UserReceiveMailResult\022\016\n\006mailId" +
+      "\030\001 \003(\004\022\031\n\005props\030\002 \003(\0132\n.msg.Props\022\r\n\005mon" +
+      "ey\030\003 \001(\r\"\023\n\021UserEnterArenaCmd\"7\n\024UserEnt" +
+      "erArenaResult\022\037\n\010userInfo\030\001 \003(\0132\r.msg.Us" +
+      "erInfo\"\'\n\025UserChooseOpponentCmd\022\016\n\006userI" +
+      "d\030\001 \001(\r\"f\n\030UserChooseOpponentResult\022\027\n\017a" +
+      "cceptChallenge\030\001 \001(\010\022\027\n\017originateUserId\030" +
+      "\002 \001(\r\022\030\n\020originatedUserId\030\003 \001(\r\"4\n\031Targe" +
+      "tUserChallengeResult\022\027\n\017originateUserId\030" +
+      "\001 \001(\r\"A\n\025TargetUserResponseCmd\022\017\n\007isAgre" +
+      "e\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\"\022\n\020User" +
+      "QuitArenaCmd\"6\n\023UserQuitArenaResult\022\037\n\010u" +
+      "serInfo\030\001 \001(\0132\r.msg.UserInfo\"%\n\rUserAtta" +
+      "ckCmd\022\024\n\014targetUserId\030\001 \001(\r\">\n\020UserAttac" +
+      "kResult\022\024\n\014attackUserId\030\001 \001(\r\022\024\n\014targetU" +
+      "serId\030\002 \001(\r\"@\n\024UserSubtractHpResult\022\024\n\014t" +
+      "argetUserId\030\001 \001(\r\022\022\n\nsubtractHp\030\002 \001(\r\"%\n" +
+      "\rUserDieResult\022\024\n\014targetUserId\030\001 \001(\r\"%\n\r" +
+      "UserTeamUpCmd\022\024\n\014targetUserId\030\001 \001(\r\"\022\n\020U" +
+      "serTeamUpResult\"E\n\017AskTeamUpResult\022\027\n\017or" +
+      "iginateUserId\030\001 \001(\r\022\031\n\021originateUserName" +
+      "\030\002 \001(\t\":\n\017UserJoinTeamCmd\022\016\n\006isJoin\030\001 \001(" +
+      "\010\022\027\n\017originateUserId\030\002 \001(\r\"6\n\022UserJoinTe" +
+      "amResult\022\016\n\006isJoin\030\001 \001(\010\022\020\n\010targetId\030\002 \001" +
+      "(\r\"*\n\026UserJoinTeamPerformCmd\022\020\n\010targetId" +
+      "\030\001 \001(\r\"b\n\031UserJoinTeamPerformResult\022\037\n\010u" +
+      "serInfo\030\001 \003(\0132\r.msg.UserInfo\022\024\n\014teamLead" +
+      "erId\030\002 \001(\r\022\016\n\006isJoin\030\003 \001(\010\"\021\n\017UserQuitTe" +
+      "amCmd\"K\n\022UserQuitTeamResult\022\037\n\010userInfo\030" +
+      "\001 \001(\0132\r.msg.UserInfo\022\024\n\014teamLeaderId\030\002 \001" +
+      "(\r\"\031\n\027UserEnterTeamFailResult\"\035\n\033UserQui" +
+      "tTeamAndDuplicateCmd\" \n\036UserQuitTeamAndD" +
+      "uplicateResult\"+\n\021PastorSkillResult\022\n\n\002h" +
+      "p\030\001 \001(\r\022\n\n\002mp\030\002 \001(\r\"8\n\030SummonMonsterSubH" +
+      "pResult\022\r\n\005isDie\030\001 \001(\010\022\r\n\005subHp\030\002 \001(\r\"\022\n" +
+      "\020UserCleanMailCmd\"6\n\023UserCleanMailResult" +
+      "\022\037\n\010mailInfo\030\001 \003(\0132\r.msg.MailInfo\"$\n\022Use" +
+      "rDealRequestCmd\022\016\n\006userId\030\001 \001(\r\"i\n\025UserD" +
+      "ealRequestResult\022\017\n\007isAgree\030\001 \001(\010\022\021\n\tisS" +
+      "uccess\030\002 \001(\010\022\024\n\014targetUserId\030\003 \001(\r\022\026\n\016ta" +
+      "rgetUserName\030\004 \001(\t\"A\n\023AskTargetUserResul" +
+      "t\022\023\n\013originateId\030\001 \001(\r\022\025\n\roriginateName\030" +
+      "\002 \001(\t\"A\n\031DealTargetUserResponseCmd\022\023\n\013or" +
+      "iginateId\030\001 \001(\r\022\017\n\007isAgree\030\002 \001(\010\"\020\n\016Deal" +
+      "ChannelCmd\"\023\n\021DealChannelResult\"I\n\017UserD" +
+      "ealItemCmd\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \001(\013" +
+      "2\n.msg.Props\022\014\n\004type\030\003 \001(\t\"L\n\022UserDealIt" +
+      "emResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \001(\0132\n" +
+      ".msg.Props\022\014\n\004type\030\003 \001(\t\"(\n\013ErrorResult\022" +
+      "\013\n\003msg\030\001 \001(\t\022\014\n\004code\030\002 \001(\r\"\024\n\022UserAddCom" +
+      "pleteCmd\"8\n\025UserAddCompleteResult\022\037\n\010use" +
+      "rInfo\030\001 \001(\0132\r.msg.UserInfo\")\n\021UserCancel" +
+      "DealCmd\022\024\n\014isNeedNotice\030\001 \001(\010\"9\n\024UserCan" +
+      "celDealResult\022\021\n\tisSuccess\030\001 \001(\010\022\016\n\006user" +
+      "Id\030\002 \001(\r\"\024\n\022UserConfirmDealCmd\"*\n\025UserCo" +
+      "nfirmDealResult\022\021\n\tisSuccess\030\001 \001(\010\"0\n\030Us" +
+      "erCancelDealConfirmCmd\022\024\n\014isNeedNotice\030\001" +
+      " \001(\010\"\035\n\033UserCancelDealConfirmResult\"\020\n\016S" +
+      "ortOutDealCmd\"=\n\021SortOutDealResult\022\031\n\005pr" +
+      "ops\030\001 \003(\0132\n.msg.Props\022\r\n\005money\030\002 \001(\r\"\'\n\022" +
+      "UserCreateGuildCmd\022\021\n\tguildName\030\001 \001(\t\"*\n" +
+      "\025UserCreateGuildResult\022\021\n\tguildName\030\001 \001(" +
+      "\t\"\026\n\024UserDissolveGuildCmd\")\n\027UserDissolv" +
+      "eGuildResult\022\016\n\006userId\030\001 \001(\r\"\016\n\014ShowGuil" +
+      "dCmd\",\n\017ShowGuildResult\022\031\n\005guild\030\001 \003(\0132\n" +
+      ".msg.Guild\"+\n\005Guild\022\017\n\007guildId\030\001 \001(\r\022\021\n\t" +
+      "guildName\030\002 \001(\t\"$\n\021UserEnterGuildCmd\022\017\n\007" +
+      "guildId\030\001 \001(\r\"1\n\024UserEnterGuildResult\022\031\n" +
+      "\005guild\030\001 \001(\0132\n.msg.Guild\"\024\n\022ShowGuildMem" +
+      "berCmd\"8\n\025ShowGuildMemberResult\022\037\n\010userI" +
+      "nfo\030\001 \003(\0132\r.msg.UserInfo\"(\n\026LookGuildMem" +
+      "berInfoCmd\022\016\n\006userId\030\001 \001(\r\"*\n\031LookGuildM" +
+      "emberInfoResult\022\r\n\005equId\030\001 \003(\r\"\016\n\014QuitGu" +
+      "ildCmd\"#\n\017QuitGuildResult\022\020\n\010userName\030\001 " +
+      "\001(\t\"6\n\020AppointMemberCmd\022\016\n\006userId\030\001 \001(\r\022" +
+      "\022\n\npositionId\030\002 \001(\r\")\n\023AppointMemberResu" +
+      "lt\022\022\n\npositionId\030\001 \001(\r\"#\n\021EliminateGuild" +
+      "Cmd\022\016\n\006userId\030\001 \001(\r\"\026\n\024EliminateGuildRes" +
+      "ult\",\n\026ModifyGuildPositionCmd\022\022\n\npositio" +
+      "nId\030\001 \001(\r\"\025\n\023ModifyGuildStateCmd\"\027\n\025Look" +
+      "GuildWarehouseCmd\"D\n\030LookGuildWarehouseR" +
+      "esult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \003(\0132\n.ms" +
+      "g.Props\"<\n\017TakeOutPropsCmd\022\031\n\005props\030\001 \001(" +
+      "\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"\024\n\022TakeOut" +
+      "PropsResult\"*\n\rPutInPropsCmd\022\031\n\005props\030\001 " +
+      "\001(\0132\n.msg.Props\"\022\n\020PutInPropsResult\" \n\017T" +
+      "akeOutMoneyCmd\022\r\n\005money\030\001 \001(\r\"\024\n\022TakeOut" +
+      "MoneyResult\"\036\n\rPutInMoneyCmd\022\r\n\005money\030\001 " +
+      "\001(\r\"\022\n\020PutInMoneyResult\"&\n\024TransferPresi" +
+      "dentCmd\022\016\n\006userId\030\001 \001(\r\")\n\027TransferPresi" +
+      "dentResult\022\016\n\006userId\030\001 \001(\r\"\024\n\022LookAuctio" +
+      "nItemCmd\">\n\025LookAuctionItemResult\022%\n\013auc" +
+      "tionItem\030\001 \003(\0132\020.msg.AuctionItem\"z\n\013Auct" +
+      "ionItem\022\n\n\002id\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\017\n" +
+      "\007propsId\030\003 \001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005price" +
+      "\030\005 \001(\r\022\016\n\006number\030\006 \001(\r\022\014\n\004date\030\007 \001(\004\"R\n\016" +
+      "ShelveGoodsCmd\022\020\n\010location\030\001 \001(\r\022\016\n\006numb" +
+      "er\030\002 \001(\r\022\017\n\007auction\030\003 \001(\r\022\r\n\005price\030\004 \001(\r" +
+      "\"\023\n\021ShelveGoodsResult\"3\n\017BiddingGoodsCmd" +
+      "\022\021\n\tauctionId\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"#\n\022Bi" +
+      "ddingGoodsResult\022\r\n\005money\030\001 \001(\r\" \n\013OnePr" +
+      "iceCmd\022\021\n\tauctionId\030\001 \001(\r\"\037\n\016OnePriceRes" +
+      "ult\022\r\n\005price\030\001 \001(\r\"\033\n\031LookOneselfAuction" +
+      "ItemCmd\"E\n\034LookOneselfAuctionItemResult\022" +
+      "%\n\013auctionItem\030\001 \003(\0132\020.msg.AuctionItem\")" +
+      "\n\024CancelAuctionItemCmd\022\021\n\tauctionId\030\001 \001(" +
+      "\r\"\031\n\027CancelAuctionItemResult\"\020\n\016LookAllT" +
+      "askCmd\"#\n\021LookAllTaskResult\022\016\n\006taskId\030\001 " +
+      "\001(\r\" \n\016ReceiveTaskCmd\022\016\n\006taskId\030\001 \001(\r\"#\n" +
+      "\021ReceiveTaskResult\022\016\n\006taskId\030\001 \001(\r\"\021\n\017Di" +
+      "alogueTaskCmd\"\025\n\023TaskCompletedResult\"%\n\023" +
+      "ReceiveTaskAwardCmd\022\016\n\006taskId\030\001 \001(\r\"B\n\026R" +
+      "eceiveTaskAwardResult\022\031\n\005props\030\001 \003(\0132\n.m" +
+      "sg.Props\022\r\n\005money\030\002 \001(\r\"\034\n\016UserUpLvResul" +
+      "t\022\n\n\002lv\030\001 \001(\r\"0\n\014AddFriendCmd\022\016\n\006userId\030" +
+      "\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"3\n\017AddFriendResu" +
+      "lt\022\016\n\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"!\n\017" +
+      "DeleteFriendCmd\022\016\n\006userId\030\001 \001(\r\"$\n\022Delet" +
+      "eFriendResult\022\016\n\006userId\030\001 \001(\r\"\023\n\021BossAll" +
+      "KillResult\"\024\n\022DuplicateFinishCmd\",\n\031Mons" +
+      "terResurrectionResult\022\017\n\007sceneId\030\001 \001(\r*\233" +
+      "#\n\007MsgCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027" +
+      "WHO_ELSE_IS_HERE_RESULT\020\001\022\024\n\020USER_QUIT_R" +
+      "ESULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033" +
+      "\n\027USER_SUBTRACT_HP_RESULT\020\005\022\016\n\nDIE_RESUL" +
+      "T\020\006\022\022\n\016USER_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RE" +
+      "SULT\020\010\022\025\n\021USER_REGISTER_CMD\020\t\022\030\n\024USER_RE" +
+      "GISTER_RESULT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n" +
+      "\027STOP_CUR_USER_ALL_TIMER\020\014\022\031\n\025USER_SWITC" +
+      "H_SCENE_CMD\020\r\022\034\n\030USER_SWITCH_SCENE_RESUL" +
+      "T\020\016\022\033\n\027MONSTER_START_ATTK_USER\020\017\022\026\n\022NOTI" +
+      "CE_USER_ATTKED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020" +
+      "\021\022\032\n\026USER_SKILL_ATTK_RESULT\020\022\022\026\n\022SKILL_S" +
+      "TATE_SWITCH\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014" +
+      "BACKPACK_CMD\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024R" +
+      "OB_EQUIPMENT_RESULT\020\027\022\023\n\017USER_POTION_CMD" +
+      "\020\030\022\026\n\022USER_POTION_RESULT\020\031\022\034\n\030USER_RESUM" +
+      "E_STATE_RESULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_" +
+      "CMD\020\033\022\036\n\032USER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n" +
+      "\027USER_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_" +
+      "EQUIPMENT_RESULT\020\036\022 \n\034DURABILITY_DEFICIE" +
+      "NCY_RESULT\020\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033" +
+      "\n\027REPAIR_EQUIPMENT_RESULT\020!\022\034\n\030MONSTER_D" +
+      "ROP_HP_AUTO_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD" +
+      "\020#\022\032\n\026ENTER_DUPLICATE_RESULT\020$\022\021\n\rATTK_B" +
+      "OSS_CMD\020%\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_" +
+      "BOSS_RESULT\020\'\022\033\n\027DUPLICATE_FINISH_RESULT" +
+      "\020(\022\033\n\027USER_QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_" +
+      "QUIT_DUPLICATE_RESULT\020*\022\031\n\025BOSS_ATTK_USE" +
+      "R_RESULT\020+\022\037\n\033BOSS_SKILL_ATTK_USER_RESUL" +
+      "T\020,\022\031\n\025BOSS_KILL_USER_RESULT\020-\022\026\n\022USER_B" +
+      "UY_GOODS_CMD\020.\022\031\n\025USER_BUY_GOODS_RESULT\020" +
+      "/\022\026\n\022USER_CHAT_INFO_CMD\0200\022\031\n\025USER_CHAT_I" +
+      "NFO_RESULT\0201\022\021\n\rSEND_MAIL_CMD\0202\022\024\n\020SEND_" +
+      "MAIL_RESULT\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n\017ALL_U" +
+      "SER_RESULT\0205\022\037\n\033NOTICE_USER_GET_MAIL_RES" +
+      "ULT\0206\022\025\n\021USER_SEE_MAIL_CMD\0207\022\030\n\024USER_SEE" +
+      "_MAIL_RESULT\0208\022\031\n\025USER_RECEIVE_MAIL_CMD\020" +
+      "9\022\034\n\030USER_RECEIVE_MAIL_RESULT\020:\022\030\n\024USER_" +
+      "ENTER_ARENA_CMD\020;\022\033\n\027USER_ENTER_ARENA_RE" +
+      "SULT\020<\022\034\n\030USER_CHOOSE_OPPONENT_CMD\020=\022\037\n\033" +
+      "USER_CHOOSE_OPPONENT_RESULT\020>\022 \n\034TARGET_" +
+      "USER_CHALLENGE_RESULT\020?\022\034\n\030TARGET_USER_R" +
+      "ESPONSE_CMD\020@\022\037\n\033TARGET_USER_RESPONSE_RE" +
+      "SULT\020A\022\027\n\023USER_QUIT_ARENA_CMD\020B\022\032\n\026USER_" +
+      "QUIT_ARENA_RESULT\020C\022\023\n\017USER_ATTACK_CMD\020D" +
+      "\022\026\n\022USER_ATTACK_RESULT\020E\022\023\n\017USER_DIE_RES" +
+      "ULT\020F\022\024\n\020USER_TEAM_UP_CMD\020G\022\027\n\023USER_TEAM" +
+      "_UP_RESULT\020H\022\026\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022" +
+      "USER_JOIN_TEAM_CMD\020J\022\031\n\025USER_JOIN_TEAM_R" +
+      "ESULT\020K\022\026\n\022USER_QUIT_TEAM_CMD\020L\022\031\n\025USER_" +
+      "QUIT_TEAM_RESULT\020M\022\037\n\033USER_ENTER_TEAM_FA" +
+      "IL_RESULT\020N\022$\n USER_QUIT_TEAM_AND_DUPLIC" +
+      "ATE_CMD\020O\022\'\n#USER_QUIT_TEAM_AND_DUPLICAT" +
+      "E_RESULT\020P\022$\n USER_SKILL_ATTK_DUPLICATE_" +
+      "RESULT\020Q\022\027\n\023PASTOR_SKILL_RESULT\020R\022 \n\034SUM" +
+      "MON_MONSTER_SUB_HP_RESULT\020S\022\036\n\032USER_JOIN" +
+      "_TEAM_PERFORM_CMD\020T\022!\n\035USER_JOIN_TEAM_PE" +
+      "RFORM_RESULT\020U\022\027\n\023USER_CLEAN_MAIL_CMD\020V\022" +
+      "\032\n\026USER_CLEAN_MAIL_RESULT\020W\022\031\n\025USER_DEAL" +
+      "_REQUEST_CMD\020X\022\034\n\030USER_DEAL_REQUEST_RESU" +
+      "LT\020Y\022\032\n\026ASK_TARGET_USER_RESULT\020Z\022!\n\035DEAL" +
+      "_TARGET_USER_RESPONSE_CMD\020[\022\024\n\020DEAL_CHAN" +
+      "NEL_CMD\020\\\022\027\n\023DEAL_CHANNEL_RESULT\020]\022\026\n\022US" +
+      "ER_DEAL_ITEM_CMD\020^\022\031\n\025USER_DEAL_ITEM_RES" +
+      "ULT\020_\022\031\n\025USER_ADD_COMPLETE_CMD\020a\022\034\n\030USER" +
+      "_ADD_COMPLETE_RESULT\020b\022\030\n\024USER_CANCEL_DE" +
+      "AL_CMD\020c\022\033\n\027USER_CANCEL_DEAL_RESULT\020d\022\031\n" +
+      "\025USER_CONFIRM_DEAL_CMD\020e\022\034\n\030USER_CONFIRM" +
+      "_DEAL_RESULT\020f\022 \n\034USER_CANCEL_DEAL_CONFI" +
+      "RM_CMD\020g\022#\n\037USER_CANCEL_DEAL_CONFIRM_RES" +
+      "ULT\020h\022\025\n\021SORT_OUT_DEAL_CMD\020i\022\030\n\024SORT_OUT" +
+      "_DEAL_RESULT\020j\022\031\n\025USER_CREATE_GUILD_CMD\020" +
+      "k\022\034\n\030USER_CREATE_GUILD_RESULT\020l\022\033\n\027USER_" +
+      "DISSOLVE_GUILD_CMD\020m\022\036\n\032USER_DISSOLVE_GU" +
+      "ILD_RESULT\020n\022\022\n\016SHOW_GUILD_CMD\020o\022\025\n\021SHOW" +
+      "_GUILD_RESULT\020p\022\030\n\024USER_ENTER_GUILD_CMD\020" +
+      "q\022\033\n\027USER_ENTER_GUILD_RESULT\020r\022\031\n\025SHOW_G" +
+      "UILD_MEMBER_CMD\020s\022\034\n\030SHOW_GUILD_MEMBER_R" +
+      "ESULT\020t\022\036\n\032LOOK_GUiLD_MEMBER_INFO_CMD\020u\022" +
+      "!\n\035LOOK_GUiLD_MEMBER_INFO_RESULT\020v\022\022\n\016QU" +
+      "IT_GUILD_CMD\020w\022\025\n\021QUIT_GUILD_RESULT\020x\022\026\n" +
+      "\022APPOINT_MEMBER_CMD\020y\022\031\n\025APPOINT_MEMBER_" +
+      "RESULT\020z\022\027\n\023ELIMINATE_GUILD_CMD\020{\022\032\n\026ELI" +
+      "MINATE_GUILD_RESULT\020|\022\035\n\031MODIFY_GUILD_PO" +
+      "SITION_CMD\020}\022\032\n\026MODIFY_GUILD_STATE_CMD\020~" +
+      "\022\034\n\030LOOK_GUILD_WAREHOUSE_CMD\020\177\022 \n\033LOOK_G" +
+      "UILD_WAREHOUSE_RESULT\020\200\001\022\027\n\022TAKE_OUT_PRO" +
+      "PS_CMD\020\201\001\022\032\n\025TAKE_OUT_PROPS_RESULT\020\202\001\022\025\n" +
+      "\020PUT_IN_PROPS_CMD\020\203\001\022\030\n\023PUT_IN_PROPS_RES" +
+      "ULT\020\204\001\022\027\n\022TAKE_OUT_MONEY_CMD\020\205\001\022\032\n\025TAKE_" +
+      "OUT_MONEY_RESULT\020\206\001\022\025\n\020PUT_IN_MONEY_CMD\020" +
+      "\207\001\022\030\n\023PUT_IN_MONEY_RESULT\020\210\001\022\033\n\026TRANSFER" +
+      "_PRESIDENT_CMD\020\310\001\022\036\n\031TRANSFER_PRESIDENT_" +
+      "RESULT\020\311\001\022\032\n\025LOOK_AUCTION_ITEM_CMD\020\211\001\022\035\n" +
+      "\030LOOK_AUCTION_ITEM_RESULT\020\212\001\022\025\n\020SHELVE_G" +
+      "OODS_CMD\020\213\001\022\030\n\023SHELVE_GOODS_RESULT\020\214\001\022\026\n" +
+      "\021BIDDING_GOODS_CMD\020\215\001\022\031\n\024BIDDING_GOODS_R" +
+      "ESULT\020\216\001\022\022\n\rONE_PRICE_CMD\020\217\001\022\025\n\020ONE_PRIC" +
+      "E_RESULT\020\220\001\022\"\n\035LOOK_ONESELF_AUCTION_ITEM" +
+      "_CMD\020\221\001\022%\n LOOK_ONESELF_AUCTION_ITEM_RES" +
+      "ULT\020\222\001\022\034\n\027CANCEL_AUCTION_ITEM_CMD\020\223\001\022\037\n\032" +
+      "CANCEL_AUCTION_ITEM_RESULT\020\224\001\022\026\n\021LOOK_AL" +
+      "L_TASK_CMD\020\225\001\022\031\n\024LOOK_ALL_TASK_RESULT\020\226\001" +
+      "\022\025\n\020RECEIVE_TASK_CMD\020\227\001\022\030\n\023RECEIVE_TASK_" +
+      "RESULT\020\230\001\022\026\n\021DIALOGUE_TASK_CMD\020\231\001\022\032\n\025TAS" +
+      "K_COMPLETED_RESULT\020\232\001\022\033\n\026RECEIVE_TASK_AW" +
+      "ARD_CMD\020\233\001\022\036\n\031RECEIVE_TASK_AWARD_RESULT\020" +
+      "\234\001\022\023\n\016ADD_FRIEND_CMD\020\236\001\022\026\n\021ADD_FRIEND_RE" +
+      "SULT\020\237\001\022\026\n\021DELETE_FRIEND_CMD\020\240\001\022\031\n\024DELET" +
+      "E_FRIEND_RESULT\020\241\001\022\031\n\024BOSS_ALL_KILL_RESU" +
+      "LT\020\242\001\022\031\n\024DUPLICATE_FINISH_CMD\020\243\001\022 \n\033MONS" +
+      "TER_RESURRECTION_RESULT\020\244\001\022\026\n\021USER_UP_LV" +
+      "_RESULT\020\235\001\022\020\n\014ERROR_RESULT\020`B\005\n\003msgb\006pro" +
+      "to3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -116406,7 +115965,7 @@ public final class GameMsg {
     internal_static_msg_UserBuyGoodsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserBuyGoodsResult_descriptor,
-        new java.lang.String[] { "IsSuccess", "Props", "GoodsId", "GoodsNumber", "Code", "Reason", });
+        new java.lang.String[] { "Props", "GoodsId", "GoodsNumber", });
     internal_static_msg_BossKillUserResult_descriptor =
       getDescriptor().getMessageTypes().get(49);
     internal_static_msg_BossKillUserResult_fieldAccessorTable = new
@@ -116442,7 +116001,7 @@ public final class GameMsg {
     internal_static_msg_SendMailResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_SendMailResult_descriptor,
-        new java.lang.String[] { "IsSuccess", });
+        new java.lang.String[] { });
     internal_static_msg_AllUserCmd_descriptor =
       getDescriptor().getMessageTypes().get(55);
     internal_static_msg_AllUserCmd_fieldAccessorTable = new

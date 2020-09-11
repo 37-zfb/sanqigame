@@ -60,10 +60,6 @@ public class AttkCmdHandler implements ICmdHandler<GameMsg.AttkCmd> {
             MonsterTimer.getInstance().resurrectionMonster(monsterMap.values(),user.getCurSceneId());
         }
 
-
-//        GameMsg.AttkResult.Builder attkResultBuilder = GameMsg.AttkResult.newBuilder();
-//        GameMsg.AttkResult attkResult = attkResultBuilder.build();
-//        ctx.channel().writeAndFlush(attkResult);
     }
 
 

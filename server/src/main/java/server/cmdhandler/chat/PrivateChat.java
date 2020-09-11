@@ -19,8 +19,6 @@ import util.MyUtil;
 @Slf4j
 public class PrivateChat extends Chat {
 
-
-
     @Override
     public void chat(ChannelHandlerContext ctx, GameMsg.UserChatInfoCmd userChatInfoCmd) {
 
@@ -30,7 +28,7 @@ public class PrivateChat extends Chat {
         // 目标用户id
         int targetUserId = userChatInfoCmd.getTargetUserId();
         // 聊天内容
-        String info = sensitiveWord(userChatInfoCmd);
+        String info = this.sensitiveWord(userChatInfoCmd);
         //聊天类型
         String chatType = userChatInfoCmd.getType();
 

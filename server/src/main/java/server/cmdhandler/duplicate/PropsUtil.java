@@ -1,5 +1,6 @@
 package server.cmdhandler.duplicate;
 
+import com.google.protobuf.GeneratedMessageV3;
 import constant.BackPackConst;
 import constant.EquipmentConst;
 import constant.PotionConst;
@@ -20,6 +21,8 @@ import server.timer.state.DbUserStateTimer;
 import server.util.IdWorker;
 import type.PropsType;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +48,9 @@ public final class PropsUtil {
      * @param propsIdList
      * @param user
      * @param newBuilder
+     * @param number 数量
      */
-    public void addProps(List<Integer> propsIdList, User user, GameMsg.DuplicateFinishResult.Builder newBuilder) {
+    public void addProps(List<Integer> propsIdList, User user, GeneratedMessageV3.Builder newBuilder,Integer number) {
         if (propsIdList == null || user == null || newBuilder == null) {
             return;
         }
@@ -71,26 +75,36 @@ public final class PropsUtil {
                     location = this.addEquipment(user, props);
                     reward.setUserPropsId(((Equipment)user.getBackpack().get(location).getPropsProperty()).getId());
                 } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-                    location = this.addPotion(props, user, 1);
+                    location = this.addPotion(props, user, number);
                     reward.setUserPropsId(((Potion)user.getBackpack().get(location).getPropsProperty()).getId());
                 }
 
                 log.info("获得道具的id: {}", propsId);
                 reward.setLocation(location);
-                reward.setPropsNumber(1);
+                reward.setPropsNumber(number);
                 reward.setPropsId(propsId);
             } catch (CustomizeException e) {
                 log.info("获得道具失败, 道具id: {}", propsId);
                 //此时给玩家发邮件
                 log.error(e.getMessage(), e);
                 reward = null;
-                AuctionUtil.sendMailBuyer(user.getUserId(), propsId, 1, "背包已满;");
+                AuctionUtil.sendMailBuyer(user.getUserId(), propsId, number, "背包已满;");
             }
 
             if (reward == null) {
                 continue;
             }
-            newBuilder.addProps(reward);
+
+            try {
+                Method addProps = newBuilder.getClass().getMethod("addProps", GameMsg.Props.Builder.class);
+                addProps.invoke(newBuilder, reward);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
     }
 

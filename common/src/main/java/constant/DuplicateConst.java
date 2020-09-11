@@ -18,7 +18,7 @@ public interface DuplicateConst {
     /**
      *  副本出货数
      */
-    int PROPS_NUMBER = 6;
+    int DUPLICATE_REWARD_NUMBER = 6;
 
     /**
      *  每个boss击杀时间
@@ -45,5 +45,10 @@ public interface DuplicateConst {
      * 副本通关后，奖励的经验
      */
     int DUPLICATE_EXPERIENCE = 20000;
+
+    /**
+     * 道具个数
+     */
+    int PROPS_NUMBER = 1;
 
 }

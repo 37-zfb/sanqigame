@@ -714,6 +714,7 @@ message BossSkillAttkUserResult {
 }
 // 展示商店
 // 命令
+
 message UserBuyGoodsCmd {
   uint32 goodsId = 1;
   uint32 goodsNumber = 2;
@@ -721,19 +722,12 @@ message UserBuyGoodsCmd {
 // 展示商店
 // 结果
 message UserBuyGoodsResult {
-  // 是否成功
-  bool isSuccess = 1;
   // 背包中的道具，前后端同步一下数据
-  repeated Props props = 2;
+  repeated Props props = 1;
   // 购买的商品id
-  uint32 goodsId = 3;
+  uint32 goodsId = 2;
   // 购买的商品数量
-  uint32 goodsNumber = 4;
-
-  // 失败码
-  uint32 code = 5;
-  // 失败原因
-  string reason = 6;
+  uint32 goodsNumber = 3;
 }
 // boss 击杀 玩家
 message BossKillUserResult {
@@ -779,7 +773,6 @@ message MailProps{
 }
 // 发送邮件结果
 message SendMailResult {
-  bool isSuccess = 1;
 }
 // 所有的用户
 // 命令

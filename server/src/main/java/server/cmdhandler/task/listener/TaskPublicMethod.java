@@ -131,7 +131,7 @@ public class TaskPublicMethod {
 
         Task task = GameData.getInstance().getTaskMap().get(user.getPlayTask().getCurrTaskId());
 
-        if (task.getTypeCode().equals(2)) {
+        if (task.getTypeCode().equals(TaskType.killType.getTaskCode())) {
             dbTaskEntity.setTaskProcess(user.getPlayTask().getKillNumber());
         }
 

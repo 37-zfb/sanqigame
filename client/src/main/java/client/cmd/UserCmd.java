@@ -72,9 +72,9 @@ public class UserCmd {
                     log.info("======> {}", "存在未领取的邮件");
                 }
 
-                System.out.println("当前等级: "+role.getLv());
-                System.out.println("当前血量: "+role.getCurrHp());
-                System.out.println("当前蓝量: "+role.getCurrMp());
+                System.out.println("当前等级: " + role.getLv());
+                System.out.println("当前血量: " + role.getCurrHp());
+                System.out.println("当前蓝量: " + role.getCurrMp());
 
                 PlayTaskClient playTaskClient = role.getPlayTaskClient();
                 if (playTaskClient.getCurrTaskId() != null && !playTaskClient.getCurrTaskId().equals(TaskType.NonTask.getTaskCode())) {
@@ -157,7 +157,6 @@ public class UserCmd {
                                 .setSkillId(skillId)
                                 .build();
                         ctx.writeAndFlush(userSkillAttkCmd);
-
 
 
                     } else if ("5".equals(command)) {
@@ -336,15 +335,16 @@ public class UserCmd {
 
                         System.out.println("===>请选择要购买的商品: ");
                         int goodsId = scanner.nextInt();
+                        int number = 1;
                         GameMsg.UserBuyGoodsCmd.Builder goodsBuilder = GameMsg.UserBuyGoodsCmd.newBuilder();
                         goodsBuilder.setGoodsId(goodsId);
                         goodsBuilder.setGoodsNumber(1);
                         if (propsMap.get(goodsMap.get(goodsId).getPropsId()).getPropsProperty().getType() == PropsType.Potion) {
                             System.out.println("请输入购买的数量: ");
-                            int number = scanner.nextInt();
-                            goodsBuilder.setGoodsNumber(number);
-                        }
+                            number = scanner.nextInt();
 
+                        }
+                        goodsBuilder.setGoodsNumber(number);
                         GameMsg.UserBuyGoodsCmd userBuyGoodsCmd = goodsBuilder.build();
                         return userBuyGoodsCmd;
                     } else if ("15".equals(command)) {

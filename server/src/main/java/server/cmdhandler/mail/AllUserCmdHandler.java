@@ -40,6 +40,5 @@ public class AllUserCmdHandler implements ICmdHandler<GameMsg.AllUserCmd> {
 
         GameMsg.AllUserResult allUserResult = newBuilder.build();
         ctx.writeAndFlush(allUserResult);
-
     }
 }
