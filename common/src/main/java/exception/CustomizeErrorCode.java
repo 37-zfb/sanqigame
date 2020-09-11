@@ -93,6 +93,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     ALL_MONSTER_DIE(-462,"当前场景没有存活的怪;"),
     GOODS_NOT_EXIST(-463,"不存在该商品;"),
     MAIL_NUMBER_OVERFLOW(-464,"邮件道具个数超出最大数量;"),
+    USER_ALREADY_IN_ARENA(-465,"用户已存在竞技场;"),
+    TARGET_NOT_EXIST(-466,"目标用户不在竞技场;"),
     ;
 
     private String message;

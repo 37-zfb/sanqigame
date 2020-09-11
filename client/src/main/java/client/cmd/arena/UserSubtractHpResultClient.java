@@ -33,7 +33,7 @@ public class UserSubtractHpResultClient implements ICmd<GameMsg.UserSubtractHpRe
             PlayUserClient challengeUser = playArenaClient.getChallengeUser();
             challengeUser.setCurrHp(challengeUser.getCurrHp()-subtractHp);
             System.out.println("攻击 "+challengeUser.getUserName()+" 伤害 "+subtractHp);
-            ArenaThread.getInstance().process(ctx, role);
+//            ArenaThread.getInstance().process(ctx, role);
         }
 
     }

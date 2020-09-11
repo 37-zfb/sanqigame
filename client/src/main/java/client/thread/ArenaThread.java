@@ -2,6 +2,7 @@ package client.thread;
 
 import client.model.Role;
 import client.model.arena.PlayArenaClient;
+import client.model.server.profession.Skill;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import client.model.PlayUserClient;
@@ -76,6 +77,7 @@ public class ArenaThread {
             System.out.println("======>1:选择对手;");
             if (playArenaClient.getChallengeUser() != null) {
                 System.out.println("======>2:普通攻击;");
+                System.out.println("======>3:技能;");
             }
             System.out.println("======>7:同意挑战;");
             System.out.println("======>8:拒接挑战;");
@@ -104,10 +106,18 @@ public class ArenaThread {
                             .setTargetUserId(challengeUser.getUserId())
                             .build();
                     ctx.writeAndFlush(userAttackCmd);
-                    break;
                 }
             } else if ("3".equals(command)) {
-                break;
+                System.out.println("当前所拥有技能如下: ");
+                for (Skill skill : role.getSkillMap().values()) {
+                    System.out.println(skill.getId() + "、技能 名称: " + skill.getName() + " , \tcd: " + skill.getCdTime() + " , 是否冷却中: " + (skill.isCd() ? "冷却中;" : "未冷却;"));
+                }
+                int skillId = scanner.nextInt();
+
+                GameMsg.UserSkillAttkCmd userSkillAttkCmd = GameMsg.UserSkillAttkCmd.newBuilder()
+                        .setSkillId(skillId)
+                        .build();
+                ctx.writeAndFlush(userSkillAttkCmd);
             } else if ("4".equals(command)) {
                 break;
             } else if ("5".equals(command)) {
@@ -139,7 +149,7 @@ public class ArenaThread {
                 GameMsg.UserQuitArenaCmd userQuitArenaCmd = GameMsg.UserQuitArenaCmd.newBuilder().build();
                 ctx.writeAndFlush(userQuitArenaCmd);
                 break;
-            } else {
+            }else {
                 if (role.getCurrHp() == 0) {
                     System.out.println("已死亡,请退出副本;");
                 }

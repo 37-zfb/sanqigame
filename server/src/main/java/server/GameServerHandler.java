@@ -7,9 +7,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import msg.GameMsg;
 import org.springframework.context.ApplicationContext;
 import entity.db.CurrUserStateEntity;
 import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.model.PlayArena;
 import server.model.User;
 import server.model.UserManager;
 import server.service.MailService;
@@ -85,7 +87,21 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
 
         // 移除用户
         UserManager.removeUser(userId);
-        ArenaManager.removeUser(user);
+
+        PlayArena playArena = user.getPlayArena();
+        if (playArena != null) {
+            if (playArena.getTargetUserId() != null) {
+                User targetUser = ArenaManager.getUserById(playArena.getTargetUserId());
+                if (targetUser != null) {
+                    targetUser.getPlayArena().setTargetUserId(null);
+                    GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                            .setTargetUserId(user.getUserId())
+                            .build();
+                    targetUser.getCtx().writeAndFlush(userDieResult);
+                }
+            }
+            ArenaManager.removeUser(user);
+        }
 
 //        // 广播用户离场的消息
 //        GameMsg.UserQuitResult.Builder resultBuilder = GameMsg.UserQuitResult.newBuilder();

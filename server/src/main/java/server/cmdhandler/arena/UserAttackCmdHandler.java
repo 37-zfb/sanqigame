@@ -31,21 +31,26 @@ public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> 
     public void handle(ChannelHandlerContext ctx, GameMsg.UserAttackCmd userAttackCmd) {
         MyUtil.checkIsNull(ctx, userAttackCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
-        // 被攻击目标id
+
         PlayArena playArena = user.getPlayArena();
-        if (playArena == null){
+        if (playArena == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_ARENA);
         }
 
         User targetUser = UserManager.getUserById(playArena.getTargetUserId());
-        if (targetUser == null){
+        if (targetUser == null) {
+            user.getPlayArena().setTargetUserId(null);
+            GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                    .setTargetUserId(targetUser.getUserId())
+                    .build();
+            ctx.writeAndFlush(userDieResult);
+
             throw new CustomizeException(CustomizeErrorCode.TARGET_USER_QUIT);
         }
 
         // 目标用户应减少的血量
         int subHp = user.calTargetUserSubHp(targetUser.getBaseDefense());
-        subHp = 10000;
-        // 在竞技场PK，只有玩家之间的伤害，并且都是在业务线程中
+//        subHp = 10000;
         synchronized (targetUser.getMpMonitor()) {
             // 目标用户减血
             targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
@@ -59,20 +64,21 @@ public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> 
         ctx.writeAndFlush(userSubtractHpResult);
         targetUser.getCtx().writeAndFlush(userSubtractHpResult);
 
-        if (targetUser.getCurrHp() <= 0) {
-            // 此时用户死了
-            targetUser.getPlayArena().setTargetUserId(null);
-            user.getPlayArena().setTargetUserId(null);
 
-            taskPublicMethod.listener(user);
-
-            GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
-                    .setTargetUserId(targetUser.getUserId())
-                    .build();
-            ctx.writeAndFlush(userDieResult);
-            targetUser.getCtx().writeAndFlush(userDieResult);
+        if (targetUser.getCurrHp() > 0) {
+            return;
         }
+        // 此时用户死了
+        targetUser.getPlayArena().setTargetUserId(null);
+        user.getPlayArena().setTargetUserId(null);
+
+        taskPublicMethod.listener(user);
+
+        GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                .setTargetUserId(targetUser.getUserId())
+                .build();
+        ctx.writeAndFlush(userDieResult);
+        targetUser.getCtx().writeAndFlush(userDieResult);
+
     }
-
-
 }

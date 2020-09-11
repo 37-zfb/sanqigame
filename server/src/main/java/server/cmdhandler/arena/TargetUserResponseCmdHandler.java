@@ -1,9 +1,12 @@
 package server.cmdhandler.arena;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
+import server.ArenaManager;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
@@ -12,6 +15,7 @@ import util.MyUtil;
 
 /**
  * @author 张丰博
+ * 目标用户响应结果
  */
 @Slf4j
 @Component
@@ -20,11 +24,15 @@ public class TargetUserResponseCmdHandler implements ICmdHandler<GameMsg.TargetU
     public void handle(ChannelHandlerContext ctx, GameMsg.TargetUserResponseCmd targetUserResponseCmd) {
         MyUtil.checkIsNull(ctx, targetUserResponseCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
+
         int originateUserId = targetUserResponseCmd.getOriginateUserId();
         boolean isAgree = targetUserResponseCmd.getIsAgree();
 
         user.getPlayArena().setTargetUserId(originateUserId);
-        User originateUser = UserManager.getUserById(originateUserId);
+        User originateUser = ArenaManager.getUserById(originateUserId);
+        if (originateUser == null){
+            throw new CustomizeException(CustomizeErrorCode.TARGET_NOT_EXIST);
+        }
 
         GameMsg.UserChooseOpponentResult.Builder newBuilder = GameMsg.UserChooseOpponentResult.newBuilder();
         if (isAgree) {

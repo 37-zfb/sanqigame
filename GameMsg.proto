@@ -246,6 +246,9 @@ enum MsgCode {
 
   MONSTER_RESURRECTION_RESULT = 164;
 
+  SORT_OUT_ARENA_CMD = 165;
+  SORT_OUT_ARENA_RESULT = 166;
+
 
   USER_UP_LV_RESULT = 157;
 
@@ -1261,4 +1264,8 @@ message DuplicateFinishCmd{
 message MonsterResurrectionResult{
   uint32 sceneId = 1;
 }
-
+//整理
+message SortOutArenaCmd{
+}
+message SortOutArenaResult{
+}

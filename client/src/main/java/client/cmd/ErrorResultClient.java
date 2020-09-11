@@ -86,6 +86,8 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
             CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }else if (code == CustomizeErrorCode.MAIL_NUMBER_OVERFLOW.getCode()){
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
+        }else if (code == CustomizeErrorCode.TARGET_NOT_EXIST.getCode()){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
         }
 
 

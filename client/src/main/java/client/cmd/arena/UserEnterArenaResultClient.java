@@ -2,7 +2,9 @@ package client.cmd.arena;
 
 import client.cmd.ICmd;
 import client.model.Role;
+import client.model.server.profession.Profession;
 import client.thread.ArenaThread;
+import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import client.model.PlayUserClient;
@@ -28,7 +30,11 @@ public class UserEnterArenaResultClient implements ICmd<GameMsg.UserEnterArenaRe
         for (GameMsg.UserInfo userInfo : userInfoList) {
             arenaUserMap.put(userInfo.getUserId(), new PlayUserClient(userInfo.getUserId(), userInfo.getUserName()));
         }
+
         if (!role.getARENA_CLIENT().isInArena()) {
+            role.setCurrHp(ProfessionConst.HP);
+            role.setCurrMp(ProfessionConst.MP);
+
             ArenaThread.getInstance().process(ctx, role);
             // 标识已进入竞技场
             role.getARENA_CLIENT().setInArena(true);

@@ -21,7 +21,7 @@ import server.model.scene.Scene;
 import server.service.UserService;
 
 /**
- * 技能攻击怪
+ * 技能
  *
  * @author 张丰博
  */
@@ -47,12 +47,12 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
 
         }
 
+        //判断用户此时状态
+        SkillUtil.getSkillUtil().skillDestination(user);
+
         // 计算当前mp
-        // 计算当前mp值
         user.calCurrMp();
         user.resumeMpTime();
-
-        SkillUtil.getSkillUtil().skillDestination(user);
 
         if ((System.currentTimeMillis() - skill.getLastUseTime()) < skill.getCdTime() * SkillConst.CD_UNIt_SWITCH) {
             // 此时技能未冷却好

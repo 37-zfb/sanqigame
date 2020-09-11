@@ -30,8 +30,10 @@ public class UserDieResultClient implements ICmd<GameMsg.UserDieResult> {
             // 攻击者，
             playArenaClient.setChallengeUser(null);
             System.out.println("已击杀;");
-            ArenaThread.getInstance().process(ctx, role);
+//            ArenaThread.getInstance().process(ctx, role);
         }
 
+        GameMsg.SortOutArenaCmd sortOutArenaCmd = GameMsg.SortOutArenaCmd.newBuilder().build();
+        ctx.writeAndFlush(sortOutArenaCmd);
     }
 }

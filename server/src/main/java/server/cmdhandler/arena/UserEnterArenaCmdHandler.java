@@ -1,5 +1,8 @@
 package server.cmdhandler.arena;
 
+import constant.ProfessionConst;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -15,6 +18,7 @@ import java.util.Collection;
 
 /**
  * @author 张丰博
+ * 进入竞技场
  */
 @Component
 @Slf4j
@@ -23,6 +27,10 @@ public class UserEnterArenaCmdHandler implements ICmdHandler<GameMsg.UserEnterAr
     public void handle(ChannelHandlerContext ctx, GameMsg.UserEnterArenaCmd userEnterArenaCmd) {
         MyUtil.checkIsNull(ctx, userEnterArenaCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
+
+        if (ArenaManager.isExist(user)){
+            throw new CustomizeException(CustomizeErrorCode.USER_ALREADY_IN_ARENA);
+        }
 
         GameMsg.UserEnterArenaResult.Builder newBuilder = GameMsg.UserEnterArenaResult.newBuilder();
         Collection<User> arenaUser = ArenaManager.getArenaUser();
@@ -35,6 +43,9 @@ public class UserEnterArenaCmdHandler implements ICmdHandler<GameMsg.UserEnterAr
 
         // 加入竞技场对象
         user.setPlayArena(new PlayArena());
+        user.setCurrHp(ProfessionConst.HP);
+        user.setCurrMp(ProfessionConst.MP);
+
         // 加入竞技场
         ArenaManager.addUser(user);
         log.info("玩家: {},进入了竞技场;", user.getUserName());

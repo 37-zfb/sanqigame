@@ -2,6 +2,8 @@ package server.cmdhandler.skill;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import server.GameServer;
+import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.PlayArena;
 import server.model.UserManager;
 import server.model.duplicate.Duplicate;
@@ -84,12 +86,40 @@ public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProper
             Integer targetUserId = playArena.getTargetUserId();
             User targetUser = UserManager.getUserById(targetUserId);
             if (targetUser == null){
+                user.getPlayArena().setTargetUserId(null);
+                GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                        .setTargetUserId(targetUser.getUserId())
+                        .build();
+                user.getCtx().writeAndFlush(userDieResult);
                 return;
             }
 
             synchronized (targetUser.getHpMonitor()){
                 targetUser.setCurrHp(targetUser.getCurrHp()-subHp);
             }
+
+            GameMsg.UserSubtractHpResult userSubtractHpResult = GameMsg.UserSubtractHpResult.newBuilder()
+                    .setTargetUserId(targetUser.getUserId())
+                    .setSubtractHp(subHp)
+                    .build();
+            targetUser.getCtx().writeAndFlush(userSubtractHpResult);
+            targetUser.getCtx().writeAndFlush(userSubtractHpResult);
+
+            if (targetUser.getCurrHp() <= 0) {
+                // 此时用户死了
+                targetUser.getPlayArena().setTargetUserId(null);
+                user.getPlayArena().setTargetUserId(null);
+
+                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+                taskPublicMethod.listener(user);
+
+                GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                        .setTargetUserId(targetUser.getUserId())
+                        .build();
+                targetUser.getCtx().writeAndFlush(userDieResult);
+                targetUser.getCtx().writeAndFlush(userDieResult);
+            }
+
 
         } else if (monsterMap.size() != 0) {
             // 存活着的怪
