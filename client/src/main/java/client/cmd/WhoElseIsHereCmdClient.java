@@ -36,7 +36,7 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
         System.out.println("============当前场景的用户个数:  " + userInfoList.size());
         for (GameMsg.UserInfo userInfo : userInfoList) {
             // 获得用户信息
-            System.out.println("============用户id:" + userInfo.getUserId() + "、 名字: " + userInfo.getUserName());
+            System.out.println("============用户id:" + userInfo.getUserId() + "、 名字: " + userInfo.getUserName()+" 组队: "+(userInfo.getIsTeam() ? "是":"无" ));
         }
 
         Scanner scanner = new Scanner(System.in);

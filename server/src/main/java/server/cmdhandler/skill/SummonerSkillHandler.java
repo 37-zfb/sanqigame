@@ -39,7 +39,6 @@ public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty
         SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();
         skill.setLastUseTime(System.currentTimeMillis());
 
-        // 此时在副本中
         for (SummonerSkillType skillType : SummonerSkillType.values()) {
             if (!skillType.getId().equals(skillProperty.getId())) {
                 continue;

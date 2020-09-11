@@ -1,5 +1,7 @@
 package server.cmdhandler.team;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -24,9 +26,11 @@ public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> 
 
         int targetUserId = userTeamUpCmd.getTargetUserId();
         User targetUser = UserManager.getUserById(targetUserId);
+        if (targetUser == null) {
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
+        }
 
         user.getInvitationUserId().add(targetUserId);
-
 
         log.info("用户: {} 发起组队, 询问: {}", user.getUserName(), targetUser.getUserName());
         GameMsg.AskTeamUpResult build = GameMsg.AskTeamUpResult.newBuilder()

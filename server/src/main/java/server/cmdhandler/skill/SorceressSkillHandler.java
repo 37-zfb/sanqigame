@@ -2,7 +2,9 @@ package server.cmdhandler.skill;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import server.GameServer;
+import server.cmdhandler.arena.ArenaUtil;
 import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.PlayArena;
 import server.model.UserManager;
@@ -29,6 +31,11 @@ import java.util.Map;
 @Component
 @Slf4j
 public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProperty> {
+
+    @Autowired
+    private TaskPublicMethod taskPublicMethod;
+
+
     @Override
     public void skillHandle(ChannelHandlerContext ctx, SorceressSkillProperty sorceressSkillProperty, Integer skillId) {
         User user = PublicMethod.getInstance().getUser(ctx);
@@ -85,7 +92,7 @@ public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProper
 
             Integer targetUserId = playArena.getTargetUserId();
             User targetUser = UserManager.getUserById(targetUserId);
-            if (targetUser == null){
+            if (targetUser == null) {
                 user.getPlayArena().setTargetUserId(null);
                 GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
                         .setTargetUserId(targetUser.getUserId())
@@ -94,37 +101,39 @@ public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProper
                 return;
             }
 
-            synchronized (targetUser.getHpMonitor()){
-                targetUser.setCurrHp(targetUser.getCurrHp()-subHp);
+            synchronized (targetUser.getHpMonitor()) {
+                targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
             }
 
-            GameMsg.UserSubtractHpResult userSubtractHpResult = GameMsg.UserSubtractHpResult.newBuilder()
+            /*GameMsg.UserSubtractHpResult userSubtractHpResult = GameMsg.UserSubtractHpResult.newBuilder()
                     .setTargetUserId(targetUser.getUserId())
                     .setSubtractHp(subHp)
                     .build();
+            user.getCtx().writeAndFlush(userSubtractHpResult);
             targetUser.getCtx().writeAndFlush(userSubtractHpResult);
-            targetUser.getCtx().writeAndFlush(userSubtractHpResult);
 
-            if (targetUser.getCurrHp() <= 0) {
-                // 此时用户死了
-                targetUser.getPlayArena().setTargetUserId(null);
-                user.getPlayArena().setTargetUserId(null);
-
-                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
-                taskPublicMethod.listener(user);
-
-                GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
-                        .setTargetUserId(targetUser.getUserId())
-                        .build();
-                targetUser.getCtx().writeAndFlush(userDieResult);
-                targetUser.getCtx().writeAndFlush(userDieResult);
+            if (targetUser.getCurrHp() > 0) {
+                return;
             }
+            // 此时用户死了
+            targetUser.getPlayArena().setTargetUserId(null);
+            user.getPlayArena().setTargetUserId(null);
 
+
+            GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                    .setTargetUserId(targetUser.getUserId())
+                    .build();
+            targetUser.getCtx().writeAndFlush(userDieResult);
+            targetUser.getCtx().writeAndFlush(userDieResult);*/
+
+            ArenaUtil.getArenaUtil().sendMsg(user, targetUser, subHp);
+
+            taskPublicMethod.listener(user);
 
         } else if (monsterMap.size() != 0) {
             // 存活着的怪
             List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
-            if (monsterAliveList == null){
+            if (monsterAliveList == null) {
                 return;
             }
 
@@ -134,7 +143,7 @@ public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProper
 
             monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
             if (monsterAliveList.size() == 0) {
-                MonsterTimer.getInstance().resurrectionMonster(monsterMap.values(),user.getCurSceneId());
+                MonsterTimer.getInstance().resurrectionMonster(monsterMap.values(), user.getCurSceneId());
             }
 
 

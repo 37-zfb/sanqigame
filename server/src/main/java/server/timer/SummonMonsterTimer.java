@@ -54,7 +54,7 @@ public class SummonMonsterTimer {
                 (RunnableScheduledFuture<?>) scheduledThreadPool
                         .scheduleAtFixedRate(() -> {
 
-                            Duplicate duplicate = user.getCurrDuplicate();
+                            Duplicate duplicate = PublicMethod.getInstance().getDuplicate(user);
                             Map<Integer, SummonMonster> summonMonsterMap = user.getSummonMonsterMap();
 
                             if (summonMonster.getHp() <= 0) {
@@ -70,7 +70,7 @@ public class SummonMonsterTimer {
                             if (duplicate != null) {
                                 // 副本
                                 BossMonster currBossMonster = duplicate.getCurrBossMonster();
-                                if (currBossMonster == null){
+                                if (currBossMonster == null) {
                                     return;
                                 }
 
@@ -113,20 +113,20 @@ public class SummonMonsterTimer {
                                     user.getCtx().writeAndFlush(userDieResult);
                                     targetUser.getCtx().writeAndFlush(userDieResult);
                                 }
-                            } else if (SceneType.getSceneIdByType(SceneConst.FIELD).contains(user.getCurSceneId())){
+                            } else if (SceneType.getSceneIdByType(SceneConst.FIELD).contains(user.getCurSceneId())) {
                                 // 野外
                                 Scene scene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
-                                if (scene == null){
+                                if (scene == null) {
                                     return;
                                 }
 
                                 List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(scene.getMonsterMap().values());
-                                if (monsterAliveList == null){
+                                if (monsterAliveList == null) {
                                     return;
                                 }
 
                                 Monster monster = monsterAliveList.remove((int) (Math.random() * monsterAliveList.size()));
-                                if (monster == null){
+                                if (monster == null) {
                                     return;
                                 }
 
@@ -134,7 +134,7 @@ public class SummonMonsterTimer {
 
                                 monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(scene.getMonsterMap().values());
                                 if (monsterAliveList.size() == 0) {
-                                    MonsterTimer.getInstance().resurrectionMonster(scene.getMonsterMap().values(),user.getCurSceneId());
+                                    MonsterTimer.getInstance().resurrectionMonster(scene.getMonsterMap().values(), user.getCurSceneId());
                                 }
                             }
 

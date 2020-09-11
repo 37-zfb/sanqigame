@@ -18,7 +18,7 @@ public class UserEnterTeamFailResultClient implements ICmd<GameMsg.UserEnterTeam
 
         Role role = Role.getInstance();
         System.out.println("加入失败;");
-        CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+//        CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
 
     }
 }

@@ -415,7 +415,7 @@ public class UserCmd {
                                 .setIsJoin(true)
                                 .setOriginateUserId(role.getTEAM_CLIENT().getOriginateUserId())
                                 .build();
-                        return userJoinTeamCmd;
+                        ctx.writeAndFlush(userJoinTeamCmd);
                     } else if ("21".equals(command)) {
                         // 不加队伍
                         role.getTEAM_CLIENT().setOriginateUserId(null);

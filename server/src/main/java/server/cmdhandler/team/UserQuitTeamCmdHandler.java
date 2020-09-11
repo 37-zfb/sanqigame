@@ -11,6 +11,7 @@ import util.MyUtil;
 
 /**
  * @author 张丰博
+ * 退出队伍
  */
 @Component
 @Slf4j
@@ -19,7 +20,9 @@ public class UserQuitTeamCmdHandler implements ICmdHandler<GameMsg.UserQuitTeamC
     public void handle(ChannelHandlerContext ctx, GameMsg.UserQuitTeamCmd userQuitTeamCmd) {
         MyUtil.checkIsNull(ctx, userQuitTeamCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
-        PublicMethod.getInstance().quitTeam(user);
+
+//        PublicMethod.getInstance().quitTeam(user);
+        TeamUtil.getTeamUtil().quitTeam(user);
 
     }
 }

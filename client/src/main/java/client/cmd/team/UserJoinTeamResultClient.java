@@ -25,13 +25,15 @@ public class UserJoinTeamResultClient implements ICmd<GameMsg.UserJoinTeamResult
 
         boolean isJoin = userJoinTeamResult.getIsJoin();
         int targetId = userJoinTeamResult.getTargetId();
-        if (isJoin) {
-            GameMsg.UserJoinTeamPerformCmd userJoinTeamPerform = GameMsg.UserJoinTeamPerformCmd.newBuilder()
-                    .setTargetId(targetId)
-                    .build();
-            ctx.writeAndFlush(userJoinTeamPerform);
-        } else {
-            System.out.println("拒绝加入队伍;");
+        GameMsg.UserJoinTeamPerformCmd userJoinTeamPerform = GameMsg.UserJoinTeamPerformCmd.newBuilder()
+                .setTargetId(targetId)
+                .setIsAgree(isJoin)
+                .build();
+        ctx.writeAndFlush(userJoinTeamPerform);
+
+        if (!isJoin) {
+            String targetName = userJoinTeamResult.getTargetName();
+            System.out.println(targetName + " 拒绝加入队伍;");
         }
 
     }

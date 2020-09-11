@@ -274,6 +274,12 @@ message UserInfo {
   string userName = 2;
   //是否在线
   bool isOnline = 3;
+  //当前血量
+  uint32 currHp = 4;
+  //当前蓝量
+  uint32 currMp = 5;
+  //是否组队状态
+  bool isTeam = 6;
 }
 //
 // 用户退场
@@ -905,14 +911,14 @@ message UserJoinTeamCmd {
 }
 // 用户加入队伍 结果
 message UserJoinTeamResult {
-  //  repeated UserInfo userInfo = 1;
-  //  uint32 teamLeaderId = 2;
   bool isJoin = 1;
   uint32 targetId = 2;
+  string targetName = 3;
 }
 // 处理加入队伍的用户
 message UserJoinTeamPerformCmd {
   uint32 targetId = 1;
+  bool isAgree = 2;
 }
 //
 message UserJoinTeamPerformResult {

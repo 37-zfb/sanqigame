@@ -14,6 +14,7 @@ import java.util.Collection;
 
 /**
  * 查询当前场景实体
+ *
  * @author 张丰博
  */
 @Slf4j
@@ -32,19 +33,23 @@ public class WhoElseIsHereCmdHandler implements ICmdHandler<GameMsg.WhoElseIsHer
         // 获得当前用户实体
         Collection<User> listUser = UserManager.listUser();
         for (User user : listUser) {
-            if (user.getCurSceneId().equals(curSceneId)) {
-                // 用户信息
-                GameMsg.UserInfo userInfo =
-                        GameMsg.UserInfo.newBuilder()
-                                .setUserId(user.getUserId())
-                                .setUserName(user.getUserName())
-                                .build();
-                resultBuilder.addUserInfo(userInfo);
+            if (!user.getCurSceneId().equals(curSceneId)) {
+                continue;
             }
+
+            // 用户信息
+            GameMsg.UserInfo userInfo = GameMsg.UserInfo.newBuilder()
+                    .setUserId(user.getUserId())
+                    .setUserName(user.getUserName())
+                    .setIsTeam(user.getPlayTeam() != null)
+                    .build();
+            resultBuilder.addUserInfo(userInfo);
         }
 
         GameMsg.WhoElseIsHereResult whoElseIsHereResult = resultBuilder.build();
-        ctx.channel().writeAndFlush(whoElseIsHereResult);
+        ctx.channel().
+
+                writeAndFlush(whoElseIsHereResult);
     }
 
 }

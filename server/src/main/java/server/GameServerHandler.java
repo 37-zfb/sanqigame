@@ -88,20 +88,23 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         // 移除用户
         UserManager.removeUser(userId);
 
+
         PlayArena playArena = user.getPlayArena();
-        if (playArena != null) {
-            if (playArena.getTargetUserId() != null) {
-                User targetUser = ArenaManager.getUserById(playArena.getTargetUserId());
-                if (targetUser != null) {
-                    targetUser.getPlayArena().setTargetUserId(null);
-                    GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
-                            .setTargetUserId(user.getUserId())
-                            .build();
-                    targetUser.getCtx().writeAndFlush(userDieResult);
-                }
-            }
-            ArenaManager.removeUser(user);
+        if (playArena == null || playArena.getTargetUserId() == null) {
+            return;
         }
+
+        User targetUser = ArenaManager.getUserById(playArena.getTargetUserId());
+        if (targetUser == null) {
+            return;
+        }
+        targetUser.getPlayArena().setTargetUserId(null);
+        GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                .setTargetUserId(user.getUserId())
+                .build();
+        targetUser.getCtx().writeAndFlush(userDieResult);
+
+        ArenaManager.removeUser(user);
 
 //        // 广播用户离场的消息
 //        GameMsg.UserQuitResult.Builder resultBuilder = GameMsg.UserQuitResult.newBuilder();

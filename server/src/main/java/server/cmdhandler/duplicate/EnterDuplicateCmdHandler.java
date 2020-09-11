@@ -72,6 +72,8 @@ public class EnterDuplicateCmdHandler implements ICmdHandler<GameMsg.EnterDuplic
         if (user.getPlayTeam() != null) {
             //设置 队伍副本；此时要通知队伍成员
             user.getPlayTeam().setCurrDuplicate(duplicate);
+
+
             noticeUser(duplicate, user.getUserId(), user.getPlayTeam().getTEAM_MEMBER());
             log.info("队长 {}，带队进入副本 {};", user.getUserName(), duplicate.getName());
         } else {

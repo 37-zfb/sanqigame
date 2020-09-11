@@ -1,5 +1,7 @@
 package server.cmdhandler.team;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -14,7 +16,7 @@ import util.MyUtil;
 
 /**
  * @author 张丰博
- * 被邀请者的应答结果
+ * 对方的应答结果
  */
 @Component
 @Slf4j
@@ -29,35 +31,48 @@ public class UserJoinTeamCmdHandler implements ICmdHandler<GameMsg.UserJoinTeamC
         User user = PublicMethod.getInstance().getUser(ctx);
 
         boolean isJoin = userJoinTeamCmd.getIsJoin();
-        int originateUserId = userJoinTeamCmd.getOriginateUserId();
+        int originateOrTargetUserId = userJoinTeamCmd.getOriginateUserId();
         // 发起者用户
-        User originateUser = UserManager.getUserById(originateUserId);
+        User originateOrTargetUser = UserManager.getUserById(originateOrTargetUserId);
+        if (originateOrTargetUser == null) {
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
+        }
 
-        GameMsg.UserJoinTeamResult.Builder newBuilder = GameMsg.UserJoinTeamResult.newBuilder();
-
-        if (!isJoin) {
-            // 此时不加入队伍，
-            originateUser.getInvitationUserId().remove(user.getUserId());
-
-            GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder.setIsJoin(false).build();
-            originateUser.getCtx().writeAndFlush(userJoinTeamResult);
-            log.info("{} 拒绝了 {} 的组队邀请;", user.getUserName(), originateUser.getUserName());
-        } else {
-
-            taskPublicMethod.listener(user);
-
-            // 此时加入队伍，
-            GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder.setIsJoin(true).setTargetId(user.getUserId()).build();
-            originateUser.getCtx().writeAndFlush(userJoinTeamResult);
-            log.info("{} 同意了 {} 的组队邀请;", user.getUserName(), originateUser.getUserName());
+        if (!originateOrTargetUser.getInvitationUserId().contains(user.getUserId())) {
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_INVITE);
         }
 
 
+        //
+        if (user.getPlayTeam() != null) {
+            TeamUtil.getTeamUtil().originateHaveTeam(originateOrTargetUser, user);
+            return;
+        }
+
+
+        GameMsg.UserJoinTeamResult.Builder newBuilder = GameMsg.UserJoinTeamResult.newBuilder();
+        if (!isJoin) {
+            // 此时不加入队伍，
+            GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder
+                    .setIsJoin(false)
+                    .setTargetName(user.getUserName())
+                    .build();
+            originateOrTargetUser.getCtx().writeAndFlush(userJoinTeamResult);
+            log.info("{} 拒绝了 {} 的组队邀请;", user.getUserName(), originateOrTargetUser.getUserName());
+        } else {
+            // 此时加入队伍，
+            GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder
+                    .setIsJoin(true)
+                    .setTargetId(user.getUserId())
+                    .setTargetName(user.getUserName())
+                    .build();
+            originateOrTargetUser.getCtx().writeAndFlush(userJoinTeamResult);
+            log.info("{} 同意了 {} 的组队邀请;", user.getUserName(), originateOrTargetUser.getUserName());
+
+            taskPublicMethod.listener(user);
+        }
 
     }
-
-
-
 
 
 }
