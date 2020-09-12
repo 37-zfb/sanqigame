@@ -30,7 +30,7 @@ public class MailUtil {
     }
 
     /**
-     * 给拍卖中发邮件
+     *
      * @param targetUserId
      * @param money
      */

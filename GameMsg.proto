@@ -1186,6 +1186,8 @@ message ShelveGoodsCmd{
   uint32 price = 4;
 }
 message ShelveGoodsResult{
+  uint32 location = 1;
+  uint32 number = 2;
 }
 //竞价
 message BiddingGoodsCmd{

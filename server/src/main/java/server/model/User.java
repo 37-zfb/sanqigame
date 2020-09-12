@@ -3,8 +3,6 @@ package server.model;
 import constant.BossMonsterConst;
 import constant.ProfessionConst;
 import entity.db.UserEquipmentEntity;
-import entity.db.UserPotionEntity;
-import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.AllArgsConstructor;
@@ -12,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
-import server.GameServer;
 import server.PublicMethod;
 import server.cmdhandler.auction.AuctionUtil;
 import server.cmdhandler.duplicate.BossSkillAttack;
@@ -26,7 +23,6 @@ import server.model.props.Equipment;
 import server.model.props.Potion;
 import server.model.props.Props;
 import server.scene.GameData;
-import server.timer.state.DbUserStateTimer;
 import type.EquipmentType;
 import type.PotionType;
 import type.PropsType;
@@ -540,50 +536,14 @@ public class User {
             }
         }catch (CustomizeException e){
             log.error(e.getMessage(), e);
-            AuctionUtil.sendMailBuyer(userId,propsId, 1, "击杀怪的奖励;");
+            AuctionUtil.sendPropsMail(userId,propsId, 1, "击杀怪的奖励;");
         }
 
     }
 
 
-    private final DbUserStateTimer USER_STATE_TIMER = GameServer.APPLICATION_CONTEXT.getBean(DbUserStateTimer.class);
 
-    /**
-     * 移除道具
-     *
-     * @param location
-     * @param number
-     */
-    public void removeProps(int location, int number) {
-        Props props = backpack.get(location);
-        if (props.getPropsProperty().getType() == PropsType.Equipment) {
 
-            UserEquipmentEntity userEquipmentEntity = new UserEquipmentEntity();
-            userEquipmentEntity.setId(((Equipment)props.getPropsProperty()).getId());
-            USER_STATE_TIMER.deleteUserEquipment(userEquipmentEntity);
-            backpack.remove(location);
-        } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-            Potion potion = (Potion) props.getPropsProperty();
-
-            if (potion.getNumber() < number) {
-                throw new CustomizeException(CustomizeErrorCode.POTION_INSUFFICIENT);
-            }
-
-            UserPotionEntity userPotionEntity = new UserPotionEntity();
-            userPotionEntity.setId(potion.getId());
-            if (potion.getNumber() > number) {
-                //修改数量
-                userPotionEntity.setNumber(potion.getNumber() - number);
-                potion.setNumber(potion.getNumber() - number);
-                USER_STATE_TIMER.modifyUserPotion(userPotionEntity);
-            } else {
-                //删除
-                USER_STATE_TIMER.deleteUserPotion(userPotionEntity);
-            }
-            log.info("用户 {} 减少 {} {}", userName, number, props.getName());
-
-        }
-    }
 
     /**
      * 添加道具

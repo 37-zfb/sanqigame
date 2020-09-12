@@ -47,7 +47,7 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
             throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
         }
 
-        if (user.getMoney() < money && money < auctionItemById.getAuction()) {
+        if (user.getMoney() < money || money < auctionItemById.getAuction()) {
             // 钱不够
             throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
         }
@@ -66,7 +66,7 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
 
         auctionTimer.addBidder(dbBidderEntity);
         if (beforeBidder != null) {
-            AuctionUtil.sendMailSeller(beforeBidder.getUserId(),beforeBidder.getMoney(),"竞拍金币返回;");
+            AuctionUtil.sendMoneyMail(beforeBidder.getUserId(),beforeBidder.getMoney(),"竞拍金币返回;");
             auctionTimer.deleteBidder(beforeBidder);
         }
 

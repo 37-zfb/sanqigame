@@ -34,20 +34,24 @@ public final class ArriveTimeTimer {
 
     public ScheduledFuture<?> process(Integer auctionId, long delayTime) {
 
+        if (auctionId == null) {
+            return null;
+        }
+
         ScheduledFuture<?> scheduledFuture = SCHEDULED_THREAD_POOL.schedule(() -> {
             DbAuctionItemEntity auctionItemEntity = PlayAuction.removeAuctionItem(auctionId);
-            if (auctionItemEntity == null){
+            if (auctionItemEntity == null) {
                 // 此时拍卖品刚被买走
                 return;
             }
 
             //是否有竞拍者
-            if (auctionItemEntity.getBidder() != null){
+            if (auctionItemEntity.getBidder() != null) {
                 //有竞拍者
-                AuctionUtil.auctionResult(auctionItemEntity,auctionItemEntity.getBidder());
-            }else {
+                AuctionUtil.auctionResult(auctionItemEntity, auctionItemEntity.getBidder());
+            } else {
                 //此时拍卖物没有被买，发送邮件给拍卖人,没有竞拍者
-                AuctionUtil.sendMailBuyer(auctionItemEntity.getUserId(), auctionItemEntity.getPropsId(), auctionItemEntity.getNumber(), "拍卖品未卖出");
+                AuctionUtil.sendPropsMail(auctionItemEntity.getUserId(), auctionItemEntity.getPropsId(), auctionItemEntity.getNumber(), "拍卖品未卖出");
             }
             //删除拍卖品数据
             DB_AUCTION_TIMER.deleteAuctionItem(auctionItemEntity);

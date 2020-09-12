@@ -285,7 +285,7 @@ public final class PublicMethod {
                 //此时给玩家发邮件
                 log.error(e.getMessage(), e);
 
-                AuctionUtil.sendMailBuyer(user.getUserId(), propsId, 1, "背包已满;");
+                AuctionUtil.sendPropsMail(user.getUserId(), propsId, 1, "背包已满;");
             } catch (NullPointerException e) {
                 log.info("获得道具失败, 道具id: {}", propsId);
                 //此时给玩家发邮件

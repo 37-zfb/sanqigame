@@ -88,7 +88,7 @@ public final class PropsUtil {
                 //此时给玩家发邮件
                 log.error(e.getMessage(), e);
                 reward = null;
-                AuctionUtil.sendMailBuyer(user.getUserId(), propsId, number, "背包已满;");
+                AuctionUtil.sendPropsMail(user.getUserId(), propsId, number, "背包已满;");
             }
 
             if (reward == null || newBuilder == null) {

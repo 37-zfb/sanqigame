@@ -1,5 +1,6 @@
 package server.cmdhandler.auction;
 
+import entity.MailProps;
 import entity.db.DbAuctionItemEntity;
 import entity.db.DbBidderEntity;
 import exception.CustomizeErrorCode;
@@ -11,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.mail.MailUtil;
 import server.model.PlayAuction;
 import server.model.User;
 import server.timer.auction.DbAuctionTimer;
 import util.MyUtil;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -45,11 +49,13 @@ public class CancelAuctionItemCmdHandler implements ICmdHandler<GameMsg.CancelAu
         //取消定时器
         dbAuctionItemEntity.getScheduledFuture().cancel(true);
 
-        AuctionUtil.sendMailBuyer(user.getUserId(), dbAuctionItemEntity.getPropsId(), dbAuctionItemEntity.getNumber(), "取消上架商品");
+
+        MailUtil.getMailUtil().sendMail(user.getUserId(),0,"取消上架商品", Collections.singletonList(new MailProps(dbAuctionItemEntity.getPropsId(), dbAuctionItemEntity.getNumber())));
+//        AuctionUtil.sendPropsMail(user.getUserId(), dbAuctionItemEntity.getPropsId(), dbAuctionItemEntity.getNumber(), "取消上架商品");
 
         //取消所有竞拍者，把钱还给他们
         DbBidderEntity bidder = dbAuctionItemEntity.getBidder();
-        AuctionUtil.sendMailSeller(bidder.getUserId(), bidder.getMoney(), "竞拍物被取消");
+        AuctionUtil.sendMoneyMail(bidder.getUserId(), bidder.getMoney(), "竞拍物被取消");
 
         //删除拍卖品
         auctionTimer.deleteAuctionItem(dbAuctionItemEntity);

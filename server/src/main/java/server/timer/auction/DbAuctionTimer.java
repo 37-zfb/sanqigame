@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.cmdhandler.auction.AuctionUtil;
 import server.model.PlayAuction;
-import server.model.User;
-import server.model.UserManager;
 import server.service.AuctionService;
 import util.CustomizeThreadFactory;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -187,7 +184,7 @@ public final class DbAuctionTimer {
                     AuctionUtil.auctionResult(auctionItemEntity,bidderEntityList.get(0));
                 }else {
                     //没有竞拍者
-                    AuctionUtil.sendMailBuyer(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"未卖掉的竞拍品;");
+                    AuctionUtil.sendPropsMail(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"未卖掉的竞拍品;");
                 }
                 auctionService.deleteAuctionItem(auctionItemEntity);
             } else {

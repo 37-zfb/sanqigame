@@ -513,7 +513,7 @@ public class UserCmd {
                         System.out.println("0、退出;");
                         System.out.println("1、上架物品;");
                         System.out.println("2、查看物品;");
-                        System.out.println("3、查看上架物品;");
+                        System.out.println("3、查看自己上架物品;");
                         int nextInt = scanner.nextInt();
                         scanner.nextLine();
 
@@ -559,16 +559,7 @@ public class UserCmd {
                                     .setAuction(auction)
                                     .setPrice(price)
                                     .build());
-                            if (props.getPropsProperty().getType() == PropsType.Potion) {
-                                Potion potion = (Potion) props.getPropsProperty();
-                                if (potion.getNumber() > number) {
-                                    potion.setNumber(potion.getNumber() - number);
-                                } else {
-                                    backpackClient.remove(location);
-                                }
-                            } else {
-                                backpackClient.remove(location);
-                            }
+
                         } else if (2 == nextInt) {
                             //查看商品
                             return GameMsg.LookAuctionItemCmd.newBuilder().build();

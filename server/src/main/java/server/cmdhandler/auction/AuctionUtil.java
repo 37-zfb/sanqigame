@@ -34,7 +34,7 @@ public final class AuctionUtil {
      * @param userId
      * @param money
      */
-    public static void sendMailSeller(Integer userId,Integer money,String title){
+    public static void sendMoneyMail(Integer userId, Integer money, String title){
         //发送邮件
         DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
         dbSendMailEntity.setId(IdWorker.generateId());
@@ -65,7 +65,7 @@ public final class AuctionUtil {
      * @param propsId
      * @param number
      */
-    public static void sendMailBuyer(Integer userId, Integer propsId, Integer number,String title){
+    public static void sendPropsMail(Integer userId, Integer propsId, Integer number, String title){
         //发送邮件
         DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
         dbSendMailEntity.setId(IdWorker.generateId());
@@ -120,14 +120,14 @@ public final class AuctionUtil {
         //下架时间到
         if (dbBidderEntity != null) {
             //出价最高者
-            AuctionUtil.sendMailBuyer(dbBidderEntity.getUserId(), auctionItemEntity.getPropsId(), auctionItemEntity.getNumber(),"竞拍成功,获得拍卖品");
+            AuctionUtil.sendPropsMail(dbBidderEntity.getUserId(), auctionItemEntity.getPropsId(), auctionItemEntity.getNumber(),"竞拍成功,获得拍卖品");
             //删除竞拍者
             auctionTimer.deleteBidder(dbBidderEntity);
             //把钱发给拍卖者
-            AuctionUtil.sendMailSeller(auctionItemEntity.getUserId(), dbBidderEntity.getMoney(), "拍卖物品卖出金币");
+            AuctionUtil.sendMoneyMail(auctionItemEntity.getUserId(), dbBidderEntity.getMoney(), "拍卖物品卖出金币");
         }else {
             // 若没有竞拍者，此时把拍卖品返回拍卖者
-            AuctionUtil.sendMailBuyer(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"拍卖失败,返回拍卖品");
+            AuctionUtil.sendPropsMail(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"拍卖失败,返回拍卖品");
         }
     }
 
