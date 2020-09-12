@@ -1,6 +1,8 @@
 package server.cmdhandler.guild;
 
 import entity.db.CurrUserStateEntity;
+import entity.db.DbGuildEquipment;
+import entity.db.DbGuildPotion;
 import entity.db.GuildMemberEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
@@ -15,10 +17,14 @@ import server.cmdhandler.ICmdHandler;
 import server.model.PlayGuild;
 import server.model.User;
 import server.model.UserManager;
+import server.model.props.Props;
 import server.timer.guild.DbGuildTimer;
 import server.timer.state.DbUserStateTimer;
 import type.GuildMemberType;
+import type.PropsType;
 import util.MyUtil;
+
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -45,22 +51,45 @@ public class UserDissolveGuildCmdHandler implements ICmdHandler<GameMsg.UserDiss
             throw new CustomizeException(CustomizeErrorCode.USER_NO_HAVE_GUILD_OR_NOT_PRESIDENT);
         }
 
-        GameMsg.UserDissolveGuildResult.Builder newBuilder = GameMsg.UserDissolveGuildResult.newBuilder();
 
         PlayGuild playGuild = user.getPlayGuild();
         guildTimer.deleteGuildEntity(playGuild.getGuildEntity());
         guildTimer.deleteGuildMemberEntity(playGuild.getGuildMemberMap());
 
-        GuildManager.removeGuild(playGuild);
-        log.info("用户: {} 解散 公会: {}", user.getUserName(),playGuild.getGuildEntity().getGuildName());
+        Map<Integer, Props> warehouseProps = playGuild.getWAREHOUSE_PROPS();
+        for (Map.Entry<Integer, Props> entry : warehouseProps.entrySet()) {
+            if (entry.getValue().getPropsProperty().getType() == PropsType.Equipment) {
+                DbGuildEquipment guildEquipment = new DbGuildEquipment();
+                guildEquipment.setGuildId(playGuild.getId());
+                guildEquipment.setLocation(entry.getKey());
+                guildTimer.deleteGuildEquipment(guildEquipment);
+            }
 
-        //改变所有公会用户的公会状态,并通知在线用户
+            if (entry.getValue().getPropsProperty().getType() == PropsType.Potion) {
+                DbGuildPotion guildPotion = new DbGuildPotion();
+                guildPotion.setLocation(entry.getKey());
+                guildPotion.setGuildId(playGuild.getId());
+                guildTimer.deleteGuildPotion(guildPotion);
+
+            }
+        }
+
+
+        GuildManager.removeGuild(playGuild);
+        log.info("用户: {} 解散 公会: {}", user.getUserName(), playGuild.getGuildEntity().getGuildName());
+
+
+        GameMsg.UserDissolveGuildResult.Builder newBuilder = GameMsg.UserDissolveGuildResult.newBuilder();
+
         for (GuildMemberEntity guildMemberEntity : playGuild.getGuildMemberMap().values()) {
             CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(UserManager.getUserById(guildMemberEntity.getUserId()));
             userState.setGuildId(GuildMemberType.Public.getRoleId());
             userStateTimer.modifyUserState(userState);
             if (guildMemberEntity.isOnline()) {
                 User guildMember = UserManager.getUserById(guildMemberEntity.getUserId());
+                if (guildMember == null) {
+                    continue;
+                }
 
                 GameMsg.UserDissolveGuildResult build = newBuilder
                         .setUserId(user.getUserId())

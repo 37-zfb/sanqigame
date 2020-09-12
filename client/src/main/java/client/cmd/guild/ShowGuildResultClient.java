@@ -24,6 +24,11 @@ public class ShowGuildResultClient implements ICmd<GameMsg.ShowGuildResult> {
 
         List<GameMsg.Guild> guildList = showGuildResult.getGuildList();
 
+        if (guildList.size() == 0){
+            System.out.println("暂无公会;");
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+            return;
+        }
         for (GameMsg.Guild guild : guildList) {
             System.out.println(guild.getGuildId() + "、" + guild.getGuildName());
         }

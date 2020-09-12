@@ -66,5 +66,10 @@ public class TakeOutMoneyCmdHandler implements ICmdHandler<GameMsg.TakeOutMoneyC
         //更新用户状态
         CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
         userStateTimer.modifyUserState(userState);
+
+        GameMsg.TakeOutMoneyResult takeOutMoneyResult = GameMsg.TakeOutMoneyResult.newBuilder()
+                .setMoney(money)
+                .build();
+        ctx.writeAndFlush(takeOutMoneyResult);
     }
 }

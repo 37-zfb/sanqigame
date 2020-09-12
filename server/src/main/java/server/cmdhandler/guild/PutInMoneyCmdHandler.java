@@ -65,5 +65,9 @@ public class PutInMoneyCmdHandler implements ICmdHandler<GameMsg.PutInMoneyCmd> 
         CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
         userStateTimer.modifyUserState(userState);
 
+        GameMsg.PutInMoneyResult putInMoneyResult = GameMsg.PutInMoneyResult.newBuilder()
+                .setMoney(money)
+                .build();
+        ctx.writeAndFlush(putInMoneyResult);
     }
 }

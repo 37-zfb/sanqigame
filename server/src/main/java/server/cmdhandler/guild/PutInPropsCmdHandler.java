@@ -53,7 +53,7 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
         }
 
         GameMsg.Props props = putInPropsCmd.getProps();
-        if (props != null && user.getBackpack().get(props.getLocation()) == null) {
+        if (user.getBackpack().get(props.getLocation()) == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_PROPS);
         }
 
@@ -62,11 +62,15 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
             addProps(props, user);
         }
 
+        GameMsg.PutInPropsResult putInPropsResult = GameMsg.PutInPropsResult.newBuilder()
+                .setProps(props)
+                .build();
+        ctx.writeAndFlush(putInPropsResult);
     }
 
 
     /**
-     * 添加道具
+     * 添加道具进仓库
      *
      * @param props
      * @param user

@@ -1,9 +1,6 @@
 package server.timer.guild;
 
-import entity.db.DbGuildEquipment;
-import entity.db.DbGuildPotion;
-import entity.db.GuildEntity;
-import entity.db.GuildMemberEntity;
+import entity.db.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -45,7 +42,6 @@ public class DbGuildTimer {
 
     private Map<Integer, GuildEntity> addGuildEntityMap = new ConcurrentHashMap<>();
     private Map<Integer, GuildMemberEntity> addGuildMemberEntityMap = new ConcurrentHashMap<>();
-
     private List<DbGuildEquipment> addGuildEquipmentList = new CopyOnWriteArrayList<>();
     private List<DbGuildPotion> addGuildPotionList = new CopyOnWriteArrayList<>();
 
@@ -221,40 +217,34 @@ public class DbGuildTimer {
             try {
                 //添加 公会信息
                 if (addGuildEntityMap.size() != 0) {
-                    guildService.addGuildInfoBatch(addGuildEntityMap.values());
-                    addGuildEntityMap.clear();
+                    guildService.addGuildInfoBatch(copyGuild(addGuildEntityMap));
                     log.info("持久化公会信息;");
                 }
                 //添加公会成员
                 if (addGuildMemberEntityMap.size() != 0) {
-                    guildService.addGuildMemberBatch(addGuildMemberEntityMap.values());
-                    addGuildMemberEntityMap.clear();
+                    guildService.addGuildMemberBatch(copyGuildMember(addGuildMemberEntityMap));
                     log.info("持久化公会成员信息;");
                 }
                 //添加公会装备
                 if (addGuildEquipmentList.size() != 0) {
-                    guildService.addGuildEquipmentBatch(addGuildEquipmentList);
-                    addGuildEquipmentList.clear();
+                    guildService.addGuildEquipmentBatch(copyGuildEqu(addGuildEquipmentList));
                     log.info("持久化公会仓库装备;");
                 }
                 //添加公会药剂
                 if (addGuildPotionList.size() != 0) {
-                    guildService.addGuildPotionBatch(addGuildPotionList);
-                    addGuildPotionList.clear();
+                    guildService.addGuildPotionBatch(copyGuildPot(addGuildPotionList));
                     log.info("持久化公会仓库药剂");
                 }
 
 
                 //修改公会信息
                 if (modifyGuildEntityMap.size() != 0) {
-                    guildService.modifyGuildEntityBatch(modifyGuildEntityMap.values());
-                    modifyGuildEntityMap.clear();
+                    guildService.modifyGuildEntityBatch(copyGuild(modifyGuildEntityMap));
                     log.info("修改公会信息;");
                 }
                 //修改公会成员信息
                 if (modifyGuildMemberEntityMap.size() != 0) {
-                    guildService.modifyGuildMemberBatch(modifyGuildMemberEntityMap.values());
-                    modifyGuildMemberEntityMap.clear();
+                    guildService.modifyGuildMemberBatch(copyGuildMember(modifyGuildMemberEntityMap));
                     log.info("修改公会成员信息;");
                 }
                 if (modifyGuildEquipmentList.size() != 0) {
@@ -262,33 +252,28 @@ public class DbGuildTimer {
                 }
                 // 修改药剂信息
                 if (modifyGuildPotionList.size() != 0) {
-                    guildService.modifyGuildPotionBatch(modifyGuildPotionList);
-                    modifyGuildPotionList.clear();
+                    guildService.modifyGuildPotionBatch(copyGuildPot(modifyGuildPotionList));
                     log.info("修改仓库药剂");
                 }
 
 
                 //删除公会
                 if (deleteGuildEntityMap.size() != 0) {
-                    guildService.deleteGuildEntityBatch(deleteGuildEntityMap.values());
-                    deleteGuildEntityMap.clear();
+                    guildService.deleteGuildEntityBatch(copyGuild(deleteGuildEntityMap));
                     log.info("解散公会;");
                 }
                 //删除公会成员
                 if (deleteGuildMemberEntityMap.size() != 0) {
-                    guildService.deleteGuildMemberEntityBatch(deleteGuildMemberEntityMap.values());
-                    deleteGuildMemberEntityMap.clear();
+                    guildService.deleteGuildMemberEntityBatch(copyGuildMember(deleteGuildMemberEntityMap));
                     log.info("删除公会成员;");
                 }
                 // 删除
                 if (deleteGuildEquipmentList.size() != 0) {
-                    guildService.deleteEquipmentBatch(deleteGuildEquipmentList);
-                    deleteGuildEquipmentList.clear();
+                    guildService.deleteEquipmentBatch(copyGuildEqu(deleteGuildEquipmentList));
                     log.info("删除公会装备");
                 }
                 if (deleteGuildPotionList.size() != 0) {
-                    guildService.deleteGuildPotionBatch(deleteGuildPotionList);
-                    deleteGuildPotionList.clear();
+                    guildService.deleteGuildPotionBatch(copyGuildPot(deleteGuildPotionList));
                     log.info("删除公会药剂");
                 }
 
@@ -299,6 +284,58 @@ public class DbGuildTimer {
 
         }, 30, 30, TimeUnit.SECONDS);
     }
+
+
+
+    /**
+     * 拷贝map中装备信息
+     * @param guildEntityMap
+     * @return
+     */
+    private List<GuildEntity> copyGuild(Map<Integer,GuildEntity> guildEntityMap) {
+        List<GuildEntity> guildList = new ArrayList<>();
+        if (guildEntityMap != null && guildEntityMap.size() != 0) {
+            Iterator<Map.Entry<Integer, GuildEntity>> iterator = guildEntityMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Integer, GuildEntity> next = iterator.next();
+                guildList.add(next.getValue());
+                iterator.remove();
+            }
+        }
+        return guildList;
+    }
+    private List<GuildMemberEntity> copyGuildMember(Map<Integer,GuildMemberEntity> guildMemberMap) {
+        List<GuildMemberEntity> guildMemberList = new ArrayList<>();
+        if (guildMemberMap != null && guildMemberMap.size() != 0) {
+            Iterator<Map.Entry<Integer, GuildMemberEntity>> iterator = guildMemberMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Integer, GuildMemberEntity> next = iterator.next();
+                guildMemberList.add(next.getValue());
+                iterator.remove();
+            }
+        }
+        return guildMemberList;
+    }
+    private List<DbGuildEquipment> copyGuildEqu(Collection<DbGuildEquipment> guildEquCollection) {
+        List<DbGuildEquipment> guildEquList = new ArrayList<>();
+        if (guildEquCollection != null && guildEquCollection.size() != 0) {
+            guildEquList.addAll(guildEquCollection);
+            guildEquCollection.removeAll(guildEquList);
+        }
+        return guildEquList;
+    }
+    private List<DbGuildPotion> copyGuildPot(Collection<DbGuildPotion> guildPotCollection) {
+        List<DbGuildPotion> guildPotList = new ArrayList<>();
+        if (guildPotCollection != null && guildPotCollection.size() != 0) {
+            guildPotList.addAll(guildPotCollection);
+            guildPotCollection.removeAll(guildPotList);
+        }
+        return guildPotList;
+    }
+
+
+
+
 
 
     /**

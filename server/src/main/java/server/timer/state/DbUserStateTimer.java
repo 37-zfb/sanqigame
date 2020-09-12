@@ -119,8 +119,7 @@ public class DbUserStateTimer {
             try {
                 // 更新公会状态为 空
                 if (userStateEntityMap.size() != 0) {
-                    userService.modifyUserGuildState(userStateEntityMap.values());
-                    userStateEntityMap.clear();
+                    userService.modifyUserGuildState(copyUser(userStateEntityMap));
                     log.info("修改用户状态;");
                 }
 
@@ -194,7 +193,23 @@ public class DbUserStateTimer {
         return potionList;
     }
 
-
+    /**
+     * 拷贝map中用户信息
+     * @param userStateEntityMap
+     * @return
+     */
+    private List<CurrUserStateEntity> copyUser(Map<Integer,CurrUserStateEntity > userStateEntityMap) {
+        List<CurrUserStateEntity> userList = new ArrayList<>();
+        if (userStateEntityMap != null && userStateEntityMap.size() != 0) {
+            Iterator<Map.Entry<Integer, CurrUserStateEntity>> iterator = userStateEntityMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Integer, CurrUserStateEntity> next = iterator.next();
+                userList.add(next.getValue());
+                iterator.remove();
+            }
+        }
+        return userList;
+    }
 
 
 }

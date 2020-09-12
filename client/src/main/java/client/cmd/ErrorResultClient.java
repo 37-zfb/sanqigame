@@ -88,6 +88,8 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
         }else if (code == CustomizeErrorCode.TARGET_NOT_EXIST.getCode()){
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
+        }else if (code == CustomizeErrorCode.TARGET_NOT_COMPLETE.getCode()){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
         }
 
 

@@ -38,8 +38,12 @@ public class UserConfirmDealCmdHandler implements ICmdHandler<GameMsg.UserConfir
         }
 
         User targetUser = UserManager.getUserById(targetId);
-        if (targetUser == null){
+        if (targetUser == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
+        }
+
+        if (!playDeal.isDetermine() || !targetUser.getPLAY_DEAL().isDetermine()) {
+            throw new CustomizeException(CustomizeErrorCode.TARGET_NOT_COMPLETE);
         }
 
         Integer prepareMoney = playDeal.getPrepareMoney();
@@ -50,8 +54,8 @@ public class UserConfirmDealCmdHandler implements ICmdHandler<GameMsg.UserConfir
 
 
         synchronized (playDeal.getCompleteDealMonitor()) {
-            playDeal.setAgreeNumber(playDeal.getAgreeNumber()+1);
-            targetUser.getPLAY_DEAL().setAgreeNumber(targetUser.getPLAY_DEAL().getAgreeNumber()+1);
+            playDeal.setAgreeNumber(playDeal.getAgreeNumber() + 1);
+            targetUser.getPLAY_DEAL().setAgreeNumber(targetUser.getPLAY_DEAL().getAgreeNumber() + 1);
 
             GameMsg.UserConfirmDealResult.Builder newBuilder = GameMsg.UserConfirmDealResult.newBuilder();
             GameMsg.UserConfirmDealResult userConfirmDealResult;

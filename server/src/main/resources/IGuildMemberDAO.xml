@@ -33,7 +33,7 @@
         </foreach>
     </delete>
     <update id="updateGuildMemberBatch" parameterType="collection">
-        <foreach collection="guildMember" item="mail" index="index" open="" close="" separator="">
+        <foreach collection="guildMemberCollection" item="guildMember" index="index" open="" close="" separator="">
             update `guild_member`
             <set>
                 guild_position = #{guildMember.guildPosition}

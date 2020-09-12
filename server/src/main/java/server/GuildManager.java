@@ -11,16 +11,17 @@ import java.util.*;
 public final class GuildManager {
 
     /**
-     *  公会id  公会model
+     * 公会id  公会model
      */
     private static final Map<Integer, PlayGuild> GUILD_MAP = new HashMap<>();
 
-    public static Collection<PlayGuild> listPlayGuild(){
+    public static Collection<PlayGuild> listPlayGuild() {
         return GUILD_MAP.values();
     }
 
     /**
-     *  获取公会id
+     * 获取公会id
+     *
      * @param playGuild
      * @return
      */
@@ -29,7 +30,7 @@ public final class GuildManager {
             return null;
         }
         Optional<Integer> max = GUILD_MAP.keySet().stream().max(Comparator.comparingInt(k -> k));
-        Integer key  = max.orElse(0);
+        Integer key = max.orElse(0);
         int id = key + 1;
         playGuild.setId(id);
         GUILD_MAP.put(id, playGuild);
@@ -38,6 +39,7 @@ public final class GuildManager {
 
     /**
      * 通过id 获取公会对象
+     *
      * @param guildId
      * @return
      */
@@ -47,23 +49,25 @@ public final class GuildManager {
 
     /**
      * 判断此公会是否存在
+     *
      * @param guildName
      * @return
      */
-    public static synchronized boolean isGuildNameDuplicate(String guildName){
-        if (guildName == null){
+    public static synchronized boolean isGuildNameDuplicate(String guildName) {
+        if (guildName == null) {
             return true;
         }
         for (PlayGuild playGuild : GUILD_MAP.values()) {
-            if (guildName.equals(playGuild.getGuildEntity().getGuildName())){
-                return true;
+            if (!guildName.equals(playGuild.getGuildEntity().getGuildName())) {
+                continue;
             }
+            return true;
 
         }
         return false;
     }
 
-    public static void removeGuild(PlayGuild playGuild){
+    public static void removeGuild(PlayGuild playGuild) {
         GUILD_MAP.remove(playGuild.getId());
     }
 

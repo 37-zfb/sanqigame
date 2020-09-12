@@ -1,5 +1,6 @@
 package server.cmdhandler.guild;
 
+import entity.db.GuildEntity;
 import entity.db.GuildMemberEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
@@ -58,6 +59,10 @@ public class TransferPresidentCmdHandler implements ICmdHandler<GameMsg.Transfer
 
         guildTimer.modifyGuildMemberEntity(srcEntity);
         guildTimer.modifyGuildMemberEntity(targetEntity);
+
+        GuildEntity guildEntity = playGuild.getGuildEntity();
+        guildEntity.setPresidentId(targetEntity.getUserId());
+        guildTimer.modifyGuildEntity(guildEntity);
 
         GameMsg.TransferPresidentResult transferPresidentResult = GameMsg.TransferPresidentResult.newBuilder()
                 .setUserId(targetUserId)

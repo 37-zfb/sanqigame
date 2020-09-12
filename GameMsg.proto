@@ -1126,24 +1126,29 @@ message TakeOutPropsCmd{
   uint32 number = 2;
 }
 message TakeOutPropsResult{
+  repeated Props props = 1;
+  uint32 number = 2;
 }
 // 放入道具
 message PutInPropsCmd{
   Props props = 1;
 }
 message PutInPropsResult{
+  Props props = 1;
 }
 // 取出金币
 message TakeOutMoneyCmd{
   uint32 money = 1;
 }
 message TakeOutMoneyResult{
+  uint32 money = 1;
 }
 // 放入金币
 message PutInMoneyCmd{
   uint32 money = 1;
 }
 message PutInMoneyResult{
+  uint32 money = 1;
 }
 //转移会长
 message TransferPresidentCmd{

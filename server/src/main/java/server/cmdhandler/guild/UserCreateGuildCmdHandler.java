@@ -77,6 +77,7 @@ public class UserCreateGuildCmdHandler implements ICmdHandler<GameMsg.UserCreate
 
         user.setPlayGuild(playGuild);
         user.setMoney(user.getMoney()-GuildConst.CREATE_GUILD_MONEY);
+
         guildTimer.addGuildEntity(guildEntity);
         guildTimer.addGuildMemberEntity(guildMemberEntity);
 

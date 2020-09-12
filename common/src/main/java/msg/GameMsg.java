@@ -94850,6 +94850,36 @@ public final class GameMsg {
   public interface TakeOutPropsResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.TakeOutPropsResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    java.util.List<msg.GameMsg.Props> 
+        getPropsList();
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    msg.GameMsg.Props getProps(int index);
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    int getPropsCount();
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList();
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index);
+
+    /**
+     * <code>uint32 number = 2;</code>
+     * @return The number.
+     */
+    int getNumber();
   }
   /**
    * Protobuf type {@code msg.TakeOutPropsResult}
@@ -94864,6 +94894,7 @@ public final class GameMsg {
       super(builder);
     }
     private TakeOutPropsResult() {
+      props_ = java.util.Collections.emptyList();
     }
 
     @java.lang.Override
@@ -94886,6 +94917,7 @@ public final class GameMsg {
       if (extensionRegistry == null) {
         throw new java.lang.NullPointerException();
       }
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -94896,6 +94928,20 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                props_ = new java.util.ArrayList<msg.GameMsg.Props>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              props_.add(
+                  input.readMessage(msg.GameMsg.Props.parser(), extensionRegistry));
+              break;
+            }
+            case 16: {
+
+              number_ = input.readUInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -94911,6 +94957,9 @@ public final class GameMsg {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          props_ = java.util.Collections.unmodifiableList(props_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -94928,6 +94977,51 @@ public final class GameMsg {
               msg.GameMsg.TakeOutPropsResult.class, msg.GameMsg.TakeOutPropsResult.Builder.class);
     }
 
+    public static final int PROPS_FIELD_NUMBER = 1;
+    private java.util.List<msg.GameMsg.Props> props_;
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    public java.util.List<msg.GameMsg.Props> getPropsList() {
+      return props_;
+    }
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+        getPropsOrBuilderList() {
+      return props_;
+    }
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    public int getPropsCount() {
+      return props_.size();
+    }
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    public msg.GameMsg.Props getProps(int index) {
+      return props_.get(index);
+    }
+    /**
+     * <code>repeated .msg.Props props = 1;</code>
+     */
+    public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+        int index) {
+      return props_.get(index);
+    }
+
+    public static final int NUMBER_FIELD_NUMBER = 2;
+    private int number_;
+    /**
+     * <code>uint32 number = 2;</code>
+     * @return The number.
+     */
+    public int getNumber() {
+      return number_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -94942,6 +95036,12 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      for (int i = 0; i < props_.size(); i++) {
+        output.writeMessage(1, props_.get(i));
+      }
+      if (number_ != 0) {
+        output.writeUInt32(2, number_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -94951,6 +95051,14 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
+      for (int i = 0; i < props_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, props_.get(i));
+      }
+      if (number_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, number_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -94966,6 +95074,10 @@ public final class GameMsg {
       }
       msg.GameMsg.TakeOutPropsResult other = (msg.GameMsg.TakeOutPropsResult) obj;
 
+      if (!getPropsList()
+          .equals(other.getPropsList())) return false;
+      if (getNumber()
+          != other.getNumber()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -94977,6 +95089,12 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPropsCount() > 0) {
+        hash = (37 * hash) + PROPS_FIELD_NUMBER;
+        hash = (53 * hash) + getPropsList().hashCode();
+      }
+      hash = (37 * hash) + NUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getNumber();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -95105,11 +95223,20 @@ public final class GameMsg {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
+          getPropsFieldBuilder();
         }
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          propsBuilder_.clear();
+        }
+        number_ = 0;
+
         return this;
       }
 
@@ -95136,6 +95263,17 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.TakeOutPropsResult buildPartial() {
         msg.GameMsg.TakeOutPropsResult result = new msg.GameMsg.TakeOutPropsResult(this);
+        int from_bitField0_ = bitField0_;
+        if (propsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            props_ = java.util.Collections.unmodifiableList(props_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.props_ = props_;
+        } else {
+          result.props_ = propsBuilder_.build();
+        }
+        result.number_ = number_;
         onBuilt();
         return result;
       }
@@ -95184,6 +95322,35 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.TakeOutPropsResult other) {
         if (other == msg.GameMsg.TakeOutPropsResult.getDefaultInstance()) return this;
+        if (propsBuilder_ == null) {
+          if (!other.props_.isEmpty()) {
+            if (props_.isEmpty()) {
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePropsIsMutable();
+              props_.addAll(other.props_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.props_.isEmpty()) {
+            if (propsBuilder_.isEmpty()) {
+              propsBuilder_.dispose();
+              propsBuilder_ = null;
+              props_ = other.props_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              propsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPropsFieldBuilder() : null;
+            } else {
+              propsBuilder_.addAllMessages(other.props_);
+            }
+          }
+        }
+        if (other.getNumber() != 0) {
+          setNumber(other.getNumber());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -95210,6 +95377,277 @@ public final class GameMsg {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<msg.GameMsg.Props> props_ =
+        java.util.Collections.emptyList();
+      private void ensurePropsIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          props_ = new java.util.ArrayList<msg.GameMsg.Props>(props_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> propsBuilder_;
+
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.Props> getPropsList() {
+        if (propsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(props_);
+        } else {
+          return propsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public int getPropsCount() {
+        if (propsBuilder_ == null) {
+          return props_.size();
+        } else {
+          return propsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public msg.GameMsg.Props getProps(int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);
+        } else {
+          return propsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.set(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder setProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder addProps(msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePropsIsMutable();
+          props_.add(index, value);
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder addProps(
+          msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder addProps(
+          int index, msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          propsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder addAllProps(
+          java.lang.Iterable<? extends msg.GameMsg.Props> values) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, props_);
+          onChanged();
+        } else {
+          propsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder clearProps() {
+        if (propsBuilder_ == null) {
+          props_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          propsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public Builder removeProps(int index) {
+        if (propsBuilder_ == null) {
+          ensurePropsIsMutable();
+          props_.remove(index);
+          onChanged();
+        } else {
+          propsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public msg.GameMsg.Props.Builder getPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public msg.GameMsg.PropsOrBuilder getPropsOrBuilder(
+          int index) {
+        if (propsBuilder_ == null) {
+          return props_.get(index);  } else {
+          return propsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public java.util.List<? extends msg.GameMsg.PropsOrBuilder> 
+           getPropsOrBuilderList() {
+        if (propsBuilder_ != null) {
+          return propsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(props_);
+        }
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder() {
+        return getPropsFieldBuilder().addBuilder(
+            msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public msg.GameMsg.Props.Builder addPropsBuilder(
+          int index) {
+        return getPropsFieldBuilder().addBuilder(
+            index, msg.GameMsg.Props.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .msg.Props props = 1;</code>
+       */
+      public java.util.List<msg.GameMsg.Props.Builder> 
+           getPropsBuilderList() {
+        return getPropsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> 
+          getPropsFieldBuilder() {
+        if (propsBuilder_ == null) {
+          propsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder>(
+                  props_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          props_ = null;
+        }
+        return propsBuilder_;
+      }
+
+      private int number_ ;
+      /**
+       * <code>uint32 number = 2;</code>
+       * @return The number.
+       */
+      public int getNumber() {
+        return number_;
+      }
+      /**
+       * <code>uint32 number = 2;</code>
+       * @param value The number to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNumber(int value) {
+        
+        number_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 number = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearNumber() {
+        
+        number_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -95894,6 +96332,21 @@ public final class GameMsg {
   public interface PutInPropsResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.PutInPropsResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.msg.Props props = 1;</code>
+     * @return Whether the props field is set.
+     */
+    boolean hasProps();
+    /**
+     * <code>.msg.Props props = 1;</code>
+     * @return The props.
+     */
+    msg.GameMsg.Props getProps();
+    /**
+     * <code>.msg.Props props = 1;</code>
+     */
+    msg.GameMsg.PropsOrBuilder getPropsOrBuilder();
   }
   /**
    * Protobuf type {@code msg.PutInPropsResult}
@@ -95940,6 +96393,19 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
+            case 10: {
+              msg.GameMsg.Props.Builder subBuilder = null;
+              if (props_ != null) {
+                subBuilder = props_.toBuilder();
+              }
+              props_ = input.readMessage(msg.GameMsg.Props.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(props_);
+                props_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -95972,6 +96438,29 @@ public final class GameMsg {
               msg.GameMsg.PutInPropsResult.class, msg.GameMsg.PutInPropsResult.Builder.class);
     }
 
+    public static final int PROPS_FIELD_NUMBER = 1;
+    private msg.GameMsg.Props props_;
+    /**
+     * <code>.msg.Props props = 1;</code>
+     * @return Whether the props field is set.
+     */
+    public boolean hasProps() {
+      return props_ != null;
+    }
+    /**
+     * <code>.msg.Props props = 1;</code>
+     * @return The props.
+     */
+    public msg.GameMsg.Props getProps() {
+      return props_ == null ? msg.GameMsg.Props.getDefaultInstance() : props_;
+    }
+    /**
+     * <code>.msg.Props props = 1;</code>
+     */
+    public msg.GameMsg.PropsOrBuilder getPropsOrBuilder() {
+      return getProps();
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -95986,6 +96475,9 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (props_ != null) {
+        output.writeMessage(1, getProps());
+      }
       unknownFields.writeTo(output);
     }
 
@@ -95995,6 +96487,10 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
+      if (props_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getProps());
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -96010,6 +96506,11 @@ public final class GameMsg {
       }
       msg.GameMsg.PutInPropsResult other = (msg.GameMsg.PutInPropsResult) obj;
 
+      if (hasProps() != other.hasProps()) return false;
+      if (hasProps()) {
+        if (!getProps()
+            .equals(other.getProps())) return false;
+      }
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -96021,6 +96522,10 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasProps()) {
+        hash = (37 * hash) + PROPS_FIELD_NUMBER;
+        hash = (53 * hash) + getProps().hashCode();
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -96154,6 +96659,12 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        if (propsBuilder_ == null) {
+          props_ = null;
+        } else {
+          props_ = null;
+          propsBuilder_ = null;
+        }
         return this;
       }
 
@@ -96180,6 +96691,11 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.PutInPropsResult buildPartial() {
         msg.GameMsg.PutInPropsResult result = new msg.GameMsg.PutInPropsResult(this);
+        if (propsBuilder_ == null) {
+          result.props_ = props_;
+        } else {
+          result.props_ = propsBuilder_.build();
+        }
         onBuilt();
         return result;
       }
@@ -96228,6 +96744,9 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.PutInPropsResult other) {
         if (other == msg.GameMsg.PutInPropsResult.getDefaultInstance()) return this;
+        if (other.hasProps()) {
+          mergeProps(other.getProps());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -96255,6 +96774,125 @@ public final class GameMsg {
           }
         }
         return this;
+      }
+
+      private msg.GameMsg.Props props_;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> propsBuilder_;
+      /**
+       * <code>.msg.Props props = 1;</code>
+       * @return Whether the props field is set.
+       */
+      public boolean hasProps() {
+        return propsBuilder_ != null || props_ != null;
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       * @return The props.
+       */
+      public msg.GameMsg.Props getProps() {
+        if (propsBuilder_ == null) {
+          return props_ == null ? msg.GameMsg.Props.getDefaultInstance() : props_;
+        } else {
+          return propsBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       */
+      public Builder setProps(msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          props_ = value;
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       */
+      public Builder setProps(
+          msg.GameMsg.Props.Builder builderForValue) {
+        if (propsBuilder_ == null) {
+          props_ = builderForValue.build();
+          onChanged();
+        } else {
+          propsBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       */
+      public Builder mergeProps(msg.GameMsg.Props value) {
+        if (propsBuilder_ == null) {
+          if (props_ != null) {
+            props_ =
+              msg.GameMsg.Props.newBuilder(props_).mergeFrom(value).buildPartial();
+          } else {
+            props_ = value;
+          }
+          onChanged();
+        } else {
+          propsBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       */
+      public Builder clearProps() {
+        if (propsBuilder_ == null) {
+          props_ = null;
+          onChanged();
+        } else {
+          props_ = null;
+          propsBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       */
+      public msg.GameMsg.Props.Builder getPropsBuilder() {
+        
+        onChanged();
+        return getPropsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       */
+      public msg.GameMsg.PropsOrBuilder getPropsOrBuilder() {
+        if (propsBuilder_ != null) {
+          return propsBuilder_.getMessageOrBuilder();
+        } else {
+          return props_ == null ?
+              msg.GameMsg.Props.getDefaultInstance() : props_;
+        }
+      }
+      /**
+       * <code>.msg.Props props = 1;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder> 
+          getPropsFieldBuilder() {
+        if (propsBuilder_ == null) {
+          propsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              msg.GameMsg.Props, msg.GameMsg.Props.Builder, msg.GameMsg.PropsOrBuilder>(
+                  getProps(),
+                  getParentForChildren(),
+                  isClean());
+          props_ = null;
+        }
+        return propsBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -96806,6 +97444,12 @@ public final class GameMsg {
   public interface TakeOutMoneyResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.TakeOutMoneyResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 money = 1;</code>
+     * @return The money.
+     */
+    int getMoney();
   }
   /**
    * Protobuf type {@code msg.TakeOutMoneyResult}
@@ -96852,6 +97496,11 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              money_ = input.readUInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -96884,6 +97533,16 @@ public final class GameMsg {
               msg.GameMsg.TakeOutMoneyResult.class, msg.GameMsg.TakeOutMoneyResult.Builder.class);
     }
 
+    public static final int MONEY_FIELD_NUMBER = 1;
+    private int money_;
+    /**
+     * <code>uint32 money = 1;</code>
+     * @return The money.
+     */
+    public int getMoney() {
+      return money_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -96898,6 +97557,9 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (money_ != 0) {
+        output.writeUInt32(1, money_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -96907,6 +97569,10 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
+      if (money_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, money_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -96922,6 +97588,8 @@ public final class GameMsg {
       }
       msg.GameMsg.TakeOutMoneyResult other = (msg.GameMsg.TakeOutMoneyResult) obj;
 
+      if (getMoney()
+          != other.getMoney()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -96933,6 +97601,8 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MONEY_FIELD_NUMBER;
+      hash = (53 * hash) + getMoney();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -97066,6 +97736,8 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        money_ = 0;
+
         return this;
       }
 
@@ -97092,6 +97764,7 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.TakeOutMoneyResult buildPartial() {
         msg.GameMsg.TakeOutMoneyResult result = new msg.GameMsg.TakeOutMoneyResult(this);
+        result.money_ = money_;
         onBuilt();
         return result;
       }
@@ -97140,6 +97813,9 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.TakeOutMoneyResult other) {
         if (other == msg.GameMsg.TakeOutMoneyResult.getDefaultInstance()) return this;
+        if (other.getMoney() != 0) {
+          setMoney(other.getMoney());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -97166,6 +97842,36 @@ public final class GameMsg {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private int money_ ;
+      /**
+       * <code>uint32 money = 1;</code>
+       * @return The money.
+       */
+      public int getMoney() {
+        return money_;
+      }
+      /**
+       * <code>uint32 money = 1;</code>
+       * @param value The money to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoney(int value) {
+        
+        money_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 money = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoney() {
+        
+        money_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -97718,6 +98424,12 @@ public final class GameMsg {
   public interface PutInMoneyResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.PutInMoneyResult)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 money = 1;</code>
+     * @return The money.
+     */
+    int getMoney();
   }
   /**
    * Protobuf type {@code msg.PutInMoneyResult}
@@ -97764,6 +98476,11 @@ public final class GameMsg {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              money_ = input.readUInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -97796,6 +98513,16 @@ public final class GameMsg {
               msg.GameMsg.PutInMoneyResult.class, msg.GameMsg.PutInMoneyResult.Builder.class);
     }
 
+    public static final int MONEY_FIELD_NUMBER = 1;
+    private int money_;
+    /**
+     * <code>uint32 money = 1;</code>
+     * @return The money.
+     */
+    public int getMoney() {
+      return money_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -97810,6 +98537,9 @@ public final class GameMsg {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (money_ != 0) {
+        output.writeUInt32(1, money_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -97819,6 +98549,10 @@ public final class GameMsg {
       if (size != -1) return size;
 
       size = 0;
+      if (money_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, money_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -97834,6 +98568,8 @@ public final class GameMsg {
       }
       msg.GameMsg.PutInMoneyResult other = (msg.GameMsg.PutInMoneyResult) obj;
 
+      if (getMoney()
+          != other.getMoney()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -97845,6 +98581,8 @@ public final class GameMsg {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + MONEY_FIELD_NUMBER;
+      hash = (53 * hash) + getMoney();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -97978,6 +98716,8 @@ public final class GameMsg {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        money_ = 0;
+
         return this;
       }
 
@@ -98004,6 +98744,7 @@ public final class GameMsg {
       @java.lang.Override
       public msg.GameMsg.PutInMoneyResult buildPartial() {
         msg.GameMsg.PutInMoneyResult result = new msg.GameMsg.PutInMoneyResult(this);
+        result.money_ = money_;
         onBuilt();
         return result;
       }
@@ -98052,6 +98793,9 @@ public final class GameMsg {
 
       public Builder mergeFrom(msg.GameMsg.PutInMoneyResult other) {
         if (other == msg.GameMsg.PutInMoneyResult.getDefaultInstance()) return this;
+        if (other.getMoney() != 0) {
+          setMoney(other.getMoney());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -98078,6 +98822,36 @@ public final class GameMsg {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private int money_ ;
+      /**
+       * <code>uint32 money = 1;</code>
+       * @return The money.
+       */
+      public int getMoney() {
+        return money_;
+      }
+      /**
+       * <code>uint32 money = 1;</code>
+       * @param value The money to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMoney(int value) {
+        
+        money_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 money = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMoney() {
+        
+        money_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -116798,160 +117572,163 @@ public final class GameMsg {
       "\025LookGuildWarehouseCmd\"D\n\030LookGuildWareh" +
       "ouseResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \003(\013" +
       "2\n.msg.Props\"<\n\017TakeOutPropsCmd\022\031\n\005props" +
-      "\030\001 \001(\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"\024\n\022Ta" +
-      "keOutPropsResult\"*\n\rPutInPropsCmd\022\031\n\005pro" +
-      "ps\030\001 \001(\0132\n.msg.Props\"\022\n\020PutInPropsResult" +
-      "\" \n\017TakeOutMoneyCmd\022\r\n\005money\030\001 \001(\r\"\024\n\022Ta" +
-      "keOutMoneyResult\"\036\n\rPutInMoneyCmd\022\r\n\005mon" +
-      "ey\030\001 \001(\r\"\022\n\020PutInMoneyResult\"&\n\024Transfer" +
-      "PresidentCmd\022\016\n\006userId\030\001 \001(\r\")\n\027Transfer" +
-      "PresidentResult\022\016\n\006userId\030\001 \001(\r\"\024\n\022LookA" +
-      "uctionItemCmd\">\n\025LookAuctionItemResult\022%" +
-      "\n\013auctionItem\030\001 \003(\0132\020.msg.AuctionItem\"z\n" +
-      "\013AuctionItem\022\n\n\002id\030\001 \001(\r\022\020\n\010userName\030\002 \001" +
-      "(\t\022\017\n\007propsId\030\003 \001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005" +
-      "price\030\005 \001(\r\022\016\n\006number\030\006 \001(\r\022\014\n\004date\030\007 \001(" +
-      "\004\"R\n\016ShelveGoodsCmd\022\020\n\010location\030\001 \001(\r\022\016\n" +
-      "\006number\030\002 \001(\r\022\017\n\007auction\030\003 \001(\r\022\r\n\005price\030" +
-      "\004 \001(\r\"\023\n\021ShelveGoodsResult\"3\n\017BiddingGoo" +
-      "dsCmd\022\021\n\tauctionId\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"" +
-      "#\n\022BiddingGoodsResult\022\r\n\005money\030\001 \001(\r\" \n\013" +
-      "OnePriceCmd\022\021\n\tauctionId\030\001 \001(\r\"\037\n\016OnePri" +
-      "ceResult\022\r\n\005price\030\001 \001(\r\"\033\n\031LookOneselfAu" +
-      "ctionItemCmd\"E\n\034LookOneselfAuctionItemRe" +
-      "sult\022%\n\013auctionItem\030\001 \003(\0132\020.msg.AuctionI" +
-      "tem\")\n\024CancelAuctionItemCmd\022\021\n\tauctionId" +
-      "\030\001 \001(\r\"\031\n\027CancelAuctionItemResult\"\020\n\016Loo" +
-      "kAllTaskCmd\"#\n\021LookAllTaskResult\022\016\n\006task" +
-      "Id\030\001 \001(\r\" \n\016ReceiveTaskCmd\022\016\n\006taskId\030\001 \001" +
-      "(\r\"#\n\021ReceiveTaskResult\022\016\n\006taskId\030\001 \001(\r\"" +
-      "\021\n\017DialogueTaskCmd\"\025\n\023TaskCompletedResul" +
-      "t\"%\n\023ReceiveTaskAwardCmd\022\016\n\006taskId\030\001 \001(\r" +
-      "\"B\n\026ReceiveTaskAwardResult\022\031\n\005props\030\001 \003(" +
-      "\0132\n.msg.Props\022\r\n\005money\030\002 \001(\r\"\034\n\016UserUpLv" +
-      "Result\022\n\n\002lv\030\001 \001(\r\"0\n\014AddFriendCmd\022\016\n\006us" +
-      "erId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"3\n\017AddFrien" +
-      "dResult\022\016\n\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(" +
-      "\t\"!\n\017DeleteFriendCmd\022\016\n\006userId\030\001 \001(\r\"$\n\022" +
-      "DeleteFriendResult\022\016\n\006userId\030\001 \001(\r\"\023\n\021Bo" +
-      "ssAllKillResult\"\024\n\022DuplicateFinishCmd\",\n" +
-      "\031MonsterResurrectionResult\022\017\n\007sceneId\030\001 " +
-      "\001(\r\"\021\n\017SortOutArenaCmd\"\024\n\022SortOutArenaRe" +
-      "sult*\320#\n\007MsgCode\022\030\n\024WHO_ELSE_IS_HERE_CMD" +
-      "\020\000\022\033\n\027WHO_ELSE_IS_HERE_RESULT\020\001\022\024\n\020USER_" +
-      "QUIT_RESULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESU" +
-      "LT\020\004\022\033\n\027USER_SUBTRACT_HP_RESULT\020\005\022\016\n\nDIE" +
-      "_RESULT\020\006\022\022\n\016USER_LOGIN_CMD\020\007\022\025\n\021USER_LO" +
-      "GIN_RESULT\020\010\022\025\n\021USER_REGISTER_CMD\020\t\022\030\n\024U" +
-      "SER_REGISTER_RESULT\020\n\022\024\n\020ATTK_MONSTER_CM" +
-      "D\020\013\022\033\n\027STOP_CUR_USER_ALL_TIMER\020\014\022\031\n\025USER" +
-      "_SWITCH_SCENE_CMD\020\r\022\034\n\030USER_SWITCH_SCENE" +
-      "_RESULT\020\016\022\033\n\027MONSTER_START_ATTK_USER\020\017\022\026" +
-      "\n\022NOTICE_USER_ATTKED\020\020\022\027\n\023USER_SKILL_ATT" +
-      "K_CMD\020\021\022\032\n\026USER_SKILL_ATTK_RESULT\020\022\022\026\n\022S" +
-      "KILL_STATE_SWITCH\020\023\022\025\n\021ROB_EQUIPMENT_CMD" +
-      "\020\024\022\020\n\014BACKPACK_CMD\020\025\022\023\n\017BACKPACK_RESULT\020" +
-      "\026\022\030\n\024ROB_EQUIPMENT_RESULT\020\027\022\023\n\017USER_POTI" +
-      "ON_CMD\020\030\022\026\n\022USER_POTION_RESULT\020\031\022\034\n\030USER" +
-      "_RESUME_STATE_RESULT\020\032\022\033\n\027USER_WEAR_EQUI" +
-      "PMENT_CMD\020\033\022\036\n\032USER_WEAR_EQUIPMENT_RESUL" +
-      "T\020\034\022\033\n\027USER_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032USER" +
-      "_UNDO_EQUIPMENT_RESULT\020\036\022 \n\034DURABILITY_D" +
-      "EFICIENCY_RESULT\020\037\022\030\n\024REPAIR_EQUIPMENT_C" +
-      "MD\020 \022\033\n\027REPAIR_EQUIPMENT_RESULT\020!\022\034\n\030MON" +
-      "STER_DROP_HP_AUTO_DIE\020\"\022\027\n\023ENTER_DUPLICA" +
-      "TE_CMD\020#\022\032\n\026ENTER_DUPLICATE_RESULT\020$\022\021\n\r" +
-      "ATTK_BOSS_CMD\020%\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n" +
-      "\020NEXT_BOSS_RESULT\020\'\022\033\n\027DUPLICATE_FINISH_" +
-      "RESULT\020(\022\033\n\027USER_QUIT_DUPLICATE_CMD\020)\022\036\n" +
-      "\032USER_QUIT_DUPLICATE_RESULT\020*\022\031\n\025BOSS_AT" +
-      "TK_USER_RESULT\020+\022\037\n\033BOSS_SKILL_ATTK_USER" +
-      "_RESULT\020,\022\031\n\025BOSS_KILL_USER_RESULT\020-\022\026\n\022" +
-      "USER_BUY_GOODS_CMD\020.\022\031\n\025USER_BUY_GOODS_R" +
-      "ESULT\020/\022\026\n\022USER_CHAT_INFO_CMD\0200\022\031\n\025USER_" +
-      "CHAT_INFO_RESULT\0201\022\021\n\rSEND_MAIL_CMD\0202\022\024\n" +
-      "\020SEND_MAIL_RESULT\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n" +
-      "\017ALL_USER_RESULT\0205\022\037\n\033NOTICE_USER_GET_MA" +
-      "IL_RESULT\0206\022\025\n\021USER_SEE_MAIL_CMD\0207\022\030\n\024US" +
-      "ER_SEE_MAIL_RESULT\0208\022\031\n\025USER_RECEIVE_MAI" +
-      "L_CMD\0209\022\034\n\030USER_RECEIVE_MAIL_RESULT\020:\022\030\n" +
-      "\024USER_ENTER_ARENA_CMD\020;\022\033\n\027USER_ENTER_AR" +
-      "ENA_RESULT\020<\022\034\n\030USER_CHOOSE_OPPONENT_CMD" +
-      "\020=\022\037\n\033USER_CHOOSE_OPPONENT_RESULT\020>\022 \n\034T" +
-      "ARGET_USER_CHALLENGE_RESULT\020?\022\034\n\030TARGET_" +
-      "USER_RESPONSE_CMD\020@\022\037\n\033TARGET_USER_RESPO" +
-      "NSE_RESULT\020A\022\027\n\023USER_QUIT_ARENA_CMD\020B\022\032\n" +
-      "\026USER_QUIT_ARENA_RESULT\020C\022\023\n\017USER_ATTACK" +
-      "_CMD\020D\022\026\n\022USER_ATTACK_RESULT\020E\022\023\n\017USER_D" +
-      "IE_RESULT\020F\022\024\n\020USER_TEAM_UP_CMD\020G\022\027\n\023USE" +
-      "R_TEAM_UP_RESULT\020H\022\026\n\022ASK_TEAM_UP_RESULT" +
-      "\020I\022\026\n\022USER_JOIN_TEAM_CMD\020J\022\031\n\025USER_JOIN_" +
-      "TEAM_RESULT\020K\022\026\n\022USER_QUIT_TEAM_CMD\020L\022\031\n" +
-      "\025USER_QUIT_TEAM_RESULT\020M\022\037\n\033USER_ENTER_T" +
-      "EAM_FAIL_RESULT\020N\022$\n USER_QUIT_TEAM_AND_" +
-      "DUPLICATE_CMD\020O\022\'\n#USER_QUIT_TEAM_AND_DU" +
-      "PLICATE_RESULT\020P\022$\n USER_SKILL_ATTK_DUPL" +
-      "ICATE_RESULT\020Q\022\027\n\023PASTOR_SKILL_RESULT\020R\022" +
-      " \n\034SUMMON_MONSTER_SUB_HP_RESULT\020S\022\036\n\032USE" +
-      "R_JOIN_TEAM_PERFORM_CMD\020T\022!\n\035USER_JOIN_T" +
-      "EAM_PERFORM_RESULT\020U\022\027\n\023USER_CLEAN_MAIL_" +
-      "CMD\020V\022\032\n\026USER_CLEAN_MAIL_RESULT\020W\022\031\n\025USE" +
-      "R_DEAL_REQUEST_CMD\020X\022\034\n\030USER_DEAL_REQUES" +
-      "T_RESULT\020Y\022\032\n\026ASK_TARGET_USER_RESULT\020Z\022!" +
-      "\n\035DEAL_TARGET_USER_RESPONSE_CMD\020[\022\024\n\020DEA" +
-      "L_CHANNEL_CMD\020\\\022\027\n\023DEAL_CHANNEL_RESULT\020]" +
-      "\022\026\n\022USER_DEAL_ITEM_CMD\020^\022\031\n\025USER_DEAL_IT" +
-      "EM_RESULT\020_\022\031\n\025USER_ADD_COMPLETE_CMD\020a\022\034" +
-      "\n\030USER_ADD_COMPLETE_RESULT\020b\022\030\n\024USER_CAN" +
-      "CEL_DEAL_CMD\020c\022\033\n\027USER_CANCEL_DEAL_RESUL" +
-      "T\020d\022\031\n\025USER_CONFIRM_DEAL_CMD\020e\022\034\n\030USER_C" +
-      "ONFIRM_DEAL_RESULT\020f\022 \n\034USER_CANCEL_DEAL" +
-      "_CONFIRM_CMD\020g\022#\n\037USER_CANCEL_DEAL_CONFI" +
-      "RM_RESULT\020h\022\025\n\021SORT_OUT_DEAL_CMD\020i\022\030\n\024SO" +
-      "RT_OUT_DEAL_RESULT\020j\022\031\n\025USER_CREATE_GUIL" +
-      "D_CMD\020k\022\034\n\030USER_CREATE_GUILD_RESULT\020l\022\033\n" +
-      "\027USER_DISSOLVE_GUILD_CMD\020m\022\036\n\032USER_DISSO" +
-      "LVE_GUILD_RESULT\020n\022\022\n\016SHOW_GUILD_CMD\020o\022\025" +
-      "\n\021SHOW_GUILD_RESULT\020p\022\030\n\024USER_ENTER_GUIL" +
-      "D_CMD\020q\022\033\n\027USER_ENTER_GUILD_RESULT\020r\022\031\n\025" +
-      "SHOW_GUILD_MEMBER_CMD\020s\022\034\n\030SHOW_GUILD_ME" +
-      "MBER_RESULT\020t\022\036\n\032LOOK_GUiLD_MEMBER_INFO_" +
-      "CMD\020u\022!\n\035LOOK_GUiLD_MEMBER_INFO_RESULT\020v" +
-      "\022\022\n\016QUIT_GUILD_CMD\020w\022\025\n\021QUIT_GUILD_RESUL" +
-      "T\020x\022\026\n\022APPOINT_MEMBER_CMD\020y\022\031\n\025APPOINT_M" +
-      "EMBER_RESULT\020z\022\027\n\023ELIMINATE_GUILD_CMD\020{\022" +
-      "\032\n\026ELIMINATE_GUILD_RESULT\020|\022\035\n\031MODIFY_GU" +
-      "ILD_POSITION_CMD\020}\022\032\n\026MODIFY_GUILD_STATE" +
-      "_CMD\020~\022\034\n\030LOOK_GUILD_WAREHOUSE_CMD\020\177\022 \n\033" +
-      "LOOK_GUILD_WAREHOUSE_RESULT\020\200\001\022\027\n\022TAKE_O" +
-      "UT_PROPS_CMD\020\201\001\022\032\n\025TAKE_OUT_PROPS_RESULT" +
-      "\020\202\001\022\025\n\020PUT_IN_PROPS_CMD\020\203\001\022\030\n\023PUT_IN_PRO" +
-      "PS_RESULT\020\204\001\022\027\n\022TAKE_OUT_MONEY_CMD\020\205\001\022\032\n" +
-      "\025TAKE_OUT_MONEY_RESULT\020\206\001\022\025\n\020PUT_IN_MONE" +
-      "Y_CMD\020\207\001\022\030\n\023PUT_IN_MONEY_RESULT\020\210\001\022\033\n\026TR" +
-      "ANSFER_PRESIDENT_CMD\020\310\001\022\036\n\031TRANSFER_PRES" +
-      "IDENT_RESULT\020\311\001\022\032\n\025LOOK_AUCTION_ITEM_CMD" +
-      "\020\211\001\022\035\n\030LOOK_AUCTION_ITEM_RESULT\020\212\001\022\025\n\020SH" +
-      "ELVE_GOODS_CMD\020\213\001\022\030\n\023SHELVE_GOODS_RESULT" +
-      "\020\214\001\022\026\n\021BIDDING_GOODS_CMD\020\215\001\022\031\n\024BIDDING_G" +
-      "OODS_RESULT\020\216\001\022\022\n\rONE_PRICE_CMD\020\217\001\022\025\n\020ON" +
-      "E_PRICE_RESULT\020\220\001\022\"\n\035LOOK_ONESELF_AUCTIO" +
-      "N_ITEM_CMD\020\221\001\022%\n LOOK_ONESELF_AUCTION_IT" +
-      "EM_RESULT\020\222\001\022\034\n\027CANCEL_AUCTION_ITEM_CMD\020" +
-      "\223\001\022\037\n\032CANCEL_AUCTION_ITEM_RESULT\020\224\001\022\026\n\021L" +
-      "OOK_ALL_TASK_CMD\020\225\001\022\031\n\024LOOK_ALL_TASK_RES" +
-      "ULT\020\226\001\022\025\n\020RECEIVE_TASK_CMD\020\227\001\022\030\n\023RECEIVE" +
-      "_TASK_RESULT\020\230\001\022\026\n\021DIALOGUE_TASK_CMD\020\231\001\022" +
-      "\032\n\025TASK_COMPLETED_RESULT\020\232\001\022\033\n\026RECEIVE_T" +
-      "ASK_AWARD_CMD\020\233\001\022\036\n\031RECEIVE_TASK_AWARD_R" +
-      "ESULT\020\234\001\022\023\n\016ADD_FRIEND_CMD\020\236\001\022\026\n\021ADD_FRI" +
-      "END_RESULT\020\237\001\022\026\n\021DELETE_FRIEND_CMD\020\240\001\022\031\n" +
-      "\024DELETE_FRIEND_RESULT\020\241\001\022\031\n\024BOSS_ALL_KIL" +
-      "L_RESULT\020\242\001\022\031\n\024DUPLICATE_FINISH_CMD\020\243\001\022 " +
-      "\n\033MONSTER_RESURRECTION_RESULT\020\244\001\022\027\n\022SORT" +
-      "_OUT_ARENA_CMD\020\245\001\022\032\n\025SORT_OUT_ARENA_RESU" +
-      "LT\020\246\001\022\026\n\021USER_UP_LV_RESULT\020\235\001\022\020\n\014ERROR_R" +
-      "ESULT\020`B\005\n\003msgb\006proto3"
+      "\030\001 \001(\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"?\n\022Ta" +
+      "keOutPropsResult\022\031\n\005props\030\001 \003(\0132\n.msg.Pr" +
+      "ops\022\016\n\006number\030\002 \001(\r\"*\n\rPutInPropsCmd\022\031\n\005" +
+      "props\030\001 \001(\0132\n.msg.Props\"-\n\020PutInPropsRes" +
+      "ult\022\031\n\005props\030\001 \001(\0132\n.msg.Props\" \n\017TakeOu" +
+      "tMoneyCmd\022\r\n\005money\030\001 \001(\r\"#\n\022TakeOutMoney" +
+      "Result\022\r\n\005money\030\001 \001(\r\"\036\n\rPutInMoneyCmd\022\r" +
+      "\n\005money\030\001 \001(\r\"!\n\020PutInMoneyResult\022\r\n\005mon" +
+      "ey\030\001 \001(\r\"&\n\024TransferPresidentCmd\022\016\n\006user" +
+      "Id\030\001 \001(\r\")\n\027TransferPresidentResult\022\016\n\006u" +
+      "serId\030\001 \001(\r\"\024\n\022LookAuctionItemCmd\">\n\025Loo" +
+      "kAuctionItemResult\022%\n\013auctionItem\030\001 \003(\0132" +
+      "\020.msg.AuctionItem\"z\n\013AuctionItem\022\n\n\002id\030\001" +
+      " \001(\r\022\020\n\010userName\030\002 \001(\t\022\017\n\007propsId\030\003 \001(\r\022" +
+      "\017\n\007auction\030\004 \001(\r\022\r\n\005price\030\005 \001(\r\022\016\n\006numbe" +
+      "r\030\006 \001(\r\022\014\n\004date\030\007 \001(\004\"R\n\016ShelveGoodsCmd\022" +
+      "\020\n\010location\030\001 \001(\r\022\016\n\006number\030\002 \001(\r\022\017\n\007auc" +
+      "tion\030\003 \001(\r\022\r\n\005price\030\004 \001(\r\"\023\n\021ShelveGoods" +
+      "Result\"3\n\017BiddingGoodsCmd\022\021\n\tauctionId\030\001" +
+      " \001(\r\022\r\n\005money\030\002 \001(\r\"#\n\022BiddingGoodsResul" +
+      "t\022\r\n\005money\030\001 \001(\r\" \n\013OnePriceCmd\022\021\n\taucti" +
+      "onId\030\001 \001(\r\"\037\n\016OnePriceResult\022\r\n\005price\030\001 " +
+      "\001(\r\"\033\n\031LookOneselfAuctionItemCmd\"E\n\034Look" +
+      "OneselfAuctionItemResult\022%\n\013auctionItem\030" +
+      "\001 \003(\0132\020.msg.AuctionItem\")\n\024CancelAuction" +
+      "ItemCmd\022\021\n\tauctionId\030\001 \001(\r\"\031\n\027CancelAuct" +
+      "ionItemResult\"\020\n\016LookAllTaskCmd\"#\n\021LookA" +
+      "llTaskResult\022\016\n\006taskId\030\001 \001(\r\" \n\016ReceiveT" +
+      "askCmd\022\016\n\006taskId\030\001 \001(\r\"#\n\021ReceiveTaskRes" +
+      "ult\022\016\n\006taskId\030\001 \001(\r\"\021\n\017DialogueTaskCmd\"\025" +
+      "\n\023TaskCompletedResult\"%\n\023ReceiveTaskAwar" +
+      "dCmd\022\016\n\006taskId\030\001 \001(\r\"B\n\026ReceiveTaskAward" +
+      "Result\022\031\n\005props\030\001 \003(\0132\n.msg.Props\022\r\n\005mon" +
+      "ey\030\002 \001(\r\"\034\n\016UserUpLvResult\022\n\n\002lv\030\001 \001(\r\"0" +
+      "\n\014AddFriendCmd\022\016\n\006userId\030\001 \001(\r\022\020\n\010userNa" +
+      "me\030\002 \001(\t\"3\n\017AddFriendResult\022\016\n\006userId\030\001 " +
+      "\001(\r\022\020\n\010userName\030\002 \001(\t\"!\n\017DeleteFriendCmd" +
+      "\022\016\n\006userId\030\001 \001(\r\"$\n\022DeleteFriendResult\022\016" +
+      "\n\006userId\030\001 \001(\r\"\023\n\021BossAllKillResult\"\024\n\022D" +
+      "uplicateFinishCmd\",\n\031MonsterResurrection" +
+      "Result\022\017\n\007sceneId\030\001 \001(\r\"\021\n\017SortOutArenaC" +
+      "md\"\024\n\022SortOutArenaResult*\320#\n\007MsgCode\022\030\n\024" +
+      "WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS_HE" +
+      "RE_RESULT\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014\n\010ATT" +
+      "K_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n\027USER_SUBTRAC" +
+      "T_HP_RESULT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016USER_LO" +
+      "GIN_CMD\020\007\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n\021USER" +
+      "_REGISTER_CMD\020\t\022\030\n\024USER_REGISTER_RESULT\020" +
+      "\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027STOP_CUR_USER" +
+      "_ALL_TIMER\020\014\022\031\n\025USER_SWITCH_SCENE_CMD\020\r\022" +
+      "\034\n\030USER_SWITCH_SCENE_RESULT\020\016\022\033\n\027MONSTER" +
+      "_START_ATTK_USER\020\017\022\026\n\022NOTICE_USER_ATTKED" +
+      "\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021\022\032\n\026USER_SKIL" +
+      "L_ATTK_RESULT\020\022\022\026\n\022SKILL_STATE_SWITCH\020\023\022" +
+      "\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014BACKPACK_CMD\020\025" +
+      "\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024ROB_EQUIPMENT_R" +
+      "ESULT\020\027\022\023\n\017USER_POTION_CMD\020\030\022\026\n\022USER_POT" +
+      "ION_RESULT\020\031\022\034\n\030USER_RESUME_STATE_RESULT" +
+      "\020\032\022\033\n\027USER_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032USER_" +
+      "WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027USER_UNDO_EQU" +
+      "IPMENT_CMD\020\035\022\036\n\032USER_UNDO_EQUIPMENT_RESU" +
+      "LT\020\036\022 \n\034DURABILITY_DEFICIENCY_RESULT\020\037\022\030" +
+      "\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n\027REPAIR_EQUIP" +
+      "MENT_RESULT\020!\022\034\n\030MONSTER_DROP_HP_AUTO_DI" +
+      "E\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020#\022\032\n\026ENTER_DU" +
+      "PLICATE_RESULT\020$\022\021\n\rATTK_BOSS_CMD\020%\022\024\n\020A" +
+      "TTK_BOSS_RESULT\020&\022\024\n\020NEXT_BOSS_RESULT\020\'\022" +
+      "\033\n\027DUPLICATE_FINISH_RESULT\020(\022\033\n\027USER_QUI" +
+      "T_DUPLICATE_CMD\020)\022\036\n\032USER_QUIT_DUPLICATE" +
+      "_RESULT\020*\022\031\n\025BOSS_ATTK_USER_RESULT\020+\022\037\n\033" +
+      "BOSS_SKILL_ATTK_USER_RESULT\020,\022\031\n\025BOSS_KI" +
+      "LL_USER_RESULT\020-\022\026\n\022USER_BUY_GOODS_CMD\020." +
+      "\022\031\n\025USER_BUY_GOODS_RESULT\020/\022\026\n\022USER_CHAT" +
+      "_INFO_CMD\0200\022\031\n\025USER_CHAT_INFO_RESULT\0201\022\021" +
+      "\n\rSEND_MAIL_CMD\0202\022\024\n\020SEND_MAIL_RESULT\0203\022" +
+      "\020\n\014ALL_USER_CMD\0204\022\023\n\017ALL_USER_RESULT\0205\022\037" +
+      "\n\033NOTICE_USER_GET_MAIL_RESULT\0206\022\025\n\021USER_" +
+      "SEE_MAIL_CMD\0207\022\030\n\024USER_SEE_MAIL_RESULT\0208" +
+      "\022\031\n\025USER_RECEIVE_MAIL_CMD\0209\022\034\n\030USER_RECE" +
+      "IVE_MAIL_RESULT\020:\022\030\n\024USER_ENTER_ARENA_CM" +
+      "D\020;\022\033\n\027USER_ENTER_ARENA_RESULT\020<\022\034\n\030USER" +
+      "_CHOOSE_OPPONENT_CMD\020=\022\037\n\033USER_CHOOSE_OP" +
+      "PONENT_RESULT\020>\022 \n\034TARGET_USER_CHALLENGE" +
+      "_RESULT\020?\022\034\n\030TARGET_USER_RESPONSE_CMD\020@\022" +
+      "\037\n\033TARGET_USER_RESPONSE_RESULT\020A\022\027\n\023USER" +
+      "_QUIT_ARENA_CMD\020B\022\032\n\026USER_QUIT_ARENA_RES" +
+      "ULT\020C\022\023\n\017USER_ATTACK_CMD\020D\022\026\n\022USER_ATTAC" +
+      "K_RESULT\020E\022\023\n\017USER_DIE_RESULT\020F\022\024\n\020USER_" +
+      "TEAM_UP_CMD\020G\022\027\n\023USER_TEAM_UP_RESULT\020H\022\026" +
+      "\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022USER_JOIN_TEAM" +
+      "_CMD\020J\022\031\n\025USER_JOIN_TEAM_RESULT\020K\022\026\n\022USE" +
+      "R_QUIT_TEAM_CMD\020L\022\031\n\025USER_QUIT_TEAM_RESU" +
+      "LT\020M\022\037\n\033USER_ENTER_TEAM_FAIL_RESULT\020N\022$\n" +
+      " USER_QUIT_TEAM_AND_DUPLICATE_CMD\020O\022\'\n#U" +
+      "SER_QUIT_TEAM_AND_DUPLICATE_RESULT\020P\022$\n " +
+      "USER_SKILL_ATTK_DUPLICATE_RESULT\020Q\022\027\n\023PA" +
+      "STOR_SKILL_RESULT\020R\022 \n\034SUMMON_MONSTER_SU" +
+      "B_HP_RESULT\020S\022\036\n\032USER_JOIN_TEAM_PERFORM_" +
+      "CMD\020T\022!\n\035USER_JOIN_TEAM_PERFORM_RESULT\020U" +
+      "\022\027\n\023USER_CLEAN_MAIL_CMD\020V\022\032\n\026USER_CLEAN_" +
+      "MAIL_RESULT\020W\022\031\n\025USER_DEAL_REQUEST_CMD\020X" +
+      "\022\034\n\030USER_DEAL_REQUEST_RESULT\020Y\022\032\n\026ASK_TA" +
+      "RGET_USER_RESULT\020Z\022!\n\035DEAL_TARGET_USER_R" +
+      "ESPONSE_CMD\020[\022\024\n\020DEAL_CHANNEL_CMD\020\\\022\027\n\023D" +
+      "EAL_CHANNEL_RESULT\020]\022\026\n\022USER_DEAL_ITEM_C" +
+      "MD\020^\022\031\n\025USER_DEAL_ITEM_RESULT\020_\022\031\n\025USER_" +
+      "ADD_COMPLETE_CMD\020a\022\034\n\030USER_ADD_COMPLETE_" +
+      "RESULT\020b\022\030\n\024USER_CANCEL_DEAL_CMD\020c\022\033\n\027US" +
+      "ER_CANCEL_DEAL_RESULT\020d\022\031\n\025USER_CONFIRM_" +
+      "DEAL_CMD\020e\022\034\n\030USER_CONFIRM_DEAL_RESULT\020f" +
+      "\022 \n\034USER_CANCEL_DEAL_CONFIRM_CMD\020g\022#\n\037US" +
+      "ER_CANCEL_DEAL_CONFIRM_RESULT\020h\022\025\n\021SORT_" +
+      "OUT_DEAL_CMD\020i\022\030\n\024SORT_OUT_DEAL_RESULT\020j" +
+      "\022\031\n\025USER_CREATE_GUILD_CMD\020k\022\034\n\030USER_CREA" +
+      "TE_GUILD_RESULT\020l\022\033\n\027USER_DISSOLVE_GUILD" +
+      "_CMD\020m\022\036\n\032USER_DISSOLVE_GUILD_RESULT\020n\022\022" +
+      "\n\016SHOW_GUILD_CMD\020o\022\025\n\021SHOW_GUILD_RESULT\020" +
+      "p\022\030\n\024USER_ENTER_GUILD_CMD\020q\022\033\n\027USER_ENTE" +
+      "R_GUILD_RESULT\020r\022\031\n\025SHOW_GUILD_MEMBER_CM" +
+      "D\020s\022\034\n\030SHOW_GUILD_MEMBER_RESULT\020t\022\036\n\032LOO" +
+      "K_GUiLD_MEMBER_INFO_CMD\020u\022!\n\035LOOK_GUiLD_" +
+      "MEMBER_INFO_RESULT\020v\022\022\n\016QUIT_GUILD_CMD\020w" +
+      "\022\025\n\021QUIT_GUILD_RESULT\020x\022\026\n\022APPOINT_MEMBE" +
+      "R_CMD\020y\022\031\n\025APPOINT_MEMBER_RESULT\020z\022\027\n\023EL" +
+      "IMINATE_GUILD_CMD\020{\022\032\n\026ELIMINATE_GUILD_R" +
+      "ESULT\020|\022\035\n\031MODIFY_GUILD_POSITION_CMD\020}\022\032" +
+      "\n\026MODIFY_GUILD_STATE_CMD\020~\022\034\n\030LOOK_GUILD" +
+      "_WAREHOUSE_CMD\020\177\022 \n\033LOOK_GUILD_WAREHOUSE" +
+      "_RESULT\020\200\001\022\027\n\022TAKE_OUT_PROPS_CMD\020\201\001\022\032\n\025T" +
+      "AKE_OUT_PROPS_RESULT\020\202\001\022\025\n\020PUT_IN_PROPS_" +
+      "CMD\020\203\001\022\030\n\023PUT_IN_PROPS_RESULT\020\204\001\022\027\n\022TAKE" +
+      "_OUT_MONEY_CMD\020\205\001\022\032\n\025TAKE_OUT_MONEY_RESU" +
+      "LT\020\206\001\022\025\n\020PUT_IN_MONEY_CMD\020\207\001\022\030\n\023PUT_IN_M" +
+      "ONEY_RESULT\020\210\001\022\033\n\026TRANSFER_PRESIDENT_CMD" +
+      "\020\310\001\022\036\n\031TRANSFER_PRESIDENT_RESULT\020\311\001\022\032\n\025L" +
+      "OOK_AUCTION_ITEM_CMD\020\211\001\022\035\n\030LOOK_AUCTION_" +
+      "ITEM_RESULT\020\212\001\022\025\n\020SHELVE_GOODS_CMD\020\213\001\022\030\n" +
+      "\023SHELVE_GOODS_RESULT\020\214\001\022\026\n\021BIDDING_GOODS" +
+      "_CMD\020\215\001\022\031\n\024BIDDING_GOODS_RESULT\020\216\001\022\022\n\rON" +
+      "E_PRICE_CMD\020\217\001\022\025\n\020ONE_PRICE_RESULT\020\220\001\022\"\n" +
+      "\035LOOK_ONESELF_AUCTION_ITEM_CMD\020\221\001\022%\n LOO" +
+      "K_ONESELF_AUCTION_ITEM_RESULT\020\222\001\022\034\n\027CANC" +
+      "EL_AUCTION_ITEM_CMD\020\223\001\022\037\n\032CANCEL_AUCTION" +
+      "_ITEM_RESULT\020\224\001\022\026\n\021LOOK_ALL_TASK_CMD\020\225\001\022" +
+      "\031\n\024LOOK_ALL_TASK_RESULT\020\226\001\022\025\n\020RECEIVE_TA" +
+      "SK_CMD\020\227\001\022\030\n\023RECEIVE_TASK_RESULT\020\230\001\022\026\n\021D" +
+      "IALOGUE_TASK_CMD\020\231\001\022\032\n\025TASK_COMPLETED_RE" +
+      "SULT\020\232\001\022\033\n\026RECEIVE_TASK_AWARD_CMD\020\233\001\022\036\n\031" +
+      "RECEIVE_TASK_AWARD_RESULT\020\234\001\022\023\n\016ADD_FRIE" +
+      "ND_CMD\020\236\001\022\026\n\021ADD_FRIEND_RESULT\020\237\001\022\026\n\021DEL" +
+      "ETE_FRIEND_CMD\020\240\001\022\031\n\024DELETE_FRIEND_RESUL" +
+      "T\020\241\001\022\031\n\024BOSS_ALL_KILL_RESULT\020\242\001\022\031\n\024DUPLI" +
+      "CATE_FINISH_CMD\020\243\001\022 \n\033MONSTER_RESURRECTI" +
+      "ON_RESULT\020\244\001\022\027\n\022SORT_OUT_ARENA_CMD\020\245\001\022\032\n" +
+      "\025SORT_OUT_ARENA_RESULT\020\246\001\022\026\n\021USER_UP_LV_" +
+      "RESULT\020\235\001\022\020\n\014ERROR_RESULT\020`B\005\n\003msgb\006prot" +
+      "o3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -117814,7 +118591,7 @@ public final class GameMsg {
     internal_static_msg_TakeOutPropsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TakeOutPropsResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Props", "Number", });
     internal_static_msg_PutInPropsCmd_descriptor =
       getDescriptor().getMessageTypes().get(135);
     internal_static_msg_PutInPropsCmd_fieldAccessorTable = new
@@ -117826,7 +118603,7 @@ public final class GameMsg {
     internal_static_msg_PutInPropsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInPropsResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Props", });
     internal_static_msg_TakeOutMoneyCmd_descriptor =
       getDescriptor().getMessageTypes().get(137);
     internal_static_msg_TakeOutMoneyCmd_fieldAccessorTable = new
@@ -117838,7 +118615,7 @@ public final class GameMsg {
     internal_static_msg_TakeOutMoneyResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TakeOutMoneyResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Money", });
     internal_static_msg_PutInMoneyCmd_descriptor =
       getDescriptor().getMessageTypes().get(139);
     internal_static_msg_PutInMoneyCmd_fieldAccessorTable = new
@@ -117850,7 +118627,7 @@ public final class GameMsg {
     internal_static_msg_PutInMoneyResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInMoneyResult_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Money", });
     internal_static_msg_TransferPresidentCmd_descriptor =
       getDescriptor().getMessageTypes().get(141);
     internal_static_msg_TransferPresidentCmd_fieldAccessorTable = new

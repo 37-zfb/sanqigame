@@ -33,6 +33,10 @@ public class UserCancelDealConfirmCmdHandler implements ICmdHandler<GameMsg.User
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
+        if (!playDeal.isDetermine()) {
+            throw new CustomizeException(CustomizeErrorCode.SELF_NOT_COMPLETE);
+        }
+
         playDeal.setDetermine(false);
         playDeal.setAgreeNumber(0);
         playDeal.setReceiveMoney(0);

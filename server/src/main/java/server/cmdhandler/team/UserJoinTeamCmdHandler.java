@@ -43,7 +43,6 @@ public class UserJoinTeamCmdHandler implements ICmdHandler<GameMsg.UserJoinTeamC
         }
 
 
-        //
         if (user.getPlayTeam() != null) {
             TeamUtil.getTeamUtil().originateHaveTeam(originateOrTargetUser, user);
             return;

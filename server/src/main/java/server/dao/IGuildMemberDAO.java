@@ -42,5 +42,5 @@ public interface IGuildMemberDAO {
      * 批量修改公会成员信息
      * @param guildMemberCollection
      */
-    void updateGuildMemberBatch(Collection<GuildMemberEntity> guildMemberCollection);
+    void updateGuildMemberBatch(@Param("guildMemberCollection") Collection<GuildMemberEntity> guildMemberCollection);
 }

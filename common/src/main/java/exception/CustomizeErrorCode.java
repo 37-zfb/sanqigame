@@ -97,6 +97,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     TARGET_NOT_EXIST(-466,"目标用户不在竞技场;"),
     USER_NOT_INVITE(-466,"未被邀请;"),
     DEAL_PROPS_NOT_EXIST(-467,"交易道具不存在;"),
+    TARGET_NOT_COMPLETE(-468,"对方还未添加完毕;"),
+    SELF_NOT_COMPLETE(-469,"自己还未添加完毕;"),
     ;
 
     private String message;
