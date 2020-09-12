@@ -43,9 +43,6 @@ public class FriendService {
     private List<DbFriendEntity> addFriendEntityList = new CopyOnWriteArrayList<>();
     private List<DbFriendEntity> deleteFriendEntityList = new CopyOnWriteArrayList<>();
 
-    private List<DbFriendEntity> addFriendEntityListTemp = new CopyOnWriteArrayList<>();
-    private List<DbFriendEntity> deleteFriendEntityListTemp = new CopyOnWriteArrayList<>();
-
 
 
     /**
@@ -75,29 +72,29 @@ public class FriendService {
     private void db() {
 
         scheduledThreadPool.scheduleWithFixedDelay(() -> {
-            List<DbFriendEntity> copyAdd = copy(addFriendEntityList, addFriendEntityListTemp);
-            List<DbFriendEntity> copyDelete = copy(deleteFriendEntityList, deleteFriendEntityListTemp);
 
-            if (copyAdd != null){
-                friendDAO.insertBatch(copyAdd);
-                log.info("添加好友;");
+            try {
+
+                if (addFriendEntityList.size() != 0) {
+                    friendDAO.insertBatch(copy(addFriendEntityList));
+                    log.info("添加好友;");
+                }
+                if (deleteFriendEntityList.size() != 0) {
+                    friendDAO.deleteBatch(copy(deleteFriendEntityList));
+                    log.info("删除好友;");
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
             }
-            if (copyDelete != null){
-                friendDAO.deleteBatch(copyDelete);
-                log.info("删除好友;");
-            }
+
 
         }, 3000, 3000, TimeUnit.MILLISECONDS);
-
+        log.info("初始化好友定时器;");
     }
 
-    private List<DbFriendEntity> copy(List<DbFriendEntity> dbFriendEntityList,List<DbFriendEntity> targetList){
-        Iterator<DbFriendEntity> iterator = dbFriendEntityList.iterator();
-        while (iterator.hasNext()){
-            DbFriendEntity friendEntity = iterator.next();
-            targetList.add(friendEntity);
-            iterator.remove();
-        }
+    private List<DbFriendEntity> copy(List<DbFriendEntity> dbFriendEntityList) {
+        List<DbFriendEntity> targetList = new ArrayList<>(dbFriendEntityList);
+        dbFriendEntityList.removeAll(targetList);
         return targetList;
     }
 

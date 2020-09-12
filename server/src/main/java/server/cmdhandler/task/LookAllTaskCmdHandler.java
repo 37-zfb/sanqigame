@@ -1,6 +1,8 @@
 package server.cmdhandler.task;
 
 import entity.MailProps;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -33,7 +35,7 @@ public class LookAllTaskCmdHandler implements ICmdHandler<GameMsg.LookAllTaskCmd
 
         if (!playTask.isHaveTask()){
             //此时没有任务了
-            return;
+            throw new CustomizeException(CustomizeErrorCode.TASK_NOT_FOUND);
         }
 
         Task task = GameData.getInstance().getTaskMap().get(completedTaskId + 1);

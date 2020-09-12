@@ -2,6 +2,7 @@ package server.model;
 
 import constant.BossMonsterConst;
 import constant.ProfessionConst;
+import entity.MailProps;
 import entity.db.UserEquipmentEntity;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,6 +15,7 @@ import server.PublicMethod;
 import server.cmdhandler.auction.AuctionUtil;
 import server.cmdhandler.duplicate.BossSkillAttack;
 import server.cmdhandler.duplicate.PropsUtil;
+import server.cmdhandler.mail.MailUtil;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.profession.Skill;
@@ -27,10 +29,7 @@ import type.EquipmentType;
 import type.PotionType;
 import type.PropsType;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.ScheduledFuture;
@@ -536,7 +535,12 @@ public class User {
             }
         }catch (CustomizeException e){
             log.error(e.getMessage(), e);
-            AuctionUtil.sendPropsMail(userId,propsId, 1, "击杀怪的奖励;");
+
+            MailUtil.getMailUtil().sendMail(userId,
+                    0,
+                    "背包已满",
+                    Collections.singletonList(new MailProps(propsId, 1)));
+//            AuctionUtil.sendPropsMail(userId,propsId, 1, "击杀怪的奖励;");
         }
 
     }

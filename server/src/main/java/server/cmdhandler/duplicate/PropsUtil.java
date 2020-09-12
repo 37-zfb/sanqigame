@@ -4,6 +4,7 @@ import com.google.protobuf.GeneratedMessageV3;
 import constant.BackPackConst;
 import constant.EquipmentConst;
 import constant.PotionConst;
+import entity.MailProps;
 import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
 import exception.CustomizeErrorCode;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import server.GameServer;
 import server.cmdhandler.auction.AuctionUtil;
+import server.cmdhandler.mail.MailUtil;
 import server.model.User;
 import server.model.props.Equipment;
 import server.model.props.Potion;
@@ -23,6 +25,7 @@ import type.PropsType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +91,12 @@ public final class PropsUtil {
                 //此时给玩家发邮件
                 log.error(e.getMessage(), e);
                 reward = null;
-                AuctionUtil.sendPropsMail(user.getUserId(), propsId, number, "背包已满;");
+
+                MailUtil.getMailUtil().sendMail(user.getUserId(),
+                        0,
+                        "背包已满",
+                        Collections.singletonList(new MailProps(propsId, number)));
+//                AuctionUtil.sendPropsMail(user.getUserId(), propsId, number, "背包已满;");
             }
 
             if (reward == null || newBuilder == null) {

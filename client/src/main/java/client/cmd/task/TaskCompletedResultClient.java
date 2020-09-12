@@ -4,6 +4,7 @@ import client.cmd.ICmd;
 import client.model.Role;
 import client.model.server.scene.Npc;
 import client.model.server.task.Task;
+import client.model.task.PlayTaskClient;
 import client.scene.GameData;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
@@ -26,14 +27,11 @@ public class TaskCompletedResultClient implements ICmd<GameMsg.TaskCompletedResu
             System.out.println(npc.getName() + ": " + task.getDialogue());
         }
 
-        System.out.println("获得奖励: ");
-        System.out.println(task.getExperience() + "经验");
-        task.getRewardProps().forEach(System.out::println);
-        System.out.println(task.getRewardMoney() + " 金币");
+        PlayTaskClient playTaskClient = role.getPlayTaskClient();
+        playTaskClient.setCompleted(true);
 
-        GameMsg.ReceiveTaskAwardCmd receiveTaskAwardCmd = GameMsg.ReceiveTaskAwardCmd.newBuilder()
-                .setTaskId(task.getId())
-                .build();
-        ctx.writeAndFlush(receiveTaskAwardCmd);
+
+
+
     }
 }

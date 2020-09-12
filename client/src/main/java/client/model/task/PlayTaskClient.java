@@ -16,6 +16,6 @@ public class PlayTaskClient {
     /**
      * 当前任务是否完成
      */
-    private boolean isCompleted;
+    private boolean isCompleted = false;
 
 }

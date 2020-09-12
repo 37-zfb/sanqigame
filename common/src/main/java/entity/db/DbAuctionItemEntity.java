@@ -79,7 +79,7 @@ public class DbAuctionItemEntity {
             throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
         }
 
-        if (bidder.getUserId().equals(bidderEntity.getUserId())) {
+        if (bidder != null && bidder.getUserId().equals(bidderEntity.getUserId())) {
             throw new CustomizeException(CustomizeErrorCode.ALREADY_JOIN_BIDDING);
         }
         DbBidderEntity temp = bidder;

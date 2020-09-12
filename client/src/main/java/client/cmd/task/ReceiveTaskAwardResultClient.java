@@ -5,6 +5,7 @@ import client.model.Role;
 import client.model.SceneData;
 import client.model.server.props.Equipment;
 import client.model.server.props.Props;
+import client.model.server.task.Task;
 import client.scene.GameData;
 import client.thread.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,6 +24,9 @@ public class ReceiveTaskAwardResultClient implements ICmd<GameMsg.ReceiveTaskAwa
 
         MyUtil.checkIsNull(ctx, receiveTaskAwardResult);
         Role role = Role.getInstance();
+
+
+
 
         int rewardMoney = receiveTaskAwardResult.getMoney();
         List<GameMsg.Props> propsList = receiveTaskAwardResult.getPropsList();
@@ -49,6 +53,13 @@ public class ReceiveTaskAwardResultClient implements ICmd<GameMsg.ReceiveTaskAwa
                 backpackClient.put(props.getLocation(), new Props(pro.getId(), pro.getName(), propsProperty));
             }
         }
+
+        GameData gameData = GameData.getInstance();
+        Task task = gameData.getTaskMap().get(role.getPlayTaskClient().getCurrTaskId());
+        System.out.println("获得奖励: ");
+        System.out.println(task.getExperience() + "经验");
+        task.getRewardProps().forEach(System.out::println);
+        System.out.println(task.getRewardMoney() + " 金币");
 
 //        CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
     }

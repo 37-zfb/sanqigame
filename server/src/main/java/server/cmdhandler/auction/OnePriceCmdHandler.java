@@ -1,5 +1,6 @@
 package server.cmdhandler.auction;
 
+import entity.MailProps;
 import entity.db.CurrUserStateEntity;
 import entity.db.DbAuctionItemEntity;
 import exception.CustomizeErrorCode;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.mail.MailUtil;
 import server.model.PlayAuction;
 import server.model.User;
 import server.model.props.Props;
@@ -18,6 +20,9 @@ import server.scene.GameData;
 import server.timer.auction.DbAuctionTimer;
 import server.timer.state.DbUserStateTimer;
 import util.MyUtil;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author 张丰博
@@ -40,7 +45,7 @@ public class OnePriceCmdHandler implements ICmdHandler<GameMsg.OnePriceCmd> {
 
         int auctionId = onePriceCmd.getAuctionId();
         DbAuctionItemEntity auctionItemEntity = PlayAuction.removeAuctionItem(auctionId);
-        if (auctionItemEntity == null){
+        if (auctionItemEntity == null) {
             throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
         }
 
@@ -67,9 +72,16 @@ public class OnePriceCmdHandler implements ICmdHandler<GameMsg.OnePriceCmd> {
         }
 
         //给购买者发邮件
-        AuctionUtil.sendPropsMail(user.getUserId(),props.getId(),auctionItemEntity.getNumber(),"购买拍卖品成功;");
+        MailUtil.getMailUtil().sendMail(user.getUserId(),
+                0,
+                "购买拍卖品成功",
+                Collections.singletonList(new MailProps(auctionItemEntity.getPropsId(), auctionItemEntity.getNumber())));
+
         //给拍卖者发邮件
-        AuctionUtil.sendMoneyMail(auctionItemEntity.getUserId(),auctionItemEntity.getPrice(),"拍卖物品卖出金币");
+        MailUtil.getMailUtil().sendMail(auctionItemEntity.getUserId(),
+                auctionItemEntity.getPrice(),
+                "拍卖物品卖出金币",
+                new ArrayList<>());
 
         GameMsg.OnePriceResult onePriceResult = GameMsg.OnePriceResult.newBuilder()
                 .setPrice(auctionItemEntity.getPrice())

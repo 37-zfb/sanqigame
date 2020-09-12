@@ -79,7 +79,7 @@ public class UserCmd {
                 PlayTaskClient playTaskClient = role.getPlayTaskClient();
                 if (playTaskClient.getCurrTaskId() != null && !playTaskClient.getCurrTaskId().equals(TaskType.NonTask.getTaskCode())) {
                     Map<Integer, Task> taskMap = GameData.getInstance().getTaskMap();
-                    log.info("任务: {}", taskMap.get(playTaskClient.getCurrTaskId()).getTaskName());
+                    log.info("任务: {}", taskMap.get(playTaskClient.getCurrTaskId()).getTaskName() + " ,完成: " + (playTaskClient.isCompleted() ? "是" : "否"));
                 }
 
                 while (true) {
@@ -114,7 +114,8 @@ public class UserCmd {
                     System.out.println("======>28:公会;");
                     System.out.println("======>29:拍卖行;");
                     System.out.println("======>30:查看任务;");
-                    System.out.println("======>31:好友列表;");
+                    System.out.println("======>31:领取任务奖励;");
+                    System.out.println("======>32:好友列表;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -571,6 +572,12 @@ public class UserCmd {
                         //查看任务
                         return GameMsg.LookAllTaskCmd.newBuilder().build();
                     } else if ("31".equals(command)) {
+                        GameData gameData = GameData.getInstance();
+                        Task task = gameData.getTaskMap().get(role.getPlayTaskClient().getCurrTaskId());
+                        ctx.writeAndFlush(GameMsg.ReceiveTaskAwardCmd.newBuilder()
+                                .setTaskId(task.getId())
+                                .build());
+                    } else if ("32".equals(command)) {
                         //查看好友
                         PlayFriendClient playFriendClient = role.getPlayFriendClient();
                         Map<Integer, String> friendMap = playFriendClient.getFriendMap();

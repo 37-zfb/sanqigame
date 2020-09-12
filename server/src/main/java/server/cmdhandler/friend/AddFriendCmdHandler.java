@@ -44,13 +44,14 @@ public class AddFriendCmdHandler implements ICmdHandler<GameMsg.AddFriendCmd> {
             throw new CustomizeException(CustomizeErrorCode.FRIEND_REACH_LIMIT);
         }
 
-
         int targetUserId = addFriendCmd.getUserId();
         String targetUserName = addFriendCmd.getUserName();
+        if (friendMap.values().contains(targetUserName)){
+            throw new CustomizeException(CustomizeErrorCode.FRIEND_EXISTS);
+        }
 
 
         friendMap.put(targetUserId, targetUserName);
-
 
         DbFriendEntity friendEntity = new DbFriendEntity();
         friendEntity.setId(IdWorker.generateId());

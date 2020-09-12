@@ -12,7 +12,7 @@
     <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
         <foreach collection="friendEntityList" item="friend" index="index" open="" close="" separator="">
             insert into `friend` (`id`,`user_id`,`friend_id`,`friend_name`)
-            values (#{friend.id},#{friend.userId},#{friend.friendId},#{friendName});
+            values (#{friend.id},#{friend.userId},#{friend.friendId},#{friend.friendName});
         </foreach>
     </insert>
 

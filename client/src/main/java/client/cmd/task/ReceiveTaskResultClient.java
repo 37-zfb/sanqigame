@@ -28,6 +28,7 @@ public class ReceiveTaskResultClient implements ICmd<GameMsg.ReceiveTaskResult> 
             playTaskClient.setCurrTaskId(taskId);
             System.out.println("任务全部完成;");
         }else {
+            playTaskClient.setCompleted(false);
             playTaskClient.setCurrTaskId(taskId);
             System.out.println("领取任务: "+ GameData.getInstance().getTaskMap().get(taskId).getTaskName());
         }

@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.mail.MailUtil;
 import server.model.PlayAuction;
 import server.model.User;
 import server.timer.auction.DbAuctionTimer;
 import server.timer.state.DbUserStateTimer;
 import util.MyUtil;
+
+import java.util.ArrayList;
 
 /**
  * @author 张丰博
@@ -66,7 +69,11 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
 
         auctionTimer.addBidder(dbBidderEntity);
         if (beforeBidder != null) {
-            AuctionUtil.sendMoneyMail(beforeBidder.getUserId(),beforeBidder.getMoney(),"竞拍金币返回;");
+
+            MailUtil.getMailUtil().sendMail(beforeBidder.getUserId(),
+                    beforeBidder.getMoney(),
+                    "竞拍金币返回",
+                    new ArrayList<>());
             auctionTimer.deleteBidder(beforeBidder);
         }
 

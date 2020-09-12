@@ -99,6 +99,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     DEAL_PROPS_NOT_EXIST(-467,"交易道具不存在;"),
     TARGET_NOT_COMPLETE(-468,"对方还未添加完毕;"),
     SELF_NOT_COMPLETE(-469,"自己还未添加完毕;"),
+    TASK_NOT_FOUND(-470,"任务已做完;"),
+    FRIEND_EXISTS(-471,"用户已存在;"),
     ;
 
     private String message;

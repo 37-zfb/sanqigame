@@ -2,6 +2,7 @@ package server;
 
 import com.google.protobuf.GeneratedMessageV3;
 import constant.*;
+import entity.MailProps;
 import entity.db.CurrUserStateEntity;
 import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
@@ -12,6 +13,7 @@ import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import server.cmdhandler.auction.AuctionUtil;
+import server.cmdhandler.mail.MailUtil;
 import server.cmdhandler.task.listener.TaskPublicMethod;
 import server.model.PlayTeam;
 import server.model.User;
@@ -285,7 +287,9 @@ public final class PublicMethod {
                 //此时给玩家发邮件
                 log.error(e.getMessage(), e);
 
-                AuctionUtil.sendPropsMail(user.getUserId(), propsId, 1, "背包已满;");
+
+                MailUtil.getMailUtil().sendMail(user.getUserId(), 0, "背包已满", Collections.singletonList(new MailProps(propsId, 1)));
+//                AuctionUtil.sendPropsMail(user.getUserId(), propsId, 1, "背包已满;");
             } catch (NullPointerException e) {
                 log.info("获得道具失败, 道具id: {}", propsId);
                 //此时给玩家发邮件

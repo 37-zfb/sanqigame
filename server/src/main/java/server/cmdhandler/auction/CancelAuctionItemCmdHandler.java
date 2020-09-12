@@ -18,6 +18,7 @@ import server.model.User;
 import server.timer.auction.DbAuctionTimer;
 import util.MyUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class CancelAuctionItemCmdHandler implements ICmdHandler<GameMsg.CancelAu
         int auctionId = cancelAuctionItemCmd.getAuctionId();
 
         DbAuctionItemEntity dbAuctionItemEntity = PlayAuction.removeAuctionItem(auctionId);
-        if (dbAuctionItemEntity == null){
+        if (dbAuctionItemEntity == null) {
             throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
         }
 
@@ -50,27 +51,25 @@ public class CancelAuctionItemCmdHandler implements ICmdHandler<GameMsg.CancelAu
         dbAuctionItemEntity.getScheduledFuture().cancel(true);
 
 
-        MailUtil.getMailUtil().sendMail(user.getUserId(),0,"取消上架商品", Collections.singletonList(new MailProps(dbAuctionItemEntity.getPropsId(), dbAuctionItemEntity.getNumber())));
-//        AuctionUtil.sendPropsMail(user.getUserId(), dbAuctionItemEntity.getPropsId(), dbAuctionItemEntity.getNumber(), "取消上架商品");
+        MailUtil.getMailUtil().sendMail(user.getUserId(),
+                0,
+                "取消上架商品",
+                Collections.singletonList(new MailProps(dbAuctionItemEntity.getPropsId(), dbAuctionItemEntity.getNumber())));
 
         //取消所有竞拍者，把钱还给他们
         DbBidderEntity bidder = dbAuctionItemEntity.getBidder();
-        AuctionUtil.sendMoneyMail(bidder.getUserId(), bidder.getMoney(), "竞拍物被取消");
+        if (bidder != null) {
+            MailUtil.getMailUtil().sendMail(bidder.getUserId(),
+                    bidder.getMoney(),
+                    "竞拍物被取消",
+                    new ArrayList<>());
+        }
+
 
         //删除拍卖品
         auctionTimer.deleteAuctionItem(dbAuctionItemEntity);
         auctionTimer.deleteBidder(bidder);
 
-    }
-
-    /**
-     * 换回参与竞拍者的钱
-     * @param bidderMap
-     */
-    private void backMoney(Map<Integer, DbBidderEntity> bidderMap){
-        for (DbBidderEntity bidderEntity : bidderMap.values()) {
-
-        }
     }
 
 }

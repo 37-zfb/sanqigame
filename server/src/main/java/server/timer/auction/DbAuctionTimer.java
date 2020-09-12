@@ -1,11 +1,13 @@
 package server.timer.auction;
 
+import entity.MailProps;
 import entity.db.DbAuctionItemEntity;
 import entity.db.DbBidderEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.cmdhandler.auction.AuctionUtil;
+import server.cmdhandler.mail.MailUtil;
 import server.model.PlayAuction;
 import server.service.AuctionService;
 import util.CustomizeThreadFactory;
@@ -184,7 +186,11 @@ public final class DbAuctionTimer {
                     AuctionUtil.auctionResult(auctionItemEntity,bidderEntityList.get(0));
                 }else {
                     //没有竞拍者
-                    AuctionUtil.sendPropsMail(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"未卖掉的竞拍品;");
+//                    AuctionUtil.sendPropsMail(auctionItemEntity.getUserId(),auctionItemEntity.getPropsId(),auctionItemEntity.getNumber(),"未卖掉的竞拍品;");
+                    MailUtil.getMailUtil().sendMail(auctionItemEntity.getUserId(),
+                            0,
+                            "未卖掉的竞拍品",
+                            Collections.singletonList(new MailProps( auctionItemEntity.getPropsId(), auctionItemEntity.getNumber())));
                 }
                 auctionService.deleteAuctionItem(auctionItemEntity);
             } else {

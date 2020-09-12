@@ -1,11 +1,14 @@
 package server.timer.auction;
 
+import entity.MailProps;
 import entity.db.DbAuctionItemEntity;
 import server.GameServer;
 import server.cmdhandler.auction.AuctionUtil;
+import server.cmdhandler.mail.MailUtil;
 import server.model.PlayAuction;
 import util.CustomizeThreadFactory;
 
+import java.util.Collections;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +54,10 @@ public final class ArriveTimeTimer {
                 AuctionUtil.auctionResult(auctionItemEntity, auctionItemEntity.getBidder());
             } else {
                 //此时拍卖物没有被买，发送邮件给拍卖人,没有竞拍者
-                AuctionUtil.sendPropsMail(auctionItemEntity.getUserId(), auctionItemEntity.getPropsId(), auctionItemEntity.getNumber(), "拍卖品未卖出");
+                MailUtil.getMailUtil().sendMail(auctionItemEntity.getUserId(),
+                        0,
+                        "拍卖品未卖出",
+                        Collections.singletonList(new MailProps( auctionItemEntity.getPropsId(), auctionItemEntity.getNumber())));
             }
             //删除拍卖品数据
             DB_AUCTION_TIMER.deleteAuctionItem(auctionItemEntity);
