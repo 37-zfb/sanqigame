@@ -131,7 +131,7 @@ public class DealThread {
         Map<Integer, Props> backpackClient = role.getBackpackClient();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("输入金额;");
+        System.out.println("重置金额;");
         int money = scanner.nextInt();
         scanner.nextLine();
 
@@ -142,11 +142,11 @@ public class DealThread {
         ctx.writeAndFlush(userDealItemCmd);
 
         while (true) {
-            System.out.println("99、退出 添加/取消 道具;");
+            System.out.println("0、退出;");
             int anInt = scanner.nextInt();
             scanner.nextLine();
 
-            if (anInt == 99) {
+            if (anInt == 0) {
                 break;
             }
 

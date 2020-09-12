@@ -30,7 +30,7 @@
 
     <delete id="deleteEquipmentBatch" parameterType="collection">
         <foreach collection="equipmentCollection" item="equipment" index="index" open="" close="" separator="">
-            DELETE FROM `user_equipment` WHERE user_id=#{equipment.userId} AND location = #{equipment.location};
+            DELETE FROM `user_equipment` WHERE id=#{equipment.id};
         </foreach>
     </delete>
 

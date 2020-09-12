@@ -24,42 +24,38 @@ import java.util.Map;
 @Slf4j
 public class UserConfirmDealCmdHandler implements ICmdHandler<GameMsg.UserConfirmDealCmd> {
 
-    /**
-     * 改变用户状态监视器
-     */
-    private final Object statusMonitor = new Object();
-
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserConfirmDealCmd userConfirmDealCmd) {
 
         MyUtil.checkIsNull(ctx, userConfirmDealCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        PlayDeal play_deal = user.getPLAY_DEAL();
-        int targetId = play_deal.getTargetUserId().get();
+        PlayDeal playDeal = user.getPLAY_DEAL();
+        int targetId = playDeal.getTargetUserId().get();
         if (targetId == 0) {
             // 此时不在交易状态
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
-        Integer prepareMoney = play_deal.getPrepareMoney();
-        Map<Integer, DealProps> prepareProps = play_deal.getPrepareProps();
-
         User targetUser = UserManager.getUserById(targetId);
+        if (targetUser == null){
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
+        }
+
+        Integer prepareMoney = playDeal.getPrepareMoney();
+        Map<Integer, DealProps> prepareProps = playDeal.getPrepareProps();
+
         targetUser.getPLAY_DEAL().setReceiveMoney(prepareMoney);
         targetUser.getPLAY_DEAL().getReceiveProps().putAll(prepareProps);
 
-        /**
-         *  若不加锁： 当a用户给ab都+1后在if前一句线程切换(时间片到期等)此时b又给ab都+1，
-         */
 
-        synchronized (statusMonitor) {
-            play_deal.setAgreeNumber(play_deal.getAgreeNumber()+1);
+        synchronized (playDeal.getCompleteDealMonitor()) {
+            playDeal.setAgreeNumber(playDeal.getAgreeNumber()+1);
             targetUser.getPLAY_DEAL().setAgreeNumber(targetUser.getPLAY_DEAL().getAgreeNumber()+1);
 
             GameMsg.UserConfirmDealResult.Builder newBuilder = GameMsg.UserConfirmDealResult.newBuilder();
             GameMsg.UserConfirmDealResult userConfirmDealResult;
-            if (play_deal.getAgreeNumber() == 2) {
+            if (playDeal.getAgreeNumber() == 2) {
                 //此时两个都同意了
                 userConfirmDealResult = newBuilder
                         .setIsSuccess(true)

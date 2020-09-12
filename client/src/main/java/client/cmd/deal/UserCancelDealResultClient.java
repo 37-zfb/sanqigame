@@ -23,7 +23,8 @@ public class UserCancelDealResultClient implements ICmd<GameMsg.UserCancelDealRe
             int userId = userCancelDealResult.getUserId();
             if (userId != role.getId()) {
                 System.out.println("对方取消交易;");
-                GameMsg.UserCancelDealCmd userCancelDealCmd = GameMsg.UserCancelDealCmd.newBuilder()
+                GameMsg.UserCancelDealCmd userCancelDealCmd = GameMsg.UserCancelDealCmd
+                        .newBuilder()
                         .setIsNeedNotice(false)
                         .build();
                 ctx.writeAndFlush(userCancelDealCmd);

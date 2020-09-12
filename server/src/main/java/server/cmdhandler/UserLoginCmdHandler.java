@@ -253,11 +253,9 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
             if (propsProperty.getType() == PropsType.Equipment) {
                 Equipment equipment = (Equipment) propsProperty;
-                // equipment.getId() 是数据库中的user_equipment中的id
                 propsResult.setDurability(equipment.getDurability()).setUserPropsId(equipment.getId());
             } else if (propsProperty.getType() == PropsType.Potion) {
                 Potion potion = (Potion) propsProperty;
-                //potion.getId() 是数据库中的 user_potion中的id
                 propsResult.setPropsNumber(potion.getNumber()).setUserPropsId(potion.getId());
             }
             resultBuilder.addProps(propsResult);

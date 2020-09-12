@@ -25,11 +25,15 @@ public class UserDealRequestCmdHandler implements ICmdHandler<GameMsg.UserDealRe
         User user = PublicMethod.getInstance().getUser(ctx);
 
         int targetUserId = userDealRequestCmd.getUserId();
-        User targetUser = UserManager.getUserById(targetUserId);
-
         if (targetUserId == user.getUserId()){
             throw new CustomizeException(CustomizeErrorCode.DEAL_REQUEST_ERROR);
         }
+
+        User targetUser = UserManager.getUserById(targetUserId);
+        if (targetUser == null){
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
+        }
+
 
         user.getPLAY_DEAL().getUserIdSet().add(targetUserId);
 

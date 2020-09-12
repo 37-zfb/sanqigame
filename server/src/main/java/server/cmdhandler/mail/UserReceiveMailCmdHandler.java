@@ -76,34 +76,6 @@ public class UserReceiveMailCmdHandler implements ICmdHandler<GameMsg.UserReceiv
         newBuilder.setMoney(user.getMoney());
         GameMsg.UserReceiveMailResult userReceiveMailResult = newBuilder.build();
         ctx.writeAndFlush(userReceiveMailResult);
-        // sortOutBackpack(user, newBuilder);
-    }
-
-
-    private void sortOutBackpack(User user, GameMsg.UserReceiveMailResult.Builder newBuilder) {
-        //  背包中的道具(装备、药剂等)  , 客户端更新背包中的数据
-        Map<Integer, Props> backpack = user.getBackpack();
-        for (Map.Entry<Integer, Props> propsEntry : backpack.entrySet()) {
-            GameMsg.Props.Builder propsResult = GameMsg.Props.newBuilder()
-                    .setLocation(propsEntry.getKey())
-                    .setPropsId(propsEntry.getValue().getId());
-
-            AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
-            if (propsProperty.getType() == PropsType.Equipment) {
-                Equipment equipment = (Equipment) propsProperty;
-                // equipment.getId() 是数据库中的user_equipment中的id
-                propsResult.setDurability(equipment.getDurability()).setUserPropsId(equipment.getId());
-            } else if (propsProperty.getType() == PropsType.Potion) {
-                Potion potion = (Potion) propsProperty;
-                //potion.getId() 是数据库中的 user_potion中的id
-                propsResult.setPropsNumber(potion.getNumber())
-                        .setUserPropsId(potion.getId());
-            }
-            newBuilder.addProps(propsResult);
-        }
-        newBuilder.setMoney(user.getMoney());
-        GameMsg.UserReceiveMailResult userReceiveMailResult = newBuilder.build();
-        user.getCtx().writeAndFlush(userReceiveMailResult);
     }
 
 
@@ -139,43 +111,6 @@ public class UserReceiveMailCmdHandler implements ICmdHandler<GameMsg.UserReceiv
         }
 
     }
-
-
-    /**
-     * 领取邮件
-     *
-     * @param user
-     * @param mailEntity
-     */
-    private void receiveMail(User user, DbSendMailEntity mailEntity) {
-        PublicMethod publicMethod = PublicMethod.getInstance();
-        Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
-
-
-        String propsInfo = mailEntity.getPropsInfo();
-        List<MailProps> mailProps = JSON.parseArray(propsInfo, MailProps.class);
-
-        for (MailProps mailProp : mailProps) {
-            Props props = propsMap.get(mailProp.getPropsId());
-            if (props.getPropsProperty().getType() == PropsType.Equipment) {
-                // 添加装备
-                publicMethod.addEquipment(user, props);
-                log.info("用户 {} 从邮件中获取 {};", user.getUserName(), props.getName());
-            } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-                // 添加药剂
-                publicMethod.addPotion(props, user, mailProp.getNumber());
-                log.info("用户 {} 从邮件中获取 {} {}个;", user.getUserName(), props.getName(), mailProp.getNumber());
-            }
-        }
-        mailEntity.setState(MailType.READ.getState());
-        sendMailTimer.modifyMailList(mailEntity);
-
-        user.setMoney(user.getMoney() + mailEntity.getMoney());
-        log.info("用户 {} 从邮件中获取 {}金币;", user.getUserName(), mailEntity.getMoney());
-        CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
-        userStateTimer.modifyUserState(userState);
-    }
-
 
 }
 

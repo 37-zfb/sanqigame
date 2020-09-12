@@ -88,8 +88,7 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
 
             // 持久化自己装备状态
             UserEquipmentEntity equipmentEntity = new UserEquipmentEntity();
-            equipmentEntity.setUserId(user.getUserId());
-            equipmentEntity.setLocation(location);
+            equipmentEntity.setId(((Equipment)propsProperty).getId());
             userStateTimer.deleteUserEquipment(equipmentEntity);
 
             log.info("用户 {} 添加 {} 进仓库", user.getUserName(), p.getName());
@@ -101,8 +100,6 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
 
             //持久化自身道具状态
             UserPotionEntity userPotionEntity = new UserPotionEntity();
-            userPotionEntity.setUserId(user.getUserId());
-            userPotionEntity.setLocation(location);
             userPotionEntity.setId(potion.getId());
             if (potion.getNumber() > propsNumber) {
                 potion.setNumber(potion.getNumber() - propsNumber);

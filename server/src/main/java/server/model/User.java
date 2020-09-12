@@ -559,8 +559,7 @@ public class User {
         if (props.getPropsProperty().getType() == PropsType.Equipment) {
 
             UserEquipmentEntity userEquipmentEntity = new UserEquipmentEntity();
-            userEquipmentEntity.setUserId(userId);
-            userEquipmentEntity.setLocation(location);
+            userEquipmentEntity.setId(((Equipment)props.getPropsProperty()).getId());
             USER_STATE_TIMER.deleteUserEquipment(userEquipmentEntity);
             backpack.remove(location);
         } else if (props.getPropsProperty().getType() == PropsType.Potion) {
@@ -572,8 +571,6 @@ public class User {
 
             UserPotionEntity userPotionEntity = new UserPotionEntity();
             userPotionEntity.setId(potion.getId());
-            userPotionEntity.setLocation(location);
-            userPotionEntity.setUserId(userId);
             if (potion.getNumber() > number) {
                 //修改数量
                 userPotionEntity.setNumber(potion.getNumber() - number);

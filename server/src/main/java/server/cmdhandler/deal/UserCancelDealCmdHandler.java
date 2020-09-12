@@ -26,34 +26,43 @@ public class UserCancelDealCmdHandler implements ICmdHandler<GameMsg.UserCancelD
         MyUtil.checkIsNull(ctx, userCancelDealCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        PlayDeal play_deal = user.getPLAY_DEAL();
-        int targetId = play_deal.getTargetUserId().get();
+        PlayDeal playDeal = user.getPLAY_DEAL();
+        int targetId = playDeal.getTargetUserId().get();
+        if (targetId == 0) {
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
+        }
 
         GameMsg.UserCancelDealResult.Builder newBuilder = GameMsg.UserCancelDealResult.newBuilder();
-        if (targetId == 0) {
-            // 此时不在交易状态
-            throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
-        } else {
-            // 此时在交易状态
-            boolean isSuccess = play_deal.getTargetUserId().compareAndSet(targetId, 0);
-            if (isSuccess) {
-                // 成功
-                play_deal.getPrepareProps().clear();
-                play_deal.setPrepareMoney(0);
-                newBuilder.setIsSuccess(true).setUserId(user.getUserId());
-                log.info("用户 {} 取消交易;", user.getUserName());
-            }else {
-                newBuilder.setIsSuccess(false);
-                log.info("用户 {} 取消交易失败;", user.getUserName());
-            }
+
+        boolean isSuccess = playDeal.getTargetUserId().compareAndSet(targetId, 0);
+        if (isSuccess) {
+            // 成功
+            playDeal.getPrepareProps().clear();
+            playDeal.setPrepareMoney(0);
+            playDeal.setCompleteDealMonitor(null);
+            newBuilder.setIsSuccess(true).setUserId(user.getUserId());
+            log.info("用户 {} 取消交易;", user.getUserName());
         }
+
+        if (!isSuccess) {
+            newBuilder.setIsSuccess(false);
+            log.info("用户 {} 取消交易失败;", user.getUserName());
+        }
+
+
+
+
+        if (!userCancelDealCmd.getIsNeedNotice()) {
+            return;
+        }
+
+        GameMsg.UserCancelDealResult userCancelDealResult = newBuilder.build();
+        ctx.writeAndFlush(userCancelDealResult);
 
         User targetUser = UserManager.getUserById(targetId);
-
-        if (userCancelDealCmd.getIsNeedNotice()){
-            GameMsg.UserCancelDealResult userCancelDealResult = newBuilder.build();
-            ctx.writeAndFlush(userCancelDealResult);
-            targetUser.getCtx().writeAndFlush(userCancelDealResult);
+        if (targetUser == null){
+            return;
         }
+        targetUser.getCtx().writeAndFlush(userCancelDealResult);
     }
 }

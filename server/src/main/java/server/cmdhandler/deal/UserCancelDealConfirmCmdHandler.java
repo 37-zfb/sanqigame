@@ -26,26 +26,35 @@ public class UserCancelDealConfirmCmdHandler implements ICmdHandler<GameMsg.User
         MyUtil.checkIsNull(ctx, userCancelDealConfirmCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        PlayDeal play_deal = user.getPLAY_DEAL();
-        int targetId = play_deal.getTargetUserId().get();
+        PlayDeal playDeal = user.getPLAY_DEAL();
+        int targetId = playDeal.getTargetUserId().get();
         if (targetId == 0) {
             // 此时不在交易状态
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
-        play_deal.setDetermine(false);
-        play_deal.setAgreeNumber(0);
+        playDeal.setDetermine(false);
+        playDeal.setAgreeNumber(0);
+        playDeal.setReceiveMoney(0);
+        playDeal.getReceiveProps().clear();
 
         log.info("用户 {} 取消确认;", user.getUserName());
 
-        if (userCancelDealConfirmCmd.getIsNeedNotice()) {
-            User targetUser = UserManager.getUserById(targetId);
-            GameMsg.UserCancelDealConfirmResult userCancelDealConfirmResult =
-                    GameMsg.UserCancelDealConfirmResult
-                            .newBuilder()
-                            .build();
-            targetUser.getCtx().writeAndFlush(userCancelDealConfirmResult);
+
+
+        if (!userCancelDealConfirmCmd.getIsNeedNotice()) {
+            return;
         }
+
+        User targetUser = UserManager.getUserById(targetId);
+        if (targetUser == null){
+            return;
+        }
+        GameMsg.UserCancelDealConfirmResult userCancelDealConfirmResult =
+                GameMsg.UserCancelDealConfirmResult
+                        .newBuilder()
+                        .build();
+        targetUser.getCtx().writeAndFlush(userCancelDealConfirmResult);
 
     }
 }

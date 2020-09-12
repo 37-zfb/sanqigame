@@ -96,6 +96,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     USER_ALREADY_IN_ARENA(-465,"用户已存在竞技场;"),
     TARGET_NOT_EXIST(-466,"目标用户不在竞技场;"),
     USER_NOT_INVITE(-466,"未被邀请;"),
+    DEAL_PROPS_NOT_EXIST(-467,"交易道具不存在;"),
     ;
 
     private String message;

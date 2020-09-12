@@ -51,7 +51,7 @@ public final class PropsUtil {
      * @param number 数量
      */
     public void addProps(List<Integer> propsIdList, User user, GeneratedMessageV3.Builder newBuilder,Integer number) {
-        if (propsIdList == null || user == null || newBuilder == null) {
+        if (propsIdList == null || user == null ) {
             return;
         }
 
@@ -91,7 +91,7 @@ public final class PropsUtil {
                 AuctionUtil.sendMailBuyer(user.getUserId(), propsId, number, "背包已满;");
             }
 
-            if (reward == null) {
+            if (reward == null || newBuilder == null) {
                 continue;
             }
 

@@ -39,7 +39,7 @@
 
     <delete id="deletePotionBatch" parameterType="collection">
         <foreach collection="deleteUserPotionCollection" item="potion" index="index" open="" close="" separator="">
-            delete from `user_potion` where use_id = #{potion.userId}  and location = #{potion.location};
+            delete from `user_potion` where id = #{potion.id};
         </foreach>
     </delete>
 

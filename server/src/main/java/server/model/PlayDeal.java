@@ -29,6 +29,12 @@ public class PlayDeal {
      * 是否放完装备
      */
     private boolean isDetermine = false;
+
+
+    /**
+     * 确定交易锁
+     */
+    private Object completeDealMonitor;
     /**
      * 同意交易个数
      */
@@ -41,7 +47,7 @@ public class PlayDeal {
 
 
     /**
-     * 准备交易的道具
+     * 准备交易的道具   k:location
      */
     private final Map<Integer, DealProps> prepareProps = new HashMap<>();
     /**

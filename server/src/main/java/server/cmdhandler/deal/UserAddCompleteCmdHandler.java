@@ -15,7 +15,7 @@ import util.MyUtil;
 
 /**
  * @author 张丰博
- * 玩家添加道具完成
+ * 玩家添加道具完毕
  */
 @Component
 @Slf4j
@@ -26,15 +26,18 @@ public class UserAddCompleteCmdHandler implements ICmdHandler<GameMsg.UserAddCom
         MyUtil.checkIsNull(ctx, userCancelDealCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        PlayDeal play_deal = user.getPLAY_DEAL();
-        int targetId = play_deal.getTargetUserId().get();
-
+        PlayDeal playDeal = user.getPLAY_DEAL();
+        int targetId = playDeal.getTargetUserId().get();
         if (targetId == 0) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
         User targetUser = UserManager.getUserById(targetId);
-        play_deal.setDetermine(true);
+        if (targetUser == null){
+            throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
+        }
+
+        playDeal.setDetermine(true);
 
         log.info("用户 {} 添加道具完毕;", user.getUserName());
 
