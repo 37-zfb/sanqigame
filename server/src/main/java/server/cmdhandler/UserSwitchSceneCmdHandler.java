@@ -1,5 +1,6 @@
 package server.cmdhandler;
 
+import constant.ProfessionConst;
 import constant.SceneConst;
 import entity.db.CurrUserStateEntity;
 import entity.db.UserEquipmentEntity;
@@ -90,6 +91,9 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
             PublicMethod.getInstance().dbWeaponDurability(user.getUserEquipmentArr());
             //取消当前用户召唤兽定时器
             PublicMethod.getInstance().cancelSummonTimer(user);
+
+            user.setCurrHp(ProfessionConst.HP);
+            user.setCurrMp(ProfessionConst.MP);
         }
 
 

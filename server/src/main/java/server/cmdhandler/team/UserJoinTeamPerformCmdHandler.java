@@ -1,6 +1,5 @@
 package server.cmdhandler.team;
 
-import constant.TeamConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;

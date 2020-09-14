@@ -42,8 +42,6 @@ import java.util.Map;
 @Slf4j
 public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
 
-    @Autowired
-    private DbUserStateTimer userStateTimer;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.AttkBossCmd attkBossCmd) {
@@ -58,6 +56,10 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
         BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
         if (currBossMonster == null){
             return;
+        }
+
+        if (user.getCurrHp() <= 0){
+            throw new CustomizeException(CustomizeErrorCode.USER_DIE);
         }
 
         Integer subHp = user.calMonsterSubHp();

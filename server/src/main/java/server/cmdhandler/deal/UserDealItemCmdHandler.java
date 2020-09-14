@@ -38,6 +38,10 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
+        if (playDeal.isDetermine()){
+            throw new CustomizeException(CustomizeErrorCode.PROPS_ADD_COMPLETE);
+        }
+
         int money = userDealItemCmd.getMoney();
         if (user.getMoney() < money) {
             throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);

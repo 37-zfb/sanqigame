@@ -39,6 +39,10 @@ public class AttkCmdHandler implements ICmdHandler<GameMsg.AttkCmd> {
         MyUtil.checkIsNull(ctx, cmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
+        if (user.getCurrHp() <= 0){
+            throw new CustomizeException(CustomizeErrorCode.USER_DIE);
+        }
+
         Scene curScene = GameData.getInstance().getSceneMap().get(user.getCurSceneId());
         Map<Integer, Monster> monsterMap = curScene.getMonsterMap();
         if (monsterMap.size() == 0) {

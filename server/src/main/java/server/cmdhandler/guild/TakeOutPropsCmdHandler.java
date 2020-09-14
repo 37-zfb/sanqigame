@@ -137,7 +137,6 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
             }
             if (p.getPropsProperty().getType() == PropsType.Equipment) {
                 //持久化装备
-//                PublicMethod.getInstance().addEquipment(user, p);
                 PropsUtil.getPropsUtil().addProps(Collections.singletonList(p.getId()), user, newBuilder, number);
                 playGuild.getWAREHOUSE_PROPS().remove(props.getLocation());
             } else if (p.getPropsProperty().getType() == PropsType.Potion) {
@@ -151,7 +150,6 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
 
                 //持久化药剂
                 PropsUtil.getPropsUtil().addProps(Collections.singletonList(p.getId()), user, newBuilder, number);
-//                PublicMethod.getInstance().addPotion(p, user, number);
                 //修改仓库药剂数量
                 if (potion.getNumber() == number) {
                     potion.setNumber(0);
@@ -162,8 +160,6 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
 
             }
         }
-
-
         return p;
     }
 

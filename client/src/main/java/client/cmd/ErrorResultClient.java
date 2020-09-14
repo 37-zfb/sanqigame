@@ -93,6 +93,8 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
         } else if (code == CustomizeErrorCode.TASK_NOT_FOUND.getCode()) {
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
             CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+        }else if (code == CustomizeErrorCode.USER_DIE.getCode()){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
         }
 
 

@@ -42,7 +42,7 @@ public class UserCmd {
      */
     public static Object operation(Role role, Collection<Npc> npcList, ChannelHandlerContext ctx) {
         // 构建角色，角色初始在启始之地
-        log.info("============欢迎勇士来到冒险大陆==============");
+        log.info("============欢迎来到<Hello World>==============");
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
@@ -50,12 +50,7 @@ public class UserCmd {
                 Scene scene = GameData.getInstance().getSceneMap().get(currSceneId);
                 String curSceneName = scene.getName();
                 log.info("============所在地: {} ==============", scene.getName());
-//                log.info("============当前场景的npc个数: {}", (npcList == null ? 0 : npcList.size()));
-//                if (npcList != null) {
-//                    for (Npc npc : npcList) {
-//                        log.info("===>> npc 名称: {}", npc.getName());
-//                    }
-//                }
+
 
                 if (role.getTEAM_CLIENT().getTeamLeaderId() != null) {
                     log.info("======> 队伍成员如下: ");

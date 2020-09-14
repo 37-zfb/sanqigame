@@ -47,6 +47,10 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
 
         }
 
+        if (user.getCurrHp() <= 0){
+            throw new CustomizeException(CustomizeErrorCode.USER_DIE);
+        }
+
         //判断用户此时状态
         SkillUtil.getSkillUtil().skillDestination(user);
 

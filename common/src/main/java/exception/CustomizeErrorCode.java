@@ -101,6 +101,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     SELF_NOT_COMPLETE(-469,"自己还未添加完毕;"),
     TASK_NOT_FOUND(-470,"任务已做完;"),
     FRIEND_EXISTS(-471,"用户已存在;"),
+    PROPS_ADD_COMPLETE(-472,"道具添加完毕;"),
+    USER_DIE(-473,"用户已死;"),
     ;
 
     private String message;
