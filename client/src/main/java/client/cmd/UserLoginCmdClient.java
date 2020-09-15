@@ -1,5 +1,6 @@
 package client.cmd;
 
+import client.model.*;
 import client.model.guild.PlayGuildClient;
 import client.model.server.profession.Skill;
 import client.model.server.props.Equipment;
@@ -12,10 +13,6 @@ import client.model.task.PlayTaskClient;
 import client.scene.GameData;
 import client.thread.CmdThread;
 import client.GameClient;
-import client.model.MailClient;
-import client.model.Role;
-import client.model.SceneData;
-import client.model.User;
 import client.model.client.MailEntityClient;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
@@ -157,10 +154,16 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
 
         PlayTaskClient playTaskClient = role.getPlayTaskClient();
         boolean isHaveTask = userLoginResult.getIsHaveTask();
-        if (isHaveTask){
+        if (isHaveTask) {
             playTaskClient.setCurrTaskId(userLoginResult.getCurrTaskId());
             playTaskClient.setCompleted(userLoginResult.getCurrTaskCompleted());
         }
+
+
+        //朋友
+        Map<Integer, String> friendMap = role.getPlayFriendClient().getFriendMap();
+        List<GameMsg.Friend> friendList = userLoginResult.getFriendList();
+        friendList.forEach(f -> friendMap.put(f.getFriendId(), f.getFriendName()));
 
 
         // 下一步 操作

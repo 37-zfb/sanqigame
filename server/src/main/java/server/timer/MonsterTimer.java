@@ -94,6 +94,7 @@ public class MonsterTimer {
                             int subHp = monster.calUserSubHp();
                             // 怪的普通攻击
                             if (user != null) {
+                                user.calCurrHp();
                                 user.monsterAttackSubHp(monster.getName(), subHp);
                                 log.info("用户 {} 受到 {} 攻击,减血 {},剩余血量 {}", user.getUserName(), monster.getName(), subHp, user.getCurrHp());
                             } else {

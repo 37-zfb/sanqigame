@@ -31,10 +31,11 @@ public class ModifyGuildStateCmdHandler implements ICmdHandler<GameMsg.ModifyGui
         MyUtil.checkIsNull(ctx,modifyGuildStateCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
+        user.setPlayGuild(null);
         CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
         userState.setGuildId(GuildMemberType.Public.getRoleId());
         userStateTimer.modifyUserState(userState);
 
-        user.setPlayGuild(null);
+
     }
 }

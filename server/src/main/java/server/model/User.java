@@ -221,7 +221,7 @@ public class User {
     /**
      * 朋友
      */
-    private final PlayFriend playFriend = new PlayFriend();
+    private final PlayFriend PLAY_FRIEND = new PlayFriend();
 
     /**
      * 设置恢复mp终止时间
@@ -328,7 +328,7 @@ public class User {
         // 使用技能后的血量
         this.currMp = currMp - consumeMp;
         //重新设置终止时间
-        int mp = 1000 - this.currMp;
+        int mp = ProfessionConst.MP - this.currMp;
         this.getUserResumeState().setStartTimeMp(System.currentTimeMillis());
         this.getUserResumeState().setEndTimeMp(System.currentTimeMillis() + mp * 1000);
     }
@@ -368,7 +368,7 @@ public class User {
                     potion.setUsedStartTime(System.currentTimeMillis());
                 } else if (potionEndTimeMp != 0) {
                     // 此时药效使用完
-                    int v = (int) ((potionEndTimeMp - potion.getUsedStartTime()) / 4000) * 400;
+                    float v = (float) (potionEndTimeMp - potion.getUsedStartTime()) / 4000 * 400;
                     if (ProfessionConst.MP <= (currMp + v)) {
                         currMp = ProfessionConst.MP;
                     } else {
@@ -385,7 +385,7 @@ public class User {
     }
 
     /**
-     * 计算当前血量
+     * 计算当前血量,并重新设计时间
      */
     public void calCurrHp() {
         synchronized (this.hpMonitor) {
@@ -400,20 +400,23 @@ public class User {
             }
 
             Long endTimeHp = potion.getUsedEndTime();
-            if (endTimeHp != 0 && endTimeHp >= System.currentTimeMillis()) {
+            long currentTimeMillis = System.currentTimeMillis();
+            if (endTimeHp != 0 && endTimeHp >= currentTimeMillis) {
                 // 此时药效未使用完
                 long startTime = potion.getUsedStartTime();
-                float v = (float) (System.currentTimeMillis() - startTime) / 4000 * 400;
+                float v = (float) (currentTimeMillis - startTime) / 4000 * 400;
                 currHp += v;
-                potion.setUsedStartTime(System.currentTimeMillis());
+                potion.setUsedStartTime(currentTimeMillis);
+                log.info("用户 {} 加血 {} 当前血量 {};", userName, v, currHp);
             } else if (endTimeHp != 0) {
                 // 此时药效使用完
-                int v = (int) ((endTimeHp - potion.getUsedStartTime()) / 4000) * 400;
+                float v = (float) (endTimeHp - potion.getUsedStartTime()) / 4000 * 400;
                 if (ProfessionConst.HP <= (currHp + v)) {
                     currHp = ProfessionConst.HP;
                 } else {
                     currHp += v;
                 }
+                log.info("用户 {} 加血 {} 当前血量 {};", userName, v, currHp);
                 potion.setUsedEndTime(0L);
                 potion.setUsedStartTime(0L);
             }
@@ -533,7 +536,7 @@ public class User {
             } else if (props.getPropsProperty().getType() == PropsType.Potion) {
                 PropsUtil.getPropsUtil().addPotion(props, this, 1);
             }
-        }catch (CustomizeException e){
+        } catch (CustomizeException e) {
             log.error(e.getMessage(), e);
 
             MailUtil.getMailUtil().sendMail(userId,
@@ -544,9 +547,6 @@ public class User {
         }
 
     }
-
-
-
 
 
     /**

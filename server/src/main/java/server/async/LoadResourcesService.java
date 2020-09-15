@@ -6,11 +6,9 @@ import entity.MailProps;
 import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.GuildManager;
-import server.cmdhandler.auction.AuctionUtil;
 import server.model.PlayGuild;
 import server.model.PlayMail;
 import server.model.PlayTask;
@@ -21,10 +19,7 @@ import server.model.props.Potion;
 import server.model.props.Props;
 import server.model.store.Goods;
 import server.scene.GameData;
-import server.service.GuildService;
-import server.service.MailService;
-import server.service.TaskService;
-import server.service.UserService;
+import server.service.*;
 import type.GoodsLimitBuyType;
 import type.GuildMemberType;
 import type.MailType;
@@ -53,6 +48,8 @@ public class LoadResourcesService {
     private GuildService guildService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private FriendService friendService;
 
 
     public void asyn(UserEntity userEntity, ChannelHandlerContext ctx, Function<User, Void> callback) {
@@ -157,6 +154,7 @@ public class LoadResourcesService {
         loadLimitNumber(user);
         loadMail(user);
         loadTask(user);
+        loadFriend(user);
         // 群发邮件
 //        sendMailAll(user);
 
@@ -166,6 +164,12 @@ public class LoadResourcesService {
         user.resumeMpTime();
 
         return user;
+    }
+
+    private void loadFriend(User user) {
+        List<DbFriendEntity> friendEntityList = friendService.listFriend(user.getUserId());
+        Map<Integer, String> friendMap = user.getPLAY_FRIEND().getFRIEND_MAP();
+        friendEntityList.forEach(f->friendMap.put(f.getUserId(),f.getFriendName()));
     }
 
     /**

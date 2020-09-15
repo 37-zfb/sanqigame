@@ -39,8 +39,6 @@ import java.util.Map;
 public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsCmd> {
 
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private StoreService storeService;

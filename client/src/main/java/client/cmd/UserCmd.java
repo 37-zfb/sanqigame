@@ -87,7 +87,7 @@ public class UserCmd {
                     System.out.println("======>6:使用MP/HP药剂;");
                     System.out.println("======>7:背包;");
                     System.out.println("======>8:装备栏;");
-                    System.out.println("======>9:怪发起攻击;");
+//                    System.out.println("======>9:怪发起攻击;");
                     System.out.println("======>10:穿戴装备;");
                     System.out.println("======>11:卸下装备;");
                     System.out.println("======>12:修理装备;");
@@ -330,19 +330,25 @@ public class UserCmd {
                         }
 
                         System.out.println("===>请选择要购买的商品: ");
+                        System.out.println("0、退出;");
                         int goodsId = scanner.nextInt();
-                        int number = 1;
-                        GameMsg.UserBuyGoodsCmd.Builder goodsBuilder = GameMsg.UserBuyGoodsCmd.newBuilder();
-                        goodsBuilder.setGoodsId(goodsId);
-                        goodsBuilder.setGoodsNumber(1);
-                        if (propsMap.get(goodsMap.get(goodsId).getPropsId()).getPropsProperty().getType() == PropsType.Potion) {
-                            System.out.println("请输入购买的数量: ");
-                            number = scanner.nextInt();
 
+                        if (goodsId == 0){
+
+                        }else {
+                            int number = 1;
+                            GameMsg.UserBuyGoodsCmd.Builder goodsBuilder = GameMsg.UserBuyGoodsCmd.newBuilder();
+                            goodsBuilder.setGoodsId(goodsId);
+                            goodsBuilder.setGoodsNumber(1);
+                            if (propsMap.get(goodsMap.get(goodsId).getPropsId()).getPropsProperty().getType() == PropsType.Potion) {
+                                System.out.println("请输入购买的数量: ");
+                                number = scanner.nextInt();
+
+                            }
+                            goodsBuilder.setGoodsNumber(number);
+                            ctx.writeAndFlush(goodsBuilder.build());
                         }
-                        goodsBuilder.setGoodsNumber(number);
-                        GameMsg.UserBuyGoodsCmd userBuyGoodsCmd = goodsBuilder.build();
-                        return userBuyGoodsCmd;
+
                     } else if ("15".equals(command)) {
                         // 聊天
                         System.out.println("1、私聊;");
@@ -414,11 +420,13 @@ public class UserCmd {
                         ctx.writeAndFlush(userJoinTeamCmd);
                     } else if ("21".equals(command)) {
                         // 不加队伍
+                        Integer originateUserId = role.getTEAM_CLIENT().getOriginateUserId();
                         role.getTEAM_CLIENT().setOriginateUserId(null);
                         GameMsg.UserJoinTeamCmd userJoinTeamCmd = GameMsg.UserJoinTeamCmd.newBuilder()
                                 .setIsJoin(false)
+                                .setOriginateUserId(originateUserId)
                                 .build();
-                        return userJoinTeamCmd;
+                        ctx.writeAndFlush(userJoinTeamCmd);
                     } else if ("22".equals(command)) {
                         //  退出队伍
                         return GameMsg.UserQuitTeamCmd.newBuilder()
@@ -439,9 +447,12 @@ public class UserCmd {
                                 .build();
                     } else if ("26".equals(command)) {
                         // 拒绝交易
+
+                        Integer originateId = role.getDEAL_CLIENT().getOriginateId();
                         role.getDEAL_CLIENT().setOriginateId(null);
                         return GameMsg.DealTargetUserResponseCmd.newBuilder()
                                 .setIsAgree(false)
+                                .setOriginateId(originateId)
                                 .build();
                     } else if ("27".equals(command)) {
                         // 建立交易通道

@@ -86,9 +86,11 @@ public class BossAttackTimer {
                             if (user != null) {
                                 int subHp = bossMonster.calUserSubHp(user.getBaseDefense(), user.getWeakenDefense());
 //                            int subHp = 5000;
+                                user.calCurrHp();
                                 user.bossAttackSubHp(bossMonster, subHp);
 
-                            } else if (summonMonster != null) {
+                            }
+                            if (summonMonster != null) {
                                 // 召唤兽
                                 int subHp = bossMonster.calUserSubHp(summonMonster.getBaseDefense(), summonMonster.getWeakenDefense());
 //                                subHp = 5000;

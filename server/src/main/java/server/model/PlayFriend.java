@@ -12,7 +12,7 @@ import java.util.Map;
 public class PlayFriend {
 
     /**
-     * 朋友集合
+     * 朋友集合  用户id 用户名称
      */
     private final Map<Integer, String> FRIEND_MAP = new HashMap<>();
 }

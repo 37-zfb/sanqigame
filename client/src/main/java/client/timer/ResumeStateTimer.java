@@ -37,6 +37,13 @@ public class ResumeStateTimer {
     public void resumeStateAutomatic(Role role ) {
         ScheduledFuture<?> scheduledFuture = scheduledThreadPool.scheduleAtFixedRate(() -> {
             synchronized (role.getMpMonitor()) {
+                if (role.getCurrMp() == ProfessionConst.MP){
+                    role.getUserResumeState().setEndTimeMp(0L);
+                    role.getMpTask().cancel(true);
+                    role.setMpTask(null);
+                    return;
+                }
+
                 if (role.getCurrMp() < ProfessionConst.MP) {
                     // 增加mp 此时需要加锁；
                     log.info("当前mp: {} ,+1", role.getCurrMp());

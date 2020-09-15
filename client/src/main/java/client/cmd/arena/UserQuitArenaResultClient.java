@@ -26,7 +26,7 @@ public class UserQuitArenaResultClient implements ICmd<GameMsg.UserQuitArenaResu
         PlayArenaClient playArenaClient = role.getARENA_CLIENT();
 
         if (userId == role.getId()){
-            // 标识未尽竞技场; 本用户
+            // 标识未进竞技场; 本用户
             playArenaClient.setInArena(false);
             role.setCurrHp(ProfessionConst.HP);
             role.setCurrMp(ProfessionConst.MP);

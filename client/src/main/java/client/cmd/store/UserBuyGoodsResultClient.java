@@ -35,6 +35,7 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
         int goodsNumber = userBuyGoodsResult.getGoodsNumber();
 
 
+
         Map<Integer, Goods> goodsMap = GameData.getInstance().getGoodsMap();
         Goods goods = goodsMap.get(goodsId);
         Props props1 = GameData.getInstance().getPropsMap().get(goods.getPropsId());
@@ -42,6 +43,9 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
             Integer allowNumber = role.getGOODS_ALLOW_NUMBER().get(goodsId);
             role.getGOODS_ALLOW_NUMBER().put(goodsId, (allowNumber - goodsNumber));
         }
+
+
+        role.setMoney(role.getMoney() -  goodsNumber*goods.getPrice());
 
         //封装背包中的物品
         List<GameMsg.Props> propsList = userBuyGoodsResult.getPropsList();
@@ -97,7 +101,7 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
         }
 
 
-        CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
+//        CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }
 
 

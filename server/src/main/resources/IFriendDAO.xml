@@ -17,7 +17,7 @@
     </insert>
 
     <select id="selectByUserId" resultMap="friendEntity" resultType="list">
-        select * from `friend` where user_id = #{userId}
+        select * from `friend` where user_id = #{userId};
     </select>
 
     <delete id="deleteBatch" parameterType="collection">

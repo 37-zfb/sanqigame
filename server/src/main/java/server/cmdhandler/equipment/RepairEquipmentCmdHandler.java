@@ -65,7 +65,7 @@ public class RepairEquipmentCmdHandler implements ICmdHandler<GameMsg.RepairEqui
                     equipmentEntity.setDurability(EquipmentConst.MAX_DURABILITY);
                     userStateTimer.modifyUserEquipment(equipmentEntity);
 
-                    log.info("用户 {} 修理已穿戴装备 {} ",user.getUserName(),props.getName());
+                    log.info("用户 {} 修理未穿戴装备 {} ",user.getUserName(),props.getName());
                 }
 
             }

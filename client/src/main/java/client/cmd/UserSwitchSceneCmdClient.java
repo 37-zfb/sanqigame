@@ -6,8 +6,11 @@ import client.model.server.scene.Scene;
 import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
+import constant.ProfessionConst;
+import constant.SceneConst;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
+import type.SceneType;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,10 @@ public class UserSwitchSceneCmdClient implements ICmd<GameMsg.UserSwitchSceneRes
         }
 
         Role role = Role.getInstance();
+        role.setCurrHp(msg.getHp());
+        synchronized (role.getMpMonitor()){
+            role.setCurrMp(msg.getMp());
+        }
         // 场景之间移动
 
 

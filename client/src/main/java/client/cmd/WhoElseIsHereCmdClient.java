@@ -36,26 +36,26 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
         System.out.println("============当前场景的用户个数:  " + userInfoList.size());
         for (GameMsg.UserInfo userInfo : userInfoList) {
             // 获得用户信息
-            System.out.println("============用户id:" + userInfo.getUserId() + "、 名字: " + userInfo.getUserName()+" 组队: "+(userInfo.getIsTeam() ? "是":"无" ));
+            System.out.println("============用户id:" + userInfo.getUserId() + "、 名字: " + userInfo.getUserName() + " 组队: " + (userInfo.getIsTeam() ? "是" : "无"));
         }
 
         Scanner scanner = new Scanner(System.in);
 
-        if (role.isAddFriend()){
+        if (role.isAddFriend()) {
             role.setAddFriend(false);
             //添加好友
             System.out.println("0、退出;");
             System.out.println("1、添加好友;");
             int anInt = scanner.nextInt();
             scanner.nextLine();
-            if (anInt == 1){
+            if (anInt == 1) {
                 System.out.println("输入用户;");
                 int userId = scanner.nextInt();
                 scanner.nextLine();
 
                 String userName = "";
                 for (GameMsg.UserInfo userInfo : userInfoList) {
-                    if (userInfo.getUserId() == userId){
+                    if (userInfo.getUserId() == userId) {
                         userName = userInfo.getUserName();
                     }
                 }
@@ -68,7 +68,7 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
             }
 
 
-        }else if (role.isChat()) {
+        } else if (role.isChat()) {
             // 聊天
             System.out.println("选择用户: ");
             int userId = scanner.nextInt();
@@ -89,25 +89,34 @@ public class WhoElseIsHereCmdClient implements ICmd<GameMsg.WhoElseIsHereResult>
         } else if (role.isTeam()) {
             // 组队
             System.out.println("选择用户: ");
+            System.out.println("0、退出;");
             int userId = scanner.nextInt();
 
             role.setTeam(false);
 
-            GameMsg.UserTeamUpCmd userTeamUpCmd = GameMsg.UserTeamUpCmd.newBuilder()
-                    .setTargetUserId(userId)
-                    .build();
-            ctx.writeAndFlush(userTeamUpCmd);
+            if (0 != userId) {
+                GameMsg.UserTeamUpCmd userTeamUpCmd = GameMsg.UserTeamUpCmd.newBuilder()
+                        .setTargetUserId(userId)
+                        .build();
+                ctx.writeAndFlush(userTeamUpCmd);
+            }
+
+
         } else if (role.isDeal()) {
             // 交易
             System.out.println("选择用户: ");
+            System.out.println("0、退出;");
             int userId = scanner.nextInt();
 
             role.setDeal(false);
 
-            GameMsg.UserDealRequestCmd userDealRequestCmd = GameMsg.UserDealRequestCmd.newBuilder()
-                    .setUserId(userId)
-                    .build();
-            ctx.writeAndFlush(userDealRequestCmd);
+            if (0 != userId){
+                GameMsg.UserDealRequestCmd userDealRequestCmd = GameMsg.UserDealRequestCmd.newBuilder()
+                        .setUserId(userId)
+                        .build();
+                ctx.writeAndFlush(userDealRequestCmd);
+            }
+
         } else {
             // 2、npc信息
             Map<Integer, Npc> npcMap = scene.getNpcMap();

@@ -439,7 +439,15 @@ message UserLoginResult {
 
   //等级
   uint32 lv = 21;
+
+  //朋友
+  repeated Friend friend = 22;
 }
+message Friend{
+  uint32 friendId = 1;
+  string friendName = 2;
+}
+
 message Props {
   uint32 location = 1;
   uint32 propsId = 2;
@@ -518,6 +526,9 @@ message UserSwitchSceneResult {
     // id
     uint32 monsterId = 4;
   }
+
+  uint32 hp = 3;
+  uint32 mp = 4;
 }
 // 怪 发动攻击
 message MonsterStartAttkUser {
@@ -546,6 +557,7 @@ message UserSkillAttkResult {
   // false 原因
   string falseReason = 4;
 
+  uint32 subMp = 5;
   // 恢复蓝的终止时间
   uint64 resumeMpEndTime = 11;
 }

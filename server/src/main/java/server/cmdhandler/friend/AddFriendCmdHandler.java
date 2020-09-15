@@ -38,7 +38,7 @@ public class AddFriendCmdHandler implements ICmdHandler<GameMsg.AddFriendCmd> {
         MyUtil.checkIsNull(ctx, addFriendCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        Map<Integer, String> friendMap = user.getPlayFriend().getFRIEND_MAP();
+        Map<Integer, String> friendMap = user.getPLAY_FRIEND().getFRIEND_MAP();
         if (friendMap.size() > FriendConst.FRIEND_MAX_NUMBER){
             //好友数量达到上限
             throw new CustomizeException(CustomizeErrorCode.FRIEND_REACH_LIMIT);

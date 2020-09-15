@@ -77,7 +77,7 @@ public class PastorSkillTimer {
                                 user.getCtx().writeAndFlush(pastorSkillResult);
                             }
                             user.setIsPrepare(null);
-
+                            log.info("用户 {} 加血;", user.getUserName());
                         }, (long) (skillProperty.getPrepareTime() * 1000), TimeUnit.MILLISECONDS);
         return scheduledFuture;
     }

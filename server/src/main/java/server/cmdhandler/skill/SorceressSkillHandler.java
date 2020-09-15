@@ -156,6 +156,7 @@ public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProper
         GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
         GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(true)
                 .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
+                .setSubMp(skill.getConsumeMp())
                 .setSubtractHp(0)
                 .build();
         user.getCtx().writeAndFlush(userSkillAttkResult);

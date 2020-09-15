@@ -24,6 +24,10 @@ public class UserDealRequestCmdHandler implements ICmdHandler<GameMsg.UserDealRe
         MyUtil.checkIsNull(ctx, userDealRequestCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
+        if (user.getPLAY_DEAL().getTargetUserId().get() != 0){
+            throw new CustomizeException(CustomizeErrorCode.DEAL_STATE);
+        }
+
         int targetUserId = userDealRequestCmd.getUserId();
         if (targetUserId == user.getUserId()){
             throw new CustomizeException(CustomizeErrorCode.DEAL_REQUEST_ERROR);

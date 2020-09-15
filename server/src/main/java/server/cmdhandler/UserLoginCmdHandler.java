@@ -142,6 +142,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                 //封装任务状态
                 packageTask(user, resultBuilder);
 
+                packageFriend(user, resultBuilder);
+
                 GameMsg.UserLoginResult userLoginResult = resultBuilder.build();
                 ctx.writeAndFlush(userLoginResult);
 
@@ -151,6 +153,16 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             });
             return null;
         });
+
+    }
+
+    private void packageFriend(User user, GameMsg.UserLoginResult.Builder resultBuilder) {
+        Map<Integer, String> friendMap = user.getPLAY_FRIEND().getFRIEND_MAP();
+        friendMap.forEach((uId, uName) -> resultBuilder.addFriend(
+                GameMsg.Friend.newBuilder()
+                        .setFriendId(uId)
+                        .setFriendName(uName)
+        ));
 
     }
 

@@ -103,6 +103,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     FRIEND_EXISTS(-471,"用户已存在;"),
     PROPS_ADD_COMPLETE(-472,"道具添加完毕;"),
     USER_DIE(-473,"用户已死;"),
+    DEAL_STATE(-474,"在交易状态;"),
     ;
 
     private String message;

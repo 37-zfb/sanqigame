@@ -161,7 +161,7 @@ public class Monster {
                     userIdMap.remove(user.getUserId());
                     user = null;
                 }
-                log.info("用户 {} 对boss减血量 {}", user.getUserName(), max.get().getValue());
+                log.info("用户 {} 对 怪 减血量 {}", user.getUserName(), max.get().getValue());
             }
 
         }

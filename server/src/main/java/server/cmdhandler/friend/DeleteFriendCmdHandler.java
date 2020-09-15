@@ -30,7 +30,7 @@ public class DeleteFriendCmdHandler implements ICmdHandler<GameMsg.DeleteFriendC
         User user = PublicMethod.getInstance().getUser(ctx);
 
         int targetUserId = deleteFriendCmd.getUserId();
-        String removeName = user.getPlayFriend().getFRIEND_MAP().remove(targetUserId);
+        String removeName = user.getPLAY_FRIEND().getFRIEND_MAP().remove(targetUserId);
 
         DbFriendEntity friendEntity = new DbFriendEntity();
         friendEntity.setUserId(user.getUserId());

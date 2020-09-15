@@ -77,6 +77,7 @@ public final class PropsUtil {
                     // 添加装备到数据库;  条件不满足时有异常抛出
                     location = this.addEquipment(user, props);
                     reward.setUserPropsId(((Equipment)user.getBackpack().get(location).getPropsProperty()).getId());
+                    reward.setDurability(((Equipment)user.getBackpack().get(location).getPropsProperty()).getDurability());
                 } else if (props.getPropsProperty().getType() == PropsType.Potion) {
                     location = this.addPotion(props, user, number);
                     reward.setUserPropsId(((Potion)user.getBackpack().get(location).getPropsProperty()).getId());

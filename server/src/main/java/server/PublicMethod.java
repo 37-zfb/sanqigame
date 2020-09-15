@@ -289,7 +289,6 @@ public final class PublicMethod {
 
 
                 MailUtil.getMailUtil().sendMail(user.getUserId(), 0, "背包已满", Collections.singletonList(new MailProps(propsId, 1)));
-//                AuctionUtil.sendPropsMail(user.getUserId(), propsId, 1, "背包已满;");
             } catch (NullPointerException e) {
                 log.info("获得道具失败, 道具id: {}", propsId);
                 //此时给玩家发邮件

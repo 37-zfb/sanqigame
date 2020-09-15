@@ -98,4 +98,12 @@ public class FriendService {
         return targetList;
     }
 
+    public List<DbFriendEntity> listFriend(Integer userId){
+        if (userId == null){
+            return null;
+        }
+
+        return friendDAO.selectByUserId(userId);
+    }
+
 }

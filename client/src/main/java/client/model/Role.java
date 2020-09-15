@@ -186,7 +186,8 @@ public class Role {
     }
 
     public void startResumeMp() {
-        if (currMp < ProfessionConst.MP && this.getUserResumeState().getEndTimeMp() > System.currentTimeMillis()) {
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currMp < ProfessionConst.MP && this.getUserResumeState().getEndTimeMp() > currentTimeMillis) {
             // 此时需要恢复mp状态,并且定时器没有启动
             if (mpTask == null) {
                 ResumeStateTimer.getInstance().resumeStateAutomatic(role);

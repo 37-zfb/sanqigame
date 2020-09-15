@@ -71,7 +71,8 @@ public class ArenaThread {
         while (true) {
 
             PlayArenaClient playArenaClient = role.getARENA_CLIENT();
-
+            System.out.println("当前HP: "+role.getCurrHp());
+            System.out.println("当前MP: "+role.getCurrMp());
 
             log.info("请选择您的操作: ");
             System.out.println("======>1:选择对手;");
@@ -88,6 +89,11 @@ public class ArenaThread {
 
             if ("1".equals(command)) {
                 Map<Integer, PlayUserClient> arenaUserMap = role.getARENA_CLIENT().getArenaUserMap();
+                if (arenaUserMap.size() == 0){
+                    System.out.println("没有玩家;");
+                    continue;
+                }
+
                 for (PlayUserClient arenaUser : arenaUserMap.values()) {
                     System.out.println(arenaUser.getUserId() + "、" + arenaUser.getUserName());
                 }

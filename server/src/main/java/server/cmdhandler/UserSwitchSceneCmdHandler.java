@@ -89,8 +89,6 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
         if (sceneId.contains(user.getCurSceneId())){
             //持久化装备耐久度
             PublicMethod.getInstance().dbWeaponDurability(user.getUserEquipmentArr());
-            //取消当前用户召唤兽定时器
-            PublicMethod.getInstance().cancelSummonTimer(user);
 
             user.setCurrHp(ProfessionConst.HP);
             user.setCurrMp(ProfessionConst.MP);
@@ -99,7 +97,10 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
 
         // 修改 当前用户所在场景
         user.setCurSceneId(cmd.getToSceneId());
-        GameMsg.UserSwitchSceneResult userSwitchSceneResult = resultBuilder.build();
+        GameMsg.UserSwitchSceneResult userSwitchSceneResult = resultBuilder
+                .setHp(user.getCurrHp())
+                .setMp(user.getCurrMp())
+                .build();
         ctx.channel().writeAndFlush(userSwitchSceneResult);
     }
 

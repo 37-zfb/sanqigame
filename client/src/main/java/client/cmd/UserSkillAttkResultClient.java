@@ -1,12 +1,10 @@
 package client.cmd;
 
+import client.model.Role;
+import client.model.SceneData;
 import client.model.server.duplicate.Duplicate;
 import client.model.server.scene.Monster;
 import client.model.server.scene.Scene;
-import client.thread.BossThread;
-import client.thread.CmdThread;
-import client.model.Role;
-import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
 import util.MyUtil;
@@ -25,6 +23,8 @@ public class UserSkillAttkResultClient implements ICmd<GameMsg.UserSkillAttkResu
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
 
         // 重新设置恢复mp终止时间
+
+        role.setCurrMp(role.getCurrMp()-userSkillAttkResult.getSubMp());
         role.getUserResumeState().setEndTimeMp(userSkillAttkResult.getResumeMpEndTime());
         role.startResumeMp();
 

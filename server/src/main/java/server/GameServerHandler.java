@@ -101,9 +101,17 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         // 移除用户
         UserManager.removeUser(userId);
 
+        //取消定时器
+        PublicMethod.getInstance().cancelMonsterAttack(user);
+
 
         PlayArena playArena = user.getPlayArena();
-        if (playArena == null || playArena.getTargetUserId() == null) {
+        if (playArena == null) {
+            return;
+        }
+        ArenaManager.removeUser(user);
+
+        if (playArena.getTargetUserId() == null) {
             return;
         }
 
@@ -117,7 +125,6 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
                 .build();
         targetUser.getCtx().writeAndFlush(userDieResult);
 
-        ArenaManager.removeUser(user);
 
 //        // 广播用户离场的消息
 //        GameMsg.UserQuitResult.Builder resultBuilder = GameMsg.UserQuitResult.newBuilder();

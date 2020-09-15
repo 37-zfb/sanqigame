@@ -237,7 +237,7 @@ public class TaskListener {
      */
     public void addFriend08(User user) {
 
-        if (user.getPlayFriend().getFRIEND_MAP().size() == 0) {
+        if (user.getPLAY_FRIEND().getFRIEND_MAP().size() == 0) {
             return;
         }
 

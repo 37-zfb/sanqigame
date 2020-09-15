@@ -1,5 +1,6 @@
 package client.cmd.duplicate;
 
+import client.model.server.profession.Profession;
 import client.model.server.scene.Scene;
 import client.thread.CmdThread;
 import client.cmd.ICmd;
@@ -22,6 +23,12 @@ public class UserQuitDuplicateResultClient implements ICmd<GameMsg.UserQuitDupli
         // 用户退出类型
         String quitDuplicateType = userQuitDuplicateResult.getQuitDuplicateType();
         Role role = Role.getInstance();
+
+        role.setCurrHp(ProfessionConst.HP);
+        synchronized (role.getMpMonitor()){
+            role.setCurrMp(ProfessionConst.MP);
+        }
+
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
         System.out.println(quitDuplicateType);
         CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
