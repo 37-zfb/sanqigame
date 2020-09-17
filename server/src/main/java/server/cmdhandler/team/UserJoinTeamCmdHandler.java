@@ -1,5 +1,6 @@
 package server.cmdhandler.team;
 
+import constant.TeamConst;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,9 +11,12 @@ import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
 import util.MyUtil;
+
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -31,44 +35,39 @@ public class UserJoinTeamCmdHandler implements ICmdHandler<GameMsg.UserJoinTeamC
         User user = PublicMethod.getInstance().getUser(ctx);
 
         boolean isJoin = userJoinTeamCmd.getIsJoin();
-        int originateOrTargetUserId = userJoinTeamCmd.getOriginateUserId();
+        int originateId = userJoinTeamCmd.getOriginateUserId();
         // 发起者用户
-        User originateOrTargetUser = UserManager.getUserById(originateOrTargetUserId);
-        if (originateOrTargetUser == null) {
+        User originateUser = UserManager.getUserById(originateId);
+        if (originateUser == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
         }
 
-        if (!originateOrTargetUser.getInvitationUserId().contains(user.getUserId())) {
+        Map<Integer, Long> invitationUserIdMap = originateUser.getInvitationUserIdMap();
+        if (invitationUserIdMap.get(user.getUserId()) == null ||
+                invitationUserIdMap.get(user.getUserId()) - System.currentTimeMillis() > TeamConst.INVITATION_TIMEOUT) {
+            //此时没有邀请，或邀请已过期
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_INVITE);
         }
 
+        if (isJoin) {
+            TeamUtil teamUtil = TeamUtil.getTeamUtil();
 
-        if (user.getPlayTeam() != null) {
-            TeamUtil.getTeamUtil().originateHaveTeam(originateOrTargetUser, user);
-            return;
-        }
+            if (user.getPlayTeam() != null) {
+                //被邀请者有队伍,先退出队伍
+                teamUtil.quitTeam(user);
+            }
 
+            //被邀请者没有队伍
+            teamUtil.joinTeam(user, originateUser);
 
-        GameMsg.UserJoinTeamResult.Builder newBuilder = GameMsg.UserJoinTeamResult.newBuilder();
-        if (!isJoin) {
-            // 此时不加入队伍，
+        } else {
+            GameMsg.UserJoinTeamResult.Builder newBuilder = GameMsg.UserJoinTeamResult.newBuilder();
             GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder
                     .setIsJoin(false)
                     .setTargetName(user.getUserName())
                     .build();
-            originateOrTargetUser.getCtx().writeAndFlush(userJoinTeamResult);
-            log.info("{} 拒绝了 {} 的组队邀请;", user.getUserName(), originateOrTargetUser.getUserName());
-        } else {
-            // 此时加入队伍，
-            GameMsg.UserJoinTeamResult userJoinTeamResult = newBuilder
-                    .setIsJoin(true)
-                    .setTargetId(user.getUserId())
-                    .setTargetName(user.getUserName())
-                    .build();
-            originateOrTargetUser.getCtx().writeAndFlush(userJoinTeamResult);
-            log.info("{} 同意了 {} 的组队邀请;", user.getUserName(), originateOrTargetUser.getUserName());
-
-            taskPublicMethod.listener(user);
+            originateUser.getCtx().writeAndFlush(userJoinTeamResult);
+            log.info("{} 拒绝了 {} 的组队邀请;", user.getUserName(), originateUser.getUserName());
         }
 
     }

@@ -13,5 +13,9 @@ public interface TeamConst {
     int MAX_NUMBER = 4;
 
 
+    /**
+     * 邀请过期时间
+     */
+    int INVITATION_TIMEOUT = 10000;
 
 }

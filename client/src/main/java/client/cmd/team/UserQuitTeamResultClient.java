@@ -3,9 +3,7 @@ package client.cmd.team;
 import client.cmd.ICmd;
 import client.model.PlayUserClient;
 import client.model.Role;
-import client.model.SceneData;
 import client.model.team.PlayTeamClient;
-import client.thread.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -27,9 +25,9 @@ public class UserQuitTeamResultClient implements ICmd<GameMsg.UserQuitTeamResult
         PlayTeamClient team_client = role.getTEAM_CLIENT();
         if (userId == role.getId()){
             team_client.setTeamLeaderId(null);
-            team_client.setOriginateUserId(null);
+            team_client.getOriginateIdSet().clear();
             team_client.setTeamMember(new PlayUserClient[4]);
-            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+//            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }else {
             team_client.setTeamLeaderId(userQuitTeamResult.getTeamLeaderId());
             PlayUserClient[] teamMember = team_client.getTeamMember();

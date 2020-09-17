@@ -37,10 +37,8 @@ import server.Broadcast;
 import type.*;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 用户登录
@@ -55,6 +53,12 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
     private LoginService loginService;
     @Autowired
     private LoadResourcesService loadResourcesService;
+
+
+    /**
+     * 用户登陆状态字典, 防止用户连点登陆按钮
+     */
+    private static final Map<String, Long> USER_LOGIN_STATE_MAP = new ConcurrentHashMap<>();
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserLoginCmd cmd) {
@@ -76,6 +80,15 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             }
         }
 
+        clearTimeoutLoginTime(USER_LOGIN_STATE_MAP);
+
+        if (USER_LOGIN_STATE_MAP.containsKey(userName)) {
+            // 已点击登录
+            return;
+        }
+
+        //设置用户登录时间
+        USER_LOGIN_STATE_MAP.put(userName, System.currentTimeMillis());
 
         loginService.asyn(userName, password, ctx, (userEntity) -> {
 
@@ -101,6 +114,8 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             // 需要继续回调
             // 加载资源
             loadResourcesService.asyn(userEntity, ctx, (user) -> {
+                //移除用户登录状态
+                USER_LOGIN_STATE_MAP.remove(userName);
 
                 // 添加管道
                 Broadcast.addChannel(user.getCurSceneId(), ctx.channel());
@@ -153,6 +168,26 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             });
             return null;
         });
+
+    }
+
+    private void clearTimeoutLoginTime(Map<String, Long> userLoginStateMap) {
+        if (userLoginStateMap == null || userLoginStateMap.isEmpty()) {
+            return;
+        }
+
+        long currentTime = System.currentTimeMillis();
+
+        Iterator<String> iterator = userLoginStateMap.keySet().iterator();
+        while (iterator.hasNext()) {
+            String userName = iterator.next();
+            Long loginTime = userLoginStateMap.get(userName);
+
+            if (loginTime == null || currentTime - loginTime > 5000) {
+                iterator.remove();
+            }
+
+        }
 
     }
 

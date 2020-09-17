@@ -4,7 +4,6 @@ import client.cmd.ICmd;
 import client.model.Role;
 import client.model.PlayUserClient;
 import client.model.arena.PlayArenaClient;
-import client.thread.ArenaThread;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
 import util.MyUtil;

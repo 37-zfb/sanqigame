@@ -24,7 +24,7 @@ public class PlayDeal {
      * 标识正在和 谁 进行交易；
      * 若 为 0，则不是交易状态
      */
-    private final AtomicInteger targetUserId = new AtomicInteger(0);
+    private  Integer targetUserId = 0;
     /**
      * 是否放完装备
      */

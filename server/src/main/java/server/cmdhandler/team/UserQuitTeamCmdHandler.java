@@ -21,7 +21,6 @@ public class UserQuitTeamCmdHandler implements ICmdHandler<GameMsg.UserQuitTeamC
         MyUtil.checkIsNull(ctx, userQuitTeamCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-//        PublicMethod.getInstance().quitTeam(user);
         TeamUtil.getTeamUtil().quitTeam(user);
 
     }

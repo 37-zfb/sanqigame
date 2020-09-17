@@ -1,5 +1,6 @@
 package server.cmdhandler.team;
 
+import constant.TeamConst;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,9 +9,14 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.PlayArena;
+import server.model.PlayTeam;
 import server.model.User;
 import server.model.UserManager;
 import util.MyUtil;
+
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -30,7 +36,20 @@ public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> 
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
         }
 
-        user.getInvitationUserId().add(targetUserId);
+        Map<Integer, Long> invitationUserIdMap = user.getInvitationUserIdMap();
+        clearInvitationTimeout(invitationUserIdMap);
+        //添加邀请人
+        invitationUserIdMap.put(targetUserId, System.currentTimeMillis());
+
+        //创建队伍
+        if (user.getPlayTeam() == null) {
+            PlayTeam playTeam = new PlayTeam();
+            playTeam.setTeamLeaderId(user.getUserId());
+            playTeam.setTeamNumber(playTeam.getTeamNumber() + 1);
+            playTeam.getTEAM_MEMBER()[0] = user.getUserId();
+            user.setPlayTeam(playTeam);
+        }
+
 
         log.info("用户: {} 发起组队, 询问: {}", user.getUserName(), targetUser.getUserName());
         GameMsg.AskTeamUpResult build = GameMsg.AskTeamUpResult.newBuilder()
@@ -38,6 +57,24 @@ public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> 
                 .setOriginateUserName(user.getUserName())
                 .build();
         targetUser.getCtx().writeAndFlush(build);
+
+        //通知自己，已创建队伍
+        GameMsg.UserJoinTeamPerformResult userJoinTeamPerformResult = GameMsg.UserJoinTeamPerformResult.newBuilder()
+                .setTeamLeaderId(user.getUserId())
+                .setIsJoin(true)
+                .build();
+        ctx.writeAndFlush(userJoinTeamPerformResult);
+
+    }
+
+    private void clearInvitationTimeout(Map<Integer, Long> invitationUserIdMap) {
+        if (invitationUserIdMap == null || invitationUserIdMap.isEmpty()) {
+            return;
+        }
+
+        long currentTime = System.currentTimeMillis();
+        //大于10秒
+        invitationUserIdMap.entrySet().removeIf(next -> currentTime - next.getValue() > TeamConst.INVITATION_TIMEOUT);
 
     }
 

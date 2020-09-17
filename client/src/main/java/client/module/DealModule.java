@@ -1,9 +1,6 @@
-package client.thread;
+package client.module;
 
-import client.model.PlayUserClient;
 import client.model.Role;
-import client.model.SceneData;
-import client.model.arena.PlayArenaClient;
 import client.model.server.props.AbstractPropsProperty;
 import client.model.server.props.Potion;
 import client.model.server.props.Props;
@@ -15,75 +12,37 @@ import type.PropsType;
 
 import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author 张丰博
  */
 @Slf4j
-public class DealThread {
-    private static final DealThread DEAL_THREAD = new DealThread();
+public class DealModule {
+    private static final DealModule DEAL_THREAD = new DealModule();
 
-    private DealThread() {
+    private DealModule() {
     }
 
-    /**
-     * 自定义单线程的线程池,
-     * 线程名称: MainThread
-     */
-    private final ExecutorService ex =
-            new ThreadPoolExecutor(
-                    1,
-                    1,
-                    0L,
-                    TimeUnit.MILLISECONDS,
-                    new LinkedBlockingQueue<Runnable>(),
-                    (newRunnable) -> {
-                        Thread thread = new Thread(newRunnable);
-                        thread.setName("dealThread");
-                        return thread;
-                    },
-                    new ThreadPoolExecutor.CallerRunsPolicy()
-            );
-
-    public static DealThread getInstance() {
+    public static DealModule getInstance() {
         return DEAL_THREAD;
     }
 
-    public void process(ChannelHandlerContext ctx, Role role) {
+    public void dealCmd(ChannelHandlerContext ctx, Role role) {
 
-        if (ctx == null || role == null) {
-            return;
-        }
-        ex.submit(() -> {
-            try {
-                log.info("当前线程 {}", Thread.currentThread().getName());
+        System.out.println("金币: "+role.getMoney());
 
-                System.out.println("金币: "+role.getMoney());
-
-                Map<Integer, Props> backpackClient = role.getBackpackClient();
-                for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
-                    AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
-                    if (propsProperty.getType() == PropsType.Equipment){
-                        System.out.println(propsEntry.getKey() + " 、 " + propsEntry.getValue().getName());
-                    }else if (propsProperty.getType() == PropsType.Potion){
-                        Potion potion = (Potion) propsProperty;
-                        System.out.println(propsEntry.getKey() + " 、 " + propsEntry.getValue().getName()+ potion.getNumber());
-                    }
-                }
-
-                sendCmd(ctx, role);
-            } catch (Exception e) {
-                e.printStackTrace();
+        Map<Integer, Props> backpackClient = role.getBackpackClient();
+        for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
+            AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
+            if (propsProperty.getType() == PropsType.Equipment){
+                System.out.println(propsEntry.getKey() + " 、 " + propsEntry.getValue().getName());
+            }else if (propsProperty.getType() == PropsType.Potion){
+                Potion potion = (Potion) propsProperty;
+                System.out.println(propsEntry.getKey() + " 、 " + propsEntry.getValue().getName()+ potion.getNumber());
             }
+        }
 
-        });
-    }
 
-    private void sendCmd(ChannelHandlerContext ctx, Role role) {
         Scanner scanner = new Scanner(System.in);
         // 添加装备
         while (true) {
@@ -118,10 +77,8 @@ public class DealThread {
                                 .build();
                 ctx.writeAndFlush(userCancelDealConfirmCmd);
             }else if ("111".equals(s)){
-                CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
                 break;
             }
-
 
 
         }

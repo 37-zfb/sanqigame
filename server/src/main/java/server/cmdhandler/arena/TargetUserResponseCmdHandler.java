@@ -1,5 +1,6 @@
 package server.cmdhandler.arena;
 
+import constant.ProfessionConst;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
@@ -11,6 +12,7 @@ import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
 import server.model.UserManager;
+import server.model.profession.Profession;
 import util.MyUtil;
 
 /**
@@ -45,13 +47,18 @@ public class TargetUserResponseCmdHandler implements ICmdHandler<GameMsg.TargetU
                     // 发起者id
             .setOriginateUserId(originateUserId)
                     // 被发起者id
-            .setOriginatedUserId(user.getUserId());
+            .setOriginatedUserId(user.getUserId())
+            .setHp(ProfessionConst.HP)
+            .setMp(ProfessionConst.MP);
         } else {
             //拒绝
             log.info("{} 拒绝了 {} PK请求;",user.getUserName(),originateUser.getUserName());
             newBuilder.setAcceptChallenge(false);
         }
-        GameMsg.UserChooseOpponentResult userChooseOpponentResult = newBuilder.build();
+        GameMsg.UserChooseOpponentResult userChooseOpponentResult = newBuilder
+                .setOriginateUserName(originateUser.getUserName())
+                .setOriginatedUserName(user.getUserName())
+                .build();
 
         // 双方都通知结果
         ctx.writeAndFlush(userChooseOpponentResult);

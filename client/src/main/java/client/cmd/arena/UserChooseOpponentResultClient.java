@@ -4,7 +4,7 @@ import client.cmd.ICmd;
 import client.model.Role;
 import client.model.PlayUserClient;
 import client.model.arena.PlayArenaClient;
-import client.thread.ArenaThread;
+import client.module.ArenaModule;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
 import util.MyUtil;
@@ -25,23 +25,39 @@ public class UserChooseOpponentResultClient implements ICmd<GameMsg.UserChooseOp
         Role role = Role.getInstance();
         PlayArenaClient playArenaClient = role.getARENA_CLIENT();
 
-        if (acceptChallenge){
+        int hp = userChooseOpponentResult.getHp();
+        int mp = userChooseOpponentResult.getMp();
+        String originatedUserName = userChooseOpponentResult.getOriginatedUserName();
+        String originateUserName = userChooseOpponentResult.getOriginateUserName();
+
+        if (acceptChallenge) {
             // 接受挑战
             PlayUserClient originateUser = playArenaClient.getArenaUserMap().get(originateUserId);
             PlayUserClient originatedUser = playArenaClient.getArenaUserMap().get(originatedUserId);
-            if (role.getId() == originateUserId){
+            if (role.getId() == originateUserId) {
                 // 发起者id
-                playArenaClient.setChallengeUser(originatedUser);
-            }else if (role.getId() == originatedUserId){
+                playArenaClient.setChallengeUser(
+                        new PlayUserClient(originatedUser.getUserId(),
+                                originatedUser.getUserName(),
+                                mp,
+                                hp));
+                System.out.println(originateUserName + " 、 " + originatedUserName + " 开始PK;");
+            } else if (role.getId() == originatedUserId) {
                 // 被发起者
-                playArenaClient.setChallengeUser(originateUser);
+                playArenaClient.setChallengeUser(
+                        new PlayUserClient(originateUser.getUserId(),
+                                originateUser.getUserName(),
+                                mp,
+                                hp));
+                System.out.println(originatedUserName + " 、 " + originateUserName + " 开始PK;");
             }
-        }else {
+        } else {
             // 拒绝挑战
-
+//            System.out.println("拒绝组队;");
+            System.out.println(originatedUserName + " 拒绝了 " + originateUserName + " 的PK邀请;");
         }
 
-        ArenaThread.getInstance().process(ctx, role);
+//        ArenaModule.getInstance().process(ctx, role);
 
     }
 }

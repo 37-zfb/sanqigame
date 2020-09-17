@@ -1,8 +1,6 @@
 package client.cmd;
 
-import client.thread.CmdThread;
 import client.model.Role;
-import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
 

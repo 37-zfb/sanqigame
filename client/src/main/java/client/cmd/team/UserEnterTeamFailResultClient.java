@@ -2,8 +2,6 @@ package client.cmd.team;
 
 import client.cmd.ICmd;
 import client.model.Role;
-import client.model.SceneData;
-import client.thread.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
 import util.MyUtil;

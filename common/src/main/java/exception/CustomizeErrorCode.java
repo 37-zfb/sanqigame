@@ -95,7 +95,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode {
     MAIL_NUMBER_OVERFLOW(-464,"邮件道具个数超出最大数量;"),
     USER_ALREADY_IN_ARENA(-465,"用户已存在竞技场;"),
     TARGET_NOT_EXIST(-466,"目标用户不在竞技场;"),
-    USER_NOT_INVITE(-466,"未被邀请;"),
+    USER_NOT_INVITE(-466,"未被邀请,或邀请已过期;"),
     DEAL_PROPS_NOT_EXIST(-467,"交易道具不存在;"),
     TARGET_NOT_COMPLETE(-468,"对方还未添加完毕;"),
     SELF_NOT_COMPLETE(-469,"自己还未添加完毕;"),

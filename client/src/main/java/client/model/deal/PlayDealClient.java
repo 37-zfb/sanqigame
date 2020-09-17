@@ -16,6 +16,6 @@ public class PlayDealClient {
     private Integer originateId;
 
 
-
+    private boolean isDealState;
 
 }

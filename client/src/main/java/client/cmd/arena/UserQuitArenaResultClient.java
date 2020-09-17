@@ -4,7 +4,7 @@ import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
 import client.model.arena.PlayArenaClient;
-import client.thread.CmdThread;
+import client.CmdThread;
 import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;

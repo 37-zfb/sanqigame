@@ -6,7 +6,7 @@ import client.model.SceneData;
 import client.model.server.props.Props;
 import client.model.server.task.Task;
 import client.scene.GameData;
-import client.thread.CmdThread;
+import client.CmdThread;
 import entity.MailProps;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;

@@ -43,10 +43,15 @@ public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateF
 
 
         Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
-        if (currDuplicate == null){
+        if (currDuplicate == null) {
             return;
         }
 
+
+        if (user.getSubHpTask() != null) {
+            user.getSubHpTask().cancel(true);
+            user.setSubHpNumber(0);
+        }
 
         System.out.println("计算奖励,存入数据库");
 
@@ -54,7 +59,7 @@ public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateF
 
         GameMsg.DuplicateFinishResult.Builder newBuilder = GameMsg.DuplicateFinishResult.newBuilder();
 
-        PropsUtil.getPropsUtil().addProps(propsIdList, user, newBuilder,DuplicateConst.PROPS_NUMBER);
+        PropsUtil.getPropsUtil().addProps(propsIdList, user, newBuilder, DuplicateConst.PROPS_NUMBER);
 
         for (DuplicateType duplicateType : DuplicateType.values()) {
             if (duplicateType.getName().equals(currDuplicate.getName())) {
@@ -70,8 +75,6 @@ public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateF
         //任务监听
         taskPublicMethod.listener(user);
     }
-
-
 
 
 }

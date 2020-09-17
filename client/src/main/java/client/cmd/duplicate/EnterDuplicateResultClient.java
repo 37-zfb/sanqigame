@@ -1,14 +1,14 @@
 package client.cmd.duplicate;
 
+import client.CmdThread;
 import client.model.SceneData;
 import client.model.server.duplicate.BossMonster;
 import client.model.server.duplicate.BossSkill;
 import client.model.server.duplicate.Duplicate;
 import client.scene.GameData;
-import client.thread.BossThread;
+import client.module.BossModule;
 import client.cmd.ICmd;
 import client.model.Role;
-import client.thread.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
 
 import msg.GameMsg;
@@ -59,7 +59,9 @@ public class EnterDuplicateResultClient implements ICmd<GameMsg.EnterDuplicateRe
         duplicate.setMinBoss();
         //此时，已进入副本；进入另一个线程？？？
         if (role.getId() == enterDuplicateResult.getUserId()) {
-            BossThread.getInstance().process(ctx, role);
+//            BossModule.getInstance().process(ctx, role);
+            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+
         } else {
             System.out.println("队伍进入 " + duplicate.getName());
         }

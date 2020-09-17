@@ -5,7 +5,7 @@ import client.model.MailClient;
 import client.model.Role;
 import client.model.SceneData;
 import client.model.client.MailEntityClient;
-import client.thread.CmdThread;
+import client.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
 import util.MyUtil;

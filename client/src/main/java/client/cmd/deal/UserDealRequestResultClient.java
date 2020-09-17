@@ -3,17 +3,10 @@ package client.cmd.deal;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
-import client.model.server.props.Props;
-import client.thread.CmdThread;
-import client.thread.DealThread;
+import client.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
-import type.DealInfoType;
-import type.PropsType;
 import util.MyUtil;
-
-import java.util.Map;
-import java.util.Scanner;
 
 /**
  * @author 张丰博
@@ -39,16 +32,17 @@ public class UserDealRequestResultClient implements ICmd<GameMsg.UserDealRequest
             boolean isSuccess = userDealRequestResult.getIsSuccess();
             if (isSuccess && role.getId() == userDealRequestResult.getTargetUserId()) {
                 // 进入交易线程
-                DealThread.getInstance().process(ctx, role);
+
+                role.getDEAL_CLIENT().setDealState(true);
+                CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+
+//                DealThread.getInstance().process(ctx, role);
             } else if (isSuccess && role.getId() != userDealRequestResult.getTargetUserId()) {
                 // 成功， 发起者
-                System.out.println("转换交易线程;");
-
-            } else {
-                System.out.println("交易失败;");
-                if (userDealRequestResult.getTargetUserId() == role.getId()) {
-                    CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
-                }
+                GameMsg.UserModifyDealStateCmd userModifyDealStateCmd = GameMsg.UserModifyDealStateCmd.newBuilder()
+                        .setTargetId(userDealRequestResult.getTargetUserId())
+                        .build();
+                ctx.writeAndFlush(userModifyDealStateCmd);
             }
 
         }

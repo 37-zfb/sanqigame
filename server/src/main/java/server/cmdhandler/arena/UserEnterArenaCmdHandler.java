@@ -23,6 +23,7 @@ import java.util.Collection;
 @Component
 @Slf4j
 public class UserEnterArenaCmdHandler implements ICmdHandler<GameMsg.UserEnterArenaCmd> {
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserEnterArenaCmd userEnterArenaCmd) {
         MyUtil.checkIsNull(ctx, userEnterArenaCmd);

@@ -12,9 +12,11 @@ import server.model.User;
 import server.model.UserManager;
 import util.MyUtil;
 
+import java.util.Map;
+
 /**
  * @author 张丰博
- *  玩家向另一个玩家发送交易请求
+ * 玩家向另一个玩家发送交易请求
  */
 @Component
 @Slf4j
@@ -24,24 +26,24 @@ public class UserDealRequestCmdHandler implements ICmdHandler<GameMsg.UserDealRe
         MyUtil.checkIsNull(ctx, userDealRequestCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        if (user.getPLAY_DEAL().getTargetUserId().get() != 0){
+        if (user.getPLAY_DEAL().getTargetUserId() != 0) {
             throw new CustomizeException(CustomizeErrorCode.DEAL_STATE);
         }
 
         int targetUserId = userDealRequestCmd.getUserId();
-        if (targetUserId == user.getUserId()){
+        if (targetUserId == user.getUserId()) {
             throw new CustomizeException(CustomizeErrorCode.DEAL_REQUEST_ERROR);
         }
 
         User targetUser = UserManager.getUserById(targetUserId);
-        if (targetUser == null){
+        if (targetUser == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
         }
 
 
         user.getPLAY_DEAL().getUserIdSet().add(targetUserId);
 
-        log.info("用户: {} ,请求 {} 交易;", user.getUserName(),targetUser.getUserName());
+        log.info("用户: {} ,请求 {} 交易;", user.getUserName(), targetUser.getUserName());
         GameMsg.AskTargetUserResult askTargetUserResult = GameMsg.AskTargetUserResult.newBuilder()
                 .setOriginateId(user.getUserId())
                 .setOriginateName(user.getUserName())
@@ -49,4 +51,6 @@ public class UserDealRequestCmdHandler implements ICmdHandler<GameMsg.UserDealRe
 
         targetUser.getCtx().writeAndFlush(askTargetUserResult);
     }
+
+
 }

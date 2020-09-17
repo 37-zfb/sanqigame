@@ -2,7 +2,6 @@ package client.cmd.duplicate;
 
 import client.model.server.duplicate.BossMonster;
 import client.model.server.duplicate.Duplicate;
-import client.thread.BossThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import io.netty.channel.ChannelHandlerContext;

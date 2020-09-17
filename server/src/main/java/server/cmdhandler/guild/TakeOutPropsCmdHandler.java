@@ -53,40 +53,6 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
         GameMsg.Props props = takeOutPropsCmd.getProps();
         int number = takeOutPropsCmd.getNumber();
 
-      /*  synchronized (playGuild.getWAREHOUSE_MONITOR()) {
-            p = playGuild.getWAREHOUSE_PROPS().get(props.getLocation());
-            if (p == null) {
-                throw new CustomizeException(CustomizeErrorCode.PROPS_NOT_EXIST);
-            }
-            if (p.getPropsProperty().getType() == PropsType.Equipment) {
-                //持久化装备
-
-                PropsUtil.getPropsUtil().addProps(Collections.singletonList(p.getId()), user, newBuilder, number);
-
-//                PublicMethod.getInstance().addEquipment(user, p);
-                playGuild.getWAREHOUSE_PROPS().remove(props.getLocation());
-            } else if (p.getPropsProperty().getType() == PropsType.Potion) {
-                AbstractPropsProperty propsProperty = p.getPropsProperty();
-
-                Potion potion = (Potion) propsProperty;
-                if (potion.getNumber() < number) {
-                    // 仓库中道具数量不足
-                    throw new CustomizeException(CustomizeErrorCode.WAREHOUSE_POTION_NUMBER_NOT_ENOUGH);
-                }
-
-                //持久化药剂
-                PropsUtil.getPropsUtil().addProps(Collections.singletonList(p.getId()), user, newBuilder, number);
-//                PublicMethod.getInstance().addPotion(p, user, number);
-                //修改仓库药剂数量
-                if (potion.getNumber() == number) {
-                    playGuild.getWAREHOUSE_PROPS().remove(props.getLocation());
-                } else {
-                    potion.setNumber(potion.getNumber() - number);
-                }
-
-            }
-        }*/
-
         //修改仓库
         Props p = modifyProps(user, props, number, newBuilder);
 

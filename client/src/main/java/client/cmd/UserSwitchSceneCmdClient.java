@@ -3,14 +3,11 @@ package client.cmd;
 import client.model.server.scene.Monster;
 import client.model.server.scene.Npc;
 import client.model.server.scene.Scene;
-import client.thread.CmdThread;
+import client.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
-import constant.ProfessionConst;
-import constant.SceneConst;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
-import type.SceneType;
 
 import java.util.List;
 import java.util.Map;

@@ -145,7 +145,7 @@ enum MsgCode {
 
   SUMMON_MONSTER_SUB_HP_RESULT = 83;
 
-  USER_JOIN_TEAM_PERFORM_CMD = 84;
+  USER_CREATE_TEAM_RESULT = 84;
   USER_JOIN_TEAM_PERFORM_RESULT = 85;
 
   USER_CLEAN_MAIL_CMD = 86;
@@ -249,6 +249,13 @@ enum MsgCode {
   SORT_OUT_ARENA_CMD = 165;
   SORT_OUT_ARENA_RESULT = 166;
 
+  USER_AUTO_SUB_HP_RESULT = 167;
+  SUMMON_AUTO_SUB_HP_RESULT = 168;
+
+  USER_MODIFY_DEAL_STATE_CMD = 169;
+  USER_MODIFY_DEAL_STATE_RESULT = 170;
+  DEAL_FAIL_CMD = 171;
+  DEAL_FAIL_RESULT = 172;
 
   USER_UP_LV_RESULT = 157;
 
@@ -858,6 +865,14 @@ message UserChooseOpponentResult {
   uint32 originateUserId = 2;
   //
   uint32 originatedUserId = 3;
+
+  string originateUserName = 4;
+  //
+  string originatedUserName = 5;
+
+  uint32 hp = 6;
+
+  uint32 mp = 7;
 }
 // 询问目标用户是否接受挑战
 message TargetUserChallengeResult {
@@ -928,10 +943,10 @@ message UserJoinTeamResult {
   string targetName = 3;
 }
 // 处理加入队伍的用户
-message UserJoinTeamPerformCmd {
-  uint32 targetId = 1;
-  bool isAgree = 2;
-}
+//message UserCreateTeamResult {
+//  uint32 targetId = 1;
+//  bool isAgree = 2;
+//}
 //
 message UserJoinTeamPerformResult {
   repeated UserInfo userInfo = 1;
@@ -1293,4 +1308,24 @@ message MonsterResurrectionResult{
 message SortOutArenaCmd{
 }
 message SortOutArenaResult{
+}
+
+message  UserAutoSubHpResult{
+  uint32 subHp = 1;
+}
+message   SummonAutoSubHpResult{
+  uint32 subHp = 1;
+}
+//用户修改交易状态
+message UserModifyDealStateCmd{
+  uint32 targetId = 1;
+}
+message  UserModifyDealStateResult{
+  bool isSuccess = 1;
+}
+
+//交易建立失败
+message DealFailCmd{
+}
+message DealFailResult{
 }

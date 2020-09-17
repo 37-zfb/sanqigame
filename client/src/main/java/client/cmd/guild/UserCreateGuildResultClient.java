@@ -4,7 +4,7 @@ import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
 import client.model.guild.PlayGuildClient;
-import client.thread.CmdThread;
+import client.CmdThread;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
 import type.GuildMemberType;

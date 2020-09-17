@@ -1,6 +1,6 @@
-package client.thread;
+package client;
 
-import client.cmd.UserCmd;
+import client.module.UserCmd;
 import client.model.Role;
 import client.model.server.scene.Npc;
 import io.netty.channel.ChannelHandlerContext;

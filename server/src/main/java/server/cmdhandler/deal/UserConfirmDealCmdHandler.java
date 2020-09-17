@@ -31,7 +31,7 @@ public class UserConfirmDealCmdHandler implements ICmdHandler<GameMsg.UserConfir
         User user = PublicMethod.getInstance().getUser(ctx);
 
         PlayDeal playDeal = user.getPLAY_DEAL();
-        int targetId = playDeal.getTargetUserId().get();
+        int targetId = playDeal.getTargetUserId();
         if (targetId == 0) {
             // 此时不在交易状态
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);

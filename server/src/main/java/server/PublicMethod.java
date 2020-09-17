@@ -463,66 +463,6 @@ public final class PublicMethod {
         return user;
     }
 
-    /**
-     * 退出队伍
-     *
-     * @param user
-     */
-    public void quitTeam(User user) {
-        PlayTeam playTeam = user.getPlayTeam();
-
-        if (playTeam == null) {
-            return;
-        }
-        synchronized (playTeam.getTEAM_MONITOR()) {
-            Integer[] team_member = playTeam.getTEAM_MEMBER();
-            for (int i = 0; i < team_member.length; i++) {
-                if (team_member[i] != null && team_member[i].equals(user.getUserId())) {
-                    team_member[i] = null;
-                    break;
-                }
-            }
-
-            if (playTeam.getTeamLeaderId().equals(user.getUserId())) {
-                // 如果 队长退出队伍,选择新队员成为队长
-                team_member = playTeam.getTEAM_MEMBER();
-                for (int i = 0; i < team_member.length; i++) {
-                    if (team_member[i] != null) {
-                        playTeam.setTeamLeaderId(team_member[i]);
-                        break;
-                    }
-                }
-            }
-
-            Duplicate currDuplicate = playTeam.getCurrDuplicate();
-            if (currDuplicate != null) {
-                // 若当前副本不为空
-                BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
-                synchronized (currBossMonster.getCHOOSE_USER_MONITOR()) {
-                    Map<Integer, Integer> userIdMap = currBossMonster.getUserIdMap();
-                    userIdMap.remove(user.getUserId());
-                }
-            }
-
-            user.setPlayTeam(null);
-            GameMsg.UserInfo.Builder userInfo = GameMsg.UserInfo.newBuilder()
-                    .setUserId(user.getUserId())
-                    .setUserName(user.getUserName());
-            GameMsg.UserQuitTeamResult userQuitTeamResult = GameMsg.UserQuitTeamResult.newBuilder()
-                    .setUserInfo(userInfo)
-                    .setTeamLeaderId(playTeam.getTeamLeaderId())
-                    .build();
-            user.getCtx().writeAndFlush(userQuitTeamResult);
-            for (Integer id : team_member) {
-                if (id != null) {
-                    User userById = UserManager.getUserById(id);
-                    userById.getCtx().writeAndFlush(userQuitTeamResult);
-                }
-            }
-        }
-
-    }
-
 
     /**
      * 返回还存活的怪集合

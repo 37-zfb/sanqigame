@@ -4,7 +4,7 @@ import client.model.server.props.Equipment;
 import client.model.server.props.Potion;
 import client.model.server.props.Props;
 import client.scene.GameData;
-import client.thread.CmdThread;
+import client.CmdThread;
 import client.cmd.ICmd;
 import client.model.MailClient;
 import client.model.Role;

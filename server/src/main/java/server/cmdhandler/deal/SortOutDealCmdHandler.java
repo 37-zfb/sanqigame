@@ -49,7 +49,7 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
         Map<Integer, Props> backpack = user.getBackpack();
         PlayDeal playDeal = user.getPLAY_DEAL();
         playDeal.setAgreeNumber(0);
-        playDeal.getTargetUserId().set(0);
+        playDeal.setTargetUserId(0);
 
         Integer prepareMoney = playDeal.getPrepareMoney();
         user.setMoney(user.getMoney() - prepareMoney);

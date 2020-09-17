@@ -5,7 +5,7 @@ import client.model.PlayUserClient;
 import client.model.Role;
 import client.model.SceneData;
 import client.model.team.PlayTeamClient;
-import client.thread.CmdThread;
+import client.CmdThread;
 import constant.ProfessionConst;
 import io.netty.channel.ChannelHandlerContext;
 import msg.GameMsg;
@@ -24,7 +24,7 @@ public class UserQuitTeamAndDuplicateResultClient implements ICmd<GameMsg.UserQu
 
         PlayTeamClient team_client = role.getTEAM_CLIENT();
         team_client.setTeamLeaderId(null);
-        team_client.setOriginateUserId(null);
+        team_client.getOriginateIdSet().clear();
         team_client.setTeamMember(new PlayUserClient[4]);
 
         CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());

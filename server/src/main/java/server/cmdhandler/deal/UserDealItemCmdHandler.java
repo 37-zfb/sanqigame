@@ -34,7 +34,7 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
         User user = PublicMethod.getInstance().getUser(ctx);
 
         PlayDeal playDeal = user.getPLAY_DEAL();
-        if (playDeal.getTargetUserId().get() == 0) {
+        if (playDeal.getTargetUserId() == 0) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
@@ -96,7 +96,7 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
                 .setProps(propsInfo)
                 .setType(type)
                 .build();
-        int targetId = playDeal.getTargetUserId().get();
+        int targetId = playDeal.getTargetUserId();
         User targetUser = UserManager.getUserById(targetId);
         targetUser.getCtx().writeAndFlush(userDealItemResult);
     }

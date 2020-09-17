@@ -193,10 +193,12 @@ public class User {
      * 队伍系统
      */
     private volatile PlayTeam playTeam;
+
     /**
-     * 邀请人id
+     * 邀请组队人id
      */
-    private final Set<Integer> invitationUserId = new HashSet<>();
+    private final Map<Integer,Long> invitationUserIdMap = new ConcurrentHashMap<>();
+
     /**
      * 组队监听器
      */

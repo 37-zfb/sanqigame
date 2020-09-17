@@ -2,8 +2,8 @@ package client.cmd;
 
 import client.model.server.props.Potion;
 import client.model.server.props.Props;
-import client.thread.BossThread;
-import client.thread.CmdThread;
+import client.module.BossModule;
+import client.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import constant.ProfessionConst;
@@ -95,7 +95,7 @@ public class UserPotionResultClient implements ICmd<GameMsg.UserPotionResult> {
             //如果是在副本中应进副本线程
             CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }else {
-            BossThread.getInstance().process(ctx, role);
+            BossModule.getInstance().process(ctx, role);
         }
 
     }

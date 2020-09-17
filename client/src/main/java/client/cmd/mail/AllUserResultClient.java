@@ -2,7 +2,7 @@ package client.cmd.mail;
 
 import client.model.server.props.Props;
 import client.scene.GameData;
-import client.thread.CmdThread;
+import client.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;

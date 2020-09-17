@@ -3,7 +3,6 @@ package client.cmd;
 import client.model.server.props.Props;
 import client.model.server.scene.Monster;
 import client.model.server.scene.Scene;
-import client.thread.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * @author 张丰博

@@ -27,7 +27,7 @@ public class UserCancelDealConfirmCmdHandler implements ICmdHandler<GameMsg.User
         User user = PublicMethod.getInstance().getUser(ctx);
 
         PlayDeal playDeal = user.getPLAY_DEAL();
-        int targetId = playDeal.getTargetUserId().get();
+        int targetId = playDeal.getTargetUserId();
         if (targetId == 0) {
             // 此时不在交易状态
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
@@ -44,8 +44,6 @@ public class UserCancelDealConfirmCmdHandler implements ICmdHandler<GameMsg.User
 
         log.info("用户 {} 取消确认;", user.getUserName());
 
-
-
         if (!userCancelDealConfirmCmd.getIsNeedNotice()) {
             return;
         }
@@ -59,6 +57,5 @@ public class UserCancelDealConfirmCmdHandler implements ICmdHandler<GameMsg.User
                         .newBuilder()
                         .build();
         targetUser.getCtx().writeAndFlush(userCancelDealConfirmResult);
-
     }
 }

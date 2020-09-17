@@ -24,16 +24,22 @@ public class PlayUserClient {
     /**
      *  当前血量
      */
-    private volatile Integer currMp = ProfessionConst.HP;
+    private volatile Integer currMp;
 
     /**
      * 当前蓝量
      */
-    private volatile Integer currHp = ProfessionConst.MP;
+    private volatile Integer currHp ;
 
     public PlayUserClient(Integer userId, String userName){
         this.userId = userId;
         this.userName = userName;
+    }
+    public PlayUserClient(Integer userId, String userName,Integer currMp,Integer currHp){
+        this.userId = userId;
+        this.userName = userName;
+        this.currMp = currMp;
+        this.currHp = currHp;
     }
 
 }

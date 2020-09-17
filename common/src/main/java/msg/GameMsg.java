@@ -360,9 +360,9 @@ public final class GameMsg {
      */
     SUMMON_MONSTER_SUB_HP_RESULT(83),
     /**
-     * <code>USER_JOIN_TEAM_PERFORM_CMD = 84;</code>
+     * <code>USER_CREATE_TEAM_RESULT = 84;</code>
      */
-    USER_JOIN_TEAM_PERFORM_CMD(84),
+    USER_CREATE_TEAM_RESULT(84),
     /**
      * <code>USER_JOIN_TEAM_PERFORM_RESULT = 85;</code>
      */
@@ -691,6 +691,30 @@ public final class GameMsg {
      * <code>SORT_OUT_ARENA_RESULT = 166;</code>
      */
     SORT_OUT_ARENA_RESULT(166),
+    /**
+     * <code>USER_AUTO_SUB_HP_RESULT = 167;</code>
+     */
+    USER_AUTO_SUB_HP_RESULT(167),
+    /**
+     * <code>SUMMON_AUTO_SUB_HP_RESULT = 168;</code>
+     */
+    SUMMON_AUTO_SUB_HP_RESULT(168),
+    /**
+     * <code>USER_MODIFY_DEAL_STATE_CMD = 169;</code>
+     */
+    USER_MODIFY_DEAL_STATE_CMD(169),
+    /**
+     * <code>USER_MODIFY_DEAL_STATE_RESULT = 170;</code>
+     */
+    USER_MODIFY_DEAL_STATE_RESULT(170),
+    /**
+     * <code>DEAL_FAIL_CMD = 171;</code>
+     */
+    DEAL_FAIL_CMD(171),
+    /**
+     * <code>DEAL_FAIL_RESULT = 172;</code>
+     */
+    DEAL_FAIL_RESULT(172),
     /**
      * <code>USER_UP_LV_RESULT = 157;</code>
      */
@@ -1039,9 +1063,9 @@ public final class GameMsg {
      */
     public static final int SUMMON_MONSTER_SUB_HP_RESULT_VALUE = 83;
     /**
-     * <code>USER_JOIN_TEAM_PERFORM_CMD = 84;</code>
+     * <code>USER_CREATE_TEAM_RESULT = 84;</code>
      */
-    public static final int USER_JOIN_TEAM_PERFORM_CMD_VALUE = 84;
+    public static final int USER_CREATE_TEAM_RESULT_VALUE = 84;
     /**
      * <code>USER_JOIN_TEAM_PERFORM_RESULT = 85;</code>
      */
@@ -1371,6 +1395,30 @@ public final class GameMsg {
      */
     public static final int SORT_OUT_ARENA_RESULT_VALUE = 166;
     /**
+     * <code>USER_AUTO_SUB_HP_RESULT = 167;</code>
+     */
+    public static final int USER_AUTO_SUB_HP_RESULT_VALUE = 167;
+    /**
+     * <code>SUMMON_AUTO_SUB_HP_RESULT = 168;</code>
+     */
+    public static final int SUMMON_AUTO_SUB_HP_RESULT_VALUE = 168;
+    /**
+     * <code>USER_MODIFY_DEAL_STATE_CMD = 169;</code>
+     */
+    public static final int USER_MODIFY_DEAL_STATE_CMD_VALUE = 169;
+    /**
+     * <code>USER_MODIFY_DEAL_STATE_RESULT = 170;</code>
+     */
+    public static final int USER_MODIFY_DEAL_STATE_RESULT_VALUE = 170;
+    /**
+     * <code>DEAL_FAIL_CMD = 171;</code>
+     */
+    public static final int DEAL_FAIL_CMD_VALUE = 171;
+    /**
+     * <code>DEAL_FAIL_RESULT = 172;</code>
+     */
+    public static final int DEAL_FAIL_RESULT_VALUE = 172;
+    /**
      * <code>USER_UP_LV_RESULT = 157;</code>
      */
     public static final int USER_UP_LV_RESULT_VALUE = 157;
@@ -1488,7 +1536,7 @@ public final class GameMsg {
         case 81: return USER_SKILL_ATTK_DUPLICATE_RESULT;
         case 82: return PASTOR_SKILL_RESULT;
         case 83: return SUMMON_MONSTER_SUB_HP_RESULT;
-        case 84: return USER_JOIN_TEAM_PERFORM_CMD;
+        case 84: return USER_CREATE_TEAM_RESULT;
         case 85: return USER_JOIN_TEAM_PERFORM_RESULT;
         case 86: return USER_CLEAN_MAIL_CMD;
         case 87: return USER_CLEAN_MAIL_RESULT;
@@ -1571,6 +1619,12 @@ public final class GameMsg {
         case 164: return MONSTER_RESURRECTION_RESULT;
         case 165: return SORT_OUT_ARENA_CMD;
         case 166: return SORT_OUT_ARENA_RESULT;
+        case 167: return USER_AUTO_SUB_HP_RESULT;
+        case 168: return SUMMON_AUTO_SUB_HP_RESULT;
+        case 169: return USER_MODIFY_DEAL_STATE_CMD;
+        case 170: return USER_MODIFY_DEAL_STATE_RESULT;
+        case 171: return DEAL_FAIL_CMD;
+        case 172: return DEAL_FAIL_RESULT;
         case 157: return USER_UP_LV_RESULT;
         case 96: return ERROR_RESULT;
         default: return null;
@@ -57953,6 +58007,48 @@ public final class GameMsg {
      * @return The originatedUserId.
      */
     int getOriginatedUserId();
+
+    /**
+     * <code>string originateUserName = 4;</code>
+     * @return The originateUserName.
+     */
+    java.lang.String getOriginateUserName();
+    /**
+     * <code>string originateUserName = 4;</code>
+     * @return The bytes for originateUserName.
+     */
+    com.google.protobuf.ByteString
+        getOriginateUserNameBytes();
+
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string originatedUserName = 5;</code>
+     * @return The originatedUserName.
+     */
+    java.lang.String getOriginatedUserName();
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string originatedUserName = 5;</code>
+     * @return The bytes for originatedUserName.
+     */
+    com.google.protobuf.ByteString
+        getOriginatedUserNameBytes();
+
+    /**
+     * <code>uint32 hp = 6;</code>
+     * @return The hp.
+     */
+    int getHp();
+
+    /**
+     * <code>uint32 mp = 7;</code>
+     * @return The mp.
+     */
+    int getMp();
   }
   /**
    * <pre>
@@ -57971,6 +58067,8 @@ public final class GameMsg {
       super(builder);
     }
     private UserChooseOpponentResult() {
+      originateUserName_ = "";
+      originatedUserName_ = "";
     }
 
     @java.lang.Override
@@ -58016,6 +58114,28 @@ public final class GameMsg {
             case 24: {
 
               originatedUserId_ = input.readUInt32();
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              originateUserName_ = s;
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              originatedUserName_ = s;
+              break;
+            }
+            case 48: {
+
+              hp_ = input.readUInt32();
+              break;
+            }
+            case 56: {
+
+              mp_ = input.readUInt32();
               break;
             }
             default: {
@@ -58091,6 +58211,104 @@ public final class GameMsg {
       return originatedUserId_;
     }
 
+    public static final int ORIGINATEUSERNAME_FIELD_NUMBER = 4;
+    private volatile java.lang.Object originateUserName_;
+    /**
+     * <code>string originateUserName = 4;</code>
+     * @return The originateUserName.
+     */
+    public java.lang.String getOriginateUserName() {
+      java.lang.Object ref = originateUserName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        originateUserName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string originateUserName = 4;</code>
+     * @return The bytes for originateUserName.
+     */
+    public com.google.protobuf.ByteString
+        getOriginateUserNameBytes() {
+      java.lang.Object ref = originateUserName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        originateUserName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ORIGINATEDUSERNAME_FIELD_NUMBER = 5;
+    private volatile java.lang.Object originatedUserName_;
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string originatedUserName = 5;</code>
+     * @return The originatedUserName.
+     */
+    public java.lang.String getOriginatedUserName() {
+      java.lang.Object ref = originatedUserName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        originatedUserName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string originatedUserName = 5;</code>
+     * @return The bytes for originatedUserName.
+     */
+    public com.google.protobuf.ByteString
+        getOriginatedUserNameBytes() {
+      java.lang.Object ref = originatedUserName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        originatedUserName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int HP_FIELD_NUMBER = 6;
+    private int hp_;
+    /**
+     * <code>uint32 hp = 6;</code>
+     * @return The hp.
+     */
+    public int getHp() {
+      return hp_;
+    }
+
+    public static final int MP_FIELD_NUMBER = 7;
+    private int mp_;
+    /**
+     * <code>uint32 mp = 7;</code>
+     * @return The mp.
+     */
+    public int getMp() {
+      return mp_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -58114,6 +58332,18 @@ public final class GameMsg {
       if (originatedUserId_ != 0) {
         output.writeUInt32(3, originatedUserId_);
       }
+      if (!getOriginateUserNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, originateUserName_);
+      }
+      if (!getOriginatedUserNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, originatedUserName_);
+      }
+      if (hp_ != 0) {
+        output.writeUInt32(6, hp_);
+      }
+      if (mp_ != 0) {
+        output.writeUInt32(7, mp_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -58134,6 +58364,20 @@ public final class GameMsg {
       if (originatedUserId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(3, originatedUserId_);
+      }
+      if (!getOriginateUserNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, originateUserName_);
+      }
+      if (!getOriginatedUserNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, originatedUserName_);
+      }
+      if (hp_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(6, hp_);
+      }
+      if (mp_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(7, mp_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -58156,6 +58400,14 @@ public final class GameMsg {
           != other.getOriginateUserId()) return false;
       if (getOriginatedUserId()
           != other.getOriginatedUserId()) return false;
+      if (!getOriginateUserName()
+          .equals(other.getOriginateUserName())) return false;
+      if (!getOriginatedUserName()
+          .equals(other.getOriginatedUserName())) return false;
+      if (getHp()
+          != other.getHp()) return false;
+      if (getMp()
+          != other.getMp()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -58174,6 +58426,14 @@ public final class GameMsg {
       hash = (53 * hash) + getOriginateUserId();
       hash = (37 * hash) + ORIGINATEDUSERID_FIELD_NUMBER;
       hash = (53 * hash) + getOriginatedUserId();
+      hash = (37 * hash) + ORIGINATEUSERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getOriginateUserName().hashCode();
+      hash = (37 * hash) + ORIGINATEDUSERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getOriginatedUserName().hashCode();
+      hash = (37 * hash) + HP_FIELD_NUMBER;
+      hash = (53 * hash) + getHp();
+      hash = (37 * hash) + MP_FIELD_NUMBER;
+      hash = (53 * hash) + getMp();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -58317,6 +58577,14 @@ public final class GameMsg {
 
         originatedUserId_ = 0;
 
+        originateUserName_ = "";
+
+        originatedUserName_ = "";
+
+        hp_ = 0;
+
+        mp_ = 0;
+
         return this;
       }
 
@@ -58346,6 +58614,10 @@ public final class GameMsg {
         result.acceptChallenge_ = acceptChallenge_;
         result.originateUserId_ = originateUserId_;
         result.originatedUserId_ = originatedUserId_;
+        result.originateUserName_ = originateUserName_;
+        result.originatedUserName_ = originatedUserName_;
+        result.hp_ = hp_;
+        result.mp_ = mp_;
         onBuilt();
         return result;
       }
@@ -58402,6 +58674,20 @@ public final class GameMsg {
         }
         if (other.getOriginatedUserId() != 0) {
           setOriginatedUserId(other.getOriginatedUserId());
+        }
+        if (!other.getOriginateUserName().isEmpty()) {
+          originateUserName_ = other.originateUserName_;
+          onChanged();
+        }
+        if (!other.getOriginatedUserName().isEmpty()) {
+          originatedUserName_ = other.originatedUserName_;
+          onChanged();
+        }
+        if (other.getHp() != 0) {
+          setHp(other.getHp());
+        }
+        if (other.getMp() != 0) {
+          setMp(other.getMp());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -58551,6 +58837,233 @@ public final class GameMsg {
       public Builder clearOriginatedUserId() {
         
         originatedUserId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object originateUserName_ = "";
+      /**
+       * <code>string originateUserName = 4;</code>
+       * @return The originateUserName.
+       */
+      public java.lang.String getOriginateUserName() {
+        java.lang.Object ref = originateUserName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          originateUserName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string originateUserName = 4;</code>
+       * @return The bytes for originateUserName.
+       */
+      public com.google.protobuf.ByteString
+          getOriginateUserNameBytes() {
+        java.lang.Object ref = originateUserName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          originateUserName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string originateUserName = 4;</code>
+       * @param value The originateUserName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginateUserName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        originateUserName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string originateUserName = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOriginateUserName() {
+        
+        originateUserName_ = getDefaultInstance().getOriginateUserName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string originateUserName = 4;</code>
+       * @param value The bytes for originateUserName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginateUserNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        originateUserName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object originatedUserName_ = "";
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string originatedUserName = 5;</code>
+       * @return The originatedUserName.
+       */
+      public java.lang.String getOriginatedUserName() {
+        java.lang.Object ref = originatedUserName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          originatedUserName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string originatedUserName = 5;</code>
+       * @return The bytes for originatedUserName.
+       */
+      public com.google.protobuf.ByteString
+          getOriginatedUserNameBytes() {
+        java.lang.Object ref = originatedUserName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          originatedUserName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string originatedUserName = 5;</code>
+       * @param value The originatedUserName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginatedUserName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        originatedUserName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string originatedUserName = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOriginatedUserName() {
+        
+        originatedUserName_ = getDefaultInstance().getOriginatedUserName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string originatedUserName = 5;</code>
+       * @param value The bytes for originatedUserName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOriginatedUserNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        originatedUserName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int hp_ ;
+      /**
+       * <code>uint32 hp = 6;</code>
+       * @return The hp.
+       */
+      public int getHp() {
+        return hp_;
+      }
+      /**
+       * <code>uint32 hp = 6;</code>
+       * @param value The hp to set.
+       * @return This builder for chaining.
+       */
+      public Builder setHp(int value) {
+        
+        hp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 hp = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearHp() {
+        
+        hp_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int mp_ ;
+      /**
+       * <code>uint32 mp = 7;</code>
+       * @return The mp.
+       */
+      public int getMp() {
+        return mp_;
+      }
+      /**
+       * <code>uint32 mp = 7;</code>
+       * @param value The mp to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMp(int value) {
+        
+        mp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 mp = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMp() {
+        
+        mp_ = 0;
         onChanged();
         return this;
       }
@@ -65860,569 +66373,6 @@ public final class GameMsg {
 
   }
 
-  public interface UserJoinTeamPerformCmdOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:msg.UserJoinTeamPerformCmd)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>uint32 targetId = 1;</code>
-     * @return The targetId.
-     */
-    int getTargetId();
-
-    /**
-     * <code>bool isAgree = 2;</code>
-     * @return The isAgree.
-     */
-    boolean getIsAgree();
-  }
-  /**
-   * <pre>
-   * 处理加入队伍的用户
-   * </pre>
-   *
-   * Protobuf type {@code msg.UserJoinTeamPerformCmd}
-   */
-  public  static final class UserJoinTeamPerformCmd extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:msg.UserJoinTeamPerformCmd)
-      UserJoinTeamPerformCmdOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use UserJoinTeamPerformCmd.newBuilder() to construct.
-    private UserJoinTeamPerformCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private UserJoinTeamPerformCmd() {
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new UserJoinTeamPerformCmd();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private UserJoinTeamPerformCmd(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              targetId_ = input.readUInt32();
-              break;
-            }
-            case 16: {
-
-              isAgree_ = input.readBool();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return msg.GameMsg.internal_static_msg_UserJoinTeamPerformCmd_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return msg.GameMsg.internal_static_msg_UserJoinTeamPerformCmd_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              msg.GameMsg.UserJoinTeamPerformCmd.class, msg.GameMsg.UserJoinTeamPerformCmd.Builder.class);
-    }
-
-    public static final int TARGETID_FIELD_NUMBER = 1;
-    private int targetId_;
-    /**
-     * <code>uint32 targetId = 1;</code>
-     * @return The targetId.
-     */
-    public int getTargetId() {
-      return targetId_;
-    }
-
-    public static final int ISAGREE_FIELD_NUMBER = 2;
-    private boolean isAgree_;
-    /**
-     * <code>bool isAgree = 2;</code>
-     * @return The isAgree.
-     */
-    public boolean getIsAgree() {
-      return isAgree_;
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (targetId_ != 0) {
-        output.writeUInt32(1, targetId_);
-      }
-      if (isAgree_ != false) {
-        output.writeBool(2, isAgree_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (targetId_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, targetId_);
-      }
-      if (isAgree_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, isAgree_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof msg.GameMsg.UserJoinTeamPerformCmd)) {
-        return super.equals(obj);
-      }
-      msg.GameMsg.UserJoinTeamPerformCmd other = (msg.GameMsg.UserJoinTeamPerformCmd) obj;
-
-      if (getTargetId()
-          != other.getTargetId()) return false;
-      if (getIsAgree()
-          != other.getIsAgree()) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + TARGETID_FIELD_NUMBER;
-      hash = (53 * hash) + getTargetId();
-      hash = (37 * hash) + ISAGREE_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getIsAgree());
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static msg.GameMsg.UserJoinTeamPerformCmd parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(msg.GameMsg.UserJoinTeamPerformCmd prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * <pre>
-     * 处理加入队伍的用户
-     * </pre>
-     *
-     * Protobuf type {@code msg.UserJoinTeamPerformCmd}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:msg.UserJoinTeamPerformCmd)
-        msg.GameMsg.UserJoinTeamPerformCmdOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return msg.GameMsg.internal_static_msg_UserJoinTeamPerformCmd_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return msg.GameMsg.internal_static_msg_UserJoinTeamPerformCmd_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                msg.GameMsg.UserJoinTeamPerformCmd.class, msg.GameMsg.UserJoinTeamPerformCmd.Builder.class);
-      }
-
-      // Construct using msg.GameMsg.UserJoinTeamPerformCmd.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        targetId_ = 0;
-
-        isAgree_ = false;
-
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return msg.GameMsg.internal_static_msg_UserJoinTeamPerformCmd_descriptor;
-      }
-
-      @java.lang.Override
-      public msg.GameMsg.UserJoinTeamPerformCmd getDefaultInstanceForType() {
-        return msg.GameMsg.UserJoinTeamPerformCmd.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public msg.GameMsg.UserJoinTeamPerformCmd build() {
-        msg.GameMsg.UserJoinTeamPerformCmd result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public msg.GameMsg.UserJoinTeamPerformCmd buildPartial() {
-        msg.GameMsg.UserJoinTeamPerformCmd result = new msg.GameMsg.UserJoinTeamPerformCmd(this);
-        result.targetId_ = targetId_;
-        result.isAgree_ = isAgree_;
-        onBuilt();
-        return result;
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof msg.GameMsg.UserJoinTeamPerformCmd) {
-          return mergeFrom((msg.GameMsg.UserJoinTeamPerformCmd)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(msg.GameMsg.UserJoinTeamPerformCmd other) {
-        if (other == msg.GameMsg.UserJoinTeamPerformCmd.getDefaultInstance()) return this;
-        if (other.getTargetId() != 0) {
-          setTargetId(other.getTargetId());
-        }
-        if (other.getIsAgree() != false) {
-          setIsAgree(other.getIsAgree());
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        msg.GameMsg.UserJoinTeamPerformCmd parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (msg.GameMsg.UserJoinTeamPerformCmd) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int targetId_ ;
-      /**
-       * <code>uint32 targetId = 1;</code>
-       * @return The targetId.
-       */
-      public int getTargetId() {
-        return targetId_;
-      }
-      /**
-       * <code>uint32 targetId = 1;</code>
-       * @param value The targetId to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTargetId(int value) {
-        
-        targetId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>uint32 targetId = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearTargetId() {
-        
-        targetId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private boolean isAgree_ ;
-      /**
-       * <code>bool isAgree = 2;</code>
-       * @return The isAgree.
-       */
-      public boolean getIsAgree() {
-        return isAgree_;
-      }
-      /**
-       * <code>bool isAgree = 2;</code>
-       * @param value The isAgree to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsAgree(boolean value) {
-        
-        isAgree_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>bool isAgree = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsAgree() {
-        
-        isAgree_ = false;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:msg.UserJoinTeamPerformCmd)
-    }
-
-    // @@protoc_insertion_point(class_scope:msg.UserJoinTeamPerformCmd)
-    private static final msg.GameMsg.UserJoinTeamPerformCmd DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new msg.GameMsg.UserJoinTeamPerformCmd();
-    }
-
-    public static msg.GameMsg.UserJoinTeamPerformCmd getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<UserJoinTeamPerformCmd>
-        PARSER = new com.google.protobuf.AbstractParser<UserJoinTeamPerformCmd>() {
-      @java.lang.Override
-      public UserJoinTeamPerformCmd parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new UserJoinTeamPerformCmd(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<UserJoinTeamPerformCmd> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<UserJoinTeamPerformCmd> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public msg.GameMsg.UserJoinTeamPerformCmd getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   public interface UserJoinTeamPerformResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:msg.UserJoinTeamPerformResult)
       com.google.protobuf.MessageOrBuilder {
@@ -66465,6 +66415,11 @@ public final class GameMsg {
   }
   /**
    * <pre>
+   * 处理加入队伍的用户
+   *message UserCreateTeamResult {
+   *  uint32 targetId = 1;
+   *  bool isAgree = 2;
+   *}
    * </pre>
    *
    * Protobuf type {@code msg.UserJoinTeamPerformResult}
@@ -66804,6 +66759,11 @@ public final class GameMsg {
     }
     /**
      * <pre>
+     * 处理加入队伍的用户
+     *message UserCreateTeamResult {
+     *  uint32 targetId = 1;
+     *  bool isAgree = 2;
+     *}
      * </pre>
      *
      * Protobuf type {@code msg.UserJoinTeamPerformResult}
@@ -117905,6 +117865,2803 @@ public final class GameMsg {
 
   }
 
+  public interface UserAutoSubHpResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserAutoSubHpResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 subHp = 1;</code>
+     * @return The subHp.
+     */
+    int getSubHp();
+  }
+  /**
+   * Protobuf type {@code msg.UserAutoSubHpResult}
+   */
+  public  static final class UserAutoSubHpResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserAutoSubHpResult)
+      UserAutoSubHpResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserAutoSubHpResult.newBuilder() to construct.
+    private UserAutoSubHpResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserAutoSubHpResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserAutoSubHpResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserAutoSubHpResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              subHp_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserAutoSubHpResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserAutoSubHpResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserAutoSubHpResult.class, msg.GameMsg.UserAutoSubHpResult.Builder.class);
+    }
+
+    public static final int SUBHP_FIELD_NUMBER = 1;
+    private int subHp_;
+    /**
+     * <code>uint32 subHp = 1;</code>
+     * @return The subHp.
+     */
+    public int getSubHp() {
+      return subHp_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (subHp_ != 0) {
+        output.writeUInt32(1, subHp_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (subHp_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, subHp_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserAutoSubHpResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserAutoSubHpResult other = (msg.GameMsg.UserAutoSubHpResult) obj;
+
+      if (getSubHp()
+          != other.getSubHp()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUBHP_FIELD_NUMBER;
+      hash = (53 * hash) + getSubHp();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserAutoSubHpResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserAutoSubHpResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.UserAutoSubHpResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserAutoSubHpResult)
+        msg.GameMsg.UserAutoSubHpResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserAutoSubHpResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserAutoSubHpResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserAutoSubHpResult.class, msg.GameMsg.UserAutoSubHpResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserAutoSubHpResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        subHp_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserAutoSubHpResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserAutoSubHpResult getDefaultInstanceForType() {
+        return msg.GameMsg.UserAutoSubHpResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserAutoSubHpResult build() {
+        msg.GameMsg.UserAutoSubHpResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserAutoSubHpResult buildPartial() {
+        msg.GameMsg.UserAutoSubHpResult result = new msg.GameMsg.UserAutoSubHpResult(this);
+        result.subHp_ = subHp_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserAutoSubHpResult) {
+          return mergeFrom((msg.GameMsg.UserAutoSubHpResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserAutoSubHpResult other) {
+        if (other == msg.GameMsg.UserAutoSubHpResult.getDefaultInstance()) return this;
+        if (other.getSubHp() != 0) {
+          setSubHp(other.getSubHp());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserAutoSubHpResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserAutoSubHpResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int subHp_ ;
+      /**
+       * <code>uint32 subHp = 1;</code>
+       * @return The subHp.
+       */
+      public int getSubHp() {
+        return subHp_;
+      }
+      /**
+       * <code>uint32 subHp = 1;</code>
+       * @param value The subHp to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSubHp(int value) {
+        
+        subHp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 subHp = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSubHp() {
+        
+        subHp_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserAutoSubHpResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserAutoSubHpResult)
+    private static final msg.GameMsg.UserAutoSubHpResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserAutoSubHpResult();
+    }
+
+    public static msg.GameMsg.UserAutoSubHpResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserAutoSubHpResult>
+        PARSER = new com.google.protobuf.AbstractParser<UserAutoSubHpResult>() {
+      @java.lang.Override
+      public UserAutoSubHpResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserAutoSubHpResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserAutoSubHpResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserAutoSubHpResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserAutoSubHpResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface SummonAutoSubHpResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.SummonAutoSubHpResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 subHp = 1;</code>
+     * @return The subHp.
+     */
+    int getSubHp();
+  }
+  /**
+   * Protobuf type {@code msg.SummonAutoSubHpResult}
+   */
+  public  static final class SummonAutoSubHpResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.SummonAutoSubHpResult)
+      SummonAutoSubHpResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SummonAutoSubHpResult.newBuilder() to construct.
+    private SummonAutoSubHpResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SummonAutoSubHpResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new SummonAutoSubHpResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SummonAutoSubHpResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              subHp_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_SummonAutoSubHpResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_SummonAutoSubHpResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.SummonAutoSubHpResult.class, msg.GameMsg.SummonAutoSubHpResult.Builder.class);
+    }
+
+    public static final int SUBHP_FIELD_NUMBER = 1;
+    private int subHp_;
+    /**
+     * <code>uint32 subHp = 1;</code>
+     * @return The subHp.
+     */
+    public int getSubHp() {
+      return subHp_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (subHp_ != 0) {
+        output.writeUInt32(1, subHp_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (subHp_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, subHp_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.SummonAutoSubHpResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.SummonAutoSubHpResult other = (msg.GameMsg.SummonAutoSubHpResult) obj;
+
+      if (getSubHp()
+          != other.getSubHp()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUBHP_FIELD_NUMBER;
+      hash = (53 * hash) + getSubHp();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.SummonAutoSubHpResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.SummonAutoSubHpResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.SummonAutoSubHpResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.SummonAutoSubHpResult)
+        msg.GameMsg.SummonAutoSubHpResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_SummonAutoSubHpResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_SummonAutoSubHpResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.SummonAutoSubHpResult.class, msg.GameMsg.SummonAutoSubHpResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.SummonAutoSubHpResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        subHp_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_SummonAutoSubHpResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.SummonAutoSubHpResult getDefaultInstanceForType() {
+        return msg.GameMsg.SummonAutoSubHpResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.SummonAutoSubHpResult build() {
+        msg.GameMsg.SummonAutoSubHpResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.SummonAutoSubHpResult buildPartial() {
+        msg.GameMsg.SummonAutoSubHpResult result = new msg.GameMsg.SummonAutoSubHpResult(this);
+        result.subHp_ = subHp_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.SummonAutoSubHpResult) {
+          return mergeFrom((msg.GameMsg.SummonAutoSubHpResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.SummonAutoSubHpResult other) {
+        if (other == msg.GameMsg.SummonAutoSubHpResult.getDefaultInstance()) return this;
+        if (other.getSubHp() != 0) {
+          setSubHp(other.getSubHp());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.SummonAutoSubHpResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.SummonAutoSubHpResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int subHp_ ;
+      /**
+       * <code>uint32 subHp = 1;</code>
+       * @return The subHp.
+       */
+      public int getSubHp() {
+        return subHp_;
+      }
+      /**
+       * <code>uint32 subHp = 1;</code>
+       * @param value The subHp to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSubHp(int value) {
+        
+        subHp_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 subHp = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSubHp() {
+        
+        subHp_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.SummonAutoSubHpResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.SummonAutoSubHpResult)
+    private static final msg.GameMsg.SummonAutoSubHpResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.SummonAutoSubHpResult();
+    }
+
+    public static msg.GameMsg.SummonAutoSubHpResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<SummonAutoSubHpResult>
+        PARSER = new com.google.protobuf.AbstractParser<SummonAutoSubHpResult>() {
+      @java.lang.Override
+      public SummonAutoSubHpResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SummonAutoSubHpResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SummonAutoSubHpResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SummonAutoSubHpResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.SummonAutoSubHpResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserModifyDealStateCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserModifyDealStateCmd)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 targetId = 1;</code>
+     * @return The targetId.
+     */
+    int getTargetId();
+  }
+  /**
+   * <pre>
+   *用户修改交易状态
+   * </pre>
+   *
+   * Protobuf type {@code msg.UserModifyDealStateCmd}
+   */
+  public  static final class UserModifyDealStateCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserModifyDealStateCmd)
+      UserModifyDealStateCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserModifyDealStateCmd.newBuilder() to construct.
+    private UserModifyDealStateCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserModifyDealStateCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserModifyDealStateCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserModifyDealStateCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              targetId_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserModifyDealStateCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserModifyDealStateCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserModifyDealStateCmd.class, msg.GameMsg.UserModifyDealStateCmd.Builder.class);
+    }
+
+    public static final int TARGETID_FIELD_NUMBER = 1;
+    private int targetId_;
+    /**
+     * <code>uint32 targetId = 1;</code>
+     * @return The targetId.
+     */
+    public int getTargetId() {
+      return targetId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (targetId_ != 0) {
+        output.writeUInt32(1, targetId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (targetId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, targetId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserModifyDealStateCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserModifyDealStateCmd other = (msg.GameMsg.UserModifyDealStateCmd) obj;
+
+      if (getTargetId()
+          != other.getTargetId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TARGETID_FIELD_NUMBER;
+      hash = (53 * hash) + getTargetId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserModifyDealStateCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserModifyDealStateCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *用户修改交易状态
+     * </pre>
+     *
+     * Protobuf type {@code msg.UserModifyDealStateCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserModifyDealStateCmd)
+        msg.GameMsg.UserModifyDealStateCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserModifyDealStateCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserModifyDealStateCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserModifyDealStateCmd.class, msg.GameMsg.UserModifyDealStateCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserModifyDealStateCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        targetId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserModifyDealStateCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserModifyDealStateCmd getDefaultInstanceForType() {
+        return msg.GameMsg.UserModifyDealStateCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserModifyDealStateCmd build() {
+        msg.GameMsg.UserModifyDealStateCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserModifyDealStateCmd buildPartial() {
+        msg.GameMsg.UserModifyDealStateCmd result = new msg.GameMsg.UserModifyDealStateCmd(this);
+        result.targetId_ = targetId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserModifyDealStateCmd) {
+          return mergeFrom((msg.GameMsg.UserModifyDealStateCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserModifyDealStateCmd other) {
+        if (other == msg.GameMsg.UserModifyDealStateCmd.getDefaultInstance()) return this;
+        if (other.getTargetId() != 0) {
+          setTargetId(other.getTargetId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserModifyDealStateCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserModifyDealStateCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int targetId_ ;
+      /**
+       * <code>uint32 targetId = 1;</code>
+       * @return The targetId.
+       */
+      public int getTargetId() {
+        return targetId_;
+      }
+      /**
+       * <code>uint32 targetId = 1;</code>
+       * @param value The targetId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTargetId(int value) {
+        
+        targetId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 targetId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTargetId() {
+        
+        targetId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserModifyDealStateCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserModifyDealStateCmd)
+    private static final msg.GameMsg.UserModifyDealStateCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserModifyDealStateCmd();
+    }
+
+    public static msg.GameMsg.UserModifyDealStateCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserModifyDealStateCmd>
+        PARSER = new com.google.protobuf.AbstractParser<UserModifyDealStateCmd>() {
+      @java.lang.Override
+      public UserModifyDealStateCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserModifyDealStateCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserModifyDealStateCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserModifyDealStateCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserModifyDealStateCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UserModifyDealStateResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.UserModifyDealStateResult)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool isSuccess = 1;</code>
+     * @return The isSuccess.
+     */
+    boolean getIsSuccess();
+  }
+  /**
+   * Protobuf type {@code msg.UserModifyDealStateResult}
+   */
+  public  static final class UserModifyDealStateResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.UserModifyDealStateResult)
+      UserModifyDealStateResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UserModifyDealStateResult.newBuilder() to construct.
+    private UserModifyDealStateResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UserModifyDealStateResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UserModifyDealStateResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private UserModifyDealStateResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              isSuccess_ = input.readBool();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_UserModifyDealStateResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_UserModifyDealStateResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.UserModifyDealStateResult.class, msg.GameMsg.UserModifyDealStateResult.Builder.class);
+    }
+
+    public static final int ISSUCCESS_FIELD_NUMBER = 1;
+    private boolean isSuccess_;
+    /**
+     * <code>bool isSuccess = 1;</code>
+     * @return The isSuccess.
+     */
+    public boolean getIsSuccess() {
+      return isSuccess_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (isSuccess_ != false) {
+        output.writeBool(1, isSuccess_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (isSuccess_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, isSuccess_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.UserModifyDealStateResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.UserModifyDealStateResult other = (msg.GameMsg.UserModifyDealStateResult) obj;
+
+      if (getIsSuccess()
+          != other.getIsSuccess()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ISSUCCESS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getIsSuccess());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.UserModifyDealStateResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.UserModifyDealStateResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.UserModifyDealStateResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.UserModifyDealStateResult)
+        msg.GameMsg.UserModifyDealStateResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_UserModifyDealStateResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_UserModifyDealStateResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.UserModifyDealStateResult.class, msg.GameMsg.UserModifyDealStateResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.UserModifyDealStateResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        isSuccess_ = false;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_UserModifyDealStateResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserModifyDealStateResult getDefaultInstanceForType() {
+        return msg.GameMsg.UserModifyDealStateResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserModifyDealStateResult build() {
+        msg.GameMsg.UserModifyDealStateResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.UserModifyDealStateResult buildPartial() {
+        msg.GameMsg.UserModifyDealStateResult result = new msg.GameMsg.UserModifyDealStateResult(this);
+        result.isSuccess_ = isSuccess_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.UserModifyDealStateResult) {
+          return mergeFrom((msg.GameMsg.UserModifyDealStateResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.UserModifyDealStateResult other) {
+        if (other == msg.GameMsg.UserModifyDealStateResult.getDefaultInstance()) return this;
+        if (other.getIsSuccess() != false) {
+          setIsSuccess(other.getIsSuccess());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.UserModifyDealStateResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.UserModifyDealStateResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private boolean isSuccess_ ;
+      /**
+       * <code>bool isSuccess = 1;</code>
+       * @return The isSuccess.
+       */
+      public boolean getIsSuccess() {
+        return isSuccess_;
+      }
+      /**
+       * <code>bool isSuccess = 1;</code>
+       * @param value The isSuccess to set.
+       * @return This builder for chaining.
+       */
+      public Builder setIsSuccess(boolean value) {
+        
+        isSuccess_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool isSuccess = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearIsSuccess() {
+        
+        isSuccess_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.UserModifyDealStateResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.UserModifyDealStateResult)
+    private static final msg.GameMsg.UserModifyDealStateResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.UserModifyDealStateResult();
+    }
+
+    public static msg.GameMsg.UserModifyDealStateResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UserModifyDealStateResult>
+        PARSER = new com.google.protobuf.AbstractParser<UserModifyDealStateResult>() {
+      @java.lang.Override
+      public UserModifyDealStateResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new UserModifyDealStateResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<UserModifyDealStateResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UserModifyDealStateResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.UserModifyDealStateResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface DealFailCmdOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.DealFailCmd)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * <pre>
+   *交易建立失败
+   * </pre>
+   *
+   * Protobuf type {@code msg.DealFailCmd}
+   */
+  public  static final class DealFailCmd extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.DealFailCmd)
+      DealFailCmdOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DealFailCmd.newBuilder() to construct.
+    private DealFailCmd(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DealFailCmd() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new DealFailCmd();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DealFailCmd(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_DealFailCmd_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_DealFailCmd_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.DealFailCmd.class, msg.GameMsg.DealFailCmd.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.DealFailCmd)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.DealFailCmd other = (msg.GameMsg.DealFailCmd) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailCmd parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DealFailCmd parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DealFailCmd parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.DealFailCmd prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *交易建立失败
+     * </pre>
+     *
+     * Protobuf type {@code msg.DealFailCmd}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.DealFailCmd)
+        msg.GameMsg.DealFailCmdOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_DealFailCmd_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_DealFailCmd_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.DealFailCmd.class, msg.GameMsg.DealFailCmd.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.DealFailCmd.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_DealFailCmd_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DealFailCmd getDefaultInstanceForType() {
+        return msg.GameMsg.DealFailCmd.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DealFailCmd build() {
+        msg.GameMsg.DealFailCmd result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DealFailCmd buildPartial() {
+        msg.GameMsg.DealFailCmd result = new msg.GameMsg.DealFailCmd(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.DealFailCmd) {
+          return mergeFrom((msg.GameMsg.DealFailCmd)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.DealFailCmd other) {
+        if (other == msg.GameMsg.DealFailCmd.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.DealFailCmd parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.DealFailCmd) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.DealFailCmd)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.DealFailCmd)
+    private static final msg.GameMsg.DealFailCmd DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.DealFailCmd();
+    }
+
+    public static msg.GameMsg.DealFailCmd getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DealFailCmd>
+        PARSER = new com.google.protobuf.AbstractParser<DealFailCmd>() {
+      @java.lang.Override
+      public DealFailCmd parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DealFailCmd(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DealFailCmd> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DealFailCmd> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.DealFailCmd getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface DealFailResultOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:msg.DealFailResult)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code msg.DealFailResult}
+   */
+  public  static final class DealFailResult extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:msg.DealFailResult)
+      DealFailResultOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use DealFailResult.newBuilder() to construct.
+    private DealFailResult(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private DealFailResult() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new DealFailResult();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private DealFailResult(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return msg.GameMsg.internal_static_msg_DealFailResult_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return msg.GameMsg.internal_static_msg_DealFailResult_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              msg.GameMsg.DealFailResult.class, msg.GameMsg.DealFailResult.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof msg.GameMsg.DealFailResult)) {
+        return super.equals(obj);
+      }
+      msg.GameMsg.DealFailResult other = (msg.GameMsg.DealFailResult) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static msg.GameMsg.DealFailResult parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailResult parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DealFailResult parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static msg.GameMsg.DealFailResult parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(msg.GameMsg.DealFailResult prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code msg.DealFailResult}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:msg.DealFailResult)
+        msg.GameMsg.DealFailResultOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return msg.GameMsg.internal_static_msg_DealFailResult_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return msg.GameMsg.internal_static_msg_DealFailResult_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                msg.GameMsg.DealFailResult.class, msg.GameMsg.DealFailResult.Builder.class);
+      }
+
+      // Construct using msg.GameMsg.DealFailResult.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return msg.GameMsg.internal_static_msg_DealFailResult_descriptor;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DealFailResult getDefaultInstanceForType() {
+        return msg.GameMsg.DealFailResult.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DealFailResult build() {
+        msg.GameMsg.DealFailResult result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public msg.GameMsg.DealFailResult buildPartial() {
+        msg.GameMsg.DealFailResult result = new msg.GameMsg.DealFailResult(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof msg.GameMsg.DealFailResult) {
+          return mergeFrom((msg.GameMsg.DealFailResult)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(msg.GameMsg.DealFailResult other) {
+        if (other == msg.GameMsg.DealFailResult.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        msg.GameMsg.DealFailResult parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (msg.GameMsg.DealFailResult) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:msg.DealFailResult)
+    }
+
+    // @@protoc_insertion_point(class_scope:msg.DealFailResult)
+    private static final msg.GameMsg.DealFailResult DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new msg.GameMsg.DealFailResult();
+    }
+
+    public static msg.GameMsg.DealFailResult getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<DealFailResult>
+        PARSER = new com.google.protobuf.AbstractParser<DealFailResult>() {
+      @java.lang.Override
+      public DealFailResult parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new DealFailResult(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<DealFailResult> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<DealFailResult> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public msg.GameMsg.DealFailResult getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_WhoElseIsHereCmd_descriptor;
   private static final 
@@ -118350,11 +121107,6 @@ public final class GameMsg {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_UserJoinTeamResult_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_msg_UserJoinTeamPerformCmd_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_msg_UserJoinTeamPerformCmd_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_msg_UserJoinTeamPerformResult_descriptor;
   private static final 
@@ -118820,6 +121572,36 @@ public final class GameMsg {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_msg_SortOutArenaResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserAutoSubHpResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserAutoSubHpResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_SummonAutoSubHpResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_SummonAutoSubHpResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserModifyDealStateCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserModifyDealStateCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_UserModifyDealStateResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_UserModifyDealStateResult_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_DealFailCmd_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_DealFailCmd_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_msg_DealFailResult_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_msg_DealFailResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -118954,9 +121736,11 @@ public final class GameMsg {
       "\n\005money\030\003 \001(\r\"\023\n\021UserEnterArenaCmd\"7\n\024Us" +
       "erEnterArenaResult\022\037\n\010userInfo\030\001 \003(\0132\r.m" +
       "sg.UserInfo\"\'\n\025UserChooseOpponentCmd\022\016\n\006" +
-      "userId\030\001 \001(\r\"f\n\030UserChooseOpponentResult" +
-      "\022\027\n\017acceptChallenge\030\001 \001(\010\022\027\n\017originateUs" +
-      "erId\030\002 \001(\r\022\030\n\020originatedUserId\030\003 \001(\r\"4\n\031" +
+      "userId\030\001 \001(\r\"\265\001\n\030UserChooseOpponentResul" +
+      "t\022\027\n\017acceptChallenge\030\001 \001(\010\022\027\n\017originateU" +
+      "serId\030\002 \001(\r\022\030\n\020originatedUserId\030\003 \001(\r\022\031\n" +
+      "\021originateUserName\030\004 \001(\t\022\032\n\022originatedUs" +
+      "erName\030\005 \001(\t\022\n\n\002hp\030\006 \001(\r\022\n\n\002mp\030\007 \001(\r\"4\n\031" +
       "TargetUserChallengeResult\022\027\n\017originateUs" +
       "erId\030\001 \001(\r\"A\n\025TargetUserResponseCmd\022\017\n\007i" +
       "sAgree\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\"\022\n" +
@@ -118973,223 +121757,231 @@ public final class GameMsg {
       "rName\030\002 \001(\t\":\n\017UserJoinTeamCmd\022\016\n\006isJoin" +
       "\030\001 \001(\010\022\027\n\017originateUserId\030\002 \001(\r\"J\n\022UserJ" +
       "oinTeamResult\022\016\n\006isJoin\030\001 \001(\010\022\020\n\010targetI" +
-      "d\030\002 \001(\r\022\022\n\ntargetName\030\003 \001(\t\";\n\026UserJoinT" +
-      "eamPerformCmd\022\020\n\010targetId\030\001 \001(\r\022\017\n\007isAgr" +
-      "ee\030\002 \001(\010\"b\n\031UserJoinTeamPerformResult\022\037\n" +
-      "\010userInfo\030\001 \003(\0132\r.msg.UserInfo\022\024\n\014teamLe" +
-      "aderId\030\002 \001(\r\022\016\n\006isJoin\030\003 \001(\010\"\021\n\017UserQuit" +
-      "TeamCmd\"K\n\022UserQuitTeamResult\022\037\n\010userInf" +
-      "o\030\001 \001(\0132\r.msg.UserInfo\022\024\n\014teamLeaderId\030\002" +
-      " \001(\r\"\031\n\027UserEnterTeamFailResult\"\035\n\033UserQ" +
-      "uitTeamAndDuplicateCmd\" \n\036UserQuitTeamAn" +
-      "dDuplicateResult\"+\n\021PastorSkillResult\022\n\n" +
-      "\002hp\030\001 \001(\r\022\n\n\002mp\030\002 \001(\r\"8\n\030SummonMonsterSu" +
-      "bHpResult\022\r\n\005isDie\030\001 \001(\010\022\r\n\005subHp\030\002 \001(\r\"" +
-      "\022\n\020UserCleanMailCmd\"6\n\023UserCleanMailResu" +
-      "lt\022\037\n\010mailInfo\030\001 \003(\0132\r.msg.MailInfo\"$\n\022U" +
-      "serDealRequestCmd\022\016\n\006userId\030\001 \001(\r\"i\n\025Use" +
-      "rDealRequestResult\022\017\n\007isAgree\030\001 \001(\010\022\021\n\ti" +
-      "sSuccess\030\002 \001(\010\022\024\n\014targetUserId\030\003 \001(\r\022\026\n\016" +
-      "targetUserName\030\004 \001(\t\"A\n\023AskTargetUserRes" +
-      "ult\022\023\n\013originateId\030\001 \001(\r\022\025\n\roriginateNam" +
-      "e\030\002 \001(\t\"A\n\031DealTargetUserResponseCmd\022\023\n\013" +
-      "originateId\030\001 \001(\r\022\017\n\007isAgree\030\002 \001(\010\"\020\n\016De" +
-      "alChannelCmd\"\023\n\021DealChannelResult\"I\n\017Use" +
-      "rDealItemCmd\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \001" +
-      "(\0132\n.msg.Props\022\014\n\004type\030\003 \001(\t\"L\n\022UserDeal" +
-      "ItemResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \001(\013" +
-      "2\n.msg.Props\022\014\n\004type\030\003 \001(\t\"(\n\013ErrorResul" +
-      "t\022\013\n\003msg\030\001 \001(\t\022\014\n\004code\030\002 \001(\r\"\024\n\022UserAddC" +
-      "ompleteCmd\"8\n\025UserAddCompleteResult\022\037\n\010u" +
-      "serInfo\030\001 \001(\0132\r.msg.UserInfo\")\n\021UserCanc" +
-      "elDealCmd\022\024\n\014isNeedNotice\030\001 \001(\010\"9\n\024UserC" +
-      "ancelDealResult\022\021\n\tisSuccess\030\001 \001(\010\022\016\n\006us" +
-      "erId\030\002 \001(\r\"\024\n\022UserConfirmDealCmd\"*\n\025User" +
-      "ConfirmDealResult\022\021\n\tisSuccess\030\001 \001(\010\"0\n\030" +
-      "UserCancelDealConfirmCmd\022\024\n\014isNeedNotice" +
-      "\030\001 \001(\010\"\035\n\033UserCancelDealConfirmResult\"\020\n" +
-      "\016SortOutDealCmd\"=\n\021SortOutDealResult\022\031\n\005" +
-      "props\030\001 \003(\0132\n.msg.Props\022\r\n\005money\030\002 \001(\r\"\'" +
-      "\n\022UserCreateGuildCmd\022\021\n\tguildName\030\001 \001(\t\"" +
-      "*\n\025UserCreateGuildResult\022\021\n\tguildName\030\001 " +
-      "\001(\t\"\026\n\024UserDissolveGuildCmd\")\n\027UserDisso" +
-      "lveGuildResult\022\016\n\006userId\030\001 \001(\r\"\016\n\014ShowGu" +
-      "ildCmd\",\n\017ShowGuildResult\022\031\n\005guild\030\001 \003(\013" +
-      "2\n.msg.Guild\"+\n\005Guild\022\017\n\007guildId\030\001 \001(\r\022\021" +
-      "\n\tguildName\030\002 \001(\t\"$\n\021UserEnterGuildCmd\022\017" +
-      "\n\007guildId\030\001 \001(\r\"1\n\024UserEnterGuildResult\022" +
-      "\031\n\005guild\030\001 \001(\0132\n.msg.Guild\"\024\n\022ShowGuildM" +
-      "emberCmd\"8\n\025ShowGuildMemberResult\022\037\n\010use" +
-      "rInfo\030\001 \003(\0132\r.msg.UserInfo\"(\n\026LookGuildM" +
-      "emberInfoCmd\022\016\n\006userId\030\001 \001(\r\"*\n\031LookGuil" +
-      "dMemberInfoResult\022\r\n\005equId\030\001 \003(\r\"\016\n\014Quit" +
-      "GuildCmd\"#\n\017QuitGuildResult\022\020\n\010userName\030" +
-      "\001 \001(\t\"6\n\020AppointMemberCmd\022\016\n\006userId\030\001 \001(" +
-      "\r\022\022\n\npositionId\030\002 \001(\r\")\n\023AppointMemberRe" +
-      "sult\022\022\n\npositionId\030\001 \001(\r\"#\n\021EliminateGui" +
-      "ldCmd\022\016\n\006userId\030\001 \001(\r\"\026\n\024EliminateGuildR" +
-      "esult\",\n\026ModifyGuildPositionCmd\022\022\n\nposit" +
-      "ionId\030\001 \001(\r\"\025\n\023ModifyGuildStateCmd\"\027\n\025Lo" +
-      "okGuildWarehouseCmd\"D\n\030LookGuildWarehous" +
-      "eResult\022\r\n\005money\030\001 \001(\r\022\031\n\005props\030\002 \003(\0132\n." +
-      "msg.Props\"<\n\017TakeOutPropsCmd\022\031\n\005props\030\001 " +
-      "\001(\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"?\n\022TakeO" +
-      "utPropsResult\022\031\n\005props\030\001 \003(\0132\n.msg.Props" +
-      "\022\016\n\006number\030\002 \001(\r\"*\n\rPutInPropsCmd\022\031\n\005pro" +
-      "ps\030\001 \001(\0132\n.msg.Props\"-\n\020PutInPropsResult" +
-      "\022\031\n\005props\030\001 \001(\0132\n.msg.Props\" \n\017TakeOutMo" +
-      "neyCmd\022\r\n\005money\030\001 \001(\r\"#\n\022TakeOutMoneyRes" +
-      "ult\022\r\n\005money\030\001 \001(\r\"\036\n\rPutInMoneyCmd\022\r\n\005m" +
-      "oney\030\001 \001(\r\"!\n\020PutInMoneyResult\022\r\n\005money\030" +
-      "\001 \001(\r\"&\n\024TransferPresidentCmd\022\016\n\006userId\030" +
-      "\001 \001(\r\")\n\027TransferPresidentResult\022\016\n\006user" +
-      "Id\030\001 \001(\r\"\024\n\022LookAuctionItemCmd\">\n\025LookAu" +
-      "ctionItemResult\022%\n\013auctionItem\030\001 \003(\0132\020.m" +
-      "sg.AuctionItem\"z\n\013AuctionItem\022\n\n\002id\030\001 \001(" +
-      "\r\022\020\n\010userName\030\002 \001(\t\022\017\n\007propsId\030\003 \001(\r\022\017\n\007" +
-      "auction\030\004 \001(\r\022\r\n\005price\030\005 \001(\r\022\016\n\006number\030\006" +
-      " \001(\r\022\014\n\004date\030\007 \001(\004\"R\n\016ShelveGoodsCmd\022\020\n\010" +
-      "location\030\001 \001(\r\022\016\n\006number\030\002 \001(\r\022\017\n\007auctio" +
-      "n\030\003 \001(\r\022\r\n\005price\030\004 \001(\r\"5\n\021ShelveGoodsRes" +
-      "ult\022\020\n\010location\030\001 \001(\r\022\016\n\006number\030\002 \001(\r\"3\n" +
-      "\017BiddingGoodsCmd\022\021\n\tauctionId\030\001 \001(\r\022\r\n\005m" +
-      "oney\030\002 \001(\r\"#\n\022BiddingGoodsResult\022\r\n\005mone" +
-      "y\030\001 \001(\r\" \n\013OnePriceCmd\022\021\n\tauctionId\030\001 \001(" +
-      "\r\"\037\n\016OnePriceResult\022\r\n\005price\030\001 \001(\r\"\033\n\031Lo" +
-      "okOneselfAuctionItemCmd\"E\n\034LookOneselfAu" +
-      "ctionItemResult\022%\n\013auctionItem\030\001 \003(\0132\020.m" +
-      "sg.AuctionItem\")\n\024CancelAuctionItemCmd\022\021" +
-      "\n\tauctionId\030\001 \001(\r\"\031\n\027CancelAuctionItemRe" +
-      "sult\"\020\n\016LookAllTaskCmd\"#\n\021LookAllTaskRes" +
-      "ult\022\016\n\006taskId\030\001 \001(\r\" \n\016ReceiveTaskCmd\022\016\n" +
-      "\006taskId\030\001 \001(\r\"#\n\021ReceiveTaskResult\022\016\n\006ta" +
-      "skId\030\001 \001(\r\"\021\n\017DialogueTaskCmd\"\025\n\023TaskCom" +
-      "pletedResult\"%\n\023ReceiveTaskAwardCmd\022\016\n\006t" +
-      "askId\030\001 \001(\r\"B\n\026ReceiveTaskAwardResult\022\031\n" +
-      "\005props\030\001 \003(\0132\n.msg.Props\022\r\n\005money\030\002 \001(\r\"" +
-      "\034\n\016UserUpLvResult\022\n\n\002lv\030\001 \001(\r\"0\n\014AddFrie" +
-      "ndCmd\022\016\n\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"" +
-      "3\n\017AddFriendResult\022\016\n\006userId\030\001 \001(\r\022\020\n\010us" +
-      "erName\030\002 \001(\t\"!\n\017DeleteFriendCmd\022\016\n\006userI" +
-      "d\030\001 \001(\r\"$\n\022DeleteFriendResult\022\016\n\006userId\030" +
-      "\001 \001(\r\"\023\n\021BossAllKillResult\"\024\n\022DuplicateF" +
-      "inishCmd\",\n\031MonsterResurrectionResult\022\017\n" +
-      "\007sceneId\030\001 \001(\r\"\021\n\017SortOutArenaCmd\"\024\n\022Sor" +
-      "tOutArenaResult*\320#\n\007MsgCode\022\030\n\024WHO_ELSE_" +
-      "IS_HERE_CMD\020\000\022\033\n\027WHO_ELSE_IS_HERE_RESULT" +
-      "\020\001\022\024\n\020USER_QUIT_RESULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017" +
-      "\n\013ATTK_RESULT\020\004\022\033\n\027USER_SUBTRACT_HP_RESU" +
-      "LT\020\005\022\016\n\nDIE_RESULT\020\006\022\022\n\016USER_LOGIN_CMD\020\007" +
-      "\022\025\n\021USER_LOGIN_RESULT\020\010\022\025\n\021USER_REGISTER" +
-      "_CMD\020\t\022\030\n\024USER_REGISTER_RESULT\020\n\022\024\n\020ATTK" +
-      "_MONSTER_CMD\020\013\022\033\n\027STOP_CUR_USER_ALL_TIME" +
-      "R\020\014\022\031\n\025USER_SWITCH_SCENE_CMD\020\r\022\034\n\030USER_S" +
-      "WITCH_SCENE_RESULT\020\016\022\033\n\027MONSTER_START_AT" +
-      "TK_USER\020\017\022\026\n\022NOTICE_USER_ATTKED\020\020\022\027\n\023USE" +
-      "R_SKILL_ATTK_CMD\020\021\022\032\n\026USER_SKILL_ATTK_RE" +
-      "SULT\020\022\022\026\n\022SKILL_STATE_SWITCH\020\023\022\025\n\021ROB_EQ" +
-      "UIPMENT_CMD\020\024\022\020\n\014BACKPACK_CMD\020\025\022\023\n\017BACKP" +
-      "ACK_RESULT\020\026\022\030\n\024ROB_EQUIPMENT_RESULT\020\027\022\023" +
-      "\n\017USER_POTION_CMD\020\030\022\026\n\022USER_POTION_RESUL" +
-      "T\020\031\022\034\n\030USER_RESUME_STATE_RESULT\020\032\022\033\n\027USE" +
-      "R_WEAR_EQUIPMENT_CMD\020\033\022\036\n\032USER_WEAR_EQUI" +
-      "PMENT_RESULT\020\034\022\033\n\027USER_UNDO_EQUIPMENT_CM" +
-      "D\020\035\022\036\n\032USER_UNDO_EQUIPMENT_RESULT\020\036\022 \n\034D" +
-      "URABILITY_DEFICIENCY_RESULT\020\037\022\030\n\024REPAIR_" +
-      "EQUIPMENT_CMD\020 \022\033\n\027REPAIR_EQUIPMENT_RESU" +
-      "LT\020!\022\034\n\030MONSTER_DROP_HP_AUTO_DIE\020\"\022\027\n\023EN" +
-      "TER_DUPLICATE_CMD\020#\022\032\n\026ENTER_DUPLICATE_R" +
-      "ESULT\020$\022\021\n\rATTK_BOSS_CMD\020%\022\024\n\020ATTK_BOSS_" +
-      "RESULT\020&\022\024\n\020NEXT_BOSS_RESULT\020\'\022\033\n\027DUPLIC" +
-      "ATE_FINISH_RESULT\020(\022\033\n\027USER_QUIT_DUPLICA" +
-      "TE_CMD\020)\022\036\n\032USER_QUIT_DUPLICATE_RESULT\020*" +
-      "\022\031\n\025BOSS_ATTK_USER_RESULT\020+\022\037\n\033BOSS_SKIL" +
-      "L_ATTK_USER_RESULT\020,\022\031\n\025BOSS_KILL_USER_R" +
-      "ESULT\020-\022\026\n\022USER_BUY_GOODS_CMD\020.\022\031\n\025USER_" +
-      "BUY_GOODS_RESULT\020/\022\026\n\022USER_CHAT_INFO_CMD" +
-      "\0200\022\031\n\025USER_CHAT_INFO_RESULT\0201\022\021\n\rSEND_MA" +
-      "IL_CMD\0202\022\024\n\020SEND_MAIL_RESULT\0203\022\020\n\014ALL_US" +
-      "ER_CMD\0204\022\023\n\017ALL_USER_RESULT\0205\022\037\n\033NOTICE_" +
-      "USER_GET_MAIL_RESULT\0206\022\025\n\021USER_SEE_MAIL_" +
-      "CMD\0207\022\030\n\024USER_SEE_MAIL_RESULT\0208\022\031\n\025USER_" +
-      "RECEIVE_MAIL_CMD\0209\022\034\n\030USER_RECEIVE_MAIL_" +
-      "RESULT\020:\022\030\n\024USER_ENTER_ARENA_CMD\020;\022\033\n\027US" +
-      "ER_ENTER_ARENA_RESULT\020<\022\034\n\030USER_CHOOSE_O" +
-      "PPONENT_CMD\020=\022\037\n\033USER_CHOOSE_OPPONENT_RE" +
-      "SULT\020>\022 \n\034TARGET_USER_CHALLENGE_RESULT\020?" +
-      "\022\034\n\030TARGET_USER_RESPONSE_CMD\020@\022\037\n\033TARGET" +
-      "_USER_RESPONSE_RESULT\020A\022\027\n\023USER_QUIT_ARE" +
-      "NA_CMD\020B\022\032\n\026USER_QUIT_ARENA_RESULT\020C\022\023\n\017" +
-      "USER_ATTACK_CMD\020D\022\026\n\022USER_ATTACK_RESULT\020" +
-      "E\022\023\n\017USER_DIE_RESULT\020F\022\024\n\020USER_TEAM_UP_C" +
-      "MD\020G\022\027\n\023USER_TEAM_UP_RESULT\020H\022\026\n\022ASK_TEA" +
-      "M_UP_RESULT\020I\022\026\n\022USER_JOIN_TEAM_CMD\020J\022\031\n" +
-      "\025USER_JOIN_TEAM_RESULT\020K\022\026\n\022USER_QUIT_TE" +
-      "AM_CMD\020L\022\031\n\025USER_QUIT_TEAM_RESULT\020M\022\037\n\033U" +
-      "SER_ENTER_TEAM_FAIL_RESULT\020N\022$\n USER_QUI" +
-      "T_TEAM_AND_DUPLICATE_CMD\020O\022\'\n#USER_QUIT_" +
-      "TEAM_AND_DUPLICATE_RESULT\020P\022$\n USER_SKIL" +
-      "L_ATTK_DUPLICATE_RESULT\020Q\022\027\n\023PASTOR_SKIL" +
-      "L_RESULT\020R\022 \n\034SUMMON_MONSTER_SUB_HP_RESU" +
-      "LT\020S\022\036\n\032USER_JOIN_TEAM_PERFORM_CMD\020T\022!\n\035" +
-      "USER_JOIN_TEAM_PERFORM_RESULT\020U\022\027\n\023USER_" +
-      "CLEAN_MAIL_CMD\020V\022\032\n\026USER_CLEAN_MAIL_RESU" +
-      "LT\020W\022\031\n\025USER_DEAL_REQUEST_CMD\020X\022\034\n\030USER_" +
-      "DEAL_REQUEST_RESULT\020Y\022\032\n\026ASK_TARGET_USER" +
-      "_RESULT\020Z\022!\n\035DEAL_TARGET_USER_RESPONSE_C" +
-      "MD\020[\022\024\n\020DEAL_CHANNEL_CMD\020\\\022\027\n\023DEAL_CHANN" +
-      "EL_RESULT\020]\022\026\n\022USER_DEAL_ITEM_CMD\020^\022\031\n\025U" +
-      "SER_DEAL_ITEM_RESULT\020_\022\031\n\025USER_ADD_COMPL" +
-      "ETE_CMD\020a\022\034\n\030USER_ADD_COMPLETE_RESULT\020b\022" +
-      "\030\n\024USER_CANCEL_DEAL_CMD\020c\022\033\n\027USER_CANCEL" +
-      "_DEAL_RESULT\020d\022\031\n\025USER_CONFIRM_DEAL_CMD\020" +
-      "e\022\034\n\030USER_CONFIRM_DEAL_RESULT\020f\022 \n\034USER_" +
-      "CANCEL_DEAL_CONFIRM_CMD\020g\022#\n\037USER_CANCEL" +
-      "_DEAL_CONFIRM_RESULT\020h\022\025\n\021SORT_OUT_DEAL_" +
-      "CMD\020i\022\030\n\024SORT_OUT_DEAL_RESULT\020j\022\031\n\025USER_" +
-      "CREATE_GUILD_CMD\020k\022\034\n\030USER_CREATE_GUILD_" +
-      "RESULT\020l\022\033\n\027USER_DISSOLVE_GUILD_CMD\020m\022\036\n" +
-      "\032USER_DISSOLVE_GUILD_RESULT\020n\022\022\n\016SHOW_GU" +
-      "ILD_CMD\020o\022\025\n\021SHOW_GUILD_RESULT\020p\022\030\n\024USER" +
-      "_ENTER_GUILD_CMD\020q\022\033\n\027USER_ENTER_GUILD_R" +
-      "ESULT\020r\022\031\n\025SHOW_GUILD_MEMBER_CMD\020s\022\034\n\030SH" +
-      "OW_GUILD_MEMBER_RESULT\020t\022\036\n\032LOOK_GUiLD_M" +
-      "EMBER_INFO_CMD\020u\022!\n\035LOOK_GUiLD_MEMBER_IN" +
-      "FO_RESULT\020v\022\022\n\016QUIT_GUILD_CMD\020w\022\025\n\021QUIT_" +
-      "GUILD_RESULT\020x\022\026\n\022APPOINT_MEMBER_CMD\020y\022\031" +
-      "\n\025APPOINT_MEMBER_RESULT\020z\022\027\n\023ELIMINATE_G" +
-      "UILD_CMD\020{\022\032\n\026ELIMINATE_GUILD_RESULT\020|\022\035" +
-      "\n\031MODIFY_GUILD_POSITION_CMD\020}\022\032\n\026MODIFY_" +
-      "GUILD_STATE_CMD\020~\022\034\n\030LOOK_GUILD_WAREHOUS" +
-      "E_CMD\020\177\022 \n\033LOOK_GUILD_WAREHOUSE_RESULT\020\200" +
-      "\001\022\027\n\022TAKE_OUT_PROPS_CMD\020\201\001\022\032\n\025TAKE_OUT_P" +
-      "ROPS_RESULT\020\202\001\022\025\n\020PUT_IN_PROPS_CMD\020\203\001\022\030\n" +
-      "\023PUT_IN_PROPS_RESULT\020\204\001\022\027\n\022TAKE_OUT_MONE" +
-      "Y_CMD\020\205\001\022\032\n\025TAKE_OUT_MONEY_RESULT\020\206\001\022\025\n\020" +
-      "PUT_IN_MONEY_CMD\020\207\001\022\030\n\023PUT_IN_MONEY_RESU" +
-      "LT\020\210\001\022\033\n\026TRANSFER_PRESIDENT_CMD\020\310\001\022\036\n\031TR" +
-      "ANSFER_PRESIDENT_RESULT\020\311\001\022\032\n\025LOOK_AUCTI" +
-      "ON_ITEM_CMD\020\211\001\022\035\n\030LOOK_AUCTION_ITEM_RESU" +
-      "LT\020\212\001\022\025\n\020SHELVE_GOODS_CMD\020\213\001\022\030\n\023SHELVE_G" +
-      "OODS_RESULT\020\214\001\022\026\n\021BIDDING_GOODS_CMD\020\215\001\022\031" +
-      "\n\024BIDDING_GOODS_RESULT\020\216\001\022\022\n\rONE_PRICE_C" +
-      "MD\020\217\001\022\025\n\020ONE_PRICE_RESULT\020\220\001\022\"\n\035LOOK_ONE" +
-      "SELF_AUCTION_ITEM_CMD\020\221\001\022%\n LOOK_ONESELF" +
-      "_AUCTION_ITEM_RESULT\020\222\001\022\034\n\027CANCEL_AUCTIO" +
-      "N_ITEM_CMD\020\223\001\022\037\n\032CANCEL_AUCTION_ITEM_RES" +
-      "ULT\020\224\001\022\026\n\021LOOK_ALL_TASK_CMD\020\225\001\022\031\n\024LOOK_A" +
-      "LL_TASK_RESULT\020\226\001\022\025\n\020RECEIVE_TASK_CMD\020\227\001" +
-      "\022\030\n\023RECEIVE_TASK_RESULT\020\230\001\022\026\n\021DIALOGUE_T" +
-      "ASK_CMD\020\231\001\022\032\n\025TASK_COMPLETED_RESULT\020\232\001\022\033" +
-      "\n\026RECEIVE_TASK_AWARD_CMD\020\233\001\022\036\n\031RECEIVE_T" +
-      "ASK_AWARD_RESULT\020\234\001\022\023\n\016ADD_FRIEND_CMD\020\236\001" +
-      "\022\026\n\021ADD_FRIEND_RESULT\020\237\001\022\026\n\021DELETE_FRIEN" +
-      "D_CMD\020\240\001\022\031\n\024DELETE_FRIEND_RESULT\020\241\001\022\031\n\024B" +
-      "OSS_ALL_KILL_RESULT\020\242\001\022\031\n\024DUPLICATE_FINI" +
-      "SH_CMD\020\243\001\022 \n\033MONSTER_RESURRECTION_RESULT" +
-      "\020\244\001\022\027\n\022SORT_OUT_ARENA_CMD\020\245\001\022\032\n\025SORT_OUT" +
-      "_ARENA_RESULT\020\246\001\022\026\n\021USER_UP_LV_RESULT\020\235\001" +
-      "\022\020\n\014ERROR_RESULT\020`B\005\n\003msgb\006proto3"
+      "d\030\002 \001(\r\022\022\n\ntargetName\030\003 \001(\t\"b\n\031UserJoinT" +
+      "eamPerformResult\022\037\n\010userInfo\030\001 \003(\0132\r.msg" +
+      ".UserInfo\022\024\n\014teamLeaderId\030\002 \001(\r\022\016\n\006isJoi" +
+      "n\030\003 \001(\010\"\021\n\017UserQuitTeamCmd\"K\n\022UserQuitTe" +
+      "amResult\022\037\n\010userInfo\030\001 \001(\0132\r.msg.UserInf" +
+      "o\022\024\n\014teamLeaderId\030\002 \001(\r\"\031\n\027UserEnterTeam" +
+      "FailResult\"\035\n\033UserQuitTeamAndDuplicateCm" +
+      "d\" \n\036UserQuitTeamAndDuplicateResult\"+\n\021P" +
+      "astorSkillResult\022\n\n\002hp\030\001 \001(\r\022\n\n\002mp\030\002 \001(\r" +
+      "\"8\n\030SummonMonsterSubHpResult\022\r\n\005isDie\030\001 " +
+      "\001(\010\022\r\n\005subHp\030\002 \001(\r\"\022\n\020UserCleanMailCmd\"6" +
+      "\n\023UserCleanMailResult\022\037\n\010mailInfo\030\001 \003(\0132" +
+      "\r.msg.MailInfo\"$\n\022UserDealRequestCmd\022\016\n\006" +
+      "userId\030\001 \001(\r\"i\n\025UserDealRequestResult\022\017\n" +
+      "\007isAgree\030\001 \001(\010\022\021\n\tisSuccess\030\002 \001(\010\022\024\n\014tar" +
+      "getUserId\030\003 \001(\r\022\026\n\016targetUserName\030\004 \001(\t\"" +
+      "A\n\023AskTargetUserResult\022\023\n\013originateId\030\001 " +
+      "\001(\r\022\025\n\roriginateName\030\002 \001(\t\"A\n\031DealTarget" +
+      "UserResponseCmd\022\023\n\013originateId\030\001 \001(\r\022\017\n\007" +
+      "isAgree\030\002 \001(\010\"\020\n\016DealChannelCmd\"\023\n\021DealC" +
+      "hannelResult\"I\n\017UserDealItemCmd\022\r\n\005money" +
+      "\030\001 \001(\r\022\031\n\005props\030\002 \001(\0132\n.msg.Props\022\014\n\004typ" +
+      "e\030\003 \001(\t\"L\n\022UserDealItemResult\022\r\n\005money\030\001" +
+      " \001(\r\022\031\n\005props\030\002 \001(\0132\n.msg.Props\022\014\n\004type\030" +
+      "\003 \001(\t\"(\n\013ErrorResult\022\013\n\003msg\030\001 \001(\t\022\014\n\004cod" +
+      "e\030\002 \001(\r\"\024\n\022UserAddCompleteCmd\"8\n\025UserAdd" +
+      "CompleteResult\022\037\n\010userInfo\030\001 \001(\0132\r.msg.U" +
+      "serInfo\")\n\021UserCancelDealCmd\022\024\n\014isNeedNo" +
+      "tice\030\001 \001(\010\"9\n\024UserCancelDealResult\022\021\n\tis" +
+      "Success\030\001 \001(\010\022\016\n\006userId\030\002 \001(\r\"\024\n\022UserCon" +
+      "firmDealCmd\"*\n\025UserConfirmDealResult\022\021\n\t" +
+      "isSuccess\030\001 \001(\010\"0\n\030UserCancelDealConfirm" +
+      "Cmd\022\024\n\014isNeedNotice\030\001 \001(\010\"\035\n\033UserCancelD" +
+      "ealConfirmResult\"\020\n\016SortOutDealCmd\"=\n\021So" +
+      "rtOutDealResult\022\031\n\005props\030\001 \003(\0132\n.msg.Pro" +
+      "ps\022\r\n\005money\030\002 \001(\r\"\'\n\022UserCreateGuildCmd\022" +
+      "\021\n\tguildName\030\001 \001(\t\"*\n\025UserCreateGuildRes" +
+      "ult\022\021\n\tguildName\030\001 \001(\t\"\026\n\024UserDissolveGu" +
+      "ildCmd\")\n\027UserDissolveGuildResult\022\016\n\006use" +
+      "rId\030\001 \001(\r\"\016\n\014ShowGuildCmd\",\n\017ShowGuildRe" +
+      "sult\022\031\n\005guild\030\001 \003(\0132\n.msg.Guild\"+\n\005Guild" +
+      "\022\017\n\007guildId\030\001 \001(\r\022\021\n\tguildName\030\002 \001(\t\"$\n\021" +
+      "UserEnterGuildCmd\022\017\n\007guildId\030\001 \001(\r\"1\n\024Us" +
+      "erEnterGuildResult\022\031\n\005guild\030\001 \001(\0132\n.msg." +
+      "Guild\"\024\n\022ShowGuildMemberCmd\"8\n\025ShowGuild" +
+      "MemberResult\022\037\n\010userInfo\030\001 \003(\0132\r.msg.Use" +
+      "rInfo\"(\n\026LookGuildMemberInfoCmd\022\016\n\006userI" +
+      "d\030\001 \001(\r\"*\n\031LookGuildMemberInfoResult\022\r\n\005" +
+      "equId\030\001 \003(\r\"\016\n\014QuitGuildCmd\"#\n\017QuitGuild" +
+      "Result\022\020\n\010userName\030\001 \001(\t\"6\n\020AppointMembe" +
+      "rCmd\022\016\n\006userId\030\001 \001(\r\022\022\n\npositionId\030\002 \001(\r" +
+      "\")\n\023AppointMemberResult\022\022\n\npositionId\030\001 " +
+      "\001(\r\"#\n\021EliminateGuildCmd\022\016\n\006userId\030\001 \001(\r" +
+      "\"\026\n\024EliminateGuildResult\",\n\026ModifyGuildP" +
+      "ositionCmd\022\022\n\npositionId\030\001 \001(\r\"\025\n\023Modify" +
+      "GuildStateCmd\"\027\n\025LookGuildWarehouseCmd\"D" +
+      "\n\030LookGuildWarehouseResult\022\r\n\005money\030\001 \001(" +
+      "\r\022\031\n\005props\030\002 \003(\0132\n.msg.Props\"<\n\017TakeOutP" +
+      "ropsCmd\022\031\n\005props\030\001 \001(\0132\n.msg.Props\022\016\n\006nu" +
+      "mber\030\002 \001(\r\"?\n\022TakeOutPropsResult\022\031\n\005prop" +
+      "s\030\001 \003(\0132\n.msg.Props\022\016\n\006number\030\002 \001(\r\"*\n\rP" +
+      "utInPropsCmd\022\031\n\005props\030\001 \001(\0132\n.msg.Props\"" +
+      "-\n\020PutInPropsResult\022\031\n\005props\030\001 \001(\0132\n.msg" +
+      ".Props\" \n\017TakeOutMoneyCmd\022\r\n\005money\030\001 \001(\r" +
+      "\"#\n\022TakeOutMoneyResult\022\r\n\005money\030\001 \001(\r\"\036\n" +
+      "\rPutInMoneyCmd\022\r\n\005money\030\001 \001(\r\"!\n\020PutInMo" +
+      "neyResult\022\r\n\005money\030\001 \001(\r\"&\n\024TransferPres" +
+      "identCmd\022\016\n\006userId\030\001 \001(\r\")\n\027TransferPres" +
+      "identResult\022\016\n\006userId\030\001 \001(\r\"\024\n\022LookAucti" +
+      "onItemCmd\">\n\025LookAuctionItemResult\022%\n\013au" +
+      "ctionItem\030\001 \003(\0132\020.msg.AuctionItem\"z\n\013Auc" +
+      "tionItem\022\n\n\002id\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\022\017" +
+      "\n\007propsId\030\003 \001(\r\022\017\n\007auction\030\004 \001(\r\022\r\n\005pric" +
+      "e\030\005 \001(\r\022\016\n\006number\030\006 \001(\r\022\014\n\004date\030\007 \001(\004\"R\n" +
+      "\016ShelveGoodsCmd\022\020\n\010location\030\001 \001(\r\022\016\n\006num" +
+      "ber\030\002 \001(\r\022\017\n\007auction\030\003 \001(\r\022\r\n\005price\030\004 \001(" +
+      "\r\"5\n\021ShelveGoodsResult\022\020\n\010location\030\001 \001(\r" +
+      "\022\016\n\006number\030\002 \001(\r\"3\n\017BiddingGoodsCmd\022\021\n\ta" +
+      "uctionId\030\001 \001(\r\022\r\n\005money\030\002 \001(\r\"#\n\022Bidding" +
+      "GoodsResult\022\r\n\005money\030\001 \001(\r\" \n\013OnePriceCm" +
+      "d\022\021\n\tauctionId\030\001 \001(\r\"\037\n\016OnePriceResult\022\r" +
+      "\n\005price\030\001 \001(\r\"\033\n\031LookOneselfAuctionItemC" +
+      "md\"E\n\034LookOneselfAuctionItemResult\022%\n\013au" +
+      "ctionItem\030\001 \003(\0132\020.msg.AuctionItem\")\n\024Can" +
+      "celAuctionItemCmd\022\021\n\tauctionId\030\001 \001(\r\"\031\n\027" +
+      "CancelAuctionItemResult\"\020\n\016LookAllTaskCm" +
+      "d\"#\n\021LookAllTaskResult\022\016\n\006taskId\030\001 \001(\r\" " +
+      "\n\016ReceiveTaskCmd\022\016\n\006taskId\030\001 \001(\r\"#\n\021Rece" +
+      "iveTaskResult\022\016\n\006taskId\030\001 \001(\r\"\021\n\017Dialogu" +
+      "eTaskCmd\"\025\n\023TaskCompletedResult\"%\n\023Recei" +
+      "veTaskAwardCmd\022\016\n\006taskId\030\001 \001(\r\"B\n\026Receiv" +
+      "eTaskAwardResult\022\031\n\005props\030\001 \003(\0132\n.msg.Pr" +
+      "ops\022\r\n\005money\030\002 \001(\r\"\034\n\016UserUpLvResult\022\n\n\002" +
+      "lv\030\001 \001(\r\"0\n\014AddFriendCmd\022\016\n\006userId\030\001 \001(\r" +
+      "\022\020\n\010userName\030\002 \001(\t\"3\n\017AddFriendResult\022\016\n" +
+      "\006userId\030\001 \001(\r\022\020\n\010userName\030\002 \001(\t\"!\n\017Delet" +
+      "eFriendCmd\022\016\n\006userId\030\001 \001(\r\"$\n\022DeleteFrie" +
+      "ndResult\022\016\n\006userId\030\001 \001(\r\"\023\n\021BossAllKillR" +
+      "esult\"\024\n\022DuplicateFinishCmd\",\n\031MonsterRe" +
+      "surrectionResult\022\017\n\007sceneId\030\001 \001(\r\"\021\n\017Sor" +
+      "tOutArenaCmd\"\024\n\022SortOutArenaResult\"$\n\023Us" +
+      "erAutoSubHpResult\022\r\n\005subHp\030\001 \001(\r\"&\n\025Summ" +
+      "onAutoSubHpResult\022\r\n\005subHp\030\001 \001(\r\"*\n\026User" +
+      "ModifyDealStateCmd\022\020\n\010targetId\030\001 \001(\r\".\n\031" +
+      "UserModifyDealStateResult\022\021\n\tisSuccess\030\001" +
+      " \001(\010\"\r\n\013DealFailCmd\"\020\n\016DealFailResult*\373$" +
+      "\n\007MsgCode\022\030\n\024WHO_ELSE_IS_HERE_CMD\020\000\022\033\n\027W" +
+      "HO_ELSE_IS_HERE_RESULT\020\001\022\024\n\020USER_QUIT_RE" +
+      "SULT\020\002\022\014\n\010ATTK_CMD\020\003\022\017\n\013ATTK_RESULT\020\004\022\033\n" +
+      "\027USER_SUBTRACT_HP_RESULT\020\005\022\016\n\nDIE_RESULT" +
+      "\020\006\022\022\n\016USER_LOGIN_CMD\020\007\022\025\n\021USER_LOGIN_RES" +
+      "ULT\020\010\022\025\n\021USER_REGISTER_CMD\020\t\022\030\n\024USER_REG" +
+      "ISTER_RESULT\020\n\022\024\n\020ATTK_MONSTER_CMD\020\013\022\033\n\027" +
+      "STOP_CUR_USER_ALL_TIMER\020\014\022\031\n\025USER_SWITCH" +
+      "_SCENE_CMD\020\r\022\034\n\030USER_SWITCH_SCENE_RESULT" +
+      "\020\016\022\033\n\027MONSTER_START_ATTK_USER\020\017\022\026\n\022NOTIC" +
+      "E_USER_ATTKED\020\020\022\027\n\023USER_SKILL_ATTK_CMD\020\021" +
+      "\022\032\n\026USER_SKILL_ATTK_RESULT\020\022\022\026\n\022SKILL_ST" +
+      "ATE_SWITCH\020\023\022\025\n\021ROB_EQUIPMENT_CMD\020\024\022\020\n\014B" +
+      "ACKPACK_CMD\020\025\022\023\n\017BACKPACK_RESULT\020\026\022\030\n\024RO" +
+      "B_EQUIPMENT_RESULT\020\027\022\023\n\017USER_POTION_CMD\020" +
+      "\030\022\026\n\022USER_POTION_RESULT\020\031\022\034\n\030USER_RESUME" +
+      "_STATE_RESULT\020\032\022\033\n\027USER_WEAR_EQUIPMENT_C" +
+      "MD\020\033\022\036\n\032USER_WEAR_EQUIPMENT_RESULT\020\034\022\033\n\027" +
+      "USER_UNDO_EQUIPMENT_CMD\020\035\022\036\n\032USER_UNDO_E" +
+      "QUIPMENT_RESULT\020\036\022 \n\034DURABILITY_DEFICIEN" +
+      "CY_RESULT\020\037\022\030\n\024REPAIR_EQUIPMENT_CMD\020 \022\033\n" +
+      "\027REPAIR_EQUIPMENT_RESULT\020!\022\034\n\030MONSTER_DR" +
+      "OP_HP_AUTO_DIE\020\"\022\027\n\023ENTER_DUPLICATE_CMD\020" +
+      "#\022\032\n\026ENTER_DUPLICATE_RESULT\020$\022\021\n\rATTK_BO" +
+      "SS_CMD\020%\022\024\n\020ATTK_BOSS_RESULT\020&\022\024\n\020NEXT_B" +
+      "OSS_RESULT\020\'\022\033\n\027DUPLICATE_FINISH_RESULT\020" +
+      "(\022\033\n\027USER_QUIT_DUPLICATE_CMD\020)\022\036\n\032USER_Q" +
+      "UIT_DUPLICATE_RESULT\020*\022\031\n\025BOSS_ATTK_USER" +
+      "_RESULT\020+\022\037\n\033BOSS_SKILL_ATTK_USER_RESULT" +
+      "\020,\022\031\n\025BOSS_KILL_USER_RESULT\020-\022\026\n\022USER_BU" +
+      "Y_GOODS_CMD\020.\022\031\n\025USER_BUY_GOODS_RESULT\020/" +
+      "\022\026\n\022USER_CHAT_INFO_CMD\0200\022\031\n\025USER_CHAT_IN" +
+      "FO_RESULT\0201\022\021\n\rSEND_MAIL_CMD\0202\022\024\n\020SEND_M" +
+      "AIL_RESULT\0203\022\020\n\014ALL_USER_CMD\0204\022\023\n\017ALL_US" +
+      "ER_RESULT\0205\022\037\n\033NOTICE_USER_GET_MAIL_RESU" +
+      "LT\0206\022\025\n\021USER_SEE_MAIL_CMD\0207\022\030\n\024USER_SEE_" +
+      "MAIL_RESULT\0208\022\031\n\025USER_RECEIVE_MAIL_CMD\0209" +
+      "\022\034\n\030USER_RECEIVE_MAIL_RESULT\020:\022\030\n\024USER_E" +
+      "NTER_ARENA_CMD\020;\022\033\n\027USER_ENTER_ARENA_RES" +
+      "ULT\020<\022\034\n\030USER_CHOOSE_OPPONENT_CMD\020=\022\037\n\033U" +
+      "SER_CHOOSE_OPPONENT_RESULT\020>\022 \n\034TARGET_U" +
+      "SER_CHALLENGE_RESULT\020?\022\034\n\030TARGET_USER_RE" +
+      "SPONSE_CMD\020@\022\037\n\033TARGET_USER_RESPONSE_RES" +
+      "ULT\020A\022\027\n\023USER_QUIT_ARENA_CMD\020B\022\032\n\026USER_Q" +
+      "UIT_ARENA_RESULT\020C\022\023\n\017USER_ATTACK_CMD\020D\022" +
+      "\026\n\022USER_ATTACK_RESULT\020E\022\023\n\017USER_DIE_RESU" +
+      "LT\020F\022\024\n\020USER_TEAM_UP_CMD\020G\022\027\n\023USER_TEAM_" +
+      "UP_RESULT\020H\022\026\n\022ASK_TEAM_UP_RESULT\020I\022\026\n\022U" +
+      "SER_JOIN_TEAM_CMD\020J\022\031\n\025USER_JOIN_TEAM_RE" +
+      "SULT\020K\022\026\n\022USER_QUIT_TEAM_CMD\020L\022\031\n\025USER_Q" +
+      "UIT_TEAM_RESULT\020M\022\037\n\033USER_ENTER_TEAM_FAI" +
+      "L_RESULT\020N\022$\n USER_QUIT_TEAM_AND_DUPLICA" +
+      "TE_CMD\020O\022\'\n#USER_QUIT_TEAM_AND_DUPLICATE" +
+      "_RESULT\020P\022$\n USER_SKILL_ATTK_DUPLICATE_R" +
+      "ESULT\020Q\022\027\n\023PASTOR_SKILL_RESULT\020R\022 \n\034SUMM" +
+      "ON_MONSTER_SUB_HP_RESULT\020S\022\033\n\027USER_CREAT" +
+      "E_TEAM_RESULT\020T\022!\n\035USER_JOIN_TEAM_PERFOR" +
+      "M_RESULT\020U\022\027\n\023USER_CLEAN_MAIL_CMD\020V\022\032\n\026U" +
+      "SER_CLEAN_MAIL_RESULT\020W\022\031\n\025USER_DEAL_REQ" +
+      "UEST_CMD\020X\022\034\n\030USER_DEAL_REQUEST_RESULT\020Y" +
+      "\022\032\n\026ASK_TARGET_USER_RESULT\020Z\022!\n\035DEAL_TAR" +
+      "GET_USER_RESPONSE_CMD\020[\022\024\n\020DEAL_CHANNEL_" +
+      "CMD\020\\\022\027\n\023DEAL_CHANNEL_RESULT\020]\022\026\n\022USER_D" +
+      "EAL_ITEM_CMD\020^\022\031\n\025USER_DEAL_ITEM_RESULT\020" +
+      "_\022\031\n\025USER_ADD_COMPLETE_CMD\020a\022\034\n\030USER_ADD" +
+      "_COMPLETE_RESULT\020b\022\030\n\024USER_CANCEL_DEAL_C" +
+      "MD\020c\022\033\n\027USER_CANCEL_DEAL_RESULT\020d\022\031\n\025USE" +
+      "R_CONFIRM_DEAL_CMD\020e\022\034\n\030USER_CONFIRM_DEA" +
+      "L_RESULT\020f\022 \n\034USER_CANCEL_DEAL_CONFIRM_C" +
+      "MD\020g\022#\n\037USER_CANCEL_DEAL_CONFIRM_RESULT\020" +
+      "h\022\025\n\021SORT_OUT_DEAL_CMD\020i\022\030\n\024SORT_OUT_DEA" +
+      "L_RESULT\020j\022\031\n\025USER_CREATE_GUILD_CMD\020k\022\034\n" +
+      "\030USER_CREATE_GUILD_RESULT\020l\022\033\n\027USER_DISS" +
+      "OLVE_GUILD_CMD\020m\022\036\n\032USER_DISSOLVE_GUILD_" +
+      "RESULT\020n\022\022\n\016SHOW_GUILD_CMD\020o\022\025\n\021SHOW_GUI" +
+      "LD_RESULT\020p\022\030\n\024USER_ENTER_GUILD_CMD\020q\022\033\n" +
+      "\027USER_ENTER_GUILD_RESULT\020r\022\031\n\025SHOW_GUILD" +
+      "_MEMBER_CMD\020s\022\034\n\030SHOW_GUILD_MEMBER_RESUL" +
+      "T\020t\022\036\n\032LOOK_GUiLD_MEMBER_INFO_CMD\020u\022!\n\035L" +
+      "OOK_GUiLD_MEMBER_INFO_RESULT\020v\022\022\n\016QUIT_G" +
+      "UILD_CMD\020w\022\025\n\021QUIT_GUILD_RESULT\020x\022\026\n\022APP" +
+      "OINT_MEMBER_CMD\020y\022\031\n\025APPOINT_MEMBER_RESU" +
+      "LT\020z\022\027\n\023ELIMINATE_GUILD_CMD\020{\022\032\n\026ELIMINA" +
+      "TE_GUILD_RESULT\020|\022\035\n\031MODIFY_GUILD_POSITI" +
+      "ON_CMD\020}\022\032\n\026MODIFY_GUILD_STATE_CMD\020~\022\034\n\030" +
+      "LOOK_GUILD_WAREHOUSE_CMD\020\177\022 \n\033LOOK_GUILD" +
+      "_WAREHOUSE_RESULT\020\200\001\022\027\n\022TAKE_OUT_PROPS_C" +
+      "MD\020\201\001\022\032\n\025TAKE_OUT_PROPS_RESULT\020\202\001\022\025\n\020PUT" +
+      "_IN_PROPS_CMD\020\203\001\022\030\n\023PUT_IN_PROPS_RESULT\020" +
+      "\204\001\022\027\n\022TAKE_OUT_MONEY_CMD\020\205\001\022\032\n\025TAKE_OUT_" +
+      "MONEY_RESULT\020\206\001\022\025\n\020PUT_IN_MONEY_CMD\020\207\001\022\030" +
+      "\n\023PUT_IN_MONEY_RESULT\020\210\001\022\033\n\026TRANSFER_PRE" +
+      "SIDENT_CMD\020\310\001\022\036\n\031TRANSFER_PRESIDENT_RESU" +
+      "LT\020\311\001\022\032\n\025LOOK_AUCTION_ITEM_CMD\020\211\001\022\035\n\030LOO" +
+      "K_AUCTION_ITEM_RESULT\020\212\001\022\025\n\020SHELVE_GOODS" +
+      "_CMD\020\213\001\022\030\n\023SHELVE_GOODS_RESULT\020\214\001\022\026\n\021BID" +
+      "DING_GOODS_CMD\020\215\001\022\031\n\024BIDDING_GOODS_RESUL" +
+      "T\020\216\001\022\022\n\rONE_PRICE_CMD\020\217\001\022\025\n\020ONE_PRICE_RE" +
+      "SULT\020\220\001\022\"\n\035LOOK_ONESELF_AUCTION_ITEM_CMD" +
+      "\020\221\001\022%\n LOOK_ONESELF_AUCTION_ITEM_RESULT\020" +
+      "\222\001\022\034\n\027CANCEL_AUCTION_ITEM_CMD\020\223\001\022\037\n\032CANC" +
+      "EL_AUCTION_ITEM_RESULT\020\224\001\022\026\n\021LOOK_ALL_TA" +
+      "SK_CMD\020\225\001\022\031\n\024LOOK_ALL_TASK_RESULT\020\226\001\022\025\n\020" +
+      "RECEIVE_TASK_CMD\020\227\001\022\030\n\023RECEIVE_TASK_RESU" +
+      "LT\020\230\001\022\026\n\021DIALOGUE_TASK_CMD\020\231\001\022\032\n\025TASK_CO" +
+      "MPLETED_RESULT\020\232\001\022\033\n\026RECEIVE_TASK_AWARD_" +
+      "CMD\020\233\001\022\036\n\031RECEIVE_TASK_AWARD_RESULT\020\234\001\022\023" +
+      "\n\016ADD_FRIEND_CMD\020\236\001\022\026\n\021ADD_FRIEND_RESULT" +
+      "\020\237\001\022\026\n\021DELETE_FRIEND_CMD\020\240\001\022\031\n\024DELETE_FR" +
+      "IEND_RESULT\020\241\001\022\031\n\024BOSS_ALL_KILL_RESULT\020\242" +
+      "\001\022\031\n\024DUPLICATE_FINISH_CMD\020\243\001\022 \n\033MONSTER_" +
+      "RESURRECTION_RESULT\020\244\001\022\027\n\022SORT_OUT_ARENA" +
+      "_CMD\020\245\001\022\032\n\025SORT_OUT_ARENA_RESULT\020\246\001\022\034\n\027U" +
+      "SER_AUTO_SUB_HP_RESULT\020\247\001\022\036\n\031SUMMON_AUTO" +
+      "_SUB_HP_RESULT\020\250\001\022\037\n\032USER_MODIFY_DEAL_ST" +
+      "ATE_CMD\020\251\001\022\"\n\035USER_MODIFY_DEAL_STATE_RES" +
+      "ULT\020\252\001\022\022\n\rDEAL_FAIL_CMD\020\253\001\022\025\n\020DEAL_FAIL_" +
+      "RESULT\020\254\001\022\026\n\021USER_UP_LV_RESULT\020\235\001\022\020\n\014ERR" +
+      "OR_RESULT\020`B\005\n\003msgb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -119650,7 +122442,7 @@ public final class GameMsg {
     internal_static_msg_UserChooseOpponentResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserChooseOpponentResult_descriptor,
-        new java.lang.String[] { "AcceptChallenge", "OriginateUserId", "OriginatedUserId", });
+        new java.lang.String[] { "AcceptChallenge", "OriginateUserId", "OriginatedUserId", "OriginateUserName", "OriginatedUserName", "Hp", "Mp", });
     internal_static_msg_TargetUserChallengeResult_descriptor =
       getDescriptor().getMessageTypes().get(68);
     internal_static_msg_TargetUserChallengeResult_fieldAccessorTable = new
@@ -119729,569 +122521,599 @@ public final class GameMsg {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserJoinTeamResult_descriptor,
         new java.lang.String[] { "IsJoin", "TargetId", "TargetName", });
-    internal_static_msg_UserJoinTeamPerformCmd_descriptor =
-      getDescriptor().getMessageTypes().get(81);
-    internal_static_msg_UserJoinTeamPerformCmd_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_msg_UserJoinTeamPerformCmd_descriptor,
-        new java.lang.String[] { "TargetId", "IsAgree", });
     internal_static_msg_UserJoinTeamPerformResult_descriptor =
-      getDescriptor().getMessageTypes().get(82);
+      getDescriptor().getMessageTypes().get(81);
     internal_static_msg_UserJoinTeamPerformResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserJoinTeamPerformResult_descriptor,
         new java.lang.String[] { "UserInfo", "TeamLeaderId", "IsJoin", });
     internal_static_msg_UserQuitTeamCmd_descriptor =
-      getDescriptor().getMessageTypes().get(83);
+      getDescriptor().getMessageTypes().get(82);
     internal_static_msg_UserQuitTeamCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitTeamCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserQuitTeamResult_descriptor =
-      getDescriptor().getMessageTypes().get(84);
+      getDescriptor().getMessageTypes().get(83);
     internal_static_msg_UserQuitTeamResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitTeamResult_descriptor,
         new java.lang.String[] { "UserInfo", "TeamLeaderId", });
     internal_static_msg_UserEnterTeamFailResult_descriptor =
-      getDescriptor().getMessageTypes().get(85);
+      getDescriptor().getMessageTypes().get(84);
     internal_static_msg_UserEnterTeamFailResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserEnterTeamFailResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserQuitTeamAndDuplicateCmd_descriptor =
-      getDescriptor().getMessageTypes().get(86);
+      getDescriptor().getMessageTypes().get(85);
     internal_static_msg_UserQuitTeamAndDuplicateCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitTeamAndDuplicateCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserQuitTeamAndDuplicateResult_descriptor =
-      getDescriptor().getMessageTypes().get(87);
+      getDescriptor().getMessageTypes().get(86);
     internal_static_msg_UserQuitTeamAndDuplicateResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserQuitTeamAndDuplicateResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_PastorSkillResult_descriptor =
-      getDescriptor().getMessageTypes().get(88);
+      getDescriptor().getMessageTypes().get(87);
     internal_static_msg_PastorSkillResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PastorSkillResult_descriptor,
         new java.lang.String[] { "Hp", "Mp", });
     internal_static_msg_SummonMonsterSubHpResult_descriptor =
-      getDescriptor().getMessageTypes().get(89);
+      getDescriptor().getMessageTypes().get(88);
     internal_static_msg_SummonMonsterSubHpResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_SummonMonsterSubHpResult_descriptor,
         new java.lang.String[] { "IsDie", "SubHp", });
     internal_static_msg_UserCleanMailCmd_descriptor =
-      getDescriptor().getMessageTypes().get(90);
+      getDescriptor().getMessageTypes().get(89);
     internal_static_msg_UserCleanMailCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCleanMailCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserCleanMailResult_descriptor =
-      getDescriptor().getMessageTypes().get(91);
+      getDescriptor().getMessageTypes().get(90);
     internal_static_msg_UserCleanMailResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCleanMailResult_descriptor,
         new java.lang.String[] { "MailInfo", });
     internal_static_msg_UserDealRequestCmd_descriptor =
-      getDescriptor().getMessageTypes().get(92);
+      getDescriptor().getMessageTypes().get(91);
     internal_static_msg_UserDealRequestCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDealRequestCmd_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_UserDealRequestResult_descriptor =
-      getDescriptor().getMessageTypes().get(93);
+      getDescriptor().getMessageTypes().get(92);
     internal_static_msg_UserDealRequestResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDealRequestResult_descriptor,
         new java.lang.String[] { "IsAgree", "IsSuccess", "TargetUserId", "TargetUserName", });
     internal_static_msg_AskTargetUserResult_descriptor =
-      getDescriptor().getMessageTypes().get(94);
+      getDescriptor().getMessageTypes().get(93);
     internal_static_msg_AskTargetUserResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AskTargetUserResult_descriptor,
         new java.lang.String[] { "OriginateId", "OriginateName", });
     internal_static_msg_DealTargetUserResponseCmd_descriptor =
-      getDescriptor().getMessageTypes().get(95);
+      getDescriptor().getMessageTypes().get(94);
     internal_static_msg_DealTargetUserResponseCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DealTargetUserResponseCmd_descriptor,
         new java.lang.String[] { "OriginateId", "IsAgree", });
     internal_static_msg_DealChannelCmd_descriptor =
-      getDescriptor().getMessageTypes().get(96);
+      getDescriptor().getMessageTypes().get(95);
     internal_static_msg_DealChannelCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DealChannelCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_DealChannelResult_descriptor =
-      getDescriptor().getMessageTypes().get(97);
+      getDescriptor().getMessageTypes().get(96);
     internal_static_msg_DealChannelResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DealChannelResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserDealItemCmd_descriptor =
-      getDescriptor().getMessageTypes().get(98);
+      getDescriptor().getMessageTypes().get(97);
     internal_static_msg_UserDealItemCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDealItemCmd_descriptor,
         new java.lang.String[] { "Money", "Props", "Type", });
     internal_static_msg_UserDealItemResult_descriptor =
-      getDescriptor().getMessageTypes().get(99);
+      getDescriptor().getMessageTypes().get(98);
     internal_static_msg_UserDealItemResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDealItemResult_descriptor,
         new java.lang.String[] { "Money", "Props", "Type", });
     internal_static_msg_ErrorResult_descriptor =
-      getDescriptor().getMessageTypes().get(100);
+      getDescriptor().getMessageTypes().get(99);
     internal_static_msg_ErrorResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ErrorResult_descriptor,
         new java.lang.String[] { "Msg", "Code", });
     internal_static_msg_UserAddCompleteCmd_descriptor =
-      getDescriptor().getMessageTypes().get(101);
+      getDescriptor().getMessageTypes().get(100);
     internal_static_msg_UserAddCompleteCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserAddCompleteCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserAddCompleteResult_descriptor =
-      getDescriptor().getMessageTypes().get(102);
+      getDescriptor().getMessageTypes().get(101);
     internal_static_msg_UserAddCompleteResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserAddCompleteResult_descriptor,
         new java.lang.String[] { "UserInfo", });
     internal_static_msg_UserCancelDealCmd_descriptor =
-      getDescriptor().getMessageTypes().get(103);
+      getDescriptor().getMessageTypes().get(102);
     internal_static_msg_UserCancelDealCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCancelDealCmd_descriptor,
         new java.lang.String[] { "IsNeedNotice", });
     internal_static_msg_UserCancelDealResult_descriptor =
-      getDescriptor().getMessageTypes().get(104);
+      getDescriptor().getMessageTypes().get(103);
     internal_static_msg_UserCancelDealResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCancelDealResult_descriptor,
         new java.lang.String[] { "IsSuccess", "UserId", });
     internal_static_msg_UserConfirmDealCmd_descriptor =
-      getDescriptor().getMessageTypes().get(105);
+      getDescriptor().getMessageTypes().get(104);
     internal_static_msg_UserConfirmDealCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserConfirmDealCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserConfirmDealResult_descriptor =
-      getDescriptor().getMessageTypes().get(106);
+      getDescriptor().getMessageTypes().get(105);
     internal_static_msg_UserConfirmDealResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserConfirmDealResult_descriptor,
         new java.lang.String[] { "IsSuccess", });
     internal_static_msg_UserCancelDealConfirmCmd_descriptor =
-      getDescriptor().getMessageTypes().get(107);
+      getDescriptor().getMessageTypes().get(106);
     internal_static_msg_UserCancelDealConfirmCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCancelDealConfirmCmd_descriptor,
         new java.lang.String[] { "IsNeedNotice", });
     internal_static_msg_UserCancelDealConfirmResult_descriptor =
-      getDescriptor().getMessageTypes().get(108);
+      getDescriptor().getMessageTypes().get(107);
     internal_static_msg_UserCancelDealConfirmResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCancelDealConfirmResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_SortOutDealCmd_descriptor =
-      getDescriptor().getMessageTypes().get(109);
+      getDescriptor().getMessageTypes().get(108);
     internal_static_msg_SortOutDealCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_SortOutDealCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_SortOutDealResult_descriptor =
-      getDescriptor().getMessageTypes().get(110);
+      getDescriptor().getMessageTypes().get(109);
     internal_static_msg_SortOutDealResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_SortOutDealResult_descriptor,
         new java.lang.String[] { "Props", "Money", });
     internal_static_msg_UserCreateGuildCmd_descriptor =
-      getDescriptor().getMessageTypes().get(111);
+      getDescriptor().getMessageTypes().get(110);
     internal_static_msg_UserCreateGuildCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCreateGuildCmd_descriptor,
         new java.lang.String[] { "GuildName", });
     internal_static_msg_UserCreateGuildResult_descriptor =
-      getDescriptor().getMessageTypes().get(112);
+      getDescriptor().getMessageTypes().get(111);
     internal_static_msg_UserCreateGuildResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserCreateGuildResult_descriptor,
         new java.lang.String[] { "GuildName", });
     internal_static_msg_UserDissolveGuildCmd_descriptor =
-      getDescriptor().getMessageTypes().get(113);
+      getDescriptor().getMessageTypes().get(112);
     internal_static_msg_UserDissolveGuildCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDissolveGuildCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_UserDissolveGuildResult_descriptor =
-      getDescriptor().getMessageTypes().get(114);
+      getDescriptor().getMessageTypes().get(113);
     internal_static_msg_UserDissolveGuildResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserDissolveGuildResult_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_ShowGuildCmd_descriptor =
-      getDescriptor().getMessageTypes().get(115);
+      getDescriptor().getMessageTypes().get(114);
     internal_static_msg_ShowGuildCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShowGuildCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_ShowGuildResult_descriptor =
-      getDescriptor().getMessageTypes().get(116);
+      getDescriptor().getMessageTypes().get(115);
     internal_static_msg_ShowGuildResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShowGuildResult_descriptor,
         new java.lang.String[] { "Guild", });
     internal_static_msg_Guild_descriptor =
-      getDescriptor().getMessageTypes().get(117);
+      getDescriptor().getMessageTypes().get(116);
     internal_static_msg_Guild_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_Guild_descriptor,
         new java.lang.String[] { "GuildId", "GuildName", });
     internal_static_msg_UserEnterGuildCmd_descriptor =
-      getDescriptor().getMessageTypes().get(118);
+      getDescriptor().getMessageTypes().get(117);
     internal_static_msg_UserEnterGuildCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserEnterGuildCmd_descriptor,
         new java.lang.String[] { "GuildId", });
     internal_static_msg_UserEnterGuildResult_descriptor =
-      getDescriptor().getMessageTypes().get(119);
+      getDescriptor().getMessageTypes().get(118);
     internal_static_msg_UserEnterGuildResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserEnterGuildResult_descriptor,
         new java.lang.String[] { "Guild", });
     internal_static_msg_ShowGuildMemberCmd_descriptor =
-      getDescriptor().getMessageTypes().get(120);
+      getDescriptor().getMessageTypes().get(119);
     internal_static_msg_ShowGuildMemberCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShowGuildMemberCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_ShowGuildMemberResult_descriptor =
-      getDescriptor().getMessageTypes().get(121);
+      getDescriptor().getMessageTypes().get(120);
     internal_static_msg_ShowGuildMemberResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShowGuildMemberResult_descriptor,
         new java.lang.String[] { "UserInfo", });
     internal_static_msg_LookGuildMemberInfoCmd_descriptor =
-      getDescriptor().getMessageTypes().get(122);
+      getDescriptor().getMessageTypes().get(121);
     internal_static_msg_LookGuildMemberInfoCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookGuildMemberInfoCmd_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_LookGuildMemberInfoResult_descriptor =
-      getDescriptor().getMessageTypes().get(123);
+      getDescriptor().getMessageTypes().get(122);
     internal_static_msg_LookGuildMemberInfoResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookGuildMemberInfoResult_descriptor,
         new java.lang.String[] { "EquId", });
     internal_static_msg_QuitGuildCmd_descriptor =
-      getDescriptor().getMessageTypes().get(124);
+      getDescriptor().getMessageTypes().get(123);
     internal_static_msg_QuitGuildCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_QuitGuildCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_QuitGuildResult_descriptor =
-      getDescriptor().getMessageTypes().get(125);
+      getDescriptor().getMessageTypes().get(124);
     internal_static_msg_QuitGuildResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_QuitGuildResult_descriptor,
         new java.lang.String[] { "UserName", });
     internal_static_msg_AppointMemberCmd_descriptor =
-      getDescriptor().getMessageTypes().get(126);
+      getDescriptor().getMessageTypes().get(125);
     internal_static_msg_AppointMemberCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AppointMemberCmd_descriptor,
         new java.lang.String[] { "UserId", "PositionId", });
     internal_static_msg_AppointMemberResult_descriptor =
-      getDescriptor().getMessageTypes().get(127);
+      getDescriptor().getMessageTypes().get(126);
     internal_static_msg_AppointMemberResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AppointMemberResult_descriptor,
         new java.lang.String[] { "PositionId", });
     internal_static_msg_EliminateGuildCmd_descriptor =
-      getDescriptor().getMessageTypes().get(128);
+      getDescriptor().getMessageTypes().get(127);
     internal_static_msg_EliminateGuildCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_EliminateGuildCmd_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_EliminateGuildResult_descriptor =
-      getDescriptor().getMessageTypes().get(129);
+      getDescriptor().getMessageTypes().get(128);
     internal_static_msg_EliminateGuildResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_EliminateGuildResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_ModifyGuildPositionCmd_descriptor =
-      getDescriptor().getMessageTypes().get(130);
+      getDescriptor().getMessageTypes().get(129);
     internal_static_msg_ModifyGuildPositionCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ModifyGuildPositionCmd_descriptor,
         new java.lang.String[] { "PositionId", });
     internal_static_msg_ModifyGuildStateCmd_descriptor =
-      getDescriptor().getMessageTypes().get(131);
+      getDescriptor().getMessageTypes().get(130);
     internal_static_msg_ModifyGuildStateCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ModifyGuildStateCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookGuildWarehouseCmd_descriptor =
-      getDescriptor().getMessageTypes().get(132);
+      getDescriptor().getMessageTypes().get(131);
     internal_static_msg_LookGuildWarehouseCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookGuildWarehouseCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookGuildWarehouseResult_descriptor =
-      getDescriptor().getMessageTypes().get(133);
+      getDescriptor().getMessageTypes().get(132);
     internal_static_msg_LookGuildWarehouseResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookGuildWarehouseResult_descriptor,
         new java.lang.String[] { "Money", "Props", });
     internal_static_msg_TakeOutPropsCmd_descriptor =
-      getDescriptor().getMessageTypes().get(134);
+      getDescriptor().getMessageTypes().get(133);
     internal_static_msg_TakeOutPropsCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TakeOutPropsCmd_descriptor,
         new java.lang.String[] { "Props", "Number", });
     internal_static_msg_TakeOutPropsResult_descriptor =
-      getDescriptor().getMessageTypes().get(135);
+      getDescriptor().getMessageTypes().get(134);
     internal_static_msg_TakeOutPropsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TakeOutPropsResult_descriptor,
         new java.lang.String[] { "Props", "Number", });
     internal_static_msg_PutInPropsCmd_descriptor =
-      getDescriptor().getMessageTypes().get(136);
+      getDescriptor().getMessageTypes().get(135);
     internal_static_msg_PutInPropsCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInPropsCmd_descriptor,
         new java.lang.String[] { "Props", });
     internal_static_msg_PutInPropsResult_descriptor =
-      getDescriptor().getMessageTypes().get(137);
+      getDescriptor().getMessageTypes().get(136);
     internal_static_msg_PutInPropsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInPropsResult_descriptor,
         new java.lang.String[] { "Props", });
     internal_static_msg_TakeOutMoneyCmd_descriptor =
-      getDescriptor().getMessageTypes().get(138);
+      getDescriptor().getMessageTypes().get(137);
     internal_static_msg_TakeOutMoneyCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TakeOutMoneyCmd_descriptor,
         new java.lang.String[] { "Money", });
     internal_static_msg_TakeOutMoneyResult_descriptor =
-      getDescriptor().getMessageTypes().get(139);
+      getDescriptor().getMessageTypes().get(138);
     internal_static_msg_TakeOutMoneyResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TakeOutMoneyResult_descriptor,
         new java.lang.String[] { "Money", });
     internal_static_msg_PutInMoneyCmd_descriptor =
-      getDescriptor().getMessageTypes().get(140);
+      getDescriptor().getMessageTypes().get(139);
     internal_static_msg_PutInMoneyCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInMoneyCmd_descriptor,
         new java.lang.String[] { "Money", });
     internal_static_msg_PutInMoneyResult_descriptor =
-      getDescriptor().getMessageTypes().get(141);
+      getDescriptor().getMessageTypes().get(140);
     internal_static_msg_PutInMoneyResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_PutInMoneyResult_descriptor,
         new java.lang.String[] { "Money", });
     internal_static_msg_TransferPresidentCmd_descriptor =
-      getDescriptor().getMessageTypes().get(142);
+      getDescriptor().getMessageTypes().get(141);
     internal_static_msg_TransferPresidentCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TransferPresidentCmd_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_TransferPresidentResult_descriptor =
-      getDescriptor().getMessageTypes().get(143);
+      getDescriptor().getMessageTypes().get(142);
     internal_static_msg_TransferPresidentResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TransferPresidentResult_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_LookAuctionItemCmd_descriptor =
-      getDescriptor().getMessageTypes().get(144);
+      getDescriptor().getMessageTypes().get(143);
     internal_static_msg_LookAuctionItemCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAuctionItemCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookAuctionItemResult_descriptor =
-      getDescriptor().getMessageTypes().get(145);
+      getDescriptor().getMessageTypes().get(144);
     internal_static_msg_LookAuctionItemResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAuctionItemResult_descriptor,
         new java.lang.String[] { "AuctionItem", });
     internal_static_msg_AuctionItem_descriptor =
-      getDescriptor().getMessageTypes().get(146);
+      getDescriptor().getMessageTypes().get(145);
     internal_static_msg_AuctionItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AuctionItem_descriptor,
         new java.lang.String[] { "Id", "UserName", "PropsId", "Auction", "Price", "Number", "Date", });
     internal_static_msg_ShelveGoodsCmd_descriptor =
-      getDescriptor().getMessageTypes().get(147);
+      getDescriptor().getMessageTypes().get(146);
     internal_static_msg_ShelveGoodsCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShelveGoodsCmd_descriptor,
         new java.lang.String[] { "Location", "Number", "Auction", "Price", });
     internal_static_msg_ShelveGoodsResult_descriptor =
-      getDescriptor().getMessageTypes().get(148);
+      getDescriptor().getMessageTypes().get(147);
     internal_static_msg_ShelveGoodsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ShelveGoodsResult_descriptor,
         new java.lang.String[] { "Location", "Number", });
     internal_static_msg_BiddingGoodsCmd_descriptor =
-      getDescriptor().getMessageTypes().get(149);
+      getDescriptor().getMessageTypes().get(148);
     internal_static_msg_BiddingGoodsCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BiddingGoodsCmd_descriptor,
         new java.lang.String[] { "AuctionId", "Money", });
     internal_static_msg_BiddingGoodsResult_descriptor =
-      getDescriptor().getMessageTypes().get(150);
+      getDescriptor().getMessageTypes().get(149);
     internal_static_msg_BiddingGoodsResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BiddingGoodsResult_descriptor,
         new java.lang.String[] { "Money", });
     internal_static_msg_OnePriceCmd_descriptor =
-      getDescriptor().getMessageTypes().get(151);
+      getDescriptor().getMessageTypes().get(150);
     internal_static_msg_OnePriceCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_OnePriceCmd_descriptor,
         new java.lang.String[] { "AuctionId", });
     internal_static_msg_OnePriceResult_descriptor =
-      getDescriptor().getMessageTypes().get(152);
+      getDescriptor().getMessageTypes().get(151);
     internal_static_msg_OnePriceResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_OnePriceResult_descriptor,
         new java.lang.String[] { "Price", });
     internal_static_msg_LookOneselfAuctionItemCmd_descriptor =
-      getDescriptor().getMessageTypes().get(153);
+      getDescriptor().getMessageTypes().get(152);
     internal_static_msg_LookOneselfAuctionItemCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookOneselfAuctionItemCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookOneselfAuctionItemResult_descriptor =
-      getDescriptor().getMessageTypes().get(154);
+      getDescriptor().getMessageTypes().get(153);
     internal_static_msg_LookOneselfAuctionItemResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookOneselfAuctionItemResult_descriptor,
         new java.lang.String[] { "AuctionItem", });
     internal_static_msg_CancelAuctionItemCmd_descriptor =
-      getDescriptor().getMessageTypes().get(155);
+      getDescriptor().getMessageTypes().get(154);
     internal_static_msg_CancelAuctionItemCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_CancelAuctionItemCmd_descriptor,
         new java.lang.String[] { "AuctionId", });
     internal_static_msg_CancelAuctionItemResult_descriptor =
-      getDescriptor().getMessageTypes().get(156);
+      getDescriptor().getMessageTypes().get(155);
     internal_static_msg_CancelAuctionItemResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_CancelAuctionItemResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookAllTaskCmd_descriptor =
-      getDescriptor().getMessageTypes().get(157);
+      getDescriptor().getMessageTypes().get(156);
     internal_static_msg_LookAllTaskCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAllTaskCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_LookAllTaskResult_descriptor =
-      getDescriptor().getMessageTypes().get(158);
+      getDescriptor().getMessageTypes().get(157);
     internal_static_msg_LookAllTaskResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_LookAllTaskResult_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_ReceiveTaskCmd_descriptor =
-      getDescriptor().getMessageTypes().get(159);
+      getDescriptor().getMessageTypes().get(158);
     internal_static_msg_ReceiveTaskCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskCmd_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_ReceiveTaskResult_descriptor =
-      getDescriptor().getMessageTypes().get(160);
+      getDescriptor().getMessageTypes().get(159);
     internal_static_msg_ReceiveTaskResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskResult_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_DialogueTaskCmd_descriptor =
-      getDescriptor().getMessageTypes().get(161);
+      getDescriptor().getMessageTypes().get(160);
     internal_static_msg_DialogueTaskCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DialogueTaskCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_TaskCompletedResult_descriptor =
-      getDescriptor().getMessageTypes().get(162);
+      getDescriptor().getMessageTypes().get(161);
     internal_static_msg_TaskCompletedResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_TaskCompletedResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_ReceiveTaskAwardCmd_descriptor =
-      getDescriptor().getMessageTypes().get(163);
+      getDescriptor().getMessageTypes().get(162);
     internal_static_msg_ReceiveTaskAwardCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskAwardCmd_descriptor,
         new java.lang.String[] { "TaskId", });
     internal_static_msg_ReceiveTaskAwardResult_descriptor =
-      getDescriptor().getMessageTypes().get(164);
+      getDescriptor().getMessageTypes().get(163);
     internal_static_msg_ReceiveTaskAwardResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_ReceiveTaskAwardResult_descriptor,
         new java.lang.String[] { "Props", "Money", });
     internal_static_msg_UserUpLvResult_descriptor =
-      getDescriptor().getMessageTypes().get(165);
+      getDescriptor().getMessageTypes().get(164);
     internal_static_msg_UserUpLvResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_UserUpLvResult_descriptor,
         new java.lang.String[] { "Lv", });
     internal_static_msg_AddFriendCmd_descriptor =
-      getDescriptor().getMessageTypes().get(166);
+      getDescriptor().getMessageTypes().get(165);
     internal_static_msg_AddFriendCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AddFriendCmd_descriptor,
         new java.lang.String[] { "UserId", "UserName", });
     internal_static_msg_AddFriendResult_descriptor =
-      getDescriptor().getMessageTypes().get(167);
+      getDescriptor().getMessageTypes().get(166);
     internal_static_msg_AddFriendResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_AddFriendResult_descriptor,
         new java.lang.String[] { "UserId", "UserName", });
     internal_static_msg_DeleteFriendCmd_descriptor =
-      getDescriptor().getMessageTypes().get(168);
+      getDescriptor().getMessageTypes().get(167);
     internal_static_msg_DeleteFriendCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DeleteFriendCmd_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_DeleteFriendResult_descriptor =
-      getDescriptor().getMessageTypes().get(169);
+      getDescriptor().getMessageTypes().get(168);
     internal_static_msg_DeleteFriendResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DeleteFriendResult_descriptor,
         new java.lang.String[] { "UserId", });
     internal_static_msg_BossAllKillResult_descriptor =
-      getDescriptor().getMessageTypes().get(170);
+      getDescriptor().getMessageTypes().get(169);
     internal_static_msg_BossAllKillResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_BossAllKillResult_descriptor,
         new java.lang.String[] { });
     internal_static_msg_DuplicateFinishCmd_descriptor =
-      getDescriptor().getMessageTypes().get(171);
+      getDescriptor().getMessageTypes().get(170);
     internal_static_msg_DuplicateFinishCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_DuplicateFinishCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_MonsterResurrectionResult_descriptor =
-      getDescriptor().getMessageTypes().get(172);
+      getDescriptor().getMessageTypes().get(171);
     internal_static_msg_MonsterResurrectionResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_MonsterResurrectionResult_descriptor,
         new java.lang.String[] { "SceneId", });
     internal_static_msg_SortOutArenaCmd_descriptor =
-      getDescriptor().getMessageTypes().get(173);
+      getDescriptor().getMessageTypes().get(172);
     internal_static_msg_SortOutArenaCmd_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_SortOutArenaCmd_descriptor,
         new java.lang.String[] { });
     internal_static_msg_SortOutArenaResult_descriptor =
-      getDescriptor().getMessageTypes().get(174);
+      getDescriptor().getMessageTypes().get(173);
     internal_static_msg_SortOutArenaResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_msg_SortOutArenaResult_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_UserAutoSubHpResult_descriptor =
+      getDescriptor().getMessageTypes().get(174);
+    internal_static_msg_UserAutoSubHpResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserAutoSubHpResult_descriptor,
+        new java.lang.String[] { "SubHp", });
+    internal_static_msg_SummonAutoSubHpResult_descriptor =
+      getDescriptor().getMessageTypes().get(175);
+    internal_static_msg_SummonAutoSubHpResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_SummonAutoSubHpResult_descriptor,
+        new java.lang.String[] { "SubHp", });
+    internal_static_msg_UserModifyDealStateCmd_descriptor =
+      getDescriptor().getMessageTypes().get(176);
+    internal_static_msg_UserModifyDealStateCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserModifyDealStateCmd_descriptor,
+        new java.lang.String[] { "TargetId", });
+    internal_static_msg_UserModifyDealStateResult_descriptor =
+      getDescriptor().getMessageTypes().get(177);
+    internal_static_msg_UserModifyDealStateResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_UserModifyDealStateResult_descriptor,
+        new java.lang.String[] { "IsSuccess", });
+    internal_static_msg_DealFailCmd_descriptor =
+      getDescriptor().getMessageTypes().get(178);
+    internal_static_msg_DealFailCmd_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_DealFailCmd_descriptor,
+        new java.lang.String[] { });
+    internal_static_msg_DealFailResult_descriptor =
+      getDescriptor().getMessageTypes().get(179);
+    internal_static_msg_DealFailResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_msg_DealFailResult_descriptor,
         new java.lang.String[] { });
   }
 

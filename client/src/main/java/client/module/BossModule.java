@@ -1,4 +1,4 @@
-package client.thread;
+package client.module;
 
 import client.model.Role;
 import client.model.server.duplicate.BossMonster;
@@ -20,12 +20,12 @@ import java.util.concurrent.TimeUnit;
  * @author 张丰博
  */
 @Slf4j
-public class BossThread {
+public class BossModule {
 
-    private static final BossThread BOSS_THREAD = new BossThread();
+    private static final BossModule BOSS_THREAD = new BossModule();
 
 
-    private BossThread() {
+    private BossModule() {
     }
 
     /**
@@ -47,7 +47,7 @@ public class BossThread {
                     new ThreadPoolExecutor.CallerRunsPolicy()
             );
 
-    public static BossThread getInstance() {
+    public static BossModule getInstance() {
         return BOSS_THREAD;
     }
 
@@ -74,7 +74,7 @@ public class BossThread {
                 System.out.println("第 " + (monsterMap.size() - bossMonsterMap.size()) + " 个 Boss");
                 System.out.println("boss: " + currBossMonster.getBossName() + " hp: " + currBossMonster.getHp());
 
-                sendCmd(ctx, role);
+                bossCmd(ctx, role);
 
 //                //怪已死，移除集合
 //                bossMonsterMap.remove(bossMonsterEntry.get().getKey());
@@ -91,19 +91,28 @@ public class BossThread {
     }
 
 
-    private void sendCmd(ChannelHandlerContext ctx, Role role) {
-        // 判断 role 对象中是否有 Duplicate对象 来区分，去哪个线程
+    public void bossCmd(ChannelHandlerContext ctx, Role role) {
+
+        Duplicate currDuplicate = role.getCurrDuplicate();
+
+        Map<Integer, BossMonster> monsterMap = GameData.getInstance().getDuplicateMap().get(currDuplicate.getId()).getBossMonsterMap();
+
+        Map<Integer, BossMonster> bossMonsterMap = currDuplicate.getBossMonsterMap();
+        long currTime = currDuplicate.getStartTime() - System.currentTimeMillis();
+        System.out.println("副本: " + role.getCurrDuplicate().getName() + " Boss数量: " + monsterMap.size());
+
+        // 当前的boss
+        BossMonster currBossMonster = role.getCurrDuplicate().getCurrBossMonster();
+        System.out.println("第 " + (monsterMap.size() - bossMonsterMap.size()) + " 个 Boss");
+        System.out.println("boss: " + currBossMonster.getBossName() + " hp: " + currBossMonster.getHp());
+
+
         while (true) {
 
             log.info("请选择您的操作: ");
             System.out.println("======>1:普通攻击;");
             System.out.println("======>2:技能列表;");
-//            System.out.println("======>3:使用MP/HP药剂;");
-//            System.out.println("======>4:背包;");
-//            System.out.println("======>5:装备栏;");
-//            System.out.println("======>6:穿戴装备;");
-//            System.out.println("======>7:卸下装备;");
-//            System.out.println("======>8:修理装备;");
+            System.out.println("======>3:使用MP/HP药剂;");
             System.out.println("======>9:退出副本;");
             System.out.println("======>10:退出并退出队伍;");
 
@@ -128,17 +137,7 @@ public class BossThread {
                 ctx.writeAndFlush(userSkillAttkCmd);
 
             } else if ("3".equals(command)) {
-                break;
-            } else if ("4".equals(command)) {
-                break;
-            } else if ("5".equals(command)) {
-                break;
-            } else if ("6".equals(command)) {
-                break;
-            } else if ("7".equals(command)) {
-                break;
-            } else if ("8".equals(command)) {
-                break;
+
             } else if ("9".equals(command)) {
                 // 退出副本
                 GameMsg.UserQuitDuplicateCmd quitDuplicateCmd = GameMsg.UserQuitDuplicateCmd.newBuilder().build();

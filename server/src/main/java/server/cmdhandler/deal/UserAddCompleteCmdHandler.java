@@ -27,7 +27,7 @@ public class UserAddCompleteCmdHandler implements ICmdHandler<GameMsg.UserAddCom
         User user = PublicMethod.getInstance().getUser(ctx);
 
         PlayDeal playDeal = user.getPLAY_DEAL();
-        int targetId = playDeal.getTargetUserId().get();
+        int targetId = playDeal.getTargetUserId();
         if (targetId == 0) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }

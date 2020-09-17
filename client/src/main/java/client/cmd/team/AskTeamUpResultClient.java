@@ -20,8 +20,9 @@ public class AskTeamUpResultClient implements ICmd<GameMsg.AskTeamUpResult> {
         Role role = Role.getInstance();
 
         PlayTeamClient teamClient = role.getTEAM_CLIENT();
+
         int originateUserId = askTeamUpResult.getOriginateUserId();
-        teamClient.setOriginateUserId(originateUserId);
+        teamClient.getOriginateIdSet().add(originateUserId);
         String originateUserName = askTeamUpResult.getOriginateUserName();
         System.out.println(originateUserName+" 发起了组队请求;");
     }

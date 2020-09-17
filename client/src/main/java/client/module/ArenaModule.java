@@ -1,4 +1,4 @@
-package client.thread;
+package client.module;
 
 import client.model.Role;
 import client.model.arena.PlayArenaClient;
@@ -19,12 +19,12 @@ import java.util.concurrent.TimeUnit;
  * @author 张丰博
  */
 @Slf4j
-public class ArenaThread {
+public class ArenaModule {
 
-    private static final ArenaThread ARENA_THREAD = new ArenaThread();
+    private static final ArenaModule ARENA_THREAD = new ArenaModule();
 
 
-    private ArenaThread() {
+    private ArenaModule() {
     }
 
     /**
@@ -46,7 +46,7 @@ public class ArenaThread {
                     new ThreadPoolExecutor.CallerRunsPolicy()
             );
 
-    public static ArenaThread getInstance() {
+    public static ArenaModule getInstance() {
         return ARENA_THREAD;
     }
 
@@ -59,7 +59,7 @@ public class ArenaThread {
             try {
                 log.info("当前线程 {}", Thread.currentThread().getName());
 
-                sendCmd(ctx, role);
+                arenaCmd(ctx, role);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -67,19 +67,26 @@ public class ArenaThread {
         });
     }
 
-    private void sendCmd(ChannelHandlerContext ctx, Role role) {
+    public void arenaCmd(ChannelHandlerContext ctx, Role role) {
+
         while (true) {
 
             PlayArenaClient playArenaClient = role.getARENA_CLIENT();
-            System.out.println("当前HP: "+role.getCurrHp());
-            System.out.println("当前MP: "+role.getCurrMp());
+            System.out.println("当前HP: " + role.getCurrHp());
+            System.out.println("当前MP: " + role.getCurrMp());
+
+            if (playArenaClient.getChallengeUser() != null){
+                System.out.println("对手 HP: " + playArenaClient.getChallengeUser().getCurrHp());
+                System.out.println("对手 MP: " + playArenaClient.getChallengeUser().getCurrMp());
+            }
+
 
             log.info("请选择您的操作: ");
             System.out.println("======>1:选择对手;");
-            if (playArenaClient.getChallengeUser() != null) {
-                System.out.println("======>2:普通攻击;");
-                System.out.println("======>3:技能;");
-            }
+//            if (playArenaClient.getChallengeUser() != null) {
+            System.out.println("======>2:普通攻击;");
+            System.out.println("======>3:技能;");
+//            }
             System.out.println("======>7:同意挑战;");
             System.out.println("======>8:拒接挑战;");
             System.out.println("======>9:退出竞技场;");
@@ -89,27 +96,31 @@ public class ArenaThread {
 
             if ("1".equals(command)) {
                 Map<Integer, PlayUserClient> arenaUserMap = role.getARENA_CLIENT().getArenaUserMap();
-                if (arenaUserMap.size() == 0){
+                if (arenaUserMap.size() == 0) {
                     System.out.println("没有玩家;");
                     continue;
                 }
 
+                System.out.println("0、退出;");
                 for (PlayUserClient arenaUser : arenaUserMap.values()) {
                     System.out.println(arenaUser.getUserId() + "、" + arenaUser.getUserName());
                 }
 
                 int userId = scanner.nextInt();
+                if (userId == 0){
+                    continue;
+                }
+
                 GameMsg.UserChooseOpponentCmd chooseOpponentCmd = GameMsg.UserChooseOpponentCmd.newBuilder()
                         .setUserId(userId)
                         .build();
                 ctx.writeAndFlush(chooseOpponentCmd);
-                break;
+//                break;
             } else if ("2".equals(command)) {
-                if (playArenaClient.getChallengeUser() != null){
-                    PlayUserClient challengeUser = playArenaClient.getChallengeUser();
+                if (playArenaClient.getChallengeUser() != null) {
 
                     GameMsg.UserAttackCmd userAttackCmd = GameMsg.UserAttackCmd.newBuilder()
-                            .setTargetUserId(challengeUser.getUserId())
+                            .setTargetUserId(playArenaClient.getChallengeUser().getUserId())
                             .build();
                     ctx.writeAndFlush(userAttackCmd);
                 }
@@ -124,12 +135,6 @@ public class ArenaThread {
                         .setSkillId(skillId)
                         .build();
                 ctx.writeAndFlush(userSkillAttkCmd);
-            } else if ("4".equals(command)) {
-                break;
-            } else if ("5".equals(command)) {
-                break;
-            } else if ("6".equals(command)) {
-                break;
             } else if ("7".equals(command)) {
                 // 同意挑战
                 GameMsg.TargetUserResponseCmd targetUserResponseCmd =
@@ -139,7 +144,7 @@ public class ArenaThread {
                                 .build();
                 role.getARENA_CLIENT().setOriginateUserId(null);
                 ctx.writeAndFlush(targetUserResponseCmd);
-                break;
+//                break;
             } else if ("8".equals(command)) {
                 // 拒绝挑战
                 GameMsg.TargetUserResponseCmd targetUserResponseCmd =
@@ -149,15 +154,15 @@ public class ArenaThread {
                                 .build();
                 role.getARENA_CLIENT().setOriginateUserId(null);
                 ctx.writeAndFlush(targetUserResponseCmd);
-                break;
+//                break;
             } else if ("9".equals(command)) {
                 // 退出竞技场
                 GameMsg.UserQuitArenaCmd userQuitArenaCmd = GameMsg.UserQuitArenaCmd.newBuilder().build();
                 ctx.writeAndFlush(userQuitArenaCmd);
                 break;
-            }else {
+            } else {
                 if (role.getCurrHp() == 0) {
-                    System.out.println("已死亡,请退出副本;");
+                    System.out.println("已死亡;");
                 }
                 log.error("指令错误,请重新输入;");
             }

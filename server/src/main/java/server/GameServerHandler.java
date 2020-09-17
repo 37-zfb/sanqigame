@@ -12,6 +12,7 @@ import msg.GameMsg;
 import org.springframework.context.ApplicationContext;
 import entity.db.CurrUserStateEntity;
 import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.team.TeamUtil;
 import server.model.PlayArena;
 import server.model.User;
 import server.model.UserManager;
@@ -93,7 +94,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         }
 
         // 队伍管理
-        PublicMethod.getInstance().quitTeam(user);
+        TeamUtil.getTeamUtil().quitTeam(user);
 
         // 移除管道
         Broadcast.removeChannel(user.getCurSceneId(), ctx.channel());

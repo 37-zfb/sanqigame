@@ -6,7 +6,6 @@ import client.model.server.props.Props;
 import client.model.server.scene.Scene;
 import client.model.server.store.Goods;
 import client.scene.GameData;
-import client.thread.CmdThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;

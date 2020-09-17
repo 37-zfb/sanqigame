@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author 张丰博
  */
@@ -16,7 +19,7 @@ public class PlayTeamClient {
     /**
      *  发起者id
      */
-    private Integer originateUserId;
+    private Set<Integer> originateIdSet = new HashSet<>();
 
     /**
      *  队长id

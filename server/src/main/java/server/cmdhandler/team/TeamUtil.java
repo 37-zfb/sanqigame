@@ -33,6 +33,10 @@ public final class TeamUtil {
         return TEAM_UTIL;
     }
 
+    /**
+     * 用户退出队伍
+     * @param user
+     */
     public void quitTeam(User user) {
         PlayTeam playTeam = user.getPlayTeam();
 
@@ -117,25 +121,27 @@ public final class TeamUtil {
     /**
      * 发起者有队伍，应答者没有队伍
      *
-     * @param targetUser
-     * @param teamUser
+     * @param targetUser 需要加入队伍的人
+     * @param teamUser 已加入队伍的用户
      */
-    public void originateHaveTeam(User targetUser, User teamUser) {
+    public void joinTeam(User targetUser, User teamUser) {
         GameMsg.UserJoinTeamPerformResult.Builder newBuilder = GameMsg.UserJoinTeamPerformResult.newBuilder();
         //发起者有队伍，
-        synchronized (targetUser.getTEAM_MONITOR()) {
+        synchronized (teamUser.getPlayTeam().getTEAM_MONITOR()) {
             if (targetUser.getPlayTeam() == null &&
                     teamUser.getPlayTeam() != null &&
                     teamUser.getPlayTeam().getTeamNumber() < TeamConst.MAX_NUMBER) {
 
                 targetUser.setPlayTeam(teamUser.getPlayTeam());
-                //
+
                 Integer[] teamMemberArr = targetUser.getPlayTeam().getTEAM_MEMBER();
 
                 // 先通知队伍成员
                 GameMsg.UserInfo userInfo = GameMsg.UserInfo.newBuilder()
                         .setUserName(targetUser.getUserName())
                         .setUserId(targetUser.getUserId())
+                        .setCurrHp(targetUser.getCurrHp())
+                        .setCurrMp(targetUser.getCurrMp())
                         .build();
                 newBuilder.addUserInfo(userInfo).setIsJoin(true);
                 GameMsg.UserJoinTeamPerformResult userJoinTeamResult1 = newBuilder.build();
@@ -188,7 +194,6 @@ public final class TeamUtil {
                 enterTeamFail(targetUser.getCtx());
             }
         }
-
     }
 
 

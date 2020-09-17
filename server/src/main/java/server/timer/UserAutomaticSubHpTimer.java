@@ -44,23 +44,28 @@ public class UserAutomaticSubHpTimer {
 
                                     log.info("用户 {}:血量 {} -20", user.getUserName(), user.getCurrHp());
 
-                                    user.setCurrHp(user.getCurrHp() - 20);
+                                    synchronized (user.getHpMonitor()){
+                                        user.setCurrHp(user.getCurrHp() - 20);
+                                    }
                                     user.setSubHpNumber(user.getSubHpNumber()+1);
+
+                                    //掉血
+                                    GameMsg.UserAutoSubHpResult userAutoSubHpResult = GameMsg.UserAutoSubHpResult.newBuilder()
+                                            .setSubHp(20)
+                                            .build();
+                                    user.getCtx().writeAndFlush(userAutoSubHpResult);
                                 } else if (user.getSubHpNumber() < subHpNumber && user.getCurrHp() <= 20) {
 
                                     log.info("用户 {} 自动掉血而死", user.getUserName());
 
                                     // 怪死了，设置0
-//                                    monster.getDropHpNumber().set(0);
                                     user.setCurrHp(0);
                                     // 取消定时任务
                                     user.getSubHpTask().cancel(true);
                                     user.setSubHpTask(null);
                                     // 发送死亡消息
 
-//                                    GameMsg.MonsterDropHpAutoDie autoDie = GameMsg.MonsterDropHpAutoDie.newBuilder()
-//                                            .setMonsterId(monster.getId())
-//                                            .build();
+
                                     GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
                                             .setTargetUserId(user.getUserId())
                                             .build();
@@ -96,6 +101,7 @@ public class UserAutomaticSubHpTimer {
                                     log.info("召唤兽:血量 {} -20", summonMonster.getHp());
                                     summonMonster.setHp(summonMonster.getHp() - 20);
                                     summonMonster.setSubHpNumber(summonMonster.getSubHpNumber()+1);
+
                                     summonMonsterSubHpResult = GameMsg.SummonMonsterSubHpResult.newBuilder()
                                             .setIsDie(false)
                                             .setSubHp(20)

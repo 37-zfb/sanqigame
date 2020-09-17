@@ -11,7 +11,7 @@ import client.model.server.scene.Npc;
 import client.model.server.scene.Scene;
 import client.model.task.PlayTaskClient;
 import client.scene.GameData;
-import client.thread.CmdThread;
+import client.CmdThread;
 import client.GameClient;
 import client.model.client.MailEntityClient;
 import entity.db.UserEquipmentEntity;

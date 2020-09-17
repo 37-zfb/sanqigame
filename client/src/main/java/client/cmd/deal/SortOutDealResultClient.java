@@ -23,6 +23,7 @@ public class SortOutDealResultClient implements ICmd<GameMsg.SortOutDealResult> 
         MyUtil.checkIsNull(ctx, sortOutDealResult);
         Role role = Role.getInstance();
 
+        role.getDEAL_CLIENT().setDealState(false);
         role.setMoney(sortOutDealResult.getMoney());
         //封装背包中的物品
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();

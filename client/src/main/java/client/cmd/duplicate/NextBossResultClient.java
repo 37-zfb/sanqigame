@@ -1,7 +1,6 @@
 package client.cmd.duplicate;
 
 import client.model.server.duplicate.Duplicate;
-import client.thread.BossThread;
 import client.cmd.ICmd;
 import client.model.Role;
 import io.netty.channel.ChannelHandlerContext;
@@ -23,11 +22,12 @@ public class NextBossResultClient implements ICmd<GameMsg.NextBossResult> {
         Duplicate currDuplicate = role.getCurrDuplicate();
         currDuplicate.setStartTime(nextBossResult.getStartTime());
         currDuplicate.setMinBoss();
-        if (role.getId() == nextBossResult.getUserId()){
+        if (role.getId() == nextBossResult.getUserId()) {
+            System.out.println("下一个BOSS " + currDuplicate.getCurrBossMonster().getBossName());
 
 //            BossThread.getInstance().process(ctx, role);
-        }else {
-            System.out.println("进入下一个BOSS "+currDuplicate.getCurrBossMonster().getBossName());
+        } else {
+            System.out.println("下一个BOSS " + currDuplicate.getCurrBossMonster().getBossName());
         }
     }
 }

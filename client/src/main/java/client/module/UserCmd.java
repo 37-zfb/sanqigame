@@ -1,4 +1,4 @@
-package client.cmd;
+package client.module;
 
 import client.model.MailClient;
 import client.model.PlayFriendClient;
@@ -16,8 +16,6 @@ import client.model.server.store.Goods;
 import client.model.server.task.Task;
 import client.model.task.PlayTaskClient;
 import client.scene.GameData;
-import client.thread.BossThread;
-import client.thread.DealThread;
 import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +41,12 @@ public class UserCmd {
     public static Object operation(Role role, Collection<Npc> npcList, ChannelHandlerContext ctx) {
         // 构建角色，角色初始在启始之地
         log.info("============欢迎来到<Hello World>==============");
+
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
+
                 Integer currSceneId = role.getCurrSceneId();
                 Scene scene = GameData.getInstance().getSceneMap().get(currSceneId);
                 String curSceneName = scene.getName();
@@ -78,6 +79,23 @@ public class UserCmd {
                 }
 
                 while (true) {
+
+                    //交易模块
+                    if (role.getDEAL_CLIENT().isDealState()) {
+                        DealModule.getInstance().dealCmd(ctx, role);
+                    }
+
+                    //副本
+                    if (role.getCurrDuplicate() != null){
+                        BossModule.getInstance().bossCmd(ctx, role);
+                    }
+
+                    //竞技场
+                    if (role.getARENA_CLIENT().isInArena()){
+                        ArenaModule.getInstance().arenaCmd(ctx, role);
+                    }
+
+                    //主操作模块
                     log.info("请选择您的操作: ");
                     System.out.println("======>1:切换场景;");
                     System.out.println("======>2:当前场景所有实体;");
@@ -105,7 +123,7 @@ public class UserCmd {
                     System.out.println("======>24:交易;");
                     System.out.println("======>25:同意交易;");
                     System.out.println("======>26:拒绝交易;");
-                    System.out.println("======>27:进入交易界面;");
+                    System.out.println("======>27:进入交易模块;");
                     System.out.println("======>28:公会;");
                     System.out.println("======>29:拍卖行;");
                     System.out.println("======>30:查看任务;");
@@ -333,9 +351,9 @@ public class UserCmd {
                         System.out.println("0、退出;");
                         int goodsId = scanner.nextInt();
 
-                        if (goodsId == 0){
+                        if (goodsId == 0) {
 
-                        }else {
+                        } else {
                             int number = 1;
                             GameMsg.UserBuyGoodsCmd.Builder goodsBuilder = GameMsg.UserBuyGoodsCmd.newBuilder();
                             goodsBuilder.setGoodsId(goodsId);
@@ -413,28 +431,35 @@ public class UserCmd {
                     } else if ("20".equals(command)) {
                         // 加入队伍
                         role.setAnswer(true);
+
+                        for (Integer id : role.getTEAM_CLIENT().getOriginateIdSet()) {
+                            System.out.println(id);
+                        }
+                        int id = scanner.nextInt();
                         GameMsg.UserJoinTeamCmd userJoinTeamCmd = GameMsg.UserJoinTeamCmd.newBuilder()
                                 .setIsJoin(true)
-                                .setOriginateUserId(role.getTEAM_CLIENT().getOriginateUserId())
+                                .setOriginateUserId(id)
                                 .build();
                         ctx.writeAndFlush(userJoinTeamCmd);
+                        role.getTEAM_CLIENT().getOriginateIdSet().clear();
                     } else if ("21".equals(command)) {
                         // 不加队伍
-                        Integer originateUserId = role.getTEAM_CLIENT().getOriginateUserId();
-                        role.getTEAM_CLIENT().setOriginateUserId(null);
+                        for (Integer id : role.getTEAM_CLIENT().getOriginateIdSet()) {
+                            System.out.println(id);
+                        }
+                        int id = scanner.nextInt();
                         GameMsg.UserJoinTeamCmd userJoinTeamCmd = GameMsg.UserJoinTeamCmd.newBuilder()
                                 .setIsJoin(false)
-                                .setOriginateUserId(originateUserId)
+                                .setOriginateUserId(id)
                                 .build();
                         ctx.writeAndFlush(userJoinTeamCmd);
                     } else if ("22".equals(command)) {
                         //  退出队伍
-                        return GameMsg.UserQuitTeamCmd.newBuilder()
-                                .build();
+                        ctx.writeAndFlush(GameMsg.UserQuitTeamCmd.newBuilder()
+                                .build());
                     } else if ("23".equals(command)) {
                         // 组队状态, 进入副本线程
-                        BossThread.getInstance().process(ctx, role);
-                        return null;
+//                        BossModule.getInstance().process(ctx, role);
                     } else if ("24".equals(command)) {
                         // 交易
                         role.setDeal(true);
@@ -456,8 +481,8 @@ public class UserCmd {
                                 .build();
                     } else if ("27".equals(command)) {
                         // 建立交易通道
-                        DealThread.getInstance().process(ctx, role);
-                        return null;
+//                        DealThread.getInstance().process(ctx, role);
+//                        return null;
                     } else if ("28".equals(command)) {
                         //公会操作
                         System.out.println("===>0:退出;");

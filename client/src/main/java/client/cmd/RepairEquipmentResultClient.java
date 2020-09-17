@@ -2,7 +2,7 @@ package client.cmd;
 
 import client.model.server.props.Equipment;
 import client.model.server.props.Props;
-import client.thread.CmdThread;
+import client.CmdThread;
 import client.model.Role;
 import client.model.SceneData;
 import constant.EquipmentConst;

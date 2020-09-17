@@ -2,27 +2,17 @@ package server.cmdhandler.duplicate;
 
 import constant.DuplicateConst;
 import constant.ProfessionConst;
-import entity.db.CurrUserStateEntity;
-import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import server.model.duplicate.Duplicate;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.PlayTeam;
 import server.model.User;
-import server.model.props.Equipment;
-import server.model.props.Props;
-import server.scene.GameData;
+import server.model.duplicate.Duplicate;
 import server.timer.BossAttackTimer;
-import server.timer.state.DbUserStateTimer;
-import type.EquipmentType;
 import util.MyUtil;
-
-import java.util.Map;
 
 /**
  * @author 张丰博
@@ -50,6 +40,12 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
         if (currDuplicate != null) {
             // 取消定时器
             BossAttackTimer.getInstance().cancelTask(currDuplicate.getCurrBossMonster().getScheduledFuture());
+        }
+
+        //取消掉血定时器
+        if (user.getSubHpTask() != null) {
+            user.getSubHpTask().cancel(true);
+            user.setSubHpNumber(0);
         }
 
 //        // 取消召唤师定时器
