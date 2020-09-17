@@ -76,6 +76,11 @@ public class UserCmd {
                 if (playTaskClient.getCurrTaskId() != null && !playTaskClient.getCurrTaskId().equals(TaskType.NonTask.getTaskCode())) {
                     Map<Integer, Task> taskMap = GameData.getInstance().getTaskMap();
                     log.info("任务: {}", taskMap.get(playTaskClient.getCurrTaskId()).getTaskName() + " ,完成: " + (playTaskClient.isCompleted() ? "是" : "否"));
+
+                    if (playTaskClient.getNumber() != null){
+                        log.info("进度: {}",playTaskClient.getNumber());
+                    }
+
                 }
 
                 while (true) {
@@ -288,7 +293,7 @@ public class UserCmd {
                         }
                         long nextInt = scanner.nextLong();
                         for (UserEquipmentEntity equipment : userEquipmentEntityList) {
-                            if (equipment.getId() == nextInt) {
+                            if (equipment !=null && equipment.getId() == nextInt) {
                                 return GameMsg.UserUndoEquipmentCmd.newBuilder().setUserEquipmentId(nextInt).setPropsId(equipment.getPropsId()).build();
                             }
                         }

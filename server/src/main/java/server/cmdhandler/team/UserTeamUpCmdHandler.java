@@ -6,16 +6,16 @@ import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.model.PlayArena;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayTeam;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import util.MyUtil;
 
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -25,6 +25,10 @@ import java.util.Map;
 @Slf4j
 @Component
 public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> {
+
+    @Autowired
+    private TaskUtil taskUtil;
+
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserTeamUpCmd userTeamUpCmd) {
         MyUtil.checkIsNull(ctx, userTeamUpCmd);
@@ -65,6 +69,7 @@ public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> 
                 .build();
         ctx.writeAndFlush(userJoinTeamPerformResult);
 
+        taskUtil.listener(user);
     }
 
     private void clearInvitationTimeout(Map<Integer, Long> invitationUserIdMap) {

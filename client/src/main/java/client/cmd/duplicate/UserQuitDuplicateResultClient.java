@@ -32,6 +32,6 @@ public class UserQuitDuplicateResultClient implements ICmd<GameMsg.UserQuitDupli
 
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
         System.out.println("退出副本");
-        CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
+//        CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());
     }
 }

@@ -1,19 +1,12 @@
 package server.cmdhandler.auction;
 
-import com.alibaba.fastjson.JSON;
 import entity.db.DbAuctionItemEntity;
 import entity.db.DbBidderEntity;
-import entity.db.DbSendMailEntity;
-import msg.GameMsg;
 import server.GameServer;
 import entity.MailProps;
 import server.cmdhandler.mail.MailUtil;
-import server.model.User;
-import server.model.UserManager;
 import server.timer.auction.DbAuctionTimer;
 import server.timer.mail.DbSendMailTimer;
-import server.util.IdWorker;
-import type.MailType;
 
 import java.util.*;
 

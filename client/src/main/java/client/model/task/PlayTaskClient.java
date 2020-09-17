@@ -18,4 +18,9 @@ public class PlayTaskClient {
      */
     private boolean isCompleted = false;
 
+    /**
+     * 任务进度
+     */
+    private Integer number = null;
+
 }

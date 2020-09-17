@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import server.GuildManager;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayGuild;
 import server.model.User;
 import server.timer.guild.DbGuildTimer;
@@ -35,7 +35,7 @@ public class UserEnterGuildCmdHandler implements ICmdHandler<GameMsg.UserEnterGu
     private DbUserStateTimer userStateTimer;
 
     @Autowired
-    private TaskPublicMethod taskPublicMethod;
+    private TaskUtil taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserEnterGuildCmd userEnterGuildCmd) {

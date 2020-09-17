@@ -9,7 +9,7 @@ import server.model.scene.Monster;
 import server.model.scene.Scene;
 import server.scene.GameData;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 
 import java.util.Map;
 

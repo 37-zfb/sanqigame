@@ -169,7 +169,7 @@ public class LoadResourcesService {
     private void loadFriend(User user) {
         List<DbFriendEntity> friendEntityList = friendService.listFriend(user.getUserId());
         Map<Integer, String> friendMap = user.getPLAY_FRIEND().getFRIEND_MAP();
-        friendEntityList.forEach(f->friendMap.put(f.getUserId(),f.getFriendName()));
+        friendEntityList.forEach(f -> friendMap.put(f.getUserId(), f.getFriendName()));
     }
 
     /**
@@ -208,15 +208,15 @@ public class LoadResourcesService {
      */
     private void loadTask(User user) {
         DbTaskEntity taskEntity = taskService.getCurrTaskById(user.getUserId());
+
         PlayTask playTask = user.getPlayTask();
         playTask.setHaveTask(!taskEntity.getCompletedTask().equals(TaskType.NonTask.getTaskCode()));
+
         if (playTask.isHaveTask()) {
             playTask.setCurrTaskId(taskEntity.getCurrTask());
             playTask.setCurrTaskCompleted(taskEntity.getCurrTaskCompleted().equals(TaskType.CurrTaskCompleted.getTaskCode()));
             playTask.setCompletedTaskId(taskEntity.getCompletedTask());
-            if (taskEntity.getCurrTask().equals(2)) {
-                playTask.setKillNumber(taskEntity.getTaskProcess());
-            }
+            playTask.setNumber(taskEntity.getTaskProcess());
         }
 
     }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import util.MyUtil;
 
 /**

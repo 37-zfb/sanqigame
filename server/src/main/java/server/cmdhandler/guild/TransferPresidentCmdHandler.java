@@ -13,7 +13,7 @@ import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.PlayGuild;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import server.timer.guild.DbGuildTimer;
 import type.GuildMemberType;
 import util.MyUtil;

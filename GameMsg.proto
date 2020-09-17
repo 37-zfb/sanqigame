@@ -257,6 +257,8 @@ enum MsgCode {
   DEAL_FAIL_CMD = 171;
   DEAL_FAIL_RESULT = 172;
 
+  TASK_PROGRESS_RESULT = 173;
+
   USER_UP_LV_RESULT = 157;
 
   ERROR_RESULT = 96;
@@ -443,6 +445,7 @@ message UserLoginResult {
   bool isHaveTask = 18;
   uint32 currTaskId = 19;
   bool currTaskCompleted = 20;
+  uint32 number = 23;
 
   //等级
   uint32 lv = 21;
@@ -1154,7 +1157,6 @@ message TakeOutPropsCmd{
 }
 message TakeOutPropsResult{
   repeated Props props = 1;
-  uint32 number = 2;
 }
 // 放入道具
 message PutInPropsCmd{
@@ -1328,4 +1330,9 @@ message  UserModifyDealStateResult{
 message DealFailCmd{
 }
 message DealFailResult{
+}
+
+//任务进度
+message TaskProgressResult{
+  uint32 number = 1;
 }

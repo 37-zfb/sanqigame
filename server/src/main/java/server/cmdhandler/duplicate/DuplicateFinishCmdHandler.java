@@ -1,7 +1,6 @@
 package server.cmdhandler.duplicate;
 
 import constant.DuplicateConst;
-import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -9,20 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.auction.AuctionUtil;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.User;
 import server.model.duplicate.Duplicate;
-import server.model.props.Equipment;
-import server.model.props.Potion;
-import server.model.props.Props;
-import server.scene.GameData;
+import server.util.PropsUtil;
 import type.DuplicateType;
-import type.PropsType;
 import util.MyUtil;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 张丰博
@@ -33,7 +26,7 @@ import java.util.Map;
 public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateFinishCmd> {
 
     @Autowired
-    private TaskPublicMethod taskPublicMethod;
+    private TaskUtil taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.DuplicateFinishCmd duplicateFinishCmd) {

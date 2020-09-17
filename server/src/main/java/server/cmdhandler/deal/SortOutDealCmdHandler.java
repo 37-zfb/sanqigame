@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.duplicate.PropsUtil;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.util.PropsUtil;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.DealProps;
 import server.model.PlayDeal;
 import server.model.User;
@@ -35,7 +35,7 @@ import java.util.Map;
 public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd> {
 
     @Autowired
-    private TaskPublicMethod taskPublicMethod;
+    private TaskUtil taskPublicMethod;
 
     @Autowired
     private DbUserStateTimer userStateTimer;

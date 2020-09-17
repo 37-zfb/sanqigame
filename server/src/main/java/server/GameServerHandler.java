@@ -1,7 +1,6 @@
 package server;
 
 import com.google.protobuf.GeneratedMessageV3;
-import entity.conf.task.TaskEntity;
 import entity.db.DbSendMailEntity;
 import entity.db.DbTaskEntity;
 import io.netty.channel.ChannelHandlerContext;
@@ -11,17 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.context.ApplicationContext;
 import entity.db.CurrUserStateEntity;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.cmdhandler.team.TeamUtil;
 import server.model.PlayArena;
 import server.model.User;
-import server.model.UserManager;
 import server.service.MailService;
 import server.service.TaskService;
-import server.service.UserService;
 import server.timer.mail.DbSendMailTimer;
 import server.timer.state.DbUserStateTimer;
-import type.TaskType;
 
 /**
  * @author 张丰博
@@ -61,7 +57,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
 //        UserService userService = context.getBean(UserService.class);
         MailService mailService = context.getBean(MailService.class);
         TaskService taskService = context.getBean(TaskService.class);
-        TaskPublicMethod taskPublicMethod = context.getBean(TaskPublicMethod.class);
+        TaskUtil taskPublicMethod = context.getBean(TaskUtil.class);
         DbUserStateTimer userStateTimer = context.getBean(DbUserStateTimer.class);
         DbSendMailTimer mailTimer = context.getBean(DbSendMailTimer.class);
 

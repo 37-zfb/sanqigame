@@ -157,6 +157,11 @@ public class UserLoginCmdClient implements ICmd<GameMsg.UserLoginResult> {
         if (isHaveTask) {
             playTaskClient.setCurrTaskId(userLoginResult.getCurrTaskId());
             playTaskClient.setCompleted(userLoginResult.getCurrTaskCompleted());
+            if (userLoginResult.getNumber() == -1 || userLoginResult.getNumber() == 0) {
+                playTaskClient.setNumber(null);
+            } else {
+                playTaskClient.setNumber(userLoginResult.getNumber());
+            }
         }
 
 

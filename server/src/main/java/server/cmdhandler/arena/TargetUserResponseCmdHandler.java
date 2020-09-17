@@ -11,8 +11,6 @@ import server.ArenaManager;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
-import server.model.UserManager;
-import server.model.profession.Profession;
 import util.MyUtil;
 
 /**

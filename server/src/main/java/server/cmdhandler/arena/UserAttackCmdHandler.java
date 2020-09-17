@@ -9,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayArena;
 import server.model.User;
-import server.model.UserManager;
-import server.model.task.Task;
+import server.UserManager;
 import util.MyUtil;
 
 /**
@@ -25,7 +24,7 @@ import util.MyUtil;
 public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> {
 
     @Autowired
-    private TaskPublicMethod taskPublicMethod;
+    private TaskUtil taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserAttackCmd userAttackCmd) {

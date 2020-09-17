@@ -2,26 +2,15 @@ package server.model;
 
 import entity.db.GuildEntity;
 import entity.db.GuildMemberEntity;
-import exception.CustomizeErrorCode;
-import exception.CustomizeException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import msg.GameMsg;
-import server.PublicMethod;
-import server.cmdhandler.duplicate.PropsUtil;
-import server.model.props.AbstractPropsProperty;
-import server.model.props.Potion;
 import server.model.props.Props;
-import type.PropsType;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * @author 张丰博

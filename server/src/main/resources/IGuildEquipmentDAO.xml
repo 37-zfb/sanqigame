@@ -17,8 +17,8 @@
     <insert id="insertEquipmentBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
             parameterType="collection">
         <foreach collection="addGuildEquipmentList" item="equipment" index="index" open="" close="" separator="">
-            INSERT INTO `guild_equipment` ( guild_id, `props_id`,`durability`,`location` ) VALUES (
-            #{equipment.guildId},#{equipment.propsId} ,#{equipment.durability},#{equipment.location});
+            INSERT INTO `guild_equipment` (id, guild_id, `props_id`,`durability`,`location` ) VALUES (
+            #{equipment.id},#{equipment.guildId},#{equipment.propsId} ,#{equipment.durability},#{equipment.location});
         </foreach>
     </insert>
 

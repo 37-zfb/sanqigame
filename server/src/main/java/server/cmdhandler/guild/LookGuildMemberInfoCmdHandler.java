@@ -14,7 +14,7 @@ import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.PlayGuild;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import server.service.UserService;
 import util.MyUtil;
 

@@ -80,7 +80,7 @@ public class TaskService {
         taskEntity.setUserId(userId);
         taskEntity.setCurrTask(TaskConst.INIT_TASK);
         taskEntity.setCompletedTask(TaskConst.INIT_TASK - 1);
-        taskEntity.setTaskProcess(-1);
+        taskEntity.setTaskProcess(0);
         taskEntity.setCurrTaskCompleted(TaskType.CurrTaskUnCompleted.getTaskCode());
         taskDAO.insert(taskEntity);
     }

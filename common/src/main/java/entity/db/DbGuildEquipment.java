@@ -12,7 +12,7 @@ public class DbGuildEquipment {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 仓库id

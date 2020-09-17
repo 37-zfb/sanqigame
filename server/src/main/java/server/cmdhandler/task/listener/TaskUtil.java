@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import server.GameServer;
 import server.PublicMethod;
 import server.model.PlayTask;
 import server.model.User;
@@ -15,16 +16,13 @@ import server.scene.GameData;
 import server.service.TaskService;
 import type.TaskType;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 
 /**
  * @author 张丰博
  */
 @Component
 @Slf4j
-public class TaskPublicMethod {
+public class TaskUtil {
 
     @Autowired
     private TaskService taskService;
@@ -61,6 +59,7 @@ public class TaskPublicMethod {
         }
         task.setNum(0);
         playTask.setCurrTaskId(taskId);
+        playTask.setNumber(0);
         log.info("用户 {} 领取 {} 任务", user.getUserName(), task.getTaskName());
 
         GameMsg.ReceiveTaskResult receiveTaskResult = GameMsg.ReceiveTaskResult.newBuilder()
@@ -69,19 +68,23 @@ public class TaskPublicMethod {
         ctx.writeAndFlush(receiveTaskResult);
 
 
-        int[] code = {3, 5, 6, 7, 8, 9, 12};
-        for (int typeCode : code) {
-            if (task.getTypeCode() == typeCode) {
-                Method method = TaskListener.getTaskListener().listenerMethod.get(typeCode);
-                try {
-                    method.invoke(TaskListener.getTaskListener(), user);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
+        if (TaskType.isContain(task.getTypeCode())) {
+            listener(user);
         }
+
+//        int[] code = {3, 5, 6, 7, 8, 9, 12};
+//        for (int typeCode : code) {
+//            if (task.getTypeCode() == typeCode) {
+//                Method method = TaskListener.getTaskListener().listenerMethod.get(typeCode);
+//                try {
+//                    method.invoke(TaskListener.getTaskListener(), user);
+//                } catch (IllegalAccessException e) {
+//                    e.printStackTrace();
+//                } catch (InvocationTargetException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
 
 
     }
@@ -110,7 +113,8 @@ public class TaskPublicMethod {
         user.getCtx().writeAndFlush(userUpLvResult);
 
         Task task = GameData.getInstance().getTaskMap().get(user.getPlayTask().getCurrTaskId());
-        if (task!=null && task.getTypeCode().equals(TaskType.LvType.getTaskCode())) {
+
+        if (task != null && task.getTypeCode().equals(TaskType.LvType.getTaskCode())) {
             //此时任务: 提升等级
             listener(user);
         }
@@ -131,8 +135,8 @@ public class TaskPublicMethod {
 
         Task task = GameData.getInstance().getTaskMap().get(user.getPlayTask().getCurrTaskId());
 
-        if (task.getTypeCode().equals(TaskType.killType.getTaskCode())) {
-            dbTaskEntity.setTaskProcess(user.getPlayTask().getKillNumber());
+        if (task.getTypeCode().equals(TaskType.KillMonsterType.getTaskCode())) {
+            dbTaskEntity.setTaskProcess(user.getPlayTask().getNumber());
         }
 
 
@@ -150,19 +154,38 @@ public class TaskPublicMethod {
 
         Integer currTaskId = playTask.getCurrTaskId();
         Task task = GameData.getInstance().getTaskMap().get(currTaskId);
-        Method method = TaskListener.getTaskListener().listenerMethod.get(task.getTypeCode());
+//        Method method = TaskListener.getTaskListener().listenerMethod.get(task.getTypeCode());
 
-        try {
-            if (method != null) {
-                method.invoke(TaskListener.getTaskListener(), user);
+//        try {
+//            if (method != null) {
+//                method.invoke(TaskListener.getTaskListener(), user);
+//            }
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
+        String clazzStr = "";
+        for (TaskType taskType : TaskType.values()) {
+            if (!task.getTypeCode().equals(taskType.getTaskCode())) {
+                continue;
             }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            clazzStr = taskType.getTaskType();
         }
 
+        if (clazzStr.equals("")) {
+            return;
+        }
 
+        server.cmdhandler.task.listener.Task bean = null;
+        try {
+            bean = (server.cmdhandler.task.listener.Task) GameServer.APPLICATION_CONTEXT.getBean(Class.forName(clazzStr));
+            bean.taskHandle(user);
+
+
+        } catch (ClassNotFoundException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
 }

@@ -11,18 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.duplicate.PropsUtil;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.util.PropsUtil;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayGuild;
 import server.model.User;
 import server.model.props.AbstractPropsProperty;
+import server.model.props.Equipment;
 import server.model.props.Potion;
 import server.model.props.Props;
 import server.timer.guild.DbGuildTimer;
 import type.PropsType;
 import util.MyUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -36,7 +36,7 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
     private DbGuildTimer guildTimer;
 
     @Autowired
-    private TaskPublicMethod taskPublicMethod;
+    private TaskUtil taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.TakeOutPropsCmd takeOutPropsCmd) {
@@ -79,7 +79,6 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
         log.info("用户 {} 从仓库中取出 {}", user.getUserName(), p.getName());
 
         GameMsg.TakeOutPropsResult takeOutPropsResult = newBuilder
-                .setNumber(number)
                 .build();
         ctx.writeAndFlush(takeOutPropsResult);
 
@@ -95,9 +94,19 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
      */
     private Props modifyProps(User user, GameMsg.Props props, Integer number, GameMsg.TakeOutPropsResult.Builder newBuilder) {
         PlayGuild playGuild = user.getPlayGuild();
-        Props p;
+        Props p = null;
         synchronized (playGuild.getWAREHOUSE_MONITOR()) {
-            p = playGuild.getWAREHOUSE_PROPS().get(props.getLocation());
+//            p = playGuild.getWAREHOUSE_PROPS().get(props.getUserPropsId());
+            for (Props value : playGuild.getWAREHOUSE_PROPS().values()) {
+                if (value.getPropsProperty().getType() == PropsType.Equipment && ((Equipment) value.getPropsProperty()).getId() == props.getUserPropsId()) {
+                    p = value;
+                    break;
+                } else if (value.getPropsProperty().getType() == PropsType.Potion && ((Potion) value.getPropsProperty()).getId() == props.getUserPropsId()) {
+                    p = value;
+                    break;
+                }
+            }
+
             if (p == null) {
                 throw new CustomizeException(CustomizeErrorCode.PROPS_NOT_EXIST);
             }

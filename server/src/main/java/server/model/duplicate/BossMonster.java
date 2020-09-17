@@ -1,16 +1,11 @@
 package server.model.duplicate;
 
-import constant.BossMonsterConst;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import msg.GameMsg;
-import org.apache.poi.ss.formula.functions.T;
-import server.PublicMethod;
-import server.cmdhandler.duplicate.BossSkillAttack;
 import server.model.profession.SummonMonster;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 
 import java.util.Comparator;
 import java.util.HashMap;

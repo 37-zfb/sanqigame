@@ -367,6 +367,7 @@ public class DbGuildTimer {
                 Integer durability = guildEquipment.getDurability();
                 Integer location = guildEquipment.getLocation();
                 Integer propsId = guildEquipment.getPropsId();
+                Long id = guildEquipment.getId();
 
                 Props props = GameData.getInstance().getPropsMap().get(propsId);
                 Equipment equipment = (Equipment) props.getPropsProperty();
@@ -374,7 +375,7 @@ public class DbGuildTimer {
                 Props p = new Props();
                 p.setName(props.getName());
                 p.setId(props.getId());
-                p.setPropsProperty(new Equipment(equipment.getId(), equipment.getPropsId(), durability, equipment.getDamage(), equipment.getEquipmentType()));
+                p.setPropsProperty(new Equipment(id, equipment.getPropsId(), durability, equipment.getDamage(), equipment.getEquipmentType()));
 
                 warehouseProps.put(location, p);
             }
@@ -385,6 +386,7 @@ public class DbGuildTimer {
                 Integer location = guildPotion.getLocation();
                 Integer number = guildPotion.getNumber();
                 Integer propsId = guildPotion.getPropsId();
+                Long id = guildPotion.getId();
 
                 Props props = GameData.getInstance().getPropsMap().get(propsId);
                 Potion potion = (Potion) props.getPropsProperty();
@@ -392,7 +394,7 @@ public class DbGuildTimer {
                 Props p = new Props();
                 p.setName(props.getName());
                 p.setId(props.getId());
-                p.setPropsProperty(new Potion(potion.getId(), potion.getPropsId(), potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), number));
+                p.setPropsProperty(new Potion(id, potion.getPropsId(), potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), number));
 
                 warehouseProps.put(location, p);
             }

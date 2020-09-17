@@ -32,5 +32,5 @@ public class PlayTask {
     /**
      * 当前击杀个数
      */
-    private Integer killNumber = 0;
+    private Integer number = 0;
 }

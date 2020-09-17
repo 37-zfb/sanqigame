@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 
 /**
  * @author 张丰博

@@ -37,19 +37,18 @@ public class TaskListener {
         Method[] declaredMethods = TaskListener.class.getDeclaredMethods();
         for (Task task : GameData.getInstance().getTaskMap().values()) {
             for (Method declaredMethod : declaredMethods) {
-               try {
-                   if (task.getTypeCode() != 1 && task.getTypeCode().equals(Integer.valueOf(declaredMethod.getName().substring(declaredMethod.getName().length() - 2)))) {
+                try {
+                    if (task.getTypeCode() != 1 && task.getTypeCode().equals(Integer.valueOf(declaredMethod.getName().substring(declaredMethod.getName().length() - 2)))) {
 
-                       listenerMethod.put(task.getTypeCode(), declaredMethod);
-                       break;
-                   }
-               }catch (Exception e){
-               }
+                        listenerMethod.put(task.getTypeCode(), declaredMethod);
+                        break;
+                    }
+                } catch (Exception e) {
+                }
 
             }
         }
     }
-
 
     public static TaskListener getTaskListener() {
         return TASK_LISTENER;
@@ -92,18 +91,23 @@ public class TaskListener {
             return;
         }
         PlayTask playTask = user.getPlayTask();
-        playTask.setKillNumber(playTask.getKillNumber() + 1);
+        playTask.setNumber(playTask.getNumber() + 1);
 
         //击杀个数达到任务要求
-        if (playTask.getKillNumber().equals(task.getKillNumber())) {
+        if (playTask.getNumber().equals(task.getNumber())) {
             //完成任务
             playTask.setCurrTaskCompleted(true);
 
             log.info("用户 {} 完成 {} 任务", user.getUserName(), task.getTaskName());
             GameMsg.TaskCompletedResult taskCompletedResult = GameMsg.TaskCompletedResult.newBuilder().build();
             user.getCtx().writeAndFlush(taskCompletedResult);
+        } else {
+            GameMsg.TaskProgressResult taskProgressResult = GameMsg.TaskProgressResult.newBuilder()
+                    .setNumber(playTask.getNumber())
+                    .build();
+            user.getCtx().writeAndFlush(taskProgressResult);
         }
-        log.info("用户 {} 已击杀 {} 只怪;", user.getUserName(), playTask.getKillNumber());
+        log.info("用户 {} 已击杀 {} 只怪;", user.getUserName(), playTask.getNumber());
     }
 
     /**
@@ -158,15 +162,14 @@ public class TaskListener {
             playTask.setCurrTaskCompleted(true);
             Task task = GameData.getInstance().getTaskMap().get(playTask.getCurrTaskId());
 
-            if (task.getNum() >= 1){
+            if (task.getNum() >= 1) {
                 return;
             }
-            task.setNum(task.getNum()+1);
+            task.setNum(task.getNum() + 1);
 
             log.info("用户 {} 完成 {} 任务", user.getUserName(), task.getTaskName());
             GameMsg.TaskCompletedResult taskCompletedResult = GameMsg.TaskCompletedResult.newBuilder().build();
             user.getCtx().writeAndFlush(taskCompletedResult);
-
 
 
         }
@@ -190,6 +193,12 @@ public class TaskListener {
         }
 
         if (equSize < targetEquSize) {
+
+            GameMsg.TaskProgressResult taskProgressResult = GameMsg.TaskProgressResult.newBuilder()
+                    .setNumber(equSize)
+                    .build();
+            user.getCtx().writeAndFlush(taskProgressResult);
+
             return;
         }
 
@@ -218,6 +227,11 @@ public class TaskListener {
         }
 
         if (targetNumber != currSize) {
+            GameMsg.TaskProgressResult taskProgressResult = GameMsg.TaskProgressResult.newBuilder()
+                    .setNumber(currSize)
+                    .build();
+            user.getCtx().writeAndFlush(taskProgressResult);
+
             return;
         }
 
@@ -309,6 +323,12 @@ public class TaskListener {
     public void reachMoney12(User user) {
         int targetMoney = 10000;
         if (user.getMoney() < targetMoney) {
+
+            GameMsg.TaskProgressResult taskProgressResult = GameMsg.TaskProgressResult.newBuilder()
+                    .setNumber(user.getMoney())
+                    .build();
+            user.getCtx().writeAndFlush(taskProgressResult);
+
             return;
         }
 

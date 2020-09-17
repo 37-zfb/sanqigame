@@ -16,7 +16,7 @@ import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.model.PlayGuild;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import server.model.props.Props;
 import server.timer.guild.DbGuildTimer;
 import server.timer.state.DbUserStateTimer;

@@ -27,13 +27,13 @@ public class TakeOutPropsResultClient implements ICmd<GameMsg.TakeOutPropsResult
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
         Map<Integer, Props> backpackClient = role.getBackpackClient();
 
-        int number = takeOutPropsResult.getNumber();
         List<GameMsg.Props> propsList = takeOutPropsResult.getPropsList();
 
 
         for (GameMsg.Props props : propsList) {
             int location = props.getLocation();
             int propsId = props.getPropsId();
+            int number = props.getPropsNumber();
 
             Props pro = propsMap.get(propsId);
             System.out.println(pro.getName());
@@ -57,7 +57,7 @@ public class TakeOutPropsResultClient implements ICmd<GameMsg.TakeOutPropsResult
                 if (p != null) {
                     //已存在
                     Potion propsProperty = (Potion) p.getPropsProperty();
-                    propsProperty.setNumber(propsProperty.getNumber() + number);
+                    propsProperty.setNumber(number);
                     continue;
                 }
 

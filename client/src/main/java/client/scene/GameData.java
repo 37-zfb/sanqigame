@@ -166,13 +166,10 @@ public class GameData {
             task.setDuplicateId(taskEntity.getDuplicateId());
             task.setNpcId(taskEntity.getNpcId());
 
-            if (taskEntity.getTypeCode().equals(TaskType.DialogueType.getTaskCode())) {
+            if (taskEntity.getDialogue() != null && !taskEntity.getDialogue().equals("")){
                 task.setDialogue(taskEntity.getDialogue());
-            } else if (taskEntity.getTypeCode().equals(TaskType.killType.getTaskCode())) {
-                task.setKillNumber(taskEntity.getNumber());
-            } else if (taskEntity.getTypeCode().equals(TaskType.DuplicateType.getTaskCode())) {
-
             }
+            task.setNumber(taskEntity.getNumber());
             taskMap.put(task.getId(), task);
         }
         taskEntityList = null;

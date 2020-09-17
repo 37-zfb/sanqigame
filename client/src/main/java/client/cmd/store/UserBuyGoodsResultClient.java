@@ -79,7 +79,7 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
                 if (p != null) {
                     //已存在
                     Potion propsProperty = (Potion) p.getPropsProperty();
-                    propsProperty.setNumber(propsProperty.getNumber() + propsNumber);
+                    propsProperty.setNumber(propsNumber);
                     continue;
                 }
 

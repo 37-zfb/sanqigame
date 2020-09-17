@@ -37,7 +37,6 @@ public class GameServer {
         Broadcast.init();
         APPLICATION_CONTEXT.getBean(DbGuildTimer.class).initGuildManager();
         APPLICATION_CONTEXT.getBean(DbAuctionTimer.class).init();
-        TaskListener.getTaskListener().init();
 
         // Configure SSL.
         final SslContext sslCtx;

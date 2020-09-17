@@ -5,7 +5,6 @@ import constant.EquipmentConst;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import server.PublicMethod;
 import server.model.props.Equipment;
@@ -17,8 +16,6 @@ import entity.db.UserEquipmentEntity;
 import server.scene.GameData;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
-import server.model.UserManager;
-import server.service.UserService;
 import server.timer.state.DbUserStateTimer;
 import util.MyUtil;
 

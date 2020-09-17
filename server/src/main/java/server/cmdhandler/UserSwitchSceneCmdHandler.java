@@ -2,14 +2,9 @@ package server.cmdhandler;
 
 import constant.ProfessionConst;
 import constant.SceneConst;
-import entity.db.CurrUserStateEntity;
-import entity.db.UserEquipmentEntity;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import server.model.props.Equipment;
-import server.model.props.Props;
 import server.model.scene.Monster;
 import server.model.scene.Npc;
 import server.model.scene.Scene;
@@ -19,14 +14,11 @@ import server.scene.GameData;
 import server.Broadcast;
 import server.PublicMethod;
 import server.model.User;
-import server.model.UserManager;
 import server.timer.state.DbUserStateTimer;
-import type.EquipmentType;
 import type.SceneType;
 import util.MyUtil;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 张丰博

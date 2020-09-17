@@ -3,11 +3,10 @@ package server.cmdhandler.skill;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import server.GameServer;
 import server.cmdhandler.arena.ArenaUtil;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayArena;
-import server.model.UserManager;
+import server.UserManager;
 import server.model.duplicate.Duplicate;
 import server.model.profession.Skill;
 import server.model.profession.skill.SorceressSkillProperty;
@@ -33,7 +32,7 @@ import java.util.Map;
 public class SorceressSkillHandler implements ISkillHandler<SorceressSkillProperty> {
 
     @Autowired
-    private TaskPublicMethod taskPublicMethod;
+    private TaskUtil taskPublicMethod;
 
 
     @Override

@@ -1,13 +1,12 @@
 package server.cmdhandler;
 
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import util.MyUtil;
 
 import java.util.Collection;

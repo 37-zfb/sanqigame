@@ -12,12 +12,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
-import server.cmdhandler.auction.AuctionUtil;
 import server.cmdhandler.mail.MailUtil;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayTeam;
 import server.model.User;
-import server.model.UserManager;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.duplicate.ForceAttackUser;
@@ -47,7 +45,7 @@ public final class PublicMethod {
 
     private final DbUserStateTimer userStateTimer = GameServer.APPLICATION_CONTEXT.getBean(DbUserStateTimer.class);
 
-    private TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+    private TaskUtil taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskUtil.class);
 
     private PublicMethod() {
     }
@@ -211,7 +209,7 @@ public final class PublicMethod {
                 Broadcast.broadcast(user.getCurSceneId(), dieResult);
 
                 //任务监听
-                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+                TaskUtil taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskUtil.class);
                 taskPublicMethod.listener(user);
                 //增加经验
                 taskPublicMethod.addExperience(SceneConst.SCENE_MONSTER_EXPERIENCE, user);

@@ -1,6 +1,7 @@
-package server.model;
+package server;
 
 import lombok.extern.slf4j.Slf4j;
+import server.model.User;
 
 import java.util.Collection;
 import java.util.HashMap;

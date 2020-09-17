@@ -4,23 +4,20 @@ import entity.MailProps;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayTask;
 import server.model.User;
-import server.model.props.Equipment;
 import server.model.props.Props;
 import server.model.task.Task;
 import server.scene.GameData;
+import server.util.PropsUtil;
 import util.MyUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 张丰博
@@ -31,7 +28,7 @@ import java.util.Map;
 public class ReceiveTaskAwardCmdHandler implements ICmdHandler<GameMsg.ReceiveTaskAwardCmd> {
 
     @Autowired
-    TaskPublicMethod taskPublicMethod;
+    TaskUtil taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.ReceiveTaskAwardCmd receiveTaskAwardCmd) {
@@ -46,6 +43,12 @@ public class ReceiveTaskAwardCmdHandler implements ICmdHandler<GameMsg.ReceiveTa
         }
 
         PlayTask playTask = user.getPlayTask();
+
+        if (!playTask.isCurrTaskCompleted()){
+            //还未完成任务
+            return;
+        }
+
         playTask.setCompletedTaskId(playTask.getCurrTaskId());
         playTask.setCurrTaskCompleted(false);
 
@@ -69,15 +72,17 @@ public class ReceiveTaskAwardCmdHandler implements ICmdHandler<GameMsg.ReceiveTa
         GameMsg.ReceiveTaskAwardResult.Builder newBuilder = GameMsg.ReceiveTaskAwardResult.newBuilder();
         for (MailProps rewardProp : rewardProps) {
             Props props = propsMap.get(rewardProp.getPropsId());
-            int location = PublicMethod.getInstance().addEquipment(user, props);
+//            int location = PublicMethod.getInstance().addEquipment(user, props);
+            PropsUtil.getPropsUtil().addProps(Collections.singletonList(rewardProp.getPropsId()), user, newBuilder, rewardProp.getNumber());
 
-            GameMsg.Props.Builder reward = GameMsg.Props.newBuilder()
-                    .setPropsId(props.getId())
-                    .setUserPropsId(((Equipment)backpack.get(location).getPropsProperty()).getId())
-                    .setLocation(location)
-                    .setPropsNumber(rewardProp.getNumber());
-            newBuilder.addProps(reward);
+//            GameMsg.Props.Builder reward = GameMsg.Props.newBuilder()
+//                    .setPropsId(props.getId())
+//                    .setUserPropsId(((Equipment) backpack.get(location).getPropsProperty()).getId())
+//                    .setLocation(location)
+//                    .setPropsNumber(rewardProp.getNumber());
+//            newBuilder.addProps(reward);
         }
+
         newBuilder.setMoney(rewardMoney);
 
         GameMsg.ReceiveTaskAwardResult receiveTaskAwardResult = newBuilder.build();

@@ -11,7 +11,7 @@ import server.cmdhandler.ICmdHandler;
 import server.model.DealProps;
 import server.model.PlayDeal;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import util.MyUtil;
 
 import java.util.Map;

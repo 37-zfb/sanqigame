@@ -24,6 +24,7 @@ import server.model.props.Potion;
 import server.model.props.Props;
 import server.timer.guild.DbGuildTimer;
 import server.timer.state.DbUserStateTimer;
+import server.util.IdWorker;
 import type.PropsType;
 import util.MyUtil;
 
@@ -92,7 +93,7 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
 
             // 持久化自己装备状态
             UserEquipmentEntity equipmentEntity = new UserEquipmentEntity();
-            equipmentEntity.setId(((Equipment)propsProperty).getId());
+            equipmentEntity.setId(((Equipment) propsProperty).getId());
             userStateTimer.deleteUserEquipment(equipmentEntity);
 
             log.info("用户 {} 添加 {} 进仓库", user.getUserName(), p.getName());
@@ -114,7 +115,7 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
                 userStateTimer.deleteUserPotion(userPotionEntity);
             }
 
-            log.info("用户 {} 个 {} 添加 {} 进仓库;", user.getUserName(), p.getName(),propsNumber);
+            log.info("用户 {} 个 {} 添加 {} 进仓库;", user.getUserName(), p.getName(), propsNumber);
         }
 
     }
@@ -161,10 +162,13 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
 
             for (int i = 1; i <= GuildConst.WAREHOUSE_MAX; i++) {
                 if (!warehouseProps.keySet().contains(i)) {
+
+                    dbGuildPotion.setId(IdWorker.generateId());
+
                     Props pro = new Props();
                     pro.setId(potion.getPropsId());
                     pro.setName(p.getName());
-                    po = new Potion(null, potion.getPropsId(), potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), propsNumber);
+                    po = new Potion(dbGuildPotion.getId(), potion.getPropsId(), potion.getCdTime(), potion.getInfo(), potion.getResumeFigure(), potion.getPercent(), propsNumber);
                     pro.setPropsProperty(po);
 
                     dbGuildPotion.setLocation(i);
@@ -189,6 +193,7 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
         dbGuildEquipment.setDurability(equipment.getDurability());
         dbGuildEquipment.setGuildId(playGuild.getId());
         dbGuildEquipment.setPropsId(equipment.getPropsId());
+        dbGuildEquipment.setId(IdWorker.generateId());
 
         Equipment equ = null;
         for (int i = 1; i < GuildConst.WAREHOUSE_MAX; i++) {
@@ -196,7 +201,7 @@ public class PutInPropsCmdHandler implements ICmdHandler<GameMsg.PutInPropsCmd> 
                 Props pro = new Props();
                 pro.setId(equipment.getPropsId());
                 pro.setName(p.getName());
-                equ = new Equipment(equipment.getId(), pro.getId(), EquipmentConst.MAX_DURABILITY, equipment.getDamage(), equipment.getEquipmentType());
+                equ = new Equipment(dbGuildEquipment.getId(), pro.getId(), EquipmentConst.MAX_DURABILITY, equipment.getDamage(), equipment.getEquipmentType());
                 pro.setPropsProperty(equ);
 
                 warehouseProps.put(i, pro);

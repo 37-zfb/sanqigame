@@ -1,23 +1,20 @@
 package server.timer;
 
 import constant.MonsterConst;
-import constant.SceneConst;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import server.Broadcast;
-import server.model.UserManager;
+import server.UserManager;
 import server.model.profession.SummonMonster;
 import server.model.scene.Monster;
 import server.model.User;
 import server.model.scene.Scene;
 import server.scene.GameData;
 import type.ProfessionType;
-import type.SceneType;
 import util.CustomizeThreadFactory;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
 

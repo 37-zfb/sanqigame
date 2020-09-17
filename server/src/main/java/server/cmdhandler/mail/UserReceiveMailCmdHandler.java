@@ -12,17 +12,11 @@ import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import entity.MailProps;
-import server.cmdhandler.duplicate.PropsUtil;
+import server.util.PropsUtil;
 import server.model.User;
-import server.model.props.AbstractPropsProperty;
-import server.model.props.Equipment;
-import server.model.props.Potion;
-import server.model.props.Props;
-import server.scene.GameData;
 import server.timer.mail.DbSendMailTimer;
 import server.timer.state.DbUserStateTimer;
 import type.MailType;
-import type.PropsType;
 import util.MyUtil;
 
 import java.util.Arrays;

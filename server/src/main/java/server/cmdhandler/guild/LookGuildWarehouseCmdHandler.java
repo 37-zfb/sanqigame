@@ -51,12 +51,14 @@ public class LookGuildWarehouseCmdHandler implements ICmdHandler<GameMsg.LookGui
                 propsBuilder.setLocation(propsEntry.getKey())
                         .setPropsId(propsEntry.getValue().getId())
                         .setDurability(equipment.getDurability())
-                        .setPropsNumber(1);
+                        .setPropsNumber(1)
+                        .setUserPropsId(equipment.getId());
             } else if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Potion) {
                 Potion potion = (Potion) propsProperty;
                 propsBuilder.setLocation(propsEntry.getKey())
                         .setPropsId(potion.getPropsId())
-                        .setPropsNumber(potion.getNumber());
+                        .setPropsNumber(potion.getNumber())
+                        .setUserPropsId(potion.getId());
             }
 
             newBuilder.addProps(propsBuilder);

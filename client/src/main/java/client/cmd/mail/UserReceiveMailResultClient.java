@@ -73,7 +73,7 @@ public class UserReceiveMailResultClient implements ICmd<GameMsg.UserReceiveMail
                 if (p != null) {
                     //已存在
                     Potion propsProperty = (Potion) p.getPropsProperty();
-                    propsProperty.setNumber(propsProperty.getNumber() + propsNumber);
+                    propsProperty.setNumber(propsNumber);
                     continue;
                 }
 

@@ -15,7 +15,7 @@ public class DbGuildPotion {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
     /**
      * 公会id
      */

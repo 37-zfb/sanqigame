@@ -6,7 +6,7 @@ import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import util.MyUtil;
 
 /**
@@ -18,7 +18,7 @@ import util.MyUtil;
 public class ReceiveTaskCmdHandler implements ICmdHandler<GameMsg.ReceiveTaskCmd> {
 
     @Autowired
-    private TaskPublicMethod receiveTask;
+    private TaskUtil receiveTask;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.ReceiveTaskCmd receiveTaskCmd) {

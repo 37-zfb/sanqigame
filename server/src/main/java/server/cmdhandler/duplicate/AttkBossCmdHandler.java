@@ -2,37 +2,21 @@ package server.cmdhandler.duplicate;
 
 import constant.BossMonsterConst;
 import constant.DuplicateConst;
-import entity.db.UserEquipmentEntity;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import server.GameServer;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
-import server.model.props.AbstractPropsProperty;
-import server.model.props.Equipment;
-import server.model.props.Potion;
-import server.model.props.Props;
 import msg.GameMsg;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.model.PlayTeam;
 import server.model.User;
-import server.scene.GameData;
-import server.service.UserService;
 import server.timer.BossAttackTimer;
-import server.timer.state.DbUserStateTimer;
-import type.DuplicateType;
-import type.EquipmentType;
-import type.PropsType;
 import util.MyUtil;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author 张丰博
@@ -88,7 +72,7 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
                 currBossMonster.setHp(0);
                 // boss已死，取消定时任务
                 BossAttackTimer.getInstance().cancelTask(currBossMonster.getScheduledFuture());
-                TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+                TaskUtil taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskUtil.class);
 
                 //增加经验
                 taskPublicMethod.addExperience(BossMonsterConst.EXPERIENCE, user);

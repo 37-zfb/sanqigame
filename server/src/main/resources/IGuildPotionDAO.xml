@@ -20,8 +20,8 @@
     </insert>-->
     <insert id="insertPotionBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
         <foreach collection="addGuildPotionList" item="potion" index="index" open="" close="" separator="">
-            INSERT INTO `guild_potion` ( guild_id, `props_id`,`number`,`location` ) VALUES ( #{potion.guildId},
-            #{potion.propsId},#{potion.number},#{potion.location} );
+            INSERT INTO `guild_potion` (id, guild_id, `props_id`,`number`,`location` ) VALUES (
+            #{potion.id}, #{potion.guildId},#{potion.propsId},#{potion.number},#{potion.location} );
         </foreach>
     </insert>
 

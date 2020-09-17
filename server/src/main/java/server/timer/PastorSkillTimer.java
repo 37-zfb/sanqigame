@@ -6,7 +6,7 @@ import server.model.profession.skill.PastorSkillProperty;
 import msg.GameMsg;
 import server.model.PlayTeam;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import util.CustomizeThreadFactory;
 
 import java.util.concurrent.RunnableScheduledFuture;

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import server.model.duplicate.ForceAttackUser;
 import server.model.profession.SummonMonster;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 
 import java.util.*;
 import java.util.concurrent.RunnableScheduledFuture;

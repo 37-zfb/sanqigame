@@ -1,20 +1,15 @@
 package server.cmdhandler;
 
-import com.alibaba.fastjson.JSON;
-import constant.EquipmentConst;
 import constant.MailConst;
-import entity.MailProps;
 import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
-import server.GuildManager;
+import server.UserManager;
 import server.async.LoadResourcesService;
 import server.async.LoginService;
-import server.cmdhandler.auction.AuctionUtil;
-import server.cmdhandler.mail.MailUtil;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.*;
-import server.model.store.Goods;
 import server.model.props.AbstractPropsProperty;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +24,9 @@ import server.model.scene.Monster;
 import server.model.scene.Npc;
 import server.model.scene.Scene;
 import server.scene.GameData;
-import server.service.GuildService;
-import server.service.MailService;
-import server.service.TaskService;
-import server.service.UserService;
 import server.Broadcast;
 import type.*;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -213,6 +203,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         if (playTask.isHaveTask()) {
             resultBuilder.setCurrTaskId(playTask.getCurrTaskId());
             resultBuilder.setCurrTaskCompleted(playTask.isCurrTaskCompleted());
+            resultBuilder.setNumber(playTask.getNumber());
         }
     }
 

@@ -49,7 +49,7 @@ public class Task {
      * 任务; 对话 or 击杀 or 通关类型
      */
     private String dialogue;
-    private Integer killNumber;
+    private Integer number;
 
     /**
      * 任务类型编码

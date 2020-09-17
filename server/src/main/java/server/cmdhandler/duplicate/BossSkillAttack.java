@@ -1,10 +1,8 @@
 package server.cmdhandler.duplicate;
 
-import com.sun.org.apache.bcel.internal.generic.FSUB;
 import lombok.extern.slf4j.Slf4j;
-import server.PublicMethod;
 import server.model.PlayTeam;
-import server.model.UserManager;
+import server.UserManager;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.BossSkill;
 import server.model.profession.SummonMonster;

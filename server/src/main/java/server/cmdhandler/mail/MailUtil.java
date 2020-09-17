@@ -6,7 +6,7 @@ import entity.db.DbSendMailEntity;
 import msg.GameMsg;
 import server.GameServer;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import server.timer.mail.DbSendMailTimer;
 import server.util.IdWorker;
 import type.MailType;

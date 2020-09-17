@@ -5,10 +5,10 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import server.GameServer;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayTeam;
 import server.model.User;
-import server.model.UserManager;
+import server.UserManager;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.profession.SummonMonster;
@@ -24,7 +24,7 @@ public final class TeamUtil {
 
     private static final TeamUtil TEAM_UTIL = new TeamUtil();
 
-    private TaskPublicMethod taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskPublicMethod.class);
+    private TaskUtil taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskUtil.class);
 
     private TeamUtil() {
     }

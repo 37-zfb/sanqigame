@@ -3,12 +3,10 @@ package server.cmdhandler.chat;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.model.User;
-import server.model.UserManager;
-import server.service.SensitiveFilterService;
+import server.UserManager;
 import util.MyUtil;
 
 /**

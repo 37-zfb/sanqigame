@@ -1,9 +1,8 @@
 package server.timer;
 
 import lombok.extern.slf4j.Slf4j;
-import server.model.UserManager;
+import server.UserManager;
 import server.model.duplicate.BossMonster;
-import server.model.duplicate.ForceAttackUser;
 import server.model.profession.SummonMonster;
 import server.model.User;
 import type.ProfessionType;
@@ -12,7 +11,6 @@ import util.CustomizeThreadFactory;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author 张丰博

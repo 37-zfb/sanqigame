@@ -2,10 +2,9 @@ package server.cmdhandler.equipment;
 
 import constant.EquipmentConst;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import server.PublicMethod;
-import server.cmdhandler.task.listener.TaskPublicMethod;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,9 @@ import entity.db.UserEquipmentEntity;
 import server.scene.GameData;
 import server.cmdhandler.ICmdHandler;
 import server.model.User;
-import server.model.UserManager;
 import server.model.props.Equipment;
 import server.service.UserService;
 import server.timer.state.DbUserStateTimer;
-import type.EquipmentType;
 import util.MyUtil;
 
 import java.util.Map;
@@ -39,7 +36,7 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
     private DbUserStateTimer userStateTimer;
 
     @Autowired
-    private TaskPublicMethod taskPublicMethod;
+    private TaskUtil taskPublicMethod;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserWearEquipmentCmd userWearEquipmentCmd) {
