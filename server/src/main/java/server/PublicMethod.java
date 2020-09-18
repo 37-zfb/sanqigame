@@ -570,13 +570,18 @@ public final class PublicMethod {
         // 取消当前场景所有 怪 对当前用户的攻击
         // 当前场景所有的怪
         Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
+
+        Map<SummonMonster, RunnableScheduledFuture<?>> scheduledFutureMap = user.getSummonMonsterRunnableScheduledFutureMap();
+
         if (monsterMap.size() != 0) {
             for (Monster monster : monsterMap.values()) {
                 monster.getUserIdMap().remove(user.getUserId());
+                for (SummonMonster summonMonster : scheduledFutureMap.keySet()) {
+                    monster.getSummonMonsterMap().remove(summonMonster);
+                }
             }
         }
         // 取消召唤兽定时器
-        Map<SummonMonster, RunnableScheduledFuture<?>> scheduledFutureMap = user.getSummonMonsterRunnableScheduledFutureMap();
         cancelSummonTimer(user);
         for (SummonMonster value : scheduledFutureMap.keySet()) {
             scheduledFutureMap.remove(value);

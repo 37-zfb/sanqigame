@@ -43,8 +43,6 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
         Scene toScene = GameData.getInstance().getSceneMap().get(cmd.getToSceneId());
         log.info("用户当前场景: {}", toScene.getName());
 
-        PublicMethod.getInstance().cancelMonsterAttack(user);
-
         // 封装目标场景的npc
         if (toScene.getNpcMap().size() != 0) {
             for (Npc npc : toScene.getNpcMap().values()) {
@@ -84,6 +82,10 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
 
             user.setCurrHp(ProfessionConst.HP);
             user.setCurrMp(ProfessionConst.MP);
+
+            //取消召唤兽，取消
+            PublicMethod.getInstance().cancelMonsterAttack(user);
+
         }
 
 

@@ -16,6 +16,7 @@ import server.model.PlayArena;
 import server.model.User;
 import server.service.MailService;
 import server.service.TaskService;
+import server.timer.logout.LogoutTimer;
 import server.timer.mail.DbSendMailTimer;
 import server.timer.state.DbUserStateTimer;
 
@@ -28,6 +29,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
+        // 客户端、服务端建立连接成功后，会执行此方法
 
     }
 
@@ -45,7 +47,11 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         super.handlerRemoved(ctx);
 
-        // 拿到用户 Id
+        User user = PublicMethod.getInstance().getUser(ctx);
+        LogoutTimer logoutTimer = GameServer.APPLICATION_CONTEXT.getBean(LogoutTimer.class);
+        logoutTimer.logout(user);
+
+       /* // 拿到用户 Id
         Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
         if (null == userId) {
             return;
@@ -54,8 +60,6 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
         log.info("用户离线, userId = {}", userId);
 
         ApplicationContext context = GameServer.APPLICATION_CONTEXT;
-//        UserService userService = context.getBean(UserService.class);
-        MailService mailService = context.getBean(MailService.class);
         TaskService taskService = context.getBean(TaskService.class);
         TaskUtil taskPublicMethod = context.getBean(TaskUtil.class);
         DbUserStateTimer userStateTimer = context.getBean(DbUserStateTimer.class);
@@ -121,7 +125,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
                 .setTargetUserId(user.getUserId())
                 .build();
         targetUser.getCtx().writeAndFlush(userDieResult);
-
+*/
 
 //        // 广播用户离场的消息
 //        GameMsg.UserQuitResult.Builder resultBuilder = GameMsg.UserQuitResult.newBuilder();

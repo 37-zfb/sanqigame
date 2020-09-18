@@ -5,6 +5,7 @@ import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import server.GameServer;
 import server.model.PlayTeam;
 import server.model.User;
 import server.model.duplicate.Duplicate;
@@ -19,6 +20,8 @@ import server.cmdhandler.CmdHandlerFactory;
 import server.cmdhandler.ICmdHandler;
 import server.model.scene.Scene;
 import server.service.UserService;
+import type.SkillType;
+import util.MyUtil;
 
 /**
  * 技能
@@ -28,27 +31,27 @@ import server.service.UserService;
 @Slf4j
 @Component
 public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAttkCmd> {
-    @Autowired
-    private UserService userService;
-
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserSkillAttkCmd cmd) {
 
-        if (ctx == null || cmd == null) {
-            return;
-        }
+        MyUtil.checkIsNull(ctx, cmd);
 
         User user = PublicMethod.getInstance().getUser(ctx);
         Skill skill = user.getSkillMap().get(cmd.getSkillId());
-        if (skill == null){
+        if (skill == null) {
             //该职业不存在此技能;
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_HAVE_THIS_SKILL);
-
         }
 
-        if (user.getCurrHp() <= 0){
-            throw new CustomizeException(CustomizeErrorCode.USER_DIE);
+        Integer skillId = skill.getId();
+        String clazzName = SkillType.getClazzNameById(skillId);
+        if (clazzName == null) {
+            return;
+        }
+
+        if (user.getCurrHp() <= 0) {
+            return;
         }
 
         //判断用户此时状态
@@ -68,22 +71,14 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
             throw new CustomizeException(CustomizeErrorCode.MP_NOT_ENOUGH);
         }
 
-
-        ISkillHandler<? extends AbstractSkillProperty> skillHandlerByClazz = CmdHandlerFactory.getSkillHandlerByClazz(skill.getSkillProperty().getClass());
-        skillHandlerByClazz.skillHandle(ctx, cast(skill.getSkillProperty()),cmd.getSkillId());
-
-    }
-
-
-    public <SkillCmd extends AbstractSkillProperty> SkillCmd cast(AbstractSkillProperty skillProperty) {
-        if (skillProperty == null) {
-            return null;
+        try {
+            ISkill iSkill = (ISkill) GameServer.APPLICATION_CONTEXT.getBean(Class.forName(clazzName));
+            iSkill.skillHandle(ctx, cmd);
+        } catch (ClassNotFoundException e) {
+            log.error(e.getMessage(), e);
         }
 
-        return (SkillCmd) skillProperty;
+
     }
-
-
-
 
 }

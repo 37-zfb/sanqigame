@@ -1,81 +1,37 @@
-package server.cmdhandler.skill;
+package server.cmdhandler.skill.skillhandler;
 
 import constant.ProfessionConst;
 import constant.SkillConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import server.model.PlayArena;
-import server.model.duplicate.Duplicate;
+import msg.GameMsg;
+import org.springframework.stereotype.Component;
+import server.PublicMethod;
+import server.cmdhandler.skill.ISkill;
+import server.model.User;
 import server.model.profession.Skill;
 import server.model.profession.SummonMonster;
 import server.model.profession.skill.SummonerSkillProperty;
-import server.model.scene.Monster;
-import msg.GameMsg;
-import org.springframework.stereotype.Component;
-import server.scene.GameData;
-import server.PublicMethod;
-import server.model.User;
 import server.timer.SummonMonsterTimer;
-import type.skill.SummonerSkillType;
 import util.MyUtil;
 
-import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author 张丰博
- * 召唤师技能处理类
+ * 召唤术
  */
 @Component
 @Slf4j
-public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty> {
+public class SummonHandler implements ISkill {
     @Override
-    public void skillHandle(ChannelHandlerContext ctx, SummonerSkillProperty summonerSkillProperty, Integer skillId) {
+    public void skillHandle(ChannelHandlerContext ctx, GameMsg.UserSkillAttkCmd cmd) {
 
+        MyUtil.checkIsNull(ctx, cmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        Skill skill = user.getSkillMap().get(skillId);
-        SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();
-        skill.setLastUseTime(System.currentTimeMillis());
 
-        for (SummonerSkillType skillType : SummonerSkillType.values()) {
-            if (!skillType.getId().equals(skillProperty.getId())) {
-                continue;
-            }
-            try {
-                Method declaredMethod = SummonerSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Integer.class);
-                declaredMethod.invoke(this, user, skillId);
-                break;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-
-    /**
-     * 治疗术
-     *
-     * @param monsterAliveList 存活怪的集合
-     * @param user             用户对象
-     * @param skillId          技能id
-     */
-    private void summonSkillScene(List<Monster> monsterAliveList, User user, Integer skillId) {
-        summonSkill(user, skillId);
-    }
-
-
-    /**
-     * 召唤术；
-     *
-     * @param user
-     * @param skillId
-     */
-    private void summonSkill(User user, Integer skillId) {
-
-        Skill skill = user.getSkillMap().get(skillId);
+        Skill skill = user.getSkillMap().get(cmd.getSkillId());
         SummonerSkillProperty skillProperty = (SummonerSkillProperty) skill.getSkillProperty();
 
         SummonMonster summonMonster = new SummonMonster();
@@ -104,8 +60,5 @@ public class SummonerSkillHandler implements ISkillHandler<SummonerSkillProperty
                 .setSubtractHp(0)
                 .build();
         user.getCtx().writeAndFlush(userSkillAttkResult);
-
     }
-
-
 }

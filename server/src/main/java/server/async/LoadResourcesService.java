@@ -60,10 +60,8 @@ public class LoadResourcesService {
         AsyncLoadResources asyncLoadResources = new AsyncLoadResources(userEntity) {
             @Override
             public void doFinish() {
-                if (callback != null) {
-                    // 执行回调函数
-                    callback.apply(this.getUser());
-                }
+                // 执行回调函数
+                callback.apply(this.getUser());
             }
         };
 

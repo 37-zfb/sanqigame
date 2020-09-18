@@ -1,5 +1,6 @@
 package server.cmdhandler;
 
+import com.sun.javafx.util.WeakReferenceQueue;
 import constant.MailConst;
 import entity.db.*;
 import io.netty.channel.ChannelHandlerContext;
@@ -27,6 +28,8 @@ import server.scene.GameData;
 import server.Broadcast;
 import type.*;
 
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -63,10 +66,18 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
         log.info("用户登陆:{}", userName);
         log.info("当前线程:{}", Thread.currentThread().getName());
 
-        //若用户已存在则不能登录
         for (User user : UserManager.listUser()) {
-            if (user.getUserName().equals(userName)) {
+            //若用户已存在则不能登录
+            if (user.getUserName().equals(userName) && user.getLogoutTimer() == null) {
                 throw new CustomizeException(CustomizeErrorCode.USER_ALREADY_LOGIN);
+            }
+
+            if (user.getUserName().equals(userName) && user.getLogoutTimer() != null) {
+                //此时玩家断线重连
+                packUser(ctx, user);
+                user.getLogoutTimer().cancel(true);
+                log.info("用户 {} 断线重连;", user.getUserName());
+                return;
             }
         }
 
@@ -114,43 +125,7 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
                 UserManager.addUser(user);
                 user.setCtx(ctx);
 
-                GameMsg.UserLoginResult.Builder resultBuilder = GameMsg.UserLoginResult.newBuilder();
-                // 用户基本信息
-                resultBuilder.setUserId(user.getUserId())
-                        .setUserName(user.getUserName())
-                        .setHp(user.getCurrHp())
-                        .setMp(user.getCurrMp())
-                        .setCurrSceneId(user.getCurSceneId())
-                        .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
-                        .setProfessionId(user.getProfessionId())
-                        .setMoney(user.getMoney())
-                        .setLv(user.getLv());
-
-                //封装 当前用户的技能.
-                packageSkill(user, resultBuilder);
-
-                //Npc 、怪
-                packageScene(user, resultBuilder);
-
-                //  背包中的道具(装备、药剂等)
-                packageBackpack(user, resultBuilder);
-
-                // 商品限制
-                packageStore(user, resultBuilder);
-
-                //封装邮件
-                packageMail(user, resultBuilder);
-
-                //封装公会
-                packageGuild(user, resultBuilder);
-
-                //封装任务状态
-                packageTask(user, resultBuilder);
-
-                packageFriend(user, resultBuilder);
-
-                GameMsg.UserLoginResult userLoginResult = resultBuilder.build();
-                ctx.writeAndFlush(userLoginResult);
+                packUser(ctx, user);
 
                 //发送邮件
 //                MailUtil.getMailUtil().sendMail(user.getUserId(), 2000, "登录奖励;",new ArrayList<>());
@@ -159,6 +134,46 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             return null;
         });
 
+    }
+
+    private void packUser(ChannelHandlerContext ctx, User user) {
+        GameMsg.UserLoginResult.Builder resultBuilder = GameMsg.UserLoginResult.newBuilder();
+        // 用户基本信息
+        resultBuilder.setUserId(user.getUserId())
+                .setUserName(user.getUserName())
+                .setHp(user.getCurrHp())
+                .setMp(user.getCurrMp())
+                .setCurrSceneId(user.getCurSceneId())
+                .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
+                .setProfessionId(user.getProfessionId())
+                .setMoney(user.getMoney())
+                .setLv(user.getLv());
+
+        //封装 当前用户的技能.
+        packageSkill(user, resultBuilder);
+
+        //Npc 、怪
+        packageScene(user, resultBuilder);
+
+        //  背包中的道具(装备、药剂等)
+        packageBackpack(user, resultBuilder);
+
+        // 商品限制
+        packageStore(user, resultBuilder);
+
+        //封装邮件
+        packageMail(user, resultBuilder);
+
+        //封装公会
+        packageGuild(user, resultBuilder);
+
+        //封装任务状态
+        packageTask(user, resultBuilder);
+
+        packageFriend(user, resultBuilder);
+
+        GameMsg.UserLoginResult userLoginResult = resultBuilder.build();
+        ctx.writeAndFlush(userLoginResult);
     }
 
     private void clearTimeoutLoginTime(Map<String, Long> userLoginStateMap) {

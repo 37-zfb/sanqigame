@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
-import server.cmdhandler.task.listener.TaskListener;
 import server.cmdhandler.task.listener.TaskUtil;
 import server.model.User;
 import util.MyUtil;
@@ -29,6 +28,6 @@ public class DialogueTaskCmdHandler implements ICmdHandler<GameMsg.DialogueTaskC
         MyUtil.checkIsNull(ctx, dialogueTaskCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        TaskListener.getTaskListener().dialogue01(user);
+        taskPublicMethod.listener(user);
     }
 }

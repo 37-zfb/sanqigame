@@ -1,78 +1,44 @@
-package server.cmdhandler.skill;
+package server.cmdhandler.skill.skillhandler;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import msg.GameMsg;
+import org.springframework.stereotype.Component;
+import server.PublicMethod;
+import server.cmdhandler.skill.ISkill;
 import server.model.PlayArena;
+import server.model.User;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.duplicate.ForceAttackUser;
 import server.model.profession.Skill;
 import server.model.profession.skill.WarriorSkillProperty;
 import server.model.scene.Monster;
-import msg.GameMsg;
-import org.springframework.stereotype.Component;
 import server.scene.GameData;
-import server.PublicMethod;
-import server.model.User;
 import server.timer.BossAttackTimer;
 import server.timer.MonsterTimer;
-import type.skill.WarriorSkillType;
+import util.MyUtil;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author 张丰博
- * 战士技能处理类
- * 能进入此类中的都能够释放技能
+ *
+ * 嘲讽
+ *
  */
 @Component
 @Slf4j
-public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> {
-
+public class RidiculeHandler implements ISkill {
     @Override
-    public void skillHandle(ChannelHandlerContext ctx, WarriorSkillProperty warriorSkillProperty, Integer skillId) {
+    public void skillHandle(ChannelHandlerContext ctx, GameMsg.UserSkillAttkCmd cmd) {
 
-        if (ctx == null || warriorSkillProperty == null || skillId == null) {
-            return;
-        }
-
+        MyUtil.checkIsNull(ctx, cmd);
         User user = PublicMethod.getInstance().getUser(ctx);
-        Skill skill = user.getSkillMap().get(skillId);
-        if (skill == null) {
-            return;
-        }
 
-        skill.setLastUseTime(System.currentTimeMillis());
-        WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
-
-        for (WarriorSkillType skillType : WarriorSkillType.values()) {
-            if (!skillType.getId().equals(skillProperty.getId())) {
-                continue;
-            }
-            try {
-                Method declaredMethod = WarriorSkillHandler.class.getDeclaredMethod(skillType.getName() + "Skill", User.class, Integer.class);
-                declaredMethod.invoke(this, user, skillId);
-                break;
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
-        }
-
-    }
-
-    /**
-     * 嘲讽当前副本中的boss
-     *
-     * @param user    用户对象
-     * @param skillId 技能id
-     */
-    private void ridiculeSkill(User user, Integer skillId) {
-        if (user == null || skillId == null) {
-            return;
-        }
+        System.out.println("嘲讽技能;");
 
         //先判断是否有副本
         Duplicate currDuplicate = PublicMethod.getInstance().getDuplicate(user);
@@ -81,7 +47,7 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
         // 此时在野外
         Map<Integer, Monster> monsterMap = GameData.getInstance().getSceneMap().get(user.getCurSceneId()).getMonsterMap();
 
-        Skill skill = user.getSkillMap().get(skillId);
+        Skill skill = user.getSkillMap().get(cmd.getSkillId());
         WarriorSkillProperty skillProperty = (WarriorSkillProperty) skill.getSkillProperty();
 
         if (currDuplicate != null) {
@@ -152,7 +118,6 @@ public class WarriorSkillHandler implements ISkillHandler<WarriorSkillProperty> 
                 .setSubtractHp(0)
                 .build();
         user.getCtx().writeAndFlush(userSkillAttkResult);
+
     }
-
-
 }

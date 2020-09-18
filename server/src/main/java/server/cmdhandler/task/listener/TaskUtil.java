@@ -154,17 +154,7 @@ public class TaskUtil {
 
         Integer currTaskId = playTask.getCurrTaskId();
         Task task = GameData.getInstance().getTaskMap().get(currTaskId);
-//        Method method = TaskListener.getTaskListener().listenerMethod.get(task.getTypeCode());
 
-//        try {
-//            if (method != null) {
-//                method.invoke(TaskListener.getTaskListener(), user);
-//            }
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//        }
         String clazzStr = "";
         for (TaskType taskType : TaskType.values()) {
             if (!task.getTypeCode().equals(taskType.getTaskCode())) {

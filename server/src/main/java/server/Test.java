@@ -1,17 +1,13 @@
 package server;
 
-import java.awt.*;
-
 public class Test {
     public static void main(String[] args) {
 //        System.out.println(fun(6));
-        Integer i = new Integer(1);
-        System.out.println("test before: " + i);
 
-        test(i);
+//        ReferenceQueue referenceQueue = new ReferenceQueue<ByteBuffer>();
+//        PhantomReference phantomReference = new PhantomReference<ByteBuffer>(ByteBuffer.allocateDirect(1024),referenceQueue);
 
-        System.out.println("test after: " + i);
-
+        System.out.println(Runtime.getRuntime().maxMemory());
 
     }
 

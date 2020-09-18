@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import server.PublicMethod;
 import server.cmdhandler.duplicate.BossSkillAttack;
+import server.timer.logout.LogoutTimer;
 import server.util.PropsUtil;
 import server.cmdhandler.mail.MailUtil;
 import server.model.duplicate.BossMonster;
@@ -196,7 +197,7 @@ public class User {
     /**
      * 邀请组队人id
      */
-    private final Map<Integer,Long> invitationUserIdMap = new ConcurrentHashMap<>();
+    private final Map<Integer, Long> invitationUserIdMap = new ConcurrentHashMap<>();
 
     /**
      * 组队监听器
@@ -223,6 +224,11 @@ public class User {
      * 朋友
      */
     private final PlayFriend PLAY_FRIEND = new PlayFriend();
+
+    /**
+     * 注销定时器
+     */
+    private ScheduledFuture<?> logoutTimer;
 
     /**
      * 设置恢复mp终止时间
@@ -533,9 +539,9 @@ public class User {
 
         try {
             if (props.getPropsProperty().getType() == PropsType.Equipment) {
-                PropsUtil.getPropsUtil().addEquipment(this, props,null);
+                PropsUtil.getPropsUtil().addEquipment(this, props, null);
             } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-                PropsUtil.getPropsUtil().addPotion(props, this, 1,null);
+                PropsUtil.getPropsUtil().addPotion(props, this, 1, null);
             }
         } catch (CustomizeException e) {
             log.error(e.getMessage(), e);
