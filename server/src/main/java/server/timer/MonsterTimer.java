@@ -104,7 +104,11 @@ public class MonsterTimer {
         monster.setRunnableScheduledFuture(scheduledFuture);
     }
 
-
+    /**
+     * 复活野外怪
+     * @param monsterCollection
+     * @param sceneId
+     */
     public void resurrectionMonster(Collection<Monster> monsterCollection, Integer sceneId) {
         if (monsterCollection == null || sceneId == null) {
             return;
@@ -119,7 +123,7 @@ public class MonsterTimer {
         synchronized (MonsterTimer.class) {
             if (resurrectionMonsterSceneId.contains(sceneId)) {
 
-                log.info("场景 {} 中的怪正在复活;", scene.getName());
+                log.info("场景 {} 中的怪正在复活ing;", scene.getName());
                 return;
             }
             resurrectionMonsterSceneId.add(sceneId);

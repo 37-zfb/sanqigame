@@ -52,6 +52,10 @@ public class Skill {
      */
     private AbstractSkillProperty skillProperty;
 
+
+
+
+
     public Skill() {
     }
 

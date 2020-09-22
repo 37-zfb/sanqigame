@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.GuildManager;
+import server.cmdhandler.mail.MailUtil;
 import server.model.PlayGuild;
 import server.model.PlayMail;
 import server.model.PlayTask;
@@ -20,16 +21,14 @@ import server.model.props.Props;
 import server.model.store.Goods;
 import server.scene.GameData;
 import server.service.*;
+import server.util.IdWorker;
 import type.GoodsLimitBuyType;
 import type.GuildMemberType;
 import type.MailType;
 import type.TaskType;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -50,6 +49,8 @@ public class LoadResourcesService {
     private TaskService taskService;
     @Autowired
     private FriendService friendService;
+    @Autowired
+    private AllSendMailService allSendMailService;
 
 
     public void asyn(UserEntity userEntity, ChannelHandlerContext ctx, Function<User, Void> callback) {
@@ -154,8 +155,7 @@ public class LoadResourcesService {
         loadTask(user);
         loadFriend(user);
         // 群发邮件
-//        sendMailAll(user);
-
+        sendMailAll(user);
         // 启动定时器
 //        user.startTimer();
         // 设置mp恢复结束时间
@@ -170,34 +170,7 @@ public class LoadResourcesService {
         friendEntityList.forEach(f -> friendMap.put(f.getUserId(), f.getFriendName()));
     }
 
-    /**
-     * 群发邮件
-     *
-     * @param user 用户对象
-     */
-    private void sendMailAll(User user) {
-        DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
-        dbSendMailEntity.setTargetUserId(user.getUserId());
-        dbSendMailEntity.setSrcUserId(0);
-        dbSendMailEntity.setMoney(10000);
-        dbSendMailEntity.setState(MailType.UNREAD.getState());
-        dbSendMailEntity.setDate(new Date());
-        dbSendMailEntity.setTitle("周年奖励;");
-        dbSendMailEntity.setSrcUserName("管理员");
 
-        List<MailProps> mailPropsList = new ArrayList<>();
-        mailPropsList.add(new MailProps());
-        String jsonString = JSON.toJSONString(mailPropsList);
-        dbSendMailEntity.setPropsInfo(jsonString);
-
-        DbSendMailEntity mailEntity = mailService.findMailInfoByUserIdAndTitle(user.getUserId(), dbSendMailEntity.getTitle());
-        if (mailEntity == null) {
-            PlayMail mail = user.getMail();
-            Map<Long, DbSendMailEntity> mailEntityMap = mail.getMailEntityMap();
-            mailEntityMap.put(dbSendMailEntity.getId(), dbSendMailEntity);
-            mailService.addMailInfo(dbSendMailEntity);
-        }
-    }
 
     /**
      * 加载当前任务状态
@@ -231,7 +204,50 @@ public class LoadResourcesService {
         for (DbSendMailEntity dbSendMailEntity : mailEntityList) {
             mailEntityMap.put(dbSendMailEntity.getId(), dbSendMailEntity);
         }
+
     }
+    /**
+     * 群发邮件
+     *
+     * @param user 用户对象
+     */
+    private void sendMailAll(User user) {
+        //所有全体发送邮件
+        List<DbAllSendMailEntity> mailEntityList = allSendMailService.listAllMail();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date zero = calendar.getTime();
+
+        for (DbAllSendMailEntity entity : mailEntityList) {
+            //查询当前邮件是否领取过
+            DbSendMailEntity sendMailEntity = mailService.selectMailByAllIdAndDate(entity.getId(),zero,user.getUserId());
+            if (sendMailEntity != null){
+                //领取过
+                continue;
+            }
+            //还未领取，添加邮件
+            DbSendMailEntity dbSendMailEntity = new DbSendMailEntity();
+            dbSendMailEntity.setId(IdWorker.generateId());
+            dbSendMailEntity.setTargetUserId(user.getUserId());
+            dbSendMailEntity.setSrcUserId(0);
+            dbSendMailEntity.setState(MailType.UNREAD.getState());
+            dbSendMailEntity.setDate(new Date());
+            dbSendMailEntity.setMoney(entity.getMoney());
+            dbSendMailEntity.setTitle(entity.getTitle());
+            dbSendMailEntity.setSrcUserName(entity.getSrcUserName());
+            dbSendMailEntity.setPropsInfo(entity.getPropsInfo());
+            dbSendMailEntity.setAllSendMailId(entity.getId());
+
+            mailService.addMailInfo(dbSendMailEntity);
+            user.getMail().getMailEntityMap().put(dbSendMailEntity.getId(), dbSendMailEntity);
+        }
+
+    }
+
 
     /**
      * 加载背包中的道具

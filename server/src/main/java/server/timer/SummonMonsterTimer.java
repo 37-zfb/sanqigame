@@ -90,7 +90,20 @@ public class SummonMonsterTimer {
                                 }
 
                                 synchronized (targetUser.getHpMonitor()) {
-                                    targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                                    if (targetUser.getShieldValue() > subHp) {
+                                        targetUser.setShieldValue(targetUser.getShieldValue() - subHp);
+
+                                        PublicMethod.getInstance().sendShieldMsg(subHp, targetUser);
+                                    } else if (targetUser.getShieldValue() > 0 && targetUser.getShieldValue() < subHp) {
+                                        subHp -= targetUser.getShieldValue();
+                                        PublicMethod.getInstance().sendShieldMsg(targetUser.getShieldValue(), targetUser);
+
+                                        targetUser.setShieldValue(0);
+
+                                        targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                                    } else {
+                                        targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                                    }
                                 }
                                 log.info("用户:{}, 对用户:{} 的伤害 {}", user.getUserName(), targetUser.getUserName(), subHp);
 
@@ -105,7 +118,7 @@ public class SummonMonsterTimer {
                                     targetUser.getPlayArena().setTargetUserId(null);
                                     user.getPlayArena().setTargetUserId(null);
 
-//                                        taskPublicMethod.listener(user);
+//                                  taskPublicMethod.listener(user);
                                     GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
                                             .setTargetUserId(targetUser.getUserId())
                                             .build();

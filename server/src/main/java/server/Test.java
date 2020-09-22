@@ -1,19 +1,22 @@
 package server;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Test {
     public static void main(String[] args) {
 //        System.out.println(fun(6));
-
-//        ReferenceQueue referenceQueue = new ReferenceQueue<ByteBuffer>();
-//        PhantomReference phantomReference = new PhantomReference<ByteBuffer>(ByteBuffer.allocateDirect(1024),referenceQueue);
-
-        System.out.println(Runtime.getRuntime().maxMemory());
-
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date zero = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:ss");
+        System.out.println(dateFormat.format(zero));
     }
 
-    static void test(Integer n) {
-        n = new Integer(9);
-    }
 
     static int fun(int n) {
         if (n <= 1) {

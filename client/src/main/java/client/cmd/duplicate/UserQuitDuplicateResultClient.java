@@ -26,10 +26,10 @@ public class UserQuitDuplicateResultClient implements ICmd<GameMsg.UserQuitDupli
         role.setCurrDuplicate(null);
 
         role.setCurrHp(ProfessionConst.HP);
-        synchronized (role.getMpMonitor()){
+        synchronized (role.getMpMonitor()) {
             role.setCurrMp(ProfessionConst.MP);
         }
-
+        role.setShieldValue(0);
         Scene scene = SceneData.getInstance().getSceneMap().get(role.getCurrSceneId());
         System.out.println("退出副本");
 //        CmdThread.getInstance().process(ctx, role, scene.getNpcMap().values());

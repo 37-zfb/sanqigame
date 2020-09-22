@@ -32,8 +32,6 @@ public final class ArenaUtil {
         targetUser.getPlayArena().setTargetUserId(null);
         user.getPlayArena().setTargetUserId(null);
 
-
-
         GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
                 .setTargetUserId(targetUser.getUserId())
                 .build();

@@ -71,6 +71,8 @@ public class UserSkillAttkCmdHandler implements ICmdHandler<GameMsg.UserSkillAtt
             throw new CustomizeException(CustomizeErrorCode.MP_NOT_ENOUGH);
         }
 
+        skill.setLastUseTime(System.currentTimeMillis());
+
         try {
             ISkill iSkill = (ISkill) GameServer.APPLICATION_CONTEXT.getBean(Class.forName(clazzName));
             iSkill.skillHandle(ctx, cmd);

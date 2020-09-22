@@ -259,6 +259,10 @@ enum MsgCode {
 
   TASK_PROGRESS_RESULT = 173;
 
+  SEND_ALL_MAIL_CMD = 174;
+  SHIELD_REDUCE_RESULT = 175;
+
+
   USER_UP_LV_RESULT = 157;
 
   ERROR_RESULT = 96;
@@ -315,6 +319,8 @@ message AttkCmd {
   string monsterName = 3;
   // 减血量
   uint32 subHp = 4;
+  //护盾值
+  uint32 shieldValue = 5;
 }
 
 // 结果
@@ -977,6 +983,7 @@ message UserQuitTeamAndDuplicateResult {
 message PastorSkillResult {
   uint32 hp = 1;
   uint32 mp = 2;
+  uint32 shieldValue = 3;
 }
 // 召唤兽掉血
 message SummonMonsterSubHpResult {
@@ -1335,4 +1342,16 @@ message DealFailResult{
 //任务进度
 message TaskProgressResult{
   uint32 number = 1;
+}
+// 发送全体邮件
+message  SendAllMailCmd{
+  repeated MailProps props = 1;
+  // 钱
+  uint32 money = 4;
+  // 标题
+  string title = 5;
+}
+//护盾减少值
+message ShieldReduceResult{
+  uint32 reduceV = 1;
 }

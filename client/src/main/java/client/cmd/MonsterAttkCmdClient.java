@@ -14,7 +14,7 @@ public class MonsterAttkCmdClient implements ICmd<GameMsg.AttkCmd> {
         if (ctx == null || attkCmd == null) {
             return;
         }
-        System.out.println("您受到攻击,Hp-"+ attkCmd.getSubHp());
+        System.out.println("您受到攻击: "+ attkCmd.getSubHp());
         Role role = Role.getInstance();
         role.setCurrHp(role.getCurrHp() - attkCmd.getSubHp());
 //        CmdThread.getInstance().process(ctx, Role.getInstance(), SceneData.getInstance().getSceneMap().get(Role.getInstance().getCurrSceneId()).getNpcMap().values());

@@ -48,4 +48,12 @@ public interface ISendMailDAO {
      * @param addMailList
      */
     void insertMailBatch(@Param("addMailList") List<DbSendMailEntity> addMailList);
+
+    /**
+     *
+     * @param id
+     * @param zero
+     * @return
+     */
+    DbSendMailEntity selectMailByAllIdAndDate(@Param("id") Long id,@Param("zero") Date zero,@Param("userId") Integer userId);
 }

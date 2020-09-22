@@ -161,7 +161,7 @@ public class Monster {
                     userIdMap.remove(user.getUserId());
                     user = null;
                 }
-                log.info("用户 {} 对 怪 减血量 {}", user.getUserName(), max.get().getValue());
+//                log.info("用户 {} 对 怪 减血量 {}", user.getUserName(), max.get().getValue());
             }
 
         }
@@ -185,7 +185,7 @@ public class Monster {
                     summonMonsterMap.remove(summonMonster);
                     summonMonster = null;
                 }
-                log.info("召唤兽,对boss减血量 {}", max.get().getValue());
+//                log.info("召唤兽,对boss减血量 {}", max.get().getValue());
             }
         }
         return summonMonster;

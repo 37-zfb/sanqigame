@@ -190,7 +190,6 @@ public final class PublicMethod {
                 monster.getAttackUserAtomicReference().set(null);
 
 
-
                 // 添加奖励
                 user.setMoney(user.getMoney() + SceneConst.SCENE_MONSTER_MONEY);
 
@@ -244,7 +243,6 @@ public final class PublicMethod {
                 }
 
                 if (monster.getRunnableScheduledFuture() == null) {
-                    // 定时器为null,设置boss定时器， 攻击玩家
                     MonsterTimer.getInstance().monsterNormalAttk(monster);
                 }
             }
@@ -607,5 +605,15 @@ public final class PublicMethod {
         }
     }
 
+
+    public void sendShieldMsg(Integer shieldV, User user) {
+        if (shieldV == null || user == null) {
+            return;
+        }
+        GameMsg.ShieldReduceResult shieldReduceResult = GameMsg.ShieldReduceResult.newBuilder()
+                .setReduceV(shieldV)
+                .build();
+        user.getCtx().writeAndFlush(shieldReduceResult);
+    }
 
 }

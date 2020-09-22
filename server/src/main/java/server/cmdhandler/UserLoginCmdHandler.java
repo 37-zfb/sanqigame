@@ -73,11 +73,16 @@ public class UserLoginCmdHandler implements ICmdHandler<GameMsg.UserLoginCmd> {
             }
 
             if (user.getUserName().equals(userName) && user.getLogoutTimer() != null) {
-                //此时玩家断线重连
-                packUser(ctx, user);
-                user.getLogoutTimer().cancel(true);
-                log.info("用户 {} 断线重连;", user.getUserName());
-                return;
+                synchronized (user.getLOGOUT_MONITOR()) {
+                    if (user.getLogoutTimer() != null) {
+                        //此时玩家断线重连
+                        packUser(ctx, user);
+                        user.getLogoutTimer().cancel(true);
+                        user.setLogoutTimer(null);
+                        log.info("用户 {} 断线重连;", user.getUserName());
+                        return;
+                    }
+                }
             }
         }
 

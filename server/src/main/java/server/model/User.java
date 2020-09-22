@@ -230,6 +230,18 @@ public class User {
      */
     private ScheduledFuture<?> logoutTimer;
 
+
+    /**
+     * 护盾
+     */
+    private Integer shieldValue = 0;
+    private final Object SHIELD_MONITOR = new Object();
+
+    /**
+     * 注销锁
+     */
+    private final Object LOGOUT_MONITOR = new Object();
+
     /**
      * 设置恢复mp终止时间
      */
@@ -280,13 +292,11 @@ public class User {
      */
     public Integer calMonsterSubHp() {
 
-        int equDamage = getEquDamage();
-        log.info("玩家: {}, 装备伤害加成: {}", this.getUserName(), 10 * equDamage);
-
-        int subHp = (int) ((Math.random() * this.getBaseDamage()) + 500 + 10 * equDamage);
+        int equDamage = getEquDamage()*10;
+        int subHp = (int) ((Math.random() * this.getBaseDamage()) + 800 + 3 * equDamage);
 
         log.info("玩家: {},伤害: {}", this.getUserName(), subHp);
-        subHp = 2000;
+//        subHp = 2000;
         return subHp;
     }
 
@@ -471,33 +481,52 @@ public class User {
             bossMonster.setOrdinaryAttack(0);
             // 每五次普通攻击，一次技能攻击
             BossSkillAttack.getInstance().bossSkillAttack(this, bossMonster, null);
-        }
-
-        synchronized (this.getHpMonitor()) {
-            // 用户减血
-            if (this.getCurrHp() <= 0 || (this.getCurrHp() - subHp) <= 0) {
-                log.info("用户: {} 已死亡;", this.getUserName());
-                this.setCurrHp(0);
-                // boss打死了玩家;
-
-                PublicMethod.getInstance().cancelSummonTimer(this);
-
-                GameMsg.BossKillUserResult bossKillUserResult = GameMsg.BossKillUserResult.newBuilder()
-                        .setTargetUserId(this.getUserId())
-                        .build();
-                this.getCtx().writeAndFlush(bossKillUserResult);
-            } else {
-                log.info("用户: {} , 当前血量: {} , 受到伤害减血: {}", this.getUserName(), this.getCurrHp(), subHp);
-                // 普通攻击数 加一;
-                bossMonster.setOrdinaryAttack(bossMonster.getOrdinaryAttack() + 1);
+        }else {
+            synchronized (this.getHpMonitor()) {
                 // 用户减血
-                this.setCurrHp(this.getCurrHp() - subHp);
-                GameMsg.BossAttkUserResult attkCmd = GameMsg.BossAttkUserResult.newBuilder()
-                        .setSubUserHp(subHp)
-                        .build();
-                this.getCtx().writeAndFlush(attkCmd);
+                if (this.getCurrHp() <= 0 || (this.getCurrHp() + this.shieldValue - subHp) <= 0) {
+                    log.info("用户: {} 已死亡;", this.getUserName());
+                    synchronized (SHIELD_MONITOR){
+                        this.shieldValue = 0;
+                    }
+                    this.setCurrHp(0);
+                    // boss打死了玩家;
+
+                    PublicMethod.getInstance().cancelSummonTimer(this);
+
+                    GameMsg.BossKillUserResult bossKillUserResult = GameMsg.BossKillUserResult.newBuilder()
+                            .setTargetUserId(this.getUserId())
+                            .build();
+                    this.getCtx().writeAndFlush(bossKillUserResult);
+                } else {
+                    log.info("用户: {} , 当前血量: {} , 受到伤害减血: {}", this.getUserName(), this.getCurrHp(), subHp);
+                    // 普通攻击数 加一;
+                    bossMonster.setOrdinaryAttack(bossMonster.getOrdinaryAttack() + 1);
+                    // 用户减血
+                    synchronized (SHIELD_MONITOR){
+                        if (this.shieldValue > subHp) {
+                            this.shieldValue -= subHp;
+                            log.info("用户 {} 护盾减少 {} 剩余 {};", userName,subHp,shieldValue);
+                            PublicMethod.getInstance().sendShieldMsg(subHp, this);
+                        } else if (this.shieldValue > 0 && this.shieldValue < subHp) {
+                            subHp -= this.shieldValue;
+                            log.info("用户 {} 护盾减少 {} 剩余 {};", userName,shieldValue,0);
+                            PublicMethod.getInstance().sendShieldMsg(shieldValue, this);
+
+                            this.shieldValue = 0;
+                            this.setCurrHp(this.getCurrHp() - subHp);
+                        } else {
+                            this.setCurrHp(this.getCurrHp() - subHp);
+                        }
+                    }
+                    GameMsg.BossAttkUserResult attkCmd = GameMsg.BossAttkUserResult.newBuilder()
+                            .setSubUserHp(subHp)
+                            .build();
+                    this.getCtx().writeAndFlush(attkCmd);
+                }
             }
         }
+
     }
 
     /**
@@ -509,8 +538,12 @@ public class User {
     public void monsterAttackSubHp(String monsterName, Integer subHp) {
         synchronized (this.getHpMonitor()) {
             // 用户减血
-            if (this.getCurrHp() <= 0 || (this.getCurrHp() - subHp) <= 0) {
+            if (this.getCurrHp() <= 0 || (this.getCurrHp()+ this.shieldValue - subHp) <= 0) {
                 this.setCurrHp(0);
+                synchronized (SHIELD_MONITOR){
+                    this.shieldValue = 0;
+                }
+
                 PublicMethod.getInstance().cancelMonsterAttack(this);
                 // 发送死亡消息
                 GameMsg.DieResult dieResult = GameMsg.DieResult.newBuilder()
@@ -518,7 +551,23 @@ public class User {
                         .build();
                 ctx.channel().writeAndFlush(dieResult);
             } else {
-                this.setCurrHp(this.getCurrHp() - subHp);
+
+                synchronized (SHIELD_MONITOR){
+                    if (this.shieldValue > subHp) {
+                        this.shieldValue -= subHp;
+                        log.info("用户 {} 护盾减少 {} 剩余 {};", userName,subHp,shieldValue);
+                        PublicMethod.getInstance().sendShieldMsg(subHp,this);
+                    } else if (this.shieldValue > 0 && this.shieldValue < subHp) {
+                        subHp -= this.shieldValue;
+                        log.info("用户 {} 护盾减少 {} 剩余 {};", userName,this.shieldValue,0);
+                        PublicMethod.getInstance().sendShieldMsg(shieldValue,this);
+
+                        this.shieldValue = 0;
+                        this.setCurrHp(this.getCurrHp() - subHp);
+                    } else {
+                        this.setCurrHp(this.getCurrHp() - subHp);
+                    }
+                }
                 GameMsg.AttkCmd attkCmd = GameMsg.AttkCmd.newBuilder()
                         .setTargetUserId(this.getUserId())
                         .setMonsterName(monsterName)
@@ -545,10 +594,6 @@ public class User {
             }
         } catch (CustomizeException e) {
             log.error(e.getMessage(), e);
-//            MailUtil.getMailUtil().sendMail(userId,
-//                    0,
-//                    "背包已满",
-//                    Collections.singletonList(new MailProps(propsId, 1)));
         }
 
     }

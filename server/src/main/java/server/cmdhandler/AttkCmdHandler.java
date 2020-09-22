@@ -1,24 +1,21 @@
 package server.cmdhandler;
 
-import constant.SceneConst;
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import server.model.scene.Monster;
-import server.model.scene.Scene;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import server.scene.GameData;
 import server.PublicMethod;
 import server.model.User;
+import server.model.scene.Monster;
+import server.model.scene.Scene;
+import server.scene.GameData;
 import server.service.UserService;
 import server.timer.MonsterTimer;
 import util.MyUtil;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 

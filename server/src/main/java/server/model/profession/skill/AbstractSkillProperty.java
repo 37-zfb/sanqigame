@@ -14,7 +14,6 @@ public abstract class AbstractSkillProperty {
 
     private Integer skillId;
 
-
     public AbstractSkillProperty(){}
 
     public AbstractSkillProperty(Integer id,Integer skillId){
@@ -22,6 +21,10 @@ public abstract class AbstractSkillProperty {
         this.skillId = skillId;
     }
 
+    /**
+     * 获取职业 类型
+     * @return
+     */
     public abstract ProfessionType getProfessionType();
 
 }

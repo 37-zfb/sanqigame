@@ -1,4 +1,4 @@
-package server.cmdhandler.potion;
+package server.cmdhandler.props.potion;
 
 import constant.PotionConst;
 import server.model.props.Potion;

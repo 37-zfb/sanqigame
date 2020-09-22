@@ -1,5 +1,6 @@
-package client.cmd;
+package client.cmd.props.potion;
 
+import client.cmd.ICmd;
 import client.model.server.props.Potion;
 import client.model.server.props.Props;
 import client.module.BossModule;

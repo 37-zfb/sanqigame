@@ -1,4 +1,4 @@
-package server.cmdhandler.potion;
+package server.cmdhandler.props.potion;
 
 import constant.ProfessionConst;
 import lombok.extern.slf4j.Slf4j;

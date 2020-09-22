@@ -11,12 +11,13 @@
         <result property="money" column="money"/>
         <result property="date" column="date"/>
         <result property="state" column="state"/>
+        <result property="allSendMailId" column="all_send_mail_id"/>
     </resultMap>
 
     <insert id="insertMail" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
-            parameterType="entity.db.UserEntity">
-        INSERT INTO `send_mail` (`id`, `title`,`target_user_id`, `src_user_id`,`props_info`,`money`,`date`,`state`,`src_user_name` )
-        VALUES (#{id}, #{title},#{targetUserId}, #{srcUserId},#{propsInfo} ,#{money},#{date},#{state},#{srcUserName});
+            parameterType="entity.db.DbSendMailEntity">
+        INSERT INTO `send_mail` (`id`, `title`,`target_user_id`, `src_user_id`,`props_info`,`money`,`date`,`state`,`src_user_name`,`all_send_mail_id` )
+        VALUES (#{id}, #{title},#{targetUserId}, #{srcUserId},#{propsInfo} ,#{money},#{date},#{state},#{srcUserName},#{allSendMailId});
     </insert>
     <insert id="insertMailBatch" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="collection">
         <foreach collection="addMailList" item="mail" index="index" open="" close="" separator="">
@@ -36,6 +37,10 @@
         SELECT * FROM `send_mail` WHERE target_user_id=#{targetUserId} AND title = #{title};
     </select>
 
+    <select id="selectMailByAllIdAndDate" resultMap="mailEntity" resultType="entity.db.DbSendMailEntity">
+           SELECT * FROM `send_mail` WHERE all_send_mail_id = #{id} AND target_user_id=#{userId}  AND `date` > #{zero};
+    </select>
+
     <update id="updateMailBatch" parameterType="collection">
         <foreach collection="mailCollection" item="mail" index="index" open="" close="" separator="">
             update `send_mail`
@@ -45,5 +50,6 @@
             where id = #{mail.id};
         </foreach>
     </update>
+
 
 </mapper>

@@ -40,26 +40,36 @@ public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> 
         if (targetUser == null) {
             user.getPlayArena().setTargetUserId(null);
             GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
-                    .setTargetUserId(targetUser.getUserId())
+                    .setTargetUserId(playArena.getTargetUserId())
                     .build();
             ctx.writeAndFlush(userDieResult);
 
-            throw new CustomizeException(CustomizeErrorCode.TARGET_USER_QUIT);
+            return;
         }
 
         int subHp = user.calTargetUserSubHp(targetUser.getBaseDefense());
-
-
 //        subHp = 10000;
         synchronized (targetUser.getMpMonitor()) {
             // 目标用户减血
-            targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+            synchronized (targetUser.getSHIELD_MONITOR()){
+                if (targetUser.getShieldValue() > subHp) {
+                    targetUser.setShieldValue(targetUser.getShieldValue() - subHp);
+
+                    PublicMethod.getInstance().sendShieldMsg(subHp, targetUser);
+                } else if (targetUser.getShieldValue() > 0 && targetUser.getShieldValue() < subHp) {
+                    subHp -= targetUser.getShieldValue();
+                    targetUser.setShieldValue(0);
+                    PublicMethod.getInstance().sendShieldMsg(targetUser.getShieldValue(), targetUser);
+
+                    targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                } else {
+                    targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                }
+            }
+            ArenaUtil.getArenaUtil().sendMsg(user, targetUser, subHp);
         }
         log.info("用户:{}, 对用户:{} 的伤害 {}", user.getUserName(), targetUser.getUserName(), subHp);
 
-        ArenaUtil.getArenaUtil().sendMsg(user, targetUser, subHp);
-
         taskPublicMethod.listener(user);
-
     }
 }

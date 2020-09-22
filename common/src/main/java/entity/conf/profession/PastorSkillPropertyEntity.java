@@ -42,4 +42,9 @@ public class PastorSkillPropertyEntity {
     private float prepareTime;
 
 
+    /**
+     * 护盾值
+     */
+    private Integer shieldValue;
+
 }

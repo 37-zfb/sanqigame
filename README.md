@@ -37,3 +37,12 @@
 ## 操作手册
 
 ![1600054251171](.\excel\img\QQ截图20200914113353.png) 
+
+## 技术栈
+
+> Netty、Spring、Mybatis、Mysql、Protobuf
+
+
+
+
+

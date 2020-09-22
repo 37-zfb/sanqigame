@@ -18,26 +18,30 @@ public class PastorSkillResultClient implements ICmd<GameMsg.PastorSkillResult> 
 
         Role role = Role.getInstance();
 
-        synchronized (role.getHpMonitor()){
-            if ((role.getCurrHp() + pastorSkillResult.getHp()) >= ProfessionConst.HP) {
-                role.setCurrHp(ProfessionConst.HP);
-            }else {
-                role.setCurrHp(role.getCurrHp()+pastorSkillResult.getHp());
+        int shieldValue = pastorSkillResult.getShieldValue();
+        if (shieldValue != 0) {
+            role.setShieldValue(shieldValue);
+            System.out.println("增加护盾: " + shieldValue);
+        } else {
+            synchronized (role.getHpMonitor()) {
+                if ((role.getCurrHp() + pastorSkillResult.getHp()) >= ProfessionConst.HP) {
+                    role.setCurrHp(ProfessionConst.HP);
+                } else {
+                    role.setCurrHp(role.getCurrHp() + pastorSkillResult.getHp());
+                }
+                System.out.println("牧师加血,当前血量:" + role.getCurrHp());
             }
-            System.out.println("牧师加血,当前血量:"+role.getCurrHp());
-        }
 
 
-        synchronized (role.getMpMonitor()){
-            if ((role.getCurrMp() + pastorSkillResult.getMp()) >= ProfessionConst.MP) {
-                role.setCurrMp(ProfessionConst.MP);
-            }else {
-                role.setCurrMp(role.getCurrMp()+pastorSkillResult.getMp());
+            synchronized (role.getMpMonitor()) {
+                if ((role.getCurrMp() + pastorSkillResult.getMp()) >= ProfessionConst.MP) {
+                    role.setCurrMp(ProfessionConst.MP);
+                } else {
+                    role.setCurrMp(role.getCurrMp() + pastorSkillResult.getMp());
+                }
+                System.out.println("牧师加蓝,当前蓝量:" + role.getCurrMp());
             }
-            System.out.println("牧师加蓝,当前蓝量:"+role.getCurrMp());
         }
-
-
 
 
     }

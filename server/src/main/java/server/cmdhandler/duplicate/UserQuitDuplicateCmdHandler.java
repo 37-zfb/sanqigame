@@ -11,8 +11,11 @@ import server.cmdhandler.ICmdHandler;
 import server.model.PlayTeam;
 import server.model.User;
 import server.model.duplicate.Duplicate;
+import server.model.profession.Skill;
 import server.timer.BossAttackTimer;
 import util.MyUtil;
+
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -53,6 +56,10 @@ public class UserQuitDuplicateCmdHandler implements ICmdHandler<GameMsg.UserQuit
 
         user.setCurrHp(ProfessionConst.HP);
         user.setCurrMp(ProfessionConst.MP);
+        user.setShieldValue(0);
+
+        Map<Integer, Skill> skillMap = user.getSkillMap();
+        skillMap.values().forEach(skill->skill.setLastUseTime(0L));
 
         //持久化装备耐久度
         PublicMethod.getInstance().dbWeaponDurability(user.getUserEquipmentArr());

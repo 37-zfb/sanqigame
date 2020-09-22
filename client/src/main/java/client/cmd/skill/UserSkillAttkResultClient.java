@@ -1,5 +1,6 @@
-package client.cmd;
+package client.cmd.skill;
 
+import client.cmd.ICmd;
 import client.model.Role;
 import client.model.SceneData;
 import client.model.server.duplicate.Duplicate;

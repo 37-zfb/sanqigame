@@ -8,32 +8,32 @@ public enum SkillType {
     /**
      * 嘲讽
      */
-    RIDICULE(1, "server.cmdhandler.skill.skillhandler.RidiculeHandler"),
+    RIDICULE(1, "server.cmdhandler.skill.warrior.RidiculeHandler"),
 
     /**
      * 治疗
      */
-    TREATMENT(2, "server.cmdhandler.skill.skillhandler.TreatmentHandler"),
+    TREATMENT(2, "server.cmdhandler.skill.pastor.TreatmentHandler"),
 
     /**
      * 全体攻击
      */
-    GROUP_ATTACK(3, "server.cmdhandler.skill.skillhandler.GroupAttackHandler"),
+    GROUP_ATTACK(3, "server.cmdhandler.skill.sorceress.GroupAttackHandler"),
 
     /**
      * 召唤术
      */
-    SUMMON(4, "server.cmdhandler.skill.skillhandler.SummonHandler"),
+    SUMMON(4, "server.cmdhandler.skill.summoner.SummonHandler"),
 
     /**
      * 护盾
      */
-    SHIELD(5, "server.cmdhandler.skill.skillhandler.ShieldHandler"),
+    SHIELD(5, "server.cmdhandler.skill.pastor.ShieldHandler"),
 
     /**
      * 放毒
      */
-    POISON(6, "server.cmdhandler.skill.skillhandler.PoisonHandler"),
+    POISON(6, "server.cmdhandler.skill.warrior.PoisonHandler"),
     ;
     private Integer skillId;
 

@@ -77,8 +77,8 @@ public class UserCmd {
                     Map<Integer, Task> taskMap = GameData.getInstance().getTaskMap();
                     log.info("任务: {}", taskMap.get(playTaskClient.getCurrTaskId()).getTaskName() + " ,完成: " + (playTaskClient.isCompleted() ? "是" : "否"));
 
-                    if (playTaskClient.getNumber() != null){
-                        log.info("进度: {}",playTaskClient.getNumber());
+                    if (playTaskClient.getNumber() != null) {
+                        log.info("进度: {}", playTaskClient.getNumber());
                     }
 
                 }
@@ -91,12 +91,12 @@ public class UserCmd {
                     }
 
                     //副本
-                    if (role.getCurrDuplicate() != null){
+                    if (role.getCurrDuplicate() != null) {
                         BossModule.getInstance().bossCmd(ctx, role);
                     }
 
                     //竞技场
-                    if (role.getARENA_CLIENT().isInArena()){
+                    if (role.getARENA_CLIENT().isInArena()) {
                         ArenaModule.getInstance().arenaCmd(ctx, role);
                     }
 
@@ -293,7 +293,7 @@ public class UserCmd {
                         }
                         long nextInt = scanner.nextLong();
                         for (UserEquipmentEntity equipment : userEquipmentEntityList) {
-                            if (equipment !=null && equipment.getId() == nextInt) {
+                            if (equipment != null && equipment.getId() == nextInt) {
                                 return GameMsg.UserUndoEquipmentCmd.newBuilder().setUserEquipmentId(nextInt).setPropsId(equipment.getPropsId()).build();
                             }
                         }
@@ -641,7 +641,7 @@ public class UserCmd {
                                     .build();
                         }
 
-                    } else {
+                    }else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
                     }

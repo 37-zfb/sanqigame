@@ -1,4 +1,4 @@
-package server.cmdhandler.equipment;
+package server.cmdhandler.props.equipment;
 
 import constant.EquipmentConst;
 import entity.db.UserEquipmentEntity;

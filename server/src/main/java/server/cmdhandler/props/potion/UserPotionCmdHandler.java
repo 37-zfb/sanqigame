@@ -1,4 +1,4 @@
-package server.cmdhandler.potion;
+package server.cmdhandler.props.potion;
 
 import exception.CustomizeErrorCode;
 import exception.CustomizeException;

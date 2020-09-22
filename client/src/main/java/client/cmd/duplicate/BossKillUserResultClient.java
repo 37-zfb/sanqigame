@@ -17,6 +17,7 @@ public class BossKillUserResultClient implements ICmd<GameMsg.BossKillUserResult
             // 被击杀
             role.setCurrHp(0);
         }
+        role.setShieldValue(0);
         System.out.println("您已阵亡,副本: "+role.getCurrDuplicate().getName()+" ,Boss: "+role.getCurrDuplicate().getCurrBossMonster().getBossName());
         System.out.println("请推出副本;");
 //        BossThread.getInstance().process(ctx, role);

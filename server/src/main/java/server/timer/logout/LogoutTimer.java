@@ -64,58 +64,64 @@ public final class LogoutTimer {
         user.setCurrDuplicate(null);
 
         ScheduledFuture<?> schedule = scheduledThreadPool.schedule(() -> {
+            synchronized (user.getLOGOUT_MONITOR()) {
+                if (user.getLogoutTimer() == null) {
+                    return;
+                }
 
-            log.info("用户离线, userId = {}", user.getUserId());
+                log.info("用户离线, userId = {}", user.getUserId());
 
-            if (user.getPlayGuild() != null) {
-                user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).setOnline(false);
-            }
-            CurrUserStateEntity userStateEntity = PublicMethod.getInstance().createUserState(user);
+                if (user.getPlayGuild() != null) {
+                    user.getPlayGuild().getGuildMemberMap().get(user.getUserId()).setOnline(false);
+                }
+                CurrUserStateEntity userStateEntity = PublicMethod.getInstance().createUserState(user);
 
-            // 保存用户所在地
-            userService.modifyUserState(userStateEntity);
+                // 保存用户所在地
+                userService.modifyUserState(userStateEntity);
 //            userStateTimer.modifyUserState(userStateEntity);
 
-            //改变任务状态
-            if (user.getPlayTask().isHaveTask()) {
-                DbTaskEntity taskEntity = taskPublicMethod.getTaskEntity(user);
-                taskService.modifyTaskState(taskEntity);
-            }
+                //改变任务状态
+                if (user.getPlayTask().isHaveTask()) {
+                    DbTaskEntity taskEntity = taskPublicMethod.getTaskEntity(user);
+                    taskService.modifyTaskState(taskEntity);
+                }
 
-            // 持久化,邮件
-            mailService.modifyMailState(user.getMail().getMailEntityMap().values());
+                // 持久化,邮件
+                mailService.modifyMailState(user.getMail().getMailEntityMap().values());
 //            for (DbSendMailEntity mailEntity : user.getMail().getMailEntityMap().values()) {
 //                mailTimer.modifyMailList(mailEntity);
 //            }
 
-            // 移除管道
-            Broadcast.removeChannel(user.getCurSceneId(), user.getCtx().channel());
+                // 移除管道
+                Broadcast.removeChannel(user.getCurSceneId(), user.getCtx().channel());
 
-            // 移除用户
-            UserManager.removeUser(user.getUserId());
+                // 移除用户
+                UserManager.removeUser(user.getUserId());
 
-            //取消定时器
-            PublicMethod.getInstance().cancelMonsterAttack(user);
+                //取消定时器
+                PublicMethod.getInstance().cancelMonsterAttack(user);
 
-            PlayArena playArena = user.getPlayArena();
-            if (playArena == null) {
-                return;
+                PlayArena playArena = user.getPlayArena();
+                if (playArena == null) {
+                    return;
+                }
+                ArenaManager.removeUser(user);
+
+                if (playArena.getTargetUserId() == null) {
+                    return;
+                }
+
+                User targetUser = ArenaManager.getUserById(playArena.getTargetUserId());
+                if (targetUser == null) {
+                    return;
+                }
+                targetUser.getPlayArena().setTargetUserId(null);
+                GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
+                        .setTargetUserId(user.getUserId())
+                        .build();
+                targetUser.getCtx().writeAndFlush(userDieResult);
             }
-            ArenaManager.removeUser(user);
 
-            if (playArena.getTargetUserId() == null) {
-                return;
-            }
-
-            User targetUser = ArenaManager.getUserById(playArena.getTargetUserId());
-            if (targetUser == null) {
-                return;
-            }
-            targetUser.getPlayArena().setTargetUserId(null);
-            GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
-                    .setTargetUserId(user.getUserId())
-                    .build();
-            targetUser.getCtx().writeAndFlush(userDieResult);
 
         }, 1, TimeUnit.MINUTES);
 

@@ -1,5 +1,6 @@
-package client.cmd;
+package client.cmd.props.equipment;
 
+import client.cmd.ICmd;
 import client.model.server.props.Equipment;
 import client.model.server.props.Props;
 import client.scene.GameData;

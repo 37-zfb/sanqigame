@@ -70,18 +70,6 @@ public class DealTargetUserResponseCmdHandler implements ICmdHandler<GameMsg.Dea
             ctx.writeAndFlush(userDealRequestResult);
             originateUser.getCtx().writeAndFlush(userDealRequestResult);
 
-//                // 修改交易状态失败
-//                originateUser.getPLAY_DEAL().getTargetUserId()
-//                        .compareAndSet(user.getUserId(), 0);
-//                user.getPLAY_DEAL().getTargetUserId()
-//                        .compareAndSet(originateId, 0);
-//
-//                log.info("用户 {}、{} 交易失败;", user.getUserName(), originateUser.getUserName());
-//                GameMsg.UserDealRequestResult userDealRequestResult = newBuilder
-//                        .setIsSuccess(false)
-//                        .setTargetUserId(user.getUserId())
-//                        .build();
-//                ctx.writeAndFlush(userDealRequestResult);
 
         }
 

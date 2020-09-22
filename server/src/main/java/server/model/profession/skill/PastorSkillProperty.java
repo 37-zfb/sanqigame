@@ -33,7 +33,10 @@ public class PastorSkillProperty extends AbstractSkillProperty {
      */
     private float prepareTime;
 
-
+    /**
+     * 护盾值
+     */
+    private Integer shieldValue;
 
     public PastorSkillProperty(){}
 
@@ -42,13 +45,14 @@ public class PastorSkillProperty extends AbstractSkillProperty {
         return ProfessionType.Pastor;
     }
 
-    public PastorSkillProperty(Integer id, Integer skillId, Integer recoverMp, Integer recoverHp, float percentMp,float percentHp,float prepareTime) {
+    public PastorSkillProperty(Integer id, Integer skillId, Integer recoverMp, Integer recoverHp, float percentMp,float percentHp,float prepareTime,Integer shieldValue) {
         super(id, skillId);
         this.recoverMp = recoverMp;
         this.recoverHp = recoverHp;
         this.percentMp = percentMp;
         this.percentHp = percentHp;
         this.prepareTime = prepareTime;
+        this.shieldValue = shieldValue;
     }
 
 

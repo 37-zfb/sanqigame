@@ -33,7 +33,8 @@ public class DieResultClient implements ICmd<GameMsg.DieResult> {
 
         if (dieResult.getTargetUserId() == role.getId()) {
             // 用户阵亡
-
+            role.setShieldValue(0);
+            role.setCurrHp(0);
             // 清空正在攻击自己的怪
             GameMsg.StopCurUserAllTimer stopCurUserAllTimer = GameMsg.StopCurUserAllTimer.newBuilder().build();
             ctx.channel().writeAndFlush(stopCurUserAllTimer);

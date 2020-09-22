@@ -5,6 +5,7 @@ import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.stereotype.Component;
+import server.PublicMethod;
 import server.model.scene.Monster;
 import server.model.scene.Scene;
 import server.scene.GameData;
@@ -43,11 +44,10 @@ public class StopCurUserAllTimerHandler implements ICmdHandler<GameMsg.StopCurUs
         // 取消当前用户的所有定时任务
         Map<Integer, Monster> monsterMap = scene.getMonsterMap();
         for (Monster monster : monsterMap.values()) {
-//            RunnableScheduledFuture runnableScheduledFuture = monster.getTimerMap().get(user);
-//            if (runnableScheduledFuture != null){
-//                MonsterAttakTimer.getInstance().removeTask(runnableScheduledFuture);
-//            }
+            monster.getUserIdMap().remove(userId);
         }
+
+        PublicMethod.getInstance().cancelSummonTimer(user);
 
     }
 

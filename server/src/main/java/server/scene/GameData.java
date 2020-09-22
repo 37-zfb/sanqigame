@@ -264,7 +264,8 @@ public class GameData {
                                     pastorSkillPropertyEntity.getRecoverHp(),
                                     pastorSkillPropertyEntity.getPercentMp(),
                                     pastorSkillPropertyEntity.getPercentHp(),
-                                    pastorSkillPropertyEntity.getPrepareTime()));
+                                    pastorSkillPropertyEntity.getPrepareTime(),
+                                    pastorSkillPropertyEntity.getShieldValue()));
         }
 
         //法师

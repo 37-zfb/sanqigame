@@ -36,6 +36,7 @@ public class MailService {
 
     /**
      * 查询该用户所有未读邮件，再把过期邮件持久化到数据库设置为过期
+     *
      * @param userId 用户id
      * @return
      */
@@ -61,7 +62,7 @@ public class MailService {
             }
         }
         // 把已过期的持久化到数据库
-        if (overdueMail.size() >0){
+        if (overdueMail.size() > 0) {
             sendMailDAO.updateMailBatch(overdueMail);
         }
         return unreadMail;
@@ -69,6 +70,7 @@ public class MailService {
 
     /**
      * 改变邮件状态
+     *
      * @param mailCollection
      */
     @Transactional(rollbackFor = Exception.class)
@@ -81,25 +83,34 @@ public class MailService {
 
     /**
      * 通过邮件用户id和邮件标题获取邮件信息
+     *
      * @param userId
      * @param title
      * @return
      */
     public DbSendMailEntity findMailInfoByUserIdAndTitle(int userId, String title) {
-        if (userId <=0 || title == null){
+        if (userId <= 0 || title == null) {
             return null;
         }
-        return sendMailDAO.selectMailByUserIdAndTitle(userId,title);
+        return sendMailDAO.selectMailByUserIdAndTitle(userId, title);
     }
 
     /**
      * 添加邮件信息
+     *
      * @param addMailList
      */
     public void addMailInfoBatch(List<DbSendMailEntity> addMailList) {
-        if (addMailList == null || addMailList.size()==0){
+        if (addMailList == null || addMailList.size() == 0) {
             return;
         }
         sendMailDAO.insertMailBatch(addMailList);
+    }
+
+    public DbSendMailEntity selectMailByAllIdAndDate(Long id, Date zero,Integer userId) {
+        if (id == null || zero == null || userId == null) {
+            return null;
+        }
+        return sendMailDAO.selectMailByAllIdAndDate(id, zero,userId);
     }
 }

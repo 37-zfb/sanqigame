@@ -160,6 +160,9 @@ public class Role {
 
     private boolean addFriend = false;
 
+
+    private Integer shieldValue = 0;
+
     /**
      *  公会系统
      */

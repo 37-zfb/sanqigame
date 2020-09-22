@@ -64,7 +64,7 @@ public class BossSkillAttack {
             }
         } else {
             synchronized (user.getHpMonitor()) {
-                user.setWeakenDefense(100);
+                user.setWeakenDefense(200);
                 BossSkill bossSkill = bossMonster.getBossSkillMap().get(4);
                 int subHp = (int) ((Math.random() * bossSkill.getDamage()) + 200) - (int) ((Math.random() * (user.getBaseDefense() - user.getWeakenDefense())) + 100);
                 user.setCurrHp(user.getCurrHp() - subHp);

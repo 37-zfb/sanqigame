@@ -1,4 +1,4 @@
-package server.cmdhandler.equipment;
+package server.cmdhandler.props.equipment;
 
 import constant.BackPackConst;
 import constant.EquipmentConst;

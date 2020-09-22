@@ -5,6 +5,7 @@ import constant.SceneConst;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import server.model.profession.Skill;
 import server.model.scene.Monster;
 import server.model.scene.Npc;
 import server.model.scene.Scene;
@@ -19,6 +20,7 @@ import type.SceneType;
 import util.MyUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 张丰博
@@ -76,16 +78,18 @@ public class UserSwitchSceneCmdHandler implements ICmdHandler<GameMsg.UserSwitch
 
         //如果当前场景是公共地图，切换地图时则更新装备耐久度
         List<Integer> sceneId = SceneType.getSceneIdByType(SceneConst.FIELD);
-        if (sceneId.contains(user.getCurSceneId())){
+        if (sceneId.contains(user.getCurSceneId())) {
             //持久化装备耐久度
             PublicMethod.getInstance().dbWeaponDurability(user.getUserEquipmentArr());
 
             user.setCurrHp(ProfessionConst.HP);
             user.setCurrMp(ProfessionConst.MP);
-
+            user.setShieldValue(0);
             //取消召唤兽，取消
             PublicMethod.getInstance().cancelMonsterAttack(user);
 
+            Map<Integer, Skill> skillMap = user.getSkillMap();
+            skillMap.values().forEach(skill->skill.setLastUseTime(0L));
         }
 
 

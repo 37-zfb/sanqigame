@@ -28,6 +28,7 @@ public class UserSwitchSceneCmdClient implements ICmd<GameMsg.UserSwitchSceneRes
         synchronized (role.getMpMonitor()){
             role.setCurrMp(msg.getMp());
         }
+        role.setShieldValue(0);
         // 场景之间移动
 
 

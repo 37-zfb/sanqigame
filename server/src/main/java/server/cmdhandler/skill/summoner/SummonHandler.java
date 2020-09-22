@@ -1,4 +1,4 @@
-package server.cmdhandler.skill.skillhandler;
+package server.cmdhandler.skill.summoner;
 
 import constant.ProfessionConst;
 import constant.SkillConst;

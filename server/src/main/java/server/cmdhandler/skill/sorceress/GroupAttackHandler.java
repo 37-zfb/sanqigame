@@ -1,4 +1,4 @@
-package server.cmdhandler.skill.skillhandler;
+package server.cmdhandler.skill.sorceress;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +70,22 @@ public class GroupAttackHandler implements ISkill {
             }
 
             synchronized (targetUser.getHpMonitor()) {
-                targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                synchronized (targetUser.getSHIELD_MONITOR()){
+                    if (targetUser.getShieldValue() > subHp) {
+                        targetUser.setShieldValue(targetUser.getShieldValue() - subHp);
+
+                        PublicMethod.getInstance().sendShieldMsg(subHp, targetUser);
+                    } else if (targetUser.getShieldValue() > 0 && targetUser.getShieldValue() < subHp) {
+                        subHp -= targetUser.getShieldValue();
+                        PublicMethod.getInstance().sendShieldMsg(targetUser.getShieldValue(), targetUser);
+
+                        targetUser.setShieldValue(0);
+
+                        targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                    } else {
+                        targetUser.setCurrHp(targetUser.getCurrHp() - subHp);
+                    }
+                }
             }
 
 
