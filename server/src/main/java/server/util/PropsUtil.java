@@ -79,7 +79,6 @@ public final class PropsUtil {
 
                 } else if (props.getPropsProperty().getType() == PropsType.Potion) {
                     location = this.addPotion(props, user, number, newBuilder);
-//                    reward.setUserPropsId(((Potion) user.getBackpack().get(location).getPropsProperty()).getId());
                 }
 
                 log.info("获得道具的id: {}", propsId);
@@ -245,6 +244,7 @@ public final class PropsUtil {
                         number = number - PotionConst.POTION_MAX_NUMBER;
                         reward.setPropsNumber(PotionConst.POTION_MAX_NUMBER);
                     } else {
+                        po.setNumber(number);
                         userPotionEntity.setNumber(number);
                         reward.setPropsNumber(number);
                         number = 0;

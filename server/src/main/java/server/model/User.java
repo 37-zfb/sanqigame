@@ -292,7 +292,7 @@ public class User {
      */
     public Integer calMonsterSubHp() {
 
-        int equDamage = getEquDamage()*10;
+        int equDamage = getEquDamage() * 10;
         int subHp = (int) ((Math.random() * this.getBaseDamage()) + 800 + 3 * equDamage);
 
         log.info("玩家: {},伤害: {}", this.getUserName(), subHp);
@@ -481,12 +481,12 @@ public class User {
             bossMonster.setOrdinaryAttack(0);
             // 每五次普通攻击，一次技能攻击
             BossSkillAttack.getInstance().bossSkillAttack(this, bossMonster, null);
-        }else {
+        } else {
             synchronized (this.getHpMonitor()) {
                 // 用户减血
                 if (this.getCurrHp() <= 0 || (this.getCurrHp() + this.shieldValue - subHp) <= 0) {
                     log.info("用户: {} 已死亡;", this.getUserName());
-                    synchronized (SHIELD_MONITOR){
+                    synchronized (SHIELD_MONITOR) {
                         this.shieldValue = 0;
                     }
                     this.setCurrHp(0);
@@ -503,14 +503,14 @@ public class User {
                     // 普通攻击数 加一;
                     bossMonster.setOrdinaryAttack(bossMonster.getOrdinaryAttack() + 1);
                     // 用户减血
-                    synchronized (SHIELD_MONITOR){
+                    synchronized (SHIELD_MONITOR) {
                         if (this.shieldValue > subHp) {
                             this.shieldValue -= subHp;
-                            log.info("用户 {} 护盾减少 {} 剩余 {};", userName,subHp,shieldValue);
+                            log.info("用户 {} 护盾减少 {} 剩余 {};", userName, subHp, shieldValue);
                             PublicMethod.getInstance().sendShieldMsg(subHp, this);
                         } else if (this.shieldValue > 0 && this.shieldValue < subHp) {
                             subHp -= this.shieldValue;
-                            log.info("用户 {} 护盾减少 {} 剩余 {};", userName,shieldValue,0);
+                            log.info("用户 {} 护盾减少 {} 剩余 {};", userName, shieldValue, 0);
                             PublicMethod.getInstance().sendShieldMsg(shieldValue, this);
 
                             this.shieldValue = 0;
@@ -538,9 +538,9 @@ public class User {
     public void monsterAttackSubHp(String monsterName, Integer subHp) {
         synchronized (this.getHpMonitor()) {
             // 用户减血
-            if (this.getCurrHp() <= 0 || (this.getCurrHp()+ this.shieldValue - subHp) <= 0) {
+            if (this.getCurrHp() <= 0 || (this.getCurrHp() + this.shieldValue - subHp) <= 0) {
                 this.setCurrHp(0);
-                synchronized (SHIELD_MONITOR){
+                synchronized (SHIELD_MONITOR) {
                     this.shieldValue = 0;
                 }
 
@@ -552,15 +552,15 @@ public class User {
                 ctx.channel().writeAndFlush(dieResult);
             } else {
 
-                synchronized (SHIELD_MONITOR){
+                synchronized (SHIELD_MONITOR) {
                     if (this.shieldValue > subHp) {
                         this.shieldValue -= subHp;
-                        log.info("用户 {} 护盾减少 {} 剩余 {};", userName,subHp,shieldValue);
-                        PublicMethod.getInstance().sendShieldMsg(subHp,this);
+                        log.info("用户 {} 护盾减少 {} 剩余 {};", userName, subHp, shieldValue);
+                        PublicMethod.getInstance().sendShieldMsg(subHp, this);
                     } else if (this.shieldValue > 0 && this.shieldValue < subHp) {
                         subHp -= this.shieldValue;
-                        log.info("用户 {} 护盾减少 {} 剩余 {};", userName,this.shieldValue,0);
-                        PublicMethod.getInstance().sendShieldMsg(shieldValue,this);
+                        log.info("用户 {} 护盾减少 {} 剩余 {};", userName, this.shieldValue, 0);
+                        PublicMethod.getInstance().sendShieldMsg(shieldValue, this);
 
                         this.shieldValue = 0;
                         this.setCurrHp(this.getCurrHp() - subHp);
@@ -583,19 +583,19 @@ public class User {
      *
      * @param propsId 奖励的道具id
      */
-    public void addMonsterReward(Integer propsId) {
+    public int addMonsterReward(Integer propsId) {
         Props props = GameData.getInstance().getPropsMap().get(propsId);
-
+        int location = 0;
         try {
             if (props.getPropsProperty().getType() == PropsType.Equipment) {
-                PropsUtil.getPropsUtil().addEquipment(this, props, null);
+                location = PropsUtil.getPropsUtil().addEquipment(this, props, null);
             } else if (props.getPropsProperty().getType() == PropsType.Potion) {
-                PropsUtil.getPropsUtil().addPotion(props, this, 1, null);
+                location = PropsUtil.getPropsUtil().addPotion(props, this, 1, null);
             }
         } catch (CustomizeException e) {
             log.error(e.getMessage(), e);
         }
-
+        return location;
     }
 
 

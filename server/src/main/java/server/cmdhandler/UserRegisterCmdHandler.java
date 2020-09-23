@@ -1,17 +1,12 @@
 package server.cmdhandler;
 
-import exception.CustomizeErrorCode;
-import exception.CustomizeException;
+import entity.db.UserEntity;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import entity.db.UserEntity;
 import server.async.RegisterService;
-import server.service.UserService;
-
-
 /**
  * 用户注册
  *

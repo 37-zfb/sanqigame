@@ -29,8 +29,6 @@ import java.util.Map;
 @Slf4j
 public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWearEquipmentCmd> {
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private DbUserStateTimer userStateTimer;

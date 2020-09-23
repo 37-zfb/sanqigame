@@ -29,6 +29,8 @@ public class KillMonsterTask implements Task {
             //场景不对或任务id不对时，直接结束
             return;
         }
+
+        //判断是否击杀
         PlayTask playTask = user.getPlayTask();
         playTask.setNumber(playTask.getNumber() + 1);
 

@@ -29,6 +29,7 @@ import server.timer.BossAttackTimer;
 import server.timer.MonsterTimer;
 import server.timer.state.DbUserStateTimer;
 import server.util.IdWorker;
+import server.util.PropsUtil;
 import type.EquipmentType;
 import type.PropsType;
 
@@ -196,12 +197,13 @@ public final class PublicMethod {
                 String propsIdString = monster.getPropsId();
                 String[] split = propsIdString.split(",");
                 int propsId = Integer.parseInt(split[(int) Math.random() * split.length]);
-                user.addMonsterReward(propsId);
 
                 GameMsg.DieResult.Builder dieBuilder = GameMsg.DieResult.newBuilder();
+
+                PropsUtil.getPropsUtil().addProps(Arrays.asList(propsId),user,dieBuilder,1);
+
                 GameMsg.DieResult dieResult = dieBuilder.setMonsterId(monster.getId())
                         .setIsDieBefore(false)
-                        .setPropsId(propsId)
                         .setResumeMpEndTime(user.getUserResumeState().getEndTimeMp())
                         .build();
 

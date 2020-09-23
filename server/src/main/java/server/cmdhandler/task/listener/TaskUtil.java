@@ -72,21 +72,6 @@ public class TaskUtil {
             listener(user);
         }
 
-//        int[] code = {3, 5, 6, 7, 8, 9, 12};
-//        for (int typeCode : code) {
-//            if (task.getTypeCode() == typeCode) {
-//                Method method = TaskListener.getTaskListener().listenerMethod.get(typeCode);
-//                try {
-//                    method.invoke(TaskListener.getTaskListener(), user);
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                } catch (InvocationTargetException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-
-
     }
 
     /**
@@ -133,11 +118,8 @@ public class TaskUtil {
         dbTaskEntity.setCurrTaskCompleted(user.getPlayTask().isCurrTaskCompleted() ? TaskType.CurrTaskCompleted.getTaskCode() : TaskType.CurrTaskUnCompleted.getTaskCode());
         dbTaskEntity.setCurrTask(user.getPlayTask().getCurrTaskId());
 
-        Task task = GameData.getInstance().getTaskMap().get(user.getPlayTask().getCurrTaskId());
 
-        if (task.getTypeCode().equals(TaskType.KillMonsterType.getTaskCode())) {
-            dbTaskEntity.setTaskProcess(user.getPlayTask().getNumber());
-        }
+        dbTaskEntity.setTaskProcess(user.getPlayTask().getNumber());
 
 
         return dbTaskEntity;

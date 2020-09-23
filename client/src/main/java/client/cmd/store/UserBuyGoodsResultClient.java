@@ -88,7 +88,7 @@ public class UserBuyGoodsResultClient implements ICmd<GameMsg.UserBuyGoodsResult
                 Potion propsProperty =
                         new Potion(props.getUserPropsId(),
                                 potion.getPropsId(),
-                                props.getDurability(),
+                                potion.getCdTime(),
                                 potion.getInfo(),
                                 potion.getResumeFigure(),
                                 potion.getPercent(),

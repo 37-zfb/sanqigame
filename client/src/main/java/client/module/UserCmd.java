@@ -736,6 +736,8 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.LookAllTaskCmd) cmd);
         } else if (cmd instanceof GameMsg.DialogueTaskCmd) {
             ctx.writeAndFlush((GameMsg.DialogueTaskCmd) cmd);
+        }else if (cmd instanceof GameMsg.DeleteFriendCmd){
+            ctx.writeAndFlush((GameMsg.DeleteFriendCmd)cmd);
         }
 
 

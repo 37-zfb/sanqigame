@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.util.PropsUtil;
 import server.model.User;
 import server.model.props.Props;
@@ -28,11 +29,11 @@ import java.util.Map;
 @Component
 @Slf4j
 public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsCmd> {
-
-
-
     @Autowired
     private StoreService storeService;
+
+    @Autowired
+    private TaskUtil taskUtil;
 
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.UserBuyGoodsCmd userBuyGoodsCmd) {
@@ -108,6 +109,7 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
 
         GameMsg.UserBuyGoodsResult build = newBuilder.build();
         ctx.writeAndFlush(build);
+        taskUtil.listener(user);
     }
 
 

@@ -167,7 +167,7 @@ public class LoadResourcesService {
     private void loadFriend(User user) {
         List<DbFriendEntity> friendEntityList = friendService.listFriend(user.getUserId());
         Map<Integer, String> friendMap = user.getPLAY_FRIEND().getFRIEND_MAP();
-        friendEntityList.forEach(f -> friendMap.put(f.getUserId(), f.getFriendName()));
+        friendEntityList.forEach(f -> friendMap.put(f.getFriendId(), f.getFriendName()));
     }
 
 

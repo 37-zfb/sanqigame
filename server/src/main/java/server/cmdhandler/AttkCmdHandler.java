@@ -28,9 +28,6 @@ import java.util.Map;
 @Component
 public class AttkCmdHandler implements ICmdHandler<GameMsg.AttkCmd> {
 
-    @Autowired
-    private UserService userService;
-
     @Override
     public void handle(ChannelHandlerContext ctx, GameMsg.AttkCmd cmd) {
         MyUtil.checkIsNull(ctx, cmd);

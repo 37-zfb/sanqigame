@@ -344,8 +344,10 @@ message DieResult {
   // 死亡的怪id
   uint32 monsterId = 2;
 
-  // 爆的装备
-  uint32 propsId = 3;
+  // 爆的道具， 装备
+//  uint32 propsId = 3;
+//  uint32 location = 7;
+  repeated Props props = 3;
 
   //之前是否已死
   bool isDieBefore = 4;
