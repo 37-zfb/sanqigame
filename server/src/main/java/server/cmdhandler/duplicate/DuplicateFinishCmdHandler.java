@@ -42,6 +42,7 @@ public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateF
         }
 
 
+        //取消自动掉血
         if (user.getSubHpTask() != null) {
             user.getSubHpTask().cancel(true);
             user.setSubHpNumber(0);

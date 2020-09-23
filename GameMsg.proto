@@ -262,6 +262,11 @@ enum MsgCode {
   SEND_ALL_MAIL_CMD = 174;
   SHIELD_REDUCE_RESULT = 175;
 
+  USER_CANCEL_DEAL_ITEM_CMD = 176;
+  USER_CANCEL_DEAL_ITEM_RESULT = 177;
+
+  USER_RESET_MONEY_CMD = 178;
+  USER_RESET_MONEY_RESULT = 179;
 
   USER_UP_LV_RESULT = 157;
 
@@ -1027,15 +1032,27 @@ message DealChannelResult{
 }
 // 添加交易物品
 message UserDealItemCmd{
-  uint32 money = 1;
-  Props props = 2;
-  string type = 3;
+  Props props = 1;
 }
 // 添加交易物品，结果
 message UserDealItemResult{
+  Props props = 1;
+}
+// 取消交易物品
+message UserCancelDealItemCmd{
+  Props props = 1;
+}
+// 取消交易物品，结果
+message UserCancelDealItemResult{
+  Props props = 1;
+}
+// 重置金币
+message UserResetMoneyCmd{
   uint32 money = 1;
-  Props props = 2;
-  string type = 3;
+}
+// 重置金币，结果
+message UserResetMoneyResult{
+  uint32 money = 1;
 }
 // 交易错误 结果
 message ErrorResult{
@@ -1051,7 +1068,6 @@ message UserAddCompleteResult{
 }
 // 用户取消交易 命令
 message UserCancelDealCmd {
-  bool isNeedNotice = 1;
 }
 //  用户取消交易 结果
 message UserCancelDealResult{
@@ -1077,8 +1093,11 @@ message UserCancelDealConfirmResult{
 message SortOutDealCmd{
 }
 message SortOutDealResult{
-  repeated Props props = 1;
-  uint32 money = 2;
+  repeated Props removeProps = 1;
+  uint32 removeMoney = 2;
+
+  repeated Props props = 3;
+  uint32 money = 4;
 }
 
 

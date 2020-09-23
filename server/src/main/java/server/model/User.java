@@ -31,6 +31,7 @@ import type.PropsType;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.RunnableScheduledFuture;
 import java.util.concurrent.ScheduledFuture;
 
@@ -208,7 +209,13 @@ public class User {
     /**
      * 交易系统
      */
-    private final PlayDeal PLAY_DEAL = new PlayDeal();
+    private Deal deal;
+    /**
+     * 发起交易的用户
+     */
+    private final Set<Integer> DEAL_ID_SET = new ConcurrentSkipListSet<>();
+
+
 
     /**
      * 公会系统

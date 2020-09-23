@@ -2,6 +2,8 @@ package server.cmdhandler.deal;
 
 import entity.db.UserEquipmentEntity;
 import entity.db.UserPotionEntity;
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.Deal;
 import server.util.PropsUtil;
 import server.cmdhandler.task.listener.TaskUtil;
 import server.model.DealProps;
@@ -25,6 +28,7 @@ import util.MyUtil;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author 张丰博
@@ -46,23 +50,85 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
         MyUtil.checkIsNull(ctx, sortOutDealCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        Map<Integer, Props> backpack = user.getBackpack();
-        PlayDeal playDeal = user.getPLAY_DEAL();
-        playDeal.setAgreeNumber(0);
-        playDeal.setTargetUserId(0);
+        Deal deal = user.getDeal();
+        if (deal == null || deal.getTargetId() == null || deal.getInitiatorId() == null) {
+            return;
+        }
 
-        Integer prepareMoney = playDeal.getPrepareMoney();
+        if (!deal.isTargetIsDetermine() || !deal.isInitiatorIsDetermine()) {
+            return;
+        }
+
+        // 交易出的 金币，道具
+        Integer prepareMoney = 0;
+        Map<Integer, DealProps> prepareProps = null;
+        if (user.getUserId() == deal.getInitiatorId()) {
+            prepareMoney = user.getDeal().getInitiatorMoney();
+            prepareProps = user.getDeal().getInitiatorProps();
+        }
+        if (user.getUserId() == deal.getTargetId()) {
+            prepareMoney = user.getDeal().getTargetMoney();
+            prepareProps = user.getDeal().getTargetProps();
+        }
+
+        int receiveMoney = 0;
+        Map<Integer, DealProps> receiveProps = null;
+        if (user.getUserId() == deal.getInitiatorId()) {
+            receiveMoney = user.getDeal().getTargetMoney();
+            receiveProps = user.getDeal().getTargetProps();
+        }
+        if (user.getUserId() == deal.getTargetId()) {
+            receiveMoney = user.getDeal().getInitiatorMoney();
+            receiveProps = user.getDeal().getInitiatorProps();
+        }
+
+
         user.setMoney(user.getMoney() - prepareMoney);
         log.info("用户 {} 交易出的金币: {} ;", user.getUserName(), prepareMoney);
 
+        GameMsg.SortOutDealResult.Builder newBuilder = GameMsg.SortOutDealResult.newBuilder();
+        newBuilder.setRemoveMoney(prepareMoney);
+        removeProps(prepareProps, user, newBuilder);
 
-        Map<Integer, DealProps> prepareProps = playDeal.getPrepareProps();
+
+        log.info("用户 {} 交易得到的金币: {} ;", user.getUserName(), receiveMoney);
+        user.setMoney(user.getMoney() + receiveMoney);
+        newBuilder.setMoney(receiveMoney);
+        PropsUtil propsUtil = PropsUtil.getPropsUtil();
+        for (Map.Entry<Integer, DealProps> propsEntry : receiveProps.entrySet()) {
+            DealProps dealProps = propsEntry.getValue();
+
+            propsUtil.addProps(Collections.singletonList(dealProps.getPropsId()), user, newBuilder, dealProps.getNumber());
+
+            Props props = GameData.getInstance().getPropsMap().get(dealProps.getPropsId());
+            log.info("用户 {} 交易获得的道具: {} {}个;", user.getUserName(), props.getName(), dealProps.getNumber());
+        }
+
+        user.setDeal(null);
+//        sortOutBackPack(newBuilder, user);
+        GameMsg.SortOutDealResult sortOutDealResult = newBuilder.build();
+        ctx.writeAndFlush(sortOutDealResult);
+
+        taskPublicMethod.listener(user);
+
+    }
+
+    private void removeProps(Map<Integer, DealProps> prepareProps, User user, GameMsg.SortOutDealResult.Builder newBuilder) {
+
+        if (user == null || prepareProps == null || prepareProps.size() == 0) {
+            return;
+        }
+
+        Map<Integer, Props> backpack = user.getBackpack();
+
         for (Map.Entry<Integer, DealProps> dealPropsEntry : prepareProps.entrySet()) {
             Integer key = dealPropsEntry.getKey();
             Props props = backpack.get(key);
             if (props == null) {
                 continue;
             }
+
+            GameMsg.Props.Builder propsBuilder = GameMsg.Props.newBuilder();
 
             if (props.getPropsProperty().getType() == PropsType.Equipment) {
                 backpack.remove(key);
@@ -71,6 +137,9 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
                 UserEquipmentEntity equipmentEntity = new UserEquipmentEntity();
                 equipmentEntity.setId(equipment.getId());
                 userStateTimer.deleteUserEquipment(equipmentEntity);
+
+                propsBuilder.setLocation(key)
+                        .setPropsNumber(1);
             }
 
             if (props.getPropsProperty().getType() == PropsType.Potion) {
@@ -83,66 +152,18 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
                     potion.setNumber(potion.getNumber() - dealPropsEntry.getValue().getNumber());
                     potionEntity.setNumber(potion.getNumber());
                     userStateTimer.modifyUserPotion(potionEntity);
+
                 } else {
-                    backpack.remove(dealPropsEntry.getKey());
+                    backpack.remove(key);
                     userStateTimer.deleteUserPotion(potionEntity);
+
                 }
+                propsBuilder.setLocation(key)
+                        .setPropsNumber(dealPropsEntry.getValue().getNumber());
             }
+            newBuilder.addRemoveProps(propsBuilder);
             log.info("用户 {} 交易出的道具: {} {}个;", user.getUserName(), props.getName(), dealPropsEntry.getValue().getNumber());
         }
-
-
-        playDeal.setPrepareMoney(0);
-        playDeal.getPrepareProps().clear();
-
-        int receiveMoney = playDeal.getReceiveMoney();
-        Map<Integer, DealProps> receiveProps = playDeal.getReceiveProps();
-        log.info("用户 {} 交易得到的金币: {} ;", user.getUserName(), receiveMoney);
-
-        user.setMoney(user.getMoney() + receiveMoney);
-
-        PropsUtil propsUtil = PropsUtil.getPropsUtil();
-        for (Map.Entry<Integer, DealProps> propsEntry : receiveProps.entrySet()) {
-            DealProps dealProps = propsEntry.getValue();
-
-            propsUtil.addProps(Collections.singletonList(dealProps.getPropsId()), user, null, dealProps.getNumber());
-
-            Props props = GameData.getInstance().getPropsMap().get(dealProps.getPropsId());
-            log.info("用户 {} 交易获得的道具: {} {}个;", user.getUserName(), props.getName(), dealProps.getNumber());
-        }
-
-
-
-        GameMsg.SortOutDealResult.Builder newBuilder = GameMsg.SortOutDealResult.newBuilder();
-        sortOutBackPack(newBuilder, user);
-        GameMsg.SortOutDealResult sortOutDealResult = newBuilder.build();
-        ctx.writeAndFlush(sortOutDealResult);
-
-        taskPublicMethod.listener(user);
-
     }
-
-    private void sortOutBackPack(GameMsg.SortOutDealResult.Builder newBuilder, User user) {
-        Map<Integer, Props> backpack = user.getBackpack();
-        //  背包中的道具(装备、药剂等)  , 客户端更新背包中的数据
-        for (Map.Entry<Integer, Props> propsEntry : backpack.entrySet()) {
-            GameMsg.Props.Builder propsResult = GameMsg.Props.newBuilder()
-                    .setLocation(propsEntry.getKey())
-                    .setPropsId(propsEntry.getValue().getId());
-
-            AbstractPropsProperty propsProperty = propsEntry.getValue().getPropsProperty();
-            if (propsProperty.getType() == PropsType.Equipment) {
-                Equipment equipment = (Equipment) propsProperty;
-                propsResult.setDurability(equipment.getDurability()).setUserPropsId(equipment.getId());
-            } else if (propsProperty.getType() == PropsType.Potion) {
-                Potion potion = (Potion) propsProperty;
-                propsResult.setPropsNumber(potion.getNumber())
-                        .setUserPropsId(potion.getId());
-            }
-            newBuilder.addProps(propsResult);
-        }
-        newBuilder.setMoney(user.getMoney());
-    }
-
 
 }

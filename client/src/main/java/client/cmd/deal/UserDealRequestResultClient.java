@@ -29,25 +29,19 @@ public class UserDealRequestResultClient implements ICmd<GameMsg.UserDealRequest
             }
         } else {
             // 同意交易
-            boolean isSuccess = userDealRequestResult.getIsSuccess();
-            if (isSuccess && role.getId() == userDealRequestResult.getTargetUserId()) {
-                // 进入交易线程
+            if (role.getId() == userDealRequestResult.getTargetUserId()) {
 
                 role.getDEAL_CLIENT().setDealState(true);
                 CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
 
-//                DealThread.getInstance().process(ctx, role);
-            } else if (isSuccess && role.getId() != userDealRequestResult.getTargetUserId()) {
+            } else if (role.getId() != userDealRequestResult.getTargetUserId()) {
                 // 成功， 发起者
                 GameMsg.UserModifyDealStateCmd userModifyDealStateCmd = GameMsg.UserModifyDealStateCmd.newBuilder()
                         .setTargetId(userDealRequestResult.getTargetUserId())
                         .build();
                 ctx.writeAndFlush(userModifyDealStateCmd);
             }
-
         }
-
-
     }
 
 

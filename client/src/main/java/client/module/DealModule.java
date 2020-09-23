@@ -55,15 +55,15 @@ public class DealModule {
             System.out.println("111、切换页面;");
             String s = scanner.nextLine();
             if ("1".equals(s)) {
-                addOrCancelProps(role, ctx, DealInfoType.ADD);
+                addProps(role, ctx);
             } else if ("2".equals(s)) {
-                addOrCancelProps(role, ctx, DealInfoType.CANCEL);
+                cancelProps(role,ctx);
             }else if ("99".equals(s)){
                 GameMsg.UserAddCompleteCmd userAddCompleteCmd = GameMsg.UserAddCompleteCmd.newBuilder().build();
                 ctx.writeAndFlush(userAddCompleteCmd);
             }else if ("88".equals(s)){
-                GameMsg.UserCancelDealCmd userCancelDealCmd = GameMsg.UserCancelDealCmd.newBuilder()
-                        .setIsNeedNotice(true)
+                GameMsg.UserCancelDealCmd userCancelDealCmd = GameMsg.UserCancelDealCmd
+                        .newBuilder()
                         .build();
                 ctx.writeAndFlush(userCancelDealCmd);
                 break;
@@ -73,7 +73,6 @@ public class DealModule {
             }else if ("888".equals(s)){
                 GameMsg.UserCancelDealConfirmCmd userCancelDealConfirmCmd =
                         GameMsg.UserCancelDealConfirmCmd.newBuilder()
-                                .setIsNeedNotice(true)
                                 .build();
                 ctx.writeAndFlush(userCancelDealConfirmCmd);
             }else if ("111".equals(s)){
@@ -84,7 +83,7 @@ public class DealModule {
         }
     }
 
-    private void addOrCancelProps(Role role, ChannelHandlerContext ctx, DealInfoType dealInfoType) {
+    private void addProps(Role role, ChannelHandlerContext ctx) {
         Map<Integer, Props> backpackClient = role.getBackpackClient();
         Scanner scanner = new Scanner(System.in);
 
@@ -92,12 +91,12 @@ public class DealModule {
         int money = scanner.nextInt();
         scanner.nextLine();
 
-        GameMsg.UserDealItemCmd userDealItemCmd = GameMsg.UserDealItemCmd.newBuilder()
+        GameMsg.UserResetMoneyCmd userResetMoneyCmd = GameMsg.UserResetMoneyCmd.newBuilder()
                 .setMoney(money)
-                .setType(dealInfoType.getType())
                 .build();
-        ctx.writeAndFlush(userDealItemCmd);
+        ctx.writeAndFlush(userResetMoneyCmd);
 
+        GameMsg.UserDealItemCmd userDealItemCmd;
         while (true) {
             System.out.println("0、退出;");
             int anInt = scanner.nextInt();
@@ -122,9 +121,55 @@ public class DealModule {
 
             userDealItemCmd = GameMsg.UserDealItemCmd.newBuilder()
                     .setProps(newBuilder)
-                    .setType(dealInfoType.getType())
                     .build();
             ctx.writeAndFlush(userDealItemCmd);
         }
     }
+
+
+    private void cancelProps(Role role, ChannelHandlerContext ctx) {
+        Map<Integer, Props> backpackClient = role.getBackpackClient();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("重置金额;");
+        int money = scanner.nextInt();
+        scanner.nextLine();
+
+        GameMsg.UserResetMoneyCmd userResetMoneyCmd = GameMsg.UserResetMoneyCmd.newBuilder()
+                .setMoney(money)
+                .build();
+        ctx.writeAndFlush(userResetMoneyCmd);
+
+        ctx.writeAndFlush(userResetMoneyCmd);
+
+        GameMsg.UserCancelDealItemCmd userCancelDealItemCmd ;
+        while (true) {
+            System.out.println("0、退出;");
+            int anInt = scanner.nextInt();
+            scanner.nextLine();
+
+            if (anInt == 0) {
+                break;
+            }
+
+            Props props = backpackClient.get(anInt);
+
+            GameMsg.Props.Builder newBuilder = GameMsg.Props.newBuilder()
+                    .setLocation(anInt)
+                    .setPropsId(props.getId())
+                    .setPropsNumber(1);
+
+            if (props.getPropsProperty().getType() != PropsType.Equipment) {
+                System.out.println("数量:");
+                int number = scanner.nextInt();
+                newBuilder.setPropsNumber(number);
+            }
+
+            userCancelDealItemCmd = GameMsg.UserCancelDealItemCmd.newBuilder()
+                    .setProps(newBuilder)
+                    .build();
+            ctx.writeAndFlush(userCancelDealItemCmd);
+        }
+    }
+
 }

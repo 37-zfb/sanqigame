@@ -8,6 +8,7 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.Deal;
 import server.model.DealProps;
 import server.model.PlayDeal;
 import server.model.User;
@@ -18,6 +19,8 @@ import server.scene.GameData;
 import type.DealInfoType;
 import type.PropsType;
 import util.MyUtil;
+
+import java.util.Map;
 
 
 /**
@@ -33,19 +36,16 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
         MyUtil.checkIsNull(ctx, userDealItemCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        PlayDeal playDeal = user.getPLAY_DEAL();
-        if (playDeal.getTargetUserId() == 0) {
+        Deal deal = user.getDeal();
+        if (deal == null || deal.getTargetId() == null || deal.getInitiatorId() == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
-        if (playDeal.isDetermine()){
+        if ((deal.getInitiatorId().equals(user.getUserId()) && user.getDeal().isInitiatorIsDetermine()) ||
+                (deal.getTargetId().equals(user.getUserId()) && user.getDeal().isTargetIsDetermine())) {
             throw new CustomizeException(CustomizeErrorCode.PROPS_ADD_COMPLETE);
         }
 
-        int money = userDealItemCmd.getMoney();
-        if (user.getMoney() < money) {
-            throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
-        }
 
         GameMsg.Props propsInfo = userDealItemCmd.getProps();
         int location = propsInfo.getLocation();
@@ -59,44 +59,45 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
             throw new CustomizeException(CustomizeErrorCode.POTION_INSUFFICIENT);
         }
 
-        String type = userDealItemCmd.getType();
+        if (location == 0) {
+            return;
+        }
 
-        // 金币
-        playDeal.setPrepareMoney(playDeal.getPrepareMoney() + money);
-        log.info("用户: {} 添加 {} 金币;", user.getUserName(), money);
-
-        if (location != 0) {
-            if (type.equals(DealInfoType.ADD.getType())) {
-                //添加道具
-                playDeal.getPrepareProps().put(location, new DealProps(propsId, propsNumber));
-                log.info("用户: {} 添加了 {} {}个", user.getUserName(), GameData.getInstance().getPropsMap().get(propsId).getName(), propsNumber);
-            }
-
-            if (type.equals(DealInfoType.CANCEL.getType())) {
-                DealProps dealProps = playDeal.getPrepareProps().get(location);
-                if (dealProps == null || dealProps.getNumber() < propsNumber) {
-                    throw new CustomizeException(CustomizeErrorCode.DEAL_PROPS_NOT_EXIST);
-                }
-
-                if (dealProps.getNumber() == propsNumber) {
-                    playDeal.getPrepareProps().remove(location);
-                    log.info("用户: {} 取消 {} ", user.getUserName(), GameData.getInstance().getPropsMap().get(propsId).getName());
-                }
-
-                if (dealProps.getNumber() > propsNumber) {
-                    dealProps.setNumber(dealProps.getNumber() - propsNumber);
-                    log.info("用户: {} 减少 {}个 {}", user.getUserName(), propsNumber, GameData.getInstance().getPropsMap().get(propsId).getName());
-                }
+        //添加道具
+        if (user.getUserId() == deal.getInitiatorId()) {
+            Map<Integer, DealProps> initiatorProps = deal.getInitiatorProps();
+            DealProps dealProps = initiatorProps.get(location);
+            if (dealProps == null) {
+                initiatorProps.put(location, new DealProps(propsId, propsNumber));
+            } else {
+                dealProps.setNumber(dealProps.getNumber() + propsNumber);
             }
 
         }
 
+        if (user.getUserId() == deal.getTargetId()) {
+            Map<Integer, DealProps> targetProps = deal.getTargetProps();
+            DealProps dealProps = targetProps.get(location);
+            if (dealProps == null) {
+                targetProps.put(location, new DealProps(propsId, propsNumber));
+            } else {
+                dealProps.setNumber(dealProps.getNumber() + propsNumber);
+            }
+        }
+        log.info("用户: {} 添加了 {} {}个", user.getUserName(), GameData.getInstance().getPropsMap().get(propsId).getName(), propsNumber);
+
+
         GameMsg.UserDealItemResult userDealItemResult = GameMsg.UserDealItemResult.newBuilder()
-                .setMoney(money)
                 .setProps(propsInfo)
-                .setType(type)
                 .build();
-        int targetId = playDeal.getTargetUserId();
+        Integer targetId = null;
+        if (user.getUserId() == deal.getInitiatorId()) {
+            targetId = deal.getTargetId();
+        }
+        if (user.getUserId() == deal.getTargetId()) {
+            targetId = deal.getInitiatorId();
+        }
+
         User targetUser = UserManager.getUserById(targetId);
         targetUser.getCtx().writeAndFlush(userDealItemResult);
     }

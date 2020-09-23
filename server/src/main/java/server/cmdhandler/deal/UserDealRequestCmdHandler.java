@@ -24,7 +24,7 @@ public class UserDealRequestCmdHandler implements ICmdHandler<GameMsg.UserDealRe
         MyUtil.checkIsNull(ctx, userDealRequestCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        if (user.getPLAY_DEAL().getTargetUserId() != 0) {
+        if (user.getDeal() != null) {
             throw new CustomizeException(CustomizeErrorCode.DEAL_STATE);
         }
 
@@ -39,7 +39,8 @@ public class UserDealRequestCmdHandler implements ICmdHandler<GameMsg.UserDealRe
         }
 
 
-        user.getPLAY_DEAL().getUserIdSet().add(targetUserId);
+//        user.getPLAY_DEAL().getUserIdSet().add(targetUserId);
+        user.getDEAL_ID_SET().add(targetUserId);
 
         log.info("用户: {} ,请求 {} 交易;", user.getUserName(), targetUser.getUserName());
         GameMsg.AskTargetUserResult askTargetUserResult = GameMsg.AskTargetUserResult.newBuilder()

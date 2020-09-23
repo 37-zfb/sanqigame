@@ -33,7 +33,7 @@ public class EnterDuplicateCmdHandler implements ICmdHandler<GameMsg.EnterDuplic
         MyUtil.checkIsNull(ctx, duplicateCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        if (user.getPLAY_DEAL().getTargetUserId() != 0){
+        if (user.getDeal() != null){
             throw new CustomizeException(CustomizeErrorCode.DEAL_STATE);
         }
 

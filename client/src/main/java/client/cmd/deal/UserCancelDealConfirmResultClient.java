@@ -15,7 +15,6 @@ public class UserCancelDealConfirmResultClient implements ICmd<GameMsg.UserCance
         System.out.println("对方取消确定交易;");
         GameMsg.UserCancelDealConfirmCmd userCancelDealConfirmCmd =
                 GameMsg.UserCancelDealConfirmCmd.newBuilder()
-                        .setIsNeedNotice(false)
                         .build();
         ctx.writeAndFlush(userCancelDealConfirmCmd);
     }

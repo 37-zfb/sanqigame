@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * @author 张丰博
- *
  */
 @Slf4j
 public class UserJoinTeamPerformResultClient implements ICmd<GameMsg.UserJoinTeamPerformResult> {
@@ -42,12 +41,12 @@ public class UserJoinTeamPerformResultClient implements ICmd<GameMsg.UserJoinTea
                 teamMember[0] = playUserClient;
                 role.setTeam(false);
                 role.setAnswer(false);
-            }else if (role.getTEAM_CLIENT().getTeamLeaderId() != null){
+            } else if (role.getTEAM_CLIENT().getTeamLeaderId() != null) {
                 // 此用户有队伍, 队伍中增加队员
                 PlayUserClient[] teamMember = team_client.getTeamMember();
                 List<GameMsg.UserInfo> userInfoList = userJoinTeamPerformResult.getUserInfoList();
                 for (int i = 0; i < teamMember.length; i++) {
-                    if (teamMember[i] == null){
+                    if (teamMember[i] == null) {
                         GameMsg.UserInfo userInfo = userInfoList.get(0);
                         PlayUserClient playUserClient = new PlayUserClient(userInfo.getUserId(), userInfo.getUserName());
                         playUserClient.setCurrHp(userInfo.getCurrHp());
@@ -57,24 +56,27 @@ public class UserJoinTeamPerformResultClient implements ICmd<GameMsg.UserJoinTea
                     }
                 }
                 role.setTeam(false);
-                if (role.isAnswer()){
+                if (role.isAnswer()) {
                     role.setAnswer(false);
                 }
-                log.info("{} 加入队伍;",userInfoList.get(0).getUserName());
-            }else if (role.getId() != teamLeaderId && team_client.getTeamLeaderId() == null){
+
+                if (userInfoList.get(0) != null) {
+                    log.info("{} 加入队伍;", userInfoList.get(0).getUserName());
+                }
+            } else if (role.getId() != teamLeaderId && team_client.getTeamLeaderId() == null) {
                 // 此用户没有队伍,刚加入队伍
                 team_client.setTeamLeaderId(teamLeaderId);
                 PlayUserClient[] teamMember = team_client.getTeamMember();
                 List<GameMsg.UserInfo> userInfoList = userJoinTeamPerformResult.getUserInfoList();
-                teamMember[0] = new PlayUserClient(role.getId(),role.getUserName(),role.getCurrMp(),role.getCurrHp());
+                teamMember[0] = new PlayUserClient(role.getId(), role.getUserName(), role.getCurrMp(), role.getCurrHp());
 
                 for (int i = 0; i < userInfoList.size(); i++) {
                     GameMsg.UserInfo userInfo = userInfoList.get(i);
-                    teamMember[i+1] = new PlayUserClient(userInfo.getUserId(),userInfo.getUserName(),userInfo.getCurrMp(),userInfo.getCurrHp());
+                    teamMember[i + 1] = new PlayUserClient(userInfo.getUserId(), userInfo.getUserName(), userInfo.getCurrMp(), userInfo.getCurrHp());
                 }
                 role.setTeam(false);
                 role.setAnswer(false);
-            }else {
+            } else {
                 role.setTeam(false);
             }
 

@@ -8,6 +8,7 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.Deal;
 import server.model.DealProps;
 import server.model.PlayDeal;
 import server.model.User;
@@ -30,36 +31,35 @@ public class UserConfirmDealCmdHandler implements ICmdHandler<GameMsg.UserConfir
         MyUtil.checkIsNull(ctx, userConfirmDealCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        PlayDeal playDeal = user.getPLAY_DEAL();
-        int targetId = playDeal.getTargetUserId();
-        if (targetId == 0) {
-            // 此时不在交易状态
+        Deal deal = user.getDeal();
+        if (deal == null || deal.getTargetId() == null || deal.getInitiatorId() == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
-        User targetUser = UserManager.getUserById(targetId);
-        if (targetUser == null) {
+
+        User targetUser = null;
+        if (user.getUserId() == deal.getInitiatorId()) {
+            targetUser = UserManager.getUserById(deal.getTargetId());
+        }
+        if (user.getUserId() == deal.getTargetId()) {
+            targetUser = UserManager.getUserById(deal.getInitiatorId());
+        }
+        if (targetUser == null){
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
         }
 
-        if (!playDeal.isDetermine() || !targetUser.getPLAY_DEAL().isDetermine()) {
+        if (!deal.isInitiatorIsDetermine() || !deal.isTargetIsDetermine()) {
             throw new CustomizeException(CustomizeErrorCode.TARGET_NOT_COMPLETE);
         }
 
-        Integer prepareMoney = playDeal.getPrepareMoney();
-        Map<Integer, DealProps> prepareProps = playDeal.getPrepareProps();
-
-        targetUser.getPLAY_DEAL().setReceiveMoney(prepareMoney);
-        targetUser.getPLAY_DEAL().getReceiveProps().putAll(prepareProps);
 
 
-        synchronized (playDeal.getCompleteDealMonitor()) {
-            playDeal.setAgreeNumber(playDeal.getAgreeNumber() + 1);
-            targetUser.getPLAY_DEAL().setAgreeNumber(targetUser.getPLAY_DEAL().getAgreeNumber() + 1);
+        synchronized (user.getDeal()) {
+            deal.setAgreeNumber(deal.getAgreeNumber()+1);
 
             GameMsg.UserConfirmDealResult.Builder newBuilder = GameMsg.UserConfirmDealResult.newBuilder();
             GameMsg.UserConfirmDealResult userConfirmDealResult;
-            if (playDeal.getAgreeNumber() == 2) {
+            if (deal.getAgreeNumber() == 2) {
                 //此时两个都同意了
                 userConfirmDealResult = newBuilder
                         .setIsSuccess(true)

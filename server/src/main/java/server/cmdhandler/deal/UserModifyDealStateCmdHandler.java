@@ -22,41 +22,30 @@ public class UserModifyDealStateCmdHandler implements ICmdHandler<GameMsg.UserMo
     public void handle(ChannelHandlerContext ctx, GameMsg.UserModifyDealStateCmd userModifyDealStateCmd) {
         MyUtil.checkIsNull(ctx, userModifyDealStateCmd);
 
-        User user = null;
-
         int targetId = userModifyDealStateCmd.getTargetId();
         User targetUser = UserManager.getUserById(targetId);
         if (targetUser == null) {
-            //目标用户已离线
-            user = PublicMethod.getInstance().getUser(ctx);
-            user.getPLAY_DEAL().getUserIdSet().remove(targetId);
             return;
         }
-
 
         Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
-        if (userId == null) {
-            //离线
-            sendFail(targetUser);
-            return;
-        }
-
-        user = UserManager.getUserById(userId);
+        User user = UserManager.getUserById(userId);
         if (user == null) {
             //离线
             sendFail(targetUser);
             return;
         }
 
-        if (!user.getPLAY_DEAL().getUserIdSet().contains(targetId)) {
+        if (!user.getDEAL_ID_SET().contains(targetId)) {
             //不包含
             sendFail(targetUser);
             return;
         }
 
-        user.getPLAY_DEAL().getUserIdSet().remove(targetId);
-        user.getPLAY_DEAL().setTargetUserId(targetId);
-        user.getPLAY_DEAL().setCompleteDealMonitor(targetUser.getPLAY_DEAL().getCompleteDealMonitor());
+        user.setDeal(targetUser.getDeal());
+        user.getDeal().setInitiatorId(userId);
+
+        log.info("用户 {} 和 {} 交易通道建立成功;", user.getUserName(),targetUser.getUserName());
 
         GameMsg.UserModifyDealStateResult userModifyDealStateResult = GameMsg.UserModifyDealStateResult
                 .newBuilder()

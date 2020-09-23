@@ -22,8 +22,7 @@ public class DealFailCmdHandler implements ICmdHandler<GameMsg.DealFailCmd> {
         MyUtil.checkIsNull(ctx, dealFailCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        user.getPLAY_DEAL().setCompleteDealMonitor(null);
-        user.getPLAY_DEAL().setTargetUserId(0);
+        user.setDeal(null);
 
         GameMsg.DealFailResult dealFailResult = GameMsg.DealFailResult.newBuilder().build();
         ctx.writeAndFlush(dealFailResult);

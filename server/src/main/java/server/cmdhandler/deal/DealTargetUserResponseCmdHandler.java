@@ -8,6 +8,7 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.Deal;
 import server.model.User;
 import server.UserManager;
 import util.MyUtil;
@@ -25,7 +26,7 @@ public class DealTargetUserResponseCmdHandler implements ICmdHandler<GameMsg.Dea
         MyUtil.checkIsNull(ctx, dealTargetUserResponseCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        if (user.getPLAY_DEAL().getTargetUserId() != 0) {
+        if (user.getDeal() != null) {
             //此时已经在交易状态
             throw new CustomizeException(CustomizeErrorCode.DEAL_STATE);
         }
@@ -52,26 +53,21 @@ public class DealTargetUserResponseCmdHandler implements ICmdHandler<GameMsg.Dea
             ctx.writeAndFlush(userDealRequestResult);
             originateUser.getCtx().writeAndFlush(userDealRequestResult);
         } else {
-            // 同意交易， 发起者用户
-            user.getPLAY_DEAL().setTargetUserId(originateId);
 
-            //修改交易状态成功
+            Deal deal = new Deal();
+            deal.setTargetId(user.getUserId());
+            user.setDeal(deal);
+
             log.info("用户 {} 同意 {} 交易;", user.getUserName(), originateUser.getUserName());
-
-            Object monitor = new Object();
-            user.getPLAY_DEAL().setCompleteDealMonitor(monitor);
-
             GameMsg.UserDealRequestResult userDealRequestResult = newBuilder
                     .setIsAgree(true)
-                    .setIsSuccess(true)
                     .setTargetUserId(user.getUserId())
                     .setTargetUserName(user.getUserName())
                     .build();
             ctx.writeAndFlush(userDealRequestResult);
             originateUser.getCtx().writeAndFlush(userDealRequestResult);
-
-
         }
 
+        user.getDEAL_ID_SET().remove(user.getUserId());
     }
 }

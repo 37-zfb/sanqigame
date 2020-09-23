@@ -96,6 +96,8 @@ public class ErrorResultClient implements ICmd<GameMsg.ErrorResult> {
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
         }else if (code == CustomizeErrorCode.DEAL_STATE.getCode()){
             System.out.println("错误代号: " + code + " 错误信息: " + msg);
+        }else if (code == CustomizeErrorCode.PROPS_ADD_COMPLETE.getCode()){
+            System.out.println("错误代号: " + code + " 错误信息: " + msg);
         }
 
 

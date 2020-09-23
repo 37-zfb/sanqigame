@@ -8,6 +8,7 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
+import server.model.Deal;
 import server.model.PlayDeal;
 import server.model.User;
 import server.UserManager;
@@ -26,18 +27,30 @@ public class UserAddCompleteCmdHandler implements ICmdHandler<GameMsg.UserAddCom
         MyUtil.checkIsNull(ctx, userCancelDealCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        PlayDeal playDeal = user.getPLAY_DEAL();
-        int targetId = playDeal.getTargetUserId();
-        if (targetId == 0) {
+        Deal deal = user.getDeal();
+        if (deal == null || deal.getTargetId() == null || deal.getInitiatorId() == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_DEAL_STATUS);
         }
 
-        User targetUser = UserManager.getUserById(targetId);
+
+        User targetUser = null;
+        if (user.getUserId() == deal.getInitiatorId()) {
+             targetUser = UserManager.getUserById(deal.getTargetId());
+        }
+        if (user.getUserId() == deal.getTargetId()) {
+            targetUser = UserManager.getUserById(deal.getInitiatorId());
+        }
+
         if (targetUser == null){
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
         }
 
-        playDeal.setDetermine(true);
+        if (user.getUserId() == deal.getInitiatorId()) {
+            deal.setInitiatorIsDetermine(true);
+        }
+        if (user.getUserId() == deal.getTargetId()) {
+            deal.setTargetIsDetermine(true);
+        }
 
         log.info("用户 {} 添加道具完毕;", user.getUserName());
 
