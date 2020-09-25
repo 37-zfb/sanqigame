@@ -283,12 +283,8 @@ public final class PropsUtil {
         try {
             Method addProps = newBuilder.getClass().getMethod("addProps", GameMsg.Props.Builder.class);
             addProps.invoke(newBuilder, reward);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            log.error(e.getMessage(), e);
         }
     }
 

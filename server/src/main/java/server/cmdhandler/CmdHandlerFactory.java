@@ -72,7 +72,7 @@ public class CmdHandlerFactory {
                 log.info("关联 {} <==> {} ", msgType.getName(), subClazz.getName());
                 HANDLER_MAP.put(msgType, cmdHandler);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
         }
 

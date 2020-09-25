@@ -3,7 +3,10 @@ package server.timer;
 import constant.SceneConst;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
+import server.GameServer;
 import server.UserManager;
+import server.cmdhandler.skill.SkillUtil;
+import server.cmdhandler.task.listener.TaskUtil;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.profession.SummonMonster;
@@ -72,6 +75,9 @@ public class SummonMonsterTimer {
                                 if (currBossMonster == null) {
                                     return;
                                 }
+                                //判断是否超时
+                                SkillUtil.getSkillUtil().isTimeout(user, currBossMonster);
+
 
                                 synchronized (currBossMonster.getATTACK_BOSS_MONITOR()) {
                                     if (currBossMonster.getHp() > 0) {
@@ -118,7 +124,6 @@ public class SummonMonsterTimer {
                                     targetUser.getPlayArena().setTargetUserId(null);
                                     user.getPlayArena().setTargetUserId(null);
 
-//                                  taskPublicMethod.listener(user);
                                     GameMsg.UserDieResult userDieResult = GameMsg.UserDieResult.newBuilder()
                                             .setTargetUserId(targetUser.getUserId())
                                             .build();
@@ -166,7 +171,6 @@ public class SummonMonsterTimer {
             }
             user.getSummonMonsterRunnableScheduledFutureMap().get(summonMonster).cancel(true);
             user.getSummonMonsterRunnableScheduledFutureMap().remove(summonMonster);
-//            log.info("用户 {} 的召唤兽时间到;", user.getUserName());
         }, time, TimeUnit.SECONDS);
     }
 

@@ -13,6 +13,7 @@ import server.cmdhandler.ICmdHandler;
 import server.cmdhandler.task.listener.TaskUtil;
 import server.model.User;
 import server.UserManager;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Map;
@@ -59,7 +60,7 @@ public class UserJoinTeamCmdHandler implements ICmdHandler<GameMsg.UserJoinTeamC
             //被邀请者没有队伍
             teamUtil.joinTeam(user, originateUser);
 
-            taskUtil.listener(user);
+            taskUtil.listener(user, TaskType.AddTeamType.getTaskCode());
 
         } else {
             GameMsg.UserJoinTeamResult.Builder newBuilder = GameMsg.UserJoinTeamResult.newBuilder();

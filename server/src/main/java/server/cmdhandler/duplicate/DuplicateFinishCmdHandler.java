@@ -13,6 +13,7 @@ import server.model.User;
 import server.model.duplicate.Duplicate;
 import server.util.PropsUtil;
 import type.DuplicateType;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Arrays;
@@ -68,7 +69,7 @@ public class DuplicateFinishCmdHandler implements ICmdHandler<GameMsg.DuplicateF
 
         taskPublicMethod.addExperience(DuplicateConst.DUPLICATE_EXPERIENCE, user);
         //任务监听
-        taskPublicMethod.listener(user);
+        taskPublicMethod.listener(user, TaskType.DuplicateType.getTaskCode());
     }
 
 

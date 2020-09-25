@@ -32,7 +32,7 @@ public class Duplicate {
     /**
      * 当前 boss
      */
-    private BossMonster currBossMonster;
+    private volatile BossMonster currBossMonster;
 
     /**
      * 通关副本后，获得的奖励道具id集合

@@ -2,6 +2,7 @@ package constant.read;
 
 import com.alibaba.fastjson.JSON;
 import constant.info.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,6 +17,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+/**
+ * @author 张丰博
+ */
+@Slf4j
 public class ExcelReaderUtil {
     public static void ReadData() throws IOException {
         String rootPath = "C:\\all_project\\sanqigame\\excel\\";
@@ -47,7 +52,7 @@ public class ExcelReaderUtil {
 
                 for (int excelRow = 0; excelRow < rows; excelRow++) {
                     Row row = sheet.getRow(excelRow);
-                    String key  = row.getCell(0).getStringCellValue().trim();
+                    String key = row.getCell(0).getStringCellValue().trim();
                     int value = (int) row.getCell(1).getNumericCellValue();
 
                     jsonData.append("\"").append(key).append("\"").append(":").append(value).append(",");
@@ -60,17 +65,11 @@ public class ExcelReaderUtil {
                     Method init = clazz.getDeclaredMethod("init", clazz);
                     init.setAccessible(true);
                     init.invoke(parseObject, parseObject);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    log.error(e.getMessage(), e);
                 }
 
             }
-
-
 
 
         }

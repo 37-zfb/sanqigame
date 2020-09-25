@@ -134,6 +134,7 @@ public class UserCmd {
                     System.out.println("======>30:查看任务;");
                     System.out.println("======>31:领取任务奖励;");
                     System.out.println("======>32:好友列表;");
+                    System.out.println("======>33:出售道具;");
                     System.out.println("======>99:退出;");
 
                     // 操作指令数字
@@ -299,7 +300,7 @@ public class UserCmd {
                         }
 
                     } else if ("12".equals(command)) {
-
+                        System.out.println("0、退出;");
                         Map<Integer, Props> backpackClient = role.getBackpackClient();
 
                         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
@@ -326,6 +327,9 @@ public class UserCmd {
 
                         }
                         long nextInt = scanner.nextLong();
+                        if (nextInt == 0) {
+                            continue;
+                        }
                         return GameMsg.RepairEquipmentCmd.newBuilder().setUserEquipmentId(nextInt).build();
                     } else if ("13".equals(command)) {
                         Map<Integer, Duplicate> duplicateMap = GameData.getInstance().getDuplicateMap();
@@ -641,7 +645,34 @@ public class UserCmd {
                                     .build();
                         }
 
-                    }else {
+                    } else if ("33".equals(command)) {
+
+                        //背包
+                        Map<Integer, Props> backpackClient = role.getBackpackClient();
+                        System.out.println("背包空间: " + backpackClient.size() + "/100");
+                        System.out.println("道具如下:");
+                        System.out.println("金币: " + role.getMoney());
+                        for (Map.Entry<Integer, Props> propsEntry : backpackClient.entrySet()) {
+                            if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Equipment) {
+                                System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType());
+                            } else if (propsEntry.getValue().getPropsProperty().getType() == PropsType.Potion) {
+                                Potion potion = (Potion) propsEntry.getValue().getPropsProperty();
+                                System.out.println("==> " + propsEntry.getKey() + "、" + propsEntry.getValue().getName() + "\t\t类型: " + propsEntry.getValue().getPropsProperty().getType().getType() + " \t\t数量: " + potion.getNumber());
+                            }
+                        }
+
+                        System.out.println("选择道具:");
+                        System.out.println("0、退出;");
+                        int location = scanner.nextInt();
+                        if (location == 0) {
+                            continue;
+                        }
+
+                        GameMsg.UserSellCmd userSellCmd = GameMsg.UserSellCmd.newBuilder()
+                                .setLocation(location)
+                                .build();
+                        ctx.writeAndFlush(userSellCmd);
+                    } else {
                         log.error("操作选择错误,请重新输入!");
                         continue;
                     }
@@ -736,8 +767,8 @@ public class UserCmd {
             ctx.writeAndFlush((GameMsg.LookAllTaskCmd) cmd);
         } else if (cmd instanceof GameMsg.DialogueTaskCmd) {
             ctx.writeAndFlush((GameMsg.DialogueTaskCmd) cmd);
-        }else if (cmd instanceof GameMsg.DeleteFriendCmd){
-            ctx.writeAndFlush((GameMsg.DeleteFriendCmd)cmd);
+        } else if (cmd instanceof GameMsg.DeleteFriendCmd) {
+            ctx.writeAndFlush((GameMsg.DeleteFriendCmd) cmd);
         }
 
 

@@ -37,6 +37,10 @@ public class UserUndoEquipmentCmdHandler implements ICmdHandler<GameMsg.UserUndo
         MyUtil.checkIsNull(ctx, userUndoEquipmentCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
+        if (user.getDeal() != null){
+            return;
+        }
+
         int propsId = userUndoEquipmentCmd.getPropsId();
         long userEquipmentId = userUndoEquipmentCmd.getUserEquipmentId();
         Map<Integer, Props> backpack = user.getBackpack();

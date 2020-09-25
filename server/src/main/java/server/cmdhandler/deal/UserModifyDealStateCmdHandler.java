@@ -1,5 +1,7 @@
 package server.cmdhandler.deal;
 
+import exception.CustomizeErrorCode;
+import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +27,7 @@ public class UserModifyDealStateCmdHandler implements ICmdHandler<GameMsg.UserMo
         int targetId = userModifyDealStateCmd.getTargetId();
         User targetUser = UserManager.getUserById(targetId);
         if (targetUser == null) {
-            return;
+            throw new CustomizeException(CustomizeErrorCode.TARGET_USER_QUIT);
         }
 
         Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();

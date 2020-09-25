@@ -69,7 +69,7 @@ public class TaskUtil {
 
 
         if (TaskType.isContain(task.getTypeCode())) {
-            listener(user);
+            listener(user,task.getTypeCode());
         }
 
     }
@@ -101,7 +101,7 @@ public class TaskUtil {
 
         if (task != null && task.getTypeCode().equals(TaskType.LvType.getTaskCode())) {
             //此时任务: 提升等级
-            listener(user);
+            listener(user,TaskType.LvType.getTaskCode());
         }
     }
 
@@ -126,7 +126,7 @@ public class TaskUtil {
     }
 
 
-    public void listener(User user) {
+    public void listener(User user,Integer taskCode) {
 
         PlayTask playTask = user.getPlayTask();
         if (!playTask.isHaveTask()) {
@@ -137,12 +137,18 @@ public class TaskUtil {
         Integer currTaskId = playTask.getCurrTaskId();
         Task task = GameData.getInstance().getTaskMap().get(currTaskId);
 
+        if (!task.getTypeCode().equals(taskCode)){
+            return;
+        }
+
+
         String clazzStr = "";
         for (TaskType taskType : TaskType.values()) {
             if (!task.getTypeCode().equals(taskType.getTaskCode())) {
                 continue;
             }
             clazzStr = taskType.getTaskType();
+            break;
         }
 
         if (clazzStr.equals("")) {

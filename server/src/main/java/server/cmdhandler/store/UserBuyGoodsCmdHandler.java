@@ -17,6 +17,7 @@ import server.model.store.Goods;
 import server.scene.GameData;
 import server.service.StoreService;
 import type.PropsType;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Arrays;
@@ -109,7 +110,7 @@ public class UserBuyGoodsCmdHandler implements ICmdHandler<GameMsg.UserBuyGoodsC
 
         GameMsg.UserBuyGoodsResult build = newBuilder.build();
         ctx.writeAndFlush(build);
-        taskUtil.listener(user);
+        taskUtil.listener(user, TaskType.GetEquipmentType.getTaskCode());
     }
 
 

@@ -19,6 +19,7 @@ import server.model.User;
 import server.timer.guild.DbGuildTimer;
 import server.timer.state.DbUserStateTimer;
 import type.GuildMemberType;
+import type.TaskType;
 import util.MyUtil;
 
 /**
@@ -76,7 +77,7 @@ public class UserEnterGuildCmdHandler implements ICmdHandler<GameMsg.UserEnterGu
         CurrUserStateEntity userState = PublicMethod.getInstance().createUserState(user);
         userStateTimer.modifyUserState(userState);
 
-        taskPublicMethod.listener(user);
+        taskPublicMethod.listener(user, TaskType.JoinType.getTaskCode());
 
         GameMsg.Guild.Builder guildInfo = GameMsg.Guild.newBuilder()
                 .setGuildId(guildId)

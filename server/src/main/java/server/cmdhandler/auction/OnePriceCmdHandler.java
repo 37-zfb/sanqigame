@@ -44,15 +44,18 @@ public class OnePriceCmdHandler implements ICmdHandler<GameMsg.OnePriceCmd> {
         User user = PublicMethod.getInstance().getUser(ctx);
 
         int auctionId = onePriceCmd.getAuctionId();
+        if (user.getMoney() < PlayAuction.getAuctionItemById(auctionId).getPrice()) {
+            throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
+        }
+
+        //拍卖品
         DbAuctionItemEntity auctionItemEntity = PlayAuction.removeAuctionItem(auctionId);
         if (auctionItemEntity == null) {
             throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
         }
+        //设置已卖
+        auctionItemEntity.setIsSell(true);
 
-        if (user.getMoney() < auctionItemEntity.getPrice()) {
-            // 钱不够
-            throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
-        }
 
         Props props = GameData.getInstance().getPropsMap().get(auctionItemEntity.getPropsId());
         log.info("用户 {} 一口价拍买了 {}", user.getUserName(), props.getName());

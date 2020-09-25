@@ -129,7 +129,7 @@ public class GameClientHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        cause.printStackTrace();
+        log.error(cause.getMessage(), cause);
         if (!handshakeFuture.isDone()) {
             handshakeFuture.setFailure(cause);
         }

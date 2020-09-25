@@ -24,6 +24,7 @@ import server.model.props.Props;
 import server.scene.GameData;
 import server.timer.state.DbUserStateTimer;
 import type.PropsType;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Collections;
@@ -105,11 +106,10 @@ public class SortOutDealCmdHandler implements ICmdHandler<GameMsg.SortOutDealCmd
         }
 
         user.setDeal(null);
-//        sortOutBackPack(newBuilder, user);
         GameMsg.SortOutDealResult sortOutDealResult = newBuilder.build();
         ctx.writeAndFlush(sortOutDealResult);
 
-        taskPublicMethod.listener(user);
+        taskPublicMethod.listener(user, TaskType.DealType.getTaskCode());
 
     }
 

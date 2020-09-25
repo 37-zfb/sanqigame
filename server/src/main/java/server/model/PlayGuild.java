@@ -49,7 +49,7 @@ public class PlayGuild {
     /**
      * 仓库道具  位置 道具
      */
-    private final Map<Integer, Props> WAREHOUSE_PROPS = new HashMap<>();
+    private final Map<Integer, Props> WAREHOUSE_PROPS = new ConcurrentHashMap<>();
 
 
 

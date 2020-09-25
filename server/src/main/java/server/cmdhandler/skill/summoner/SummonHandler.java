@@ -51,7 +51,7 @@ public class SummonHandler implements ISkill {
         SummonMonsterTimer.getInstance().startAttack(user, summonMonster);
 
         SummonMonsterTimer.getInstance().cancelTimer(user, summonMonster, skillProperty.getEffectTime());
-        //启动定时器，攻击当前副本中的boss
+
         log.info("用户 {} ,使用召唤术", user.getUserName());
         GameMsg.UserSkillAttkResult.Builder newBuilder = GameMsg.UserSkillAttkResult.newBuilder();
         GameMsg.UserSkillAttkResult userSkillAttkResult = newBuilder.setIsSuccess(true)

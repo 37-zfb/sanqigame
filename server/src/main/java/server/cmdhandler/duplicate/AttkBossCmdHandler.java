@@ -7,6 +7,7 @@ import exception.CustomizeException;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import server.GameServer;
+import server.cmdhandler.skill.SkillUtil;
 import server.cmdhandler.task.listener.TaskUtil;
 import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
@@ -48,20 +49,8 @@ public class AttkBossCmdHandler implements ICmdHandler<GameMsg.AttkBossCmd> {
 
         Integer subHp = user.calMonsterSubHp();
 
-        if ((currBossMonster.getEnterRoomTime() + DuplicateConst.BOSS_TIME) < System.currentTimeMillis()) {
-            // 副本超时
-            log.error("用户: {} , 副本: {} , boss: {} , 超时;", user.getUserName(), currDuplicate.getName(), currBossMonster.getBossName());
-
-            BossAttackTimer.getInstance().cancelTask(currDuplicate.getCurrBossMonster().getScheduledFuture());
-            PublicMethod.getInstance().cancelSummonTimerOrPlayTeam(user);
-
-            //持久化装备耐久度
-            PublicMethod.getInstance().dbWeaponDurability(user.getUserEquipmentArr());
-
-            user.setCurrDuplicate(null);
-            // 用户退出
-            throw new CustomizeException(CustomizeErrorCode.DUPLICATE_TIME_OUT);
-        }
+        //判断是否超时
+        SkillUtil.getSkillUtil().isTimeout(user, currBossMonster);
 
         synchronized (currBossMonster.getATTACK_BOSS_MONITOR()) {
             if (currBossMonster.getHp() <= 0) {

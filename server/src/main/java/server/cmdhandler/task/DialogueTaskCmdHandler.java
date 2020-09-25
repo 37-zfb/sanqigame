@@ -9,6 +9,7 @@ import server.PublicMethod;
 import server.cmdhandler.ICmdHandler;
 import server.cmdhandler.task.listener.TaskUtil;
 import server.model.User;
+import type.TaskType;
 import util.MyUtil;
 
 /**
@@ -28,6 +29,6 @@ public class DialogueTaskCmdHandler implements ICmdHandler<GameMsg.DialogueTaskC
         MyUtil.checkIsNull(ctx, dialogueTaskCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
 
-        taskPublicMethod.listener(user);
+        taskPublicMethod.listener(user, TaskType.DialogueType.getTaskCode());
     }
 }

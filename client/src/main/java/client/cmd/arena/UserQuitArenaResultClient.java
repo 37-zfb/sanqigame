@@ -30,7 +30,7 @@ public class UserQuitArenaResultClient implements ICmd<GameMsg.UserQuitArenaResu
             playArenaClient.setInArena(false);
             role.setCurrHp(ProfessionConst.HP);
             role.setCurrMp(ProfessionConst.MP);
-            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
+//            CmdThread.getInstance().process(ctx, role, SceneData.getInstance().getSceneMap().get(role.getCurrSceneId()).getNpcMap().values());
         }else {
             // 其他用户，
             playArenaClient.getArenaUserMap().remove(userId);

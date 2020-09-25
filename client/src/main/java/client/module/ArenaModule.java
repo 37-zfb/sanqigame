@@ -61,7 +61,7 @@ public class ArenaModule {
 
                 arenaCmd(ctx, role);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
 
         });
@@ -75,7 +75,7 @@ public class ArenaModule {
             System.out.println("当前HP: " + role.getCurrHp());
             System.out.println("当前MP: " + role.getCurrMp());
 
-            if (playArenaClient.getChallengeUser() != null){
+            if (playArenaClient.getChallengeUser() != null) {
                 System.out.println("对手 HP: " + playArenaClient.getChallengeUser().getCurrHp());
                 System.out.println("对手 MP: " + playArenaClient.getChallengeUser().getCurrMp());
             }
@@ -107,7 +107,7 @@ public class ArenaModule {
                 }
 
                 int userId = scanner.nextInt();
-                if (userId == 0){
+                if (userId == 0) {
                     continue;
                 }
 

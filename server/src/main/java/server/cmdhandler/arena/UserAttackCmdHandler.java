@@ -13,6 +13,7 @@ import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayArena;
 import server.model.User;
 import server.UserManager;
+import type.TaskType;
 import util.MyUtil;
 
 /**
@@ -70,6 +71,6 @@ public class UserAttackCmdHandler implements ICmdHandler<GameMsg.UserAttackCmd> 
         }
         log.info("用户:{}, 对用户:{} 的伤害 {}", user.getUserName(), targetUser.getUserName(), subHp);
 
-        taskPublicMethod.listener(user);
+        taskPublicMethod.listener(user, TaskType.PKWin.getTaskCode());
     }
 }

@@ -72,15 +72,7 @@ public class ReceiveTaskAwardCmdHandler implements ICmdHandler<GameMsg.ReceiveTa
         GameMsg.ReceiveTaskAwardResult.Builder newBuilder = GameMsg.ReceiveTaskAwardResult.newBuilder();
         for (MailProps rewardProp : rewardProps) {
             Props props = propsMap.get(rewardProp.getPropsId());
-//            int location = PublicMethod.getInstance().addEquipment(user, props);
             PropsUtil.getPropsUtil().addProps(Collections.singletonList(rewardProp.getPropsId()), user, newBuilder, rewardProp.getNumber());
-
-//            GameMsg.Props.Builder reward = GameMsg.Props.newBuilder()
-//                    .setPropsId(props.getId())
-//                    .setUserPropsId(((Equipment) backpack.get(location).getPropsProperty()).getId())
-//                    .setLocation(location)
-//                    .setPropsNumber(rewardProp.getNumber());
-//            newBuilder.addProps(reward);
         }
 
         newBuilder.setMoney(rewardMoney);

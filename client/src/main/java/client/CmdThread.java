@@ -60,7 +60,7 @@ public class CmdThread {
                 UserCmd.sendCmd(ctx,  cmd);
 
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
 
         });

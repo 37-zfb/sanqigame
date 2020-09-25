@@ -43,13 +43,8 @@ public class UserCancelDealItemCmdHandler implements ICmdHandler<GameMsg.UserCan
 
         GameMsg.Props propsInfo = userCancelDealItemCmd.getProps();
         int location = propsInfo.getLocation();
-        Props props = user.getBackpack().get(location);
-
         int propsId = propsInfo.getPropsId();
         int propsNumber = propsInfo.getPropsNumber();
-        if (props == null) {
-            throw new CustomizeException(CustomizeErrorCode.PROPS_NOT_EXIST);
-        }
 
 
 
@@ -74,12 +69,17 @@ public class UserCancelDealItemCmdHandler implements ICmdHandler<GameMsg.UserCan
             if (user.getUserId() == deal.getTargetId()) {
                 deal.getTargetProps().remove(location);
             }
-            log.info("用户: {} 取消 {} ", user.getUserName(), GameData.getInstance().getPropsMap().get(propsId).getName());
+            log.info("用户: {} 取消 {} ",
+                    user.getUserName(),
+                    GameData.getInstance().getPropsMap().get(propsId).getName());
         }
 
         if (dealProps.getNumber() > propsNumber) {
             dealProps.setNumber(dealProps.getNumber() - propsNumber);
-            log.info("用户: {} 减少 {}个 {}", user.getUserName(), propsNumber, GameData.getInstance().getPropsMap().get(propsId).getName());
+            log.info("用户: {} 减少 {}个 {}",
+                    user.getUserName(),
+                    propsNumber,
+                    GameData.getInstance().getPropsMap().get(propsId).getName());
         }
 
 

@@ -1,5 +1,7 @@
 package util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +14,7 @@ import java.util.Set;
 /**
  * @author 张丰博
  */
+@Slf4j
 public class SensitiveWordInit {
     /**
      * 字符编码
@@ -115,7 +118,7 @@ public class SensitiveWordInit {
             read.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return wordSet;
     }

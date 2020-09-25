@@ -37,9 +37,6 @@ public class UserResetMoneyCmdHandler implements ICmdHandler<GameMsg.UserResetMo
         }
 
         int money = userResetMoneyCmd.getMoney();
-        if (money == 0){
-            return;
-        }
 
         if (user.getMoney() < money) {
             throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
@@ -49,11 +46,12 @@ public class UserResetMoneyCmdHandler implements ICmdHandler<GameMsg.UserResetMo
         if (user.getUserId() == deal.getInitiatorId()) {
             deal.setInitiatorMoney(money);
         }
-
         if (user.getUserId() == deal.getTargetId()) {
             deal.setTargetMoney(money);
         }
-        log.info("用户: {} 重置 {} 金币;", user.getUserName(), money);
+        log.info("用户: {} 重置 {} 金币;",
+                user.getUserName(),
+                money);
 
 
         GameMsg.UserResetMoneyResult userResetMoneyResult = GameMsg.UserResetMoneyResult.newBuilder()

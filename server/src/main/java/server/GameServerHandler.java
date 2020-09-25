@@ -139,8 +139,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        System.out.println(cause.getMessage());
-        cause.printStackTrace();
+        log.error(cause.getMessage(), cause);
         super.exceptionCaught(ctx, cause);
     }
 }

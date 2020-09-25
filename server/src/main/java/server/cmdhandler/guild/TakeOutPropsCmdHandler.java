@@ -21,6 +21,7 @@ import server.model.props.Potion;
 import server.model.props.Props;
 import server.timer.guild.DbGuildTimer;
 import type.PropsType;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Collections;
@@ -82,7 +83,7 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
                 .build();
         ctx.writeAndFlush(takeOutPropsResult);
 
-        taskPublicMethod.listener(user);
+        taskPublicMethod.listener(user, TaskType.GetEquipmentType.getTaskCode());
     }
 
     /**
@@ -96,7 +97,6 @@ public class TakeOutPropsCmdHandler implements ICmdHandler<GameMsg.TakeOutPropsC
         PlayGuild playGuild = user.getPlayGuild();
         Props p = null;
         synchronized (playGuild.getWAREHOUSE_MONITOR()) {
-//            p = playGuild.getWAREHOUSE_PROPS().get(props.getUserPropsId());
             for (Props value : playGuild.getWAREHOUSE_PROPS().values()) {
                 if (value.getPropsProperty().getType() == PropsType.Equipment && ((Equipment) value.getPropsProperty()).getId() == props.getUserPropsId()) {
                     p = value;

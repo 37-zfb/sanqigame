@@ -14,6 +14,7 @@ import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayTeam;
 import server.model.User;
 import server.UserManager;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Map;
@@ -52,6 +53,12 @@ public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> 
             playTeam.setTeamNumber(playTeam.getTeamNumber() + 1);
             playTeam.getTEAM_MEMBER()[0] = user.getUserId();
             user.setPlayTeam(playTeam);
+
+            GameMsg.UserJoinTeamPerformResult userJoinTeamPerformResult = GameMsg.UserJoinTeamPerformResult.newBuilder()
+                    .setTeamLeaderId(user.getUserId())
+                    .setIsJoin(true)
+                    .build();
+            ctx.writeAndFlush(userJoinTeamPerformResult);
         }
 
 
@@ -62,14 +69,8 @@ public class UserTeamUpCmdHandler implements ICmdHandler<GameMsg.UserTeamUpCmd> 
                 .build();
         targetUser.getCtx().writeAndFlush(build);
 
-        //通知自己，已创建队伍
-        GameMsg.UserJoinTeamPerformResult userJoinTeamPerformResult = GameMsg.UserJoinTeamPerformResult.newBuilder()
-                .setTeamLeaderId(user.getUserId())
-                .setIsJoin(true)
-                .build();
-        ctx.writeAndFlush(userJoinTeamPerformResult);
 
-        taskUtil.listener(user);
+        taskUtil.listener(user, TaskType.AddTeamType.getTaskCode());
     }
 
     private void clearInvitationTimeout(Map<Integer, Long> invitationUserIdMap) {

@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.UserManager;
 import server.cmdhandler.skill.ISkill;
+import server.cmdhandler.skill.SkillUtil;
 import server.model.PlayTeam;
 import server.model.User;
+import server.model.duplicate.Duplicate;
 import server.model.profession.Skill;
 import server.model.profession.skill.PastorSkillProperty;
 import server.timer.ShieldTimer;
@@ -30,6 +32,11 @@ public class ShieldHandler implements ISkill {
         Skill skill = user.getSkillMap().get(cmd.getSkillId());
         PastorSkillProperty skillProperty = (PastorSkillProperty) skill.getSkillProperty();
 
+        Duplicate duplicate = PublicMethod.getInstance().getDuplicate(user);
+        if (duplicate != null) {
+            //判断是否超时
+            SkillUtil.getSkillUtil().isTimeout(user, duplicate.getCurrBossMonster());
+        }
 
         PlayTeam playTeam = user.getPlayTeam();
         if (playTeam != null) {

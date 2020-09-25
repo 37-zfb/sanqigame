@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import server.PublicMethod;
 import server.cmdhandler.task.listener.TaskUtil;
+import server.model.PlayTask;
 import server.model.props.Props;
 import msg.GameMsg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import server.model.User;
 import server.model.props.Equipment;
 import server.service.UserService;
 import server.timer.state.DbUserStateTimer;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Map;
@@ -40,6 +42,10 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
     public void handle(ChannelHandlerContext ctx, GameMsg.UserWearEquipmentCmd userWearEquipmentCmd) {
         MyUtil.checkIsNull(ctx, userWearEquipmentCmd);
         User user = PublicMethod.getInstance().getUser(ctx);
+
+        if (user.getDeal() != null) {
+            return;
+        }
 
         Map<Integer, Props> propsMap = GameData.getInstance().getPropsMap();
 
@@ -79,7 +85,6 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
                 userEquipmentArr[i].setLocation(location);
                 userStateTimer.modifyUserEquipment(userEquipmentArr[i]);
 
-//                userService.modifyWearEquipment(userEquipmentArr[i].getId(), 0,location);
                 // 穿上指定的装备
                 userEquipmentArr[i] = wearEqu;
                 isSuccess = true;
@@ -93,11 +98,8 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
                 }
             }
         }
-//        userService.modifyWearEquipment(equipment.getId(), 1,-1);
         wearEqu.setLocation(-1);
         userStateTimer.modifyUserEquipment(wearEqu);
-
-        taskPublicMethod.listener(user);
 
         GameMsg.UserWearEquipmentResult equipmentResult = GameMsg.UserWearEquipmentResult.newBuilder()
                 .setPropsId(wearEqu.getPropsId())
@@ -107,5 +109,6 @@ public class UserWearEquipmentCmdHandler implements ICmdHandler<GameMsg.UserWear
 
         ctx.channel().writeAndFlush(equipmentResult);
 
+        taskPublicMethod.listener(user,TaskType.WearEquipmentType.getTaskCode());
     }
 }

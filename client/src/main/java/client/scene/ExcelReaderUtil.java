@@ -1,6 +1,7 @@
 package client.scene;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -14,6 +15,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 张丰博
+ */
+@Slf4j
 public class ExcelReaderUtil {
     public static void ReadData() throws IOException {
         String rootPath = "C:\\all_project\\sanqigame\\excel\\";
@@ -89,10 +94,8 @@ public class ExcelReaderUtil {
                     }
                     try {
                         method.invoke(gameData, result);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        log.error(e.getMessage(), e);
                     }
                 }
 

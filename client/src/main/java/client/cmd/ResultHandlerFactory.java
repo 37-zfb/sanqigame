@@ -72,10 +72,8 @@ public class ResultHandlerFactory {
                 log.info("关联 {} <==> {} ", msgType.getName(), subClazz.getName());
 
                 CMD_MAP.put(msgType, cmd);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            } catch (InstantiationException | IllegalAccessException e) {
+                log.error(e.getMessage(), e);
             }
 
         }

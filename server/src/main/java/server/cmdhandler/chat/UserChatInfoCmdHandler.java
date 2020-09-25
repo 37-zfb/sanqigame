@@ -37,7 +37,7 @@ public class UserChatInfoCmdHandler implements ICmdHandler<GameMsg.UserChatInfoC
                 Chat chat = (Chat) GameServer.APPLICATION_CONTEXT.getBean(Class.forName(type.getHandler()));
                 chat.chat(ctx, userChatInfoCmd);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
         }
 

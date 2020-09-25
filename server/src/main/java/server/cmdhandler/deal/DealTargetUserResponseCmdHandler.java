@@ -33,7 +33,6 @@ public class DealTargetUserResponseCmdHandler implements ICmdHandler<GameMsg.Dea
 
         boolean isAgree = dealTargetUserResponseCmd.getIsAgree();
         int originateId = dealTargetUserResponseCmd.getOriginateId();
-
         User originateUser = UserManager.getUserById(originateId);
         if (originateUser == null) {
             throw new CustomizeException(CustomizeErrorCode.ORIGINATE_USER_NOT_FOUNT);
@@ -67,7 +66,5 @@ public class DealTargetUserResponseCmdHandler implements ICmdHandler<GameMsg.Dea
             ctx.writeAndFlush(userDealRequestResult);
             originateUser.getCtx().writeAndFlush(userDealRequestResult);
         }
-
-        user.getDEAL_ID_SET().remove(user.getUserId());
     }
 }

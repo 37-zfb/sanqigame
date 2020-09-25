@@ -268,6 +268,9 @@ enum MsgCode {
   USER_RESET_MONEY_CMD = 178;
   USER_RESET_MONEY_RESULT = 179;
 
+  USER_SELL_CMD = 180;
+  USER_SELL_RESULT = 181;
+
   USER_UP_LV_RESULT = 157;
 
   ERROR_RESULT = 96;
@@ -350,8 +353,8 @@ message DieResult {
   uint32 monsterId = 2;
 
   // 爆的道具， 装备
-//  uint32 propsId = 3;
-//  uint32 location = 7;
+  //  uint32 propsId = 3;
+  //  uint32 location = 7;
   repeated Props props = 3;
 
   //之前是否已死
@@ -1375,4 +1378,13 @@ message  SendAllMailCmd{
 //护盾减少值
 message ShieldReduceResult{
   uint32 reduceV = 1;
+}
+
+//卖
+message UserSellCmd{
+  uint32 location = 1;
+}
+message UserSellResult{
+  uint32 location = 1;
+  uint32 currMoney =2;
 }

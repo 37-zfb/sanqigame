@@ -49,9 +49,7 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
             //拍卖品已卖出
             throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
         }
-
-        if (user.getMoney() < money || money < auctionItemById.getAuction()) {
-            // 钱不够
+        if (user.getMoney() < money){
             throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
         }
 
@@ -59,8 +57,9 @@ public class BiddingGoodsCmdHandler implements ICmdHandler<GameMsg.BiddingGoodsC
         dbBidderEntity.setAuctionId(auctionId);
         dbBidderEntity.setMoney(money);
         dbBidderEntity.setUserId(user.getUserId());
+
         //添加竞拍者
-        DbBidderEntity beforeBidder = PlayAuction.addBidder(dbBidderEntity);
+        DbBidderEntity beforeBidder = auctionItemById.addBidder(dbBidderEntity);
 
         user.setMoney(user.getMoney() - money);
 

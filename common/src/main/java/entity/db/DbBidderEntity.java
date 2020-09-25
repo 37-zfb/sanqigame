@@ -28,6 +28,6 @@ public class DbBidderEntity {
     /**
      * 钱
      */
-    private Integer money;
+    private Integer money = 0;
 
 }

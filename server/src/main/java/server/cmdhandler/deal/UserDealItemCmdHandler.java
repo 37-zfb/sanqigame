@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * @author 张丰博
- * 添加或减少 道具
+ * 添加 道具
  */
 @Component
 @Slf4j
@@ -50,18 +50,17 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
         GameMsg.Props propsInfo = userDealItemCmd.getProps();
         int location = propsInfo.getLocation();
         Props props = user.getBackpack().get(location);
+        if (props == null) {
+            return;
+        }
 
         int propsId = propsInfo.getPropsId();
         int propsNumber = propsInfo.getPropsNumber();
-        if (props != null &&
-                props.getPropsProperty().getType() == PropsType.Potion &&
+        if (props.getPropsProperty().getType() == PropsType.Potion &&
                 ((Potion) props.getPropsProperty()).getNumber() < propsNumber) {
             throw new CustomizeException(CustomizeErrorCode.POTION_INSUFFICIENT);
         }
 
-        if (location == 0) {
-            return;
-        }
 
         //添加道具
         if (user.getUserId() == deal.getInitiatorId()) {
@@ -74,7 +73,6 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
             }
 
         }
-
         if (user.getUserId() == deal.getTargetId()) {
             Map<Integer, DealProps> targetProps = deal.getTargetProps();
             DealProps dealProps = targetProps.get(location);
@@ -84,7 +82,10 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
                 dealProps.setNumber(dealProps.getNumber() + propsNumber);
             }
         }
-        log.info("用户: {} 添加了 {} {}个", user.getUserName(), GameData.getInstance().getPropsMap().get(propsId).getName(), propsNumber);
+        log.info("用户: {} 添加了 {} {}个",
+                user.getUserName(),
+                GameData.getInstance().getPropsMap().get(propsId).getName(),
+                propsNumber);
 
 
         GameMsg.UserDealItemResult userDealItemResult = GameMsg.UserDealItemResult.newBuilder()
@@ -99,6 +100,11 @@ public class UserDealItemCmdHandler implements ICmdHandler<GameMsg.UserDealItemC
         }
 
         User targetUser = UserManager.getUserById(targetId);
+        if (targetUser == null){
+            return;
+        }
         targetUser.getCtx().writeAndFlush(userDealItemResult);
     }
+
+
 }

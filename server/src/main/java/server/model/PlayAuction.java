@@ -7,6 +7,7 @@ import exception.CustomizeException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author 张丰博
@@ -18,14 +19,14 @@ public final class PlayAuction {
     /**
      * 拍卖物品
      */
-    private static final Map<Integer, DbAuctionItemEntity> AUCTION_ITEM = new HashMap<>();
+    private static final Map<Integer, DbAuctionItemEntity> AUCTION_ITEM = new ConcurrentHashMap<>();
 
     /**
      * 拍卖行添加商品
      *
      * @param auctionItem
      */
-    public static synchronized Integer addAuctionItem(DbAuctionItemEntity auctionItem) {
+    public static Integer addAuctionItem(DbAuctionItemEntity auctionItem) {
         int id = 0;
         if (auctionItem != null && auctionItem.getId() == null) {
             Optional<Integer> max = AUCTION_ITEM.keySet().stream().max(Comparator.comparingInt(o -> o));
@@ -52,7 +53,7 @@ public final class PlayAuction {
     /**
      * 添加竞拍者
      */
-    public static synchronized DbBidderEntity addBidder(DbBidderEntity dbBidderEntity) {
+    public static DbBidderEntity addBidder(DbBidderEntity dbBidderEntity) {
         DbAuctionItemEntity dbAuctionItemEntity = AUCTION_ITEM.get(dbBidderEntity.getAuctionId());
 
         if (dbAuctionItemEntity == null){
@@ -68,7 +69,7 @@ public final class PlayAuction {
      * @param id
      * @return
      */
-    public static synchronized DbAuctionItemEntity removeAuctionItem(Integer id) {
+    public static DbAuctionItemEntity removeAuctionItem(Integer id) {
         DbAuctionItemEntity auctionItemEntity = null;
         if (id != null) {
             auctionItemEntity = AUCTION_ITEM.get(id);

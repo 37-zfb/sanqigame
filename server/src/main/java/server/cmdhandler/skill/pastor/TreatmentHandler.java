@@ -6,7 +6,9 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.skill.ISkill;
+import server.cmdhandler.skill.SkillUtil;
 import server.model.User;
+import server.model.duplicate.Duplicate;
 import server.model.profession.Skill;
 import server.model.profession.skill.PastorSkillProperty;
 import server.timer.PastorSkillTimer;
@@ -27,6 +29,12 @@ public class TreatmentHandler implements ISkill {
     public void skillHandle(ChannelHandlerContext ctx, GameMsg.UserSkillAttkCmd cmd) {
         MyUtil.checkIsNull(ctx, cmd);
         User user = PublicMethod.getInstance().getUser(ctx);
+
+        Duplicate duplicate = PublicMethod.getInstance().getDuplicate(user);
+        if (duplicate != null) {
+            //判断是否超时
+            SkillUtil.getSkillUtil().isTimeout(user, duplicate.getCurrBossMonster());
+        }
 
         Skill skill = user.getSkillMap().get(cmd.getSkillId());
         PastorSkillProperty skillProperty = (PastorSkillProperty) skill.getSkillProperty();

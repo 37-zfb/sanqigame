@@ -13,6 +13,7 @@ import server.model.duplicate.BossMonster;
 import server.model.duplicate.Duplicate;
 import server.model.profession.SummonMonster;
 import type.ProfessionType;
+import type.TaskType;
 
 import java.util.Map;
 
@@ -185,7 +186,7 @@ public final class TeamUtil {
                 teamUser.getPlayTeam().setTeamNumber(teamUser.getPlayTeam().getTeamNumber() + 1);
                 log.info("用户 {} 加入 {} 的队伍;", targetUser.getUserName(), teamUser.getUserName());
 
-                taskPublicMethod.listener(targetUser);
+                taskPublicMethod.listener(targetUser, TaskType.AddTeamType.getTaskCode());
 
                 GameMsg.UserJoinTeamPerformResult userJoinTeamResult = newBuilder.setIsJoin(true).build();
                 targetUser.getCtx().writeAndFlush(userJoinTeamResult);

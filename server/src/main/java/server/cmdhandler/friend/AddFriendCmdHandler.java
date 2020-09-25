@@ -15,6 +15,7 @@ import server.cmdhandler.task.listener.TaskUtil;
 import server.model.User;
 import server.service.FriendService;
 import server.util.IdWorker;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.Map;
@@ -60,8 +61,6 @@ public class AddFriendCmdHandler implements ICmdHandler<GameMsg.AddFriendCmd> {
         friendEntity.setFriendName(targetUserName);
         friendService.addFriend(friendEntity);
 
-        taskPublicMethod.listener(user);
-
         log.info("用户 {} 添加好友 {}", user.getUserName(),targetUserName);
         GameMsg.AddFriendResult addFriendResult = GameMsg.AddFriendResult
                 .newBuilder()
@@ -69,5 +68,7 @@ public class AddFriendCmdHandler implements ICmdHandler<GameMsg.AddFriendCmd> {
                 .setUserName(targetUserName)
                 .build();
         ctx.writeAndFlush(addFriendResult);
+
+        taskPublicMethod.listener(user, TaskType.AddFriendType.getTaskCode());
     }
 }

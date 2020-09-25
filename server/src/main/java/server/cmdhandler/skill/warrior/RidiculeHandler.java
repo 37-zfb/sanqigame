@@ -6,6 +6,7 @@ import msg.GameMsg;
 import org.springframework.stereotype.Component;
 import server.PublicMethod;
 import server.cmdhandler.skill.ISkill;
+import server.cmdhandler.skill.SkillUtil;
 import server.model.PlayArena;
 import server.model.User;
 import server.model.duplicate.BossMonster;
@@ -53,6 +54,10 @@ public class RidiculeHandler implements ISkill {
         if (currDuplicate != null) {
             // 副本中;  设置自己成为boss强制攻击的玩家
             BossMonster currBossMonster = currDuplicate.getCurrBossMonster();
+
+            //判断是否超时
+            SkillUtil.getSkillUtil().isTimeout(user, currBossMonster);
+
             ForceAttackUser forceAttackUser = PublicMethod.getInstance().createForeAttackUser(user.getUserId(), skillProperty.getEffectTime());
             AtomicReference<ForceAttackUser> attackUserAtomicReference = currBossMonster.getAttackUserAtomicReference();
             boolean isSuccess = attackUserAtomicReference.compareAndSet(null, forceAttackUser);

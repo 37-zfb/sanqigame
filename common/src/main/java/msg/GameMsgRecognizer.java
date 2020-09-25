@@ -58,12 +58,8 @@ public class GameMsgRecognizer {
                     msgCodeAndMsgMap.put(msgCode.getNumber(), (GeneratedMessageV3) defaultInstance);
 
                     msgClassAndMsgCodeMap.put(innerClass, msgCode.getNumber());
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    log.error(e.getMessage(), e);
                 }
 
 
@@ -93,7 +89,8 @@ public class GameMsgRecognizer {
     }
 
     /**
-     *  根据消息类型获取消息编号
+     * 根据消息类型获取消息编号
+     *
      * @param clazz
      * @return
      */
@@ -103,7 +100,7 @@ public class GameMsgRecognizer {
         }
 
         Integer msgCode = msgClassAndMsgCodeMap.get(clazz);
-        if (msgCode == null){
+        if (msgCode == null) {
             msgCode = -1;
         }
         return msgCode.intValue();

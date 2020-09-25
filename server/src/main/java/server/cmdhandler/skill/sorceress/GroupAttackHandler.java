@@ -18,6 +18,7 @@ import server.model.profession.skill.SorceressSkillProperty;
 import server.model.scene.Monster;
 import server.scene.GameData;
 import server.timer.MonsterTimer;
+import type.TaskType;
 import util.MyUtil;
 
 import java.util.List;
@@ -91,7 +92,7 @@ public class GroupAttackHandler implements ISkill {
 
             ArenaUtil.getArenaUtil().sendMsg(user, targetUser, subHp);
 
-            taskUtil.listener(user);
+            taskUtil.listener(user, TaskType.PKWin.getTaskCode());
 
         } else if (monsterMap.size() != 0) {
             // 存活着的怪

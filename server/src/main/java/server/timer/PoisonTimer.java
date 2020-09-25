@@ -8,6 +8,7 @@ import server.GameServer;
 import server.PublicMethod;
 import server.UserManager;
 import server.cmdhandler.arena.ArenaUtil;
+import server.cmdhandler.skill.SkillUtil;
 import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayArena;
 import server.model.User;
@@ -16,6 +17,7 @@ import server.model.duplicate.Duplicate;
 import server.model.profession.Skill;
 import server.model.scene.Monster;
 import server.scene.GameData;
+import type.TaskType;
 import util.CustomizeThreadFactory;
 
 import java.util.List;
@@ -75,7 +77,7 @@ public final class PoisonTimer {
             userPoison(user, 3);
             userPoison(user, 4);
 
-            taskUtil.listener(user);
+            taskUtil.listener(user, TaskType.PKWin.getTaskCode());
         } else if (monsterMap.size() != 0) {
             List<Monster> monsterAliveList = PublicMethod.getInstance().getMonsterAliveList(monsterMap.values());
             if (monsterAliveList == null) {
@@ -161,6 +163,8 @@ public final class PoisonTimer {
         if (user == null || bossMonster == null || delayTime == null) {
             return;
         }
+        //判断是否超时
+        SkillUtil.getSkillUtil().isTimeout(user, bossMonster);
 
         scheduledThreadPool.schedule(() -> {
             synchronized (bossMonster.getATTACK_BOSS_MONITOR()) {

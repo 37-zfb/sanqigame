@@ -13,6 +13,7 @@ import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import msg.GameMsg;
 import server.cmdhandler.mail.MailUtil;
+import server.cmdhandler.skill.SkillUtil;
 import server.cmdhandler.task.listener.TaskUtil;
 import server.model.PlayTeam;
 import server.model.User;
@@ -32,6 +33,7 @@ import server.util.IdWorker;
 import server.util.PropsUtil;
 import type.EquipmentType;
 import type.PropsType;
+import type.TaskType;
 
 import java.util.*;
 import java.util.concurrent.RunnableScheduledFuture;
@@ -98,6 +100,9 @@ public final class PublicMethod {
         if (currBossMonster == null) {
             return;
         }
+
+        //判断是否超时
+        SkillUtil.getSkillUtil().isTimeout(user, currBossMonster);
 
         GameMsg.AttkBossResult.Builder newBuilder1 = GameMsg.AttkBossResult.newBuilder();
 
@@ -170,8 +175,7 @@ public final class PublicMethod {
         }
 
         GameMsg.AttkResult.Builder attkResultBuilder = GameMsg.AttkResult.newBuilder();
-        // 普通攻击
-        // 使用当前被攻击的怪对象，做锁对象
+
         synchronized (monster.getSubHpMonitor()) {
 
             if (monster.isDie()) {
@@ -211,7 +215,7 @@ public final class PublicMethod {
 
                 //任务监听
                 TaskUtil taskPublicMethod = GameServer.APPLICATION_CONTEXT.getBean(TaskUtil.class);
-                taskPublicMethod.listener(user);
+                taskPublicMethod.listener(user, TaskType.KillMonsterType.getTaskCode());
                 //增加经验
                 taskPublicMethod.addExperience(SceneConst.SCENE_MONSTER_EXPERIENCE, user);
                 return;

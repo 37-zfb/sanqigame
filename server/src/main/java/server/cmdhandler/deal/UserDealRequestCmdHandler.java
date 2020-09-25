@@ -29,17 +29,12 @@ public class UserDealRequestCmdHandler implements ICmdHandler<GameMsg.UserDealRe
         }
 
         int targetUserId = userDealRequestCmd.getUserId();
-        if (targetUserId == user.getUserId()) {
-            throw new CustomizeException(CustomizeErrorCode.DEAL_REQUEST_ERROR);
-        }
-
         User targetUser = UserManager.getUserById(targetUserId);
         if (targetUser == null) {
-            throw new CustomizeException(CustomizeErrorCode.USER_NOT_EXISTS);
+            return;
         }
 
 
-//        user.getPLAY_DEAL().getUserIdSet().add(targetUserId);
         user.getDEAL_ID_SET().add(targetUserId);
 
         log.info("用户: {} ,请求 {} 交易;", user.getUserName(), targetUser.getUserName());

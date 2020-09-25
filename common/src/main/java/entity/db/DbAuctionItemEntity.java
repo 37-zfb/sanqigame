@@ -70,11 +70,34 @@ public class DbAuctionItemEntity {
     private DbBidderEntity bidder;
 
     /**
-     * 添加竞拍者
-     *
-     * @param bidderEntity
+     * 是否卖出
      */
-    public DbBidderEntity addBidder(DbBidderEntity bidderEntity) {
+    public boolean isSell = false;
+
+
+    public synchronized void setIsSell(boolean isSell){
+        if (this.isSell){
+            // 已卖出
+            throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
+        }
+        this.isSell = isSell;
+    }
+
+
+    /**
+     *
+     * @param bidderEntity 新竞拍者
+     * @return
+     */
+    public synchronized DbBidderEntity addBidder(DbBidderEntity bidderEntity) {
+        if (bidderEntity == null){
+            return null;
+        }
+
+        if (isSell){
+            throw new CustomizeException(CustomizeErrorCode.ITEM_NOT_FOUNT);
+        }
+
         if (bidder != null && bidder.getMoney() > bidderEntity.getMoney()) {
             throw new CustomizeException(CustomizeErrorCode.USER_MONEY_INSUFFICIENT);
         }
